@@ -1,0 +1,70 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: layout/navigation/site
+ * -----------------------------------------------------------------------------
+ */
+
+nav.site-nav {
+
+    * {
+        opacity: 0;
+        -webkit-transition: opacity .1s .3s ease-out;
+        transition: opacity .1s .3s ease-out;
+    }
+
+    > div {
+        @extend %page-block;
+        @extend %v-center;
+        @include responsive-prop('height', $header-heights);
+    }
+
+    background-color: $color--dark;
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 101;
+    @include translateY(-100%);
+    -webkit-transition: transform .2s ease-out;
+    transition: transform .2s  ease-out;
+
+    &.is-visible {
+        @include translateY(0);
+
+        * {
+            opacity: 1;
+        }
+    }
+    
+    ul {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 100px;
+        text-align: center;
+        width: 400px;
+    }
+
+    li {
+        @extend %v-center;
+        display: block;
+
+        a {
+            color: $color--medium-grey;
+            display: block;
+            @include font-bold();
+            @include font-size($fs-lg);
+            @include responsive-prop('padding-bottom', $space-xs);
+            @include responsive-prop('padding-top', $space-xs);
+            max-width: 400px;
+            text-align: center;
+            width: 100%;
+            @include transition(color .1s ease-out);
+    
+            &.is-active,
+            &:hover {
+                color: $color--white;
+            }
+        }
+    }
+}

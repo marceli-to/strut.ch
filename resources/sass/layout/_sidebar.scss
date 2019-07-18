@@ -1,0 +1,14 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: layout/sidebar
+ * -----------------------------------------------------------------------------
+ */
+
+aside.sidebar {
+    background-color: $color--black;
+    min-height: calc(100vh - 60px);
+    // @include responsive-prop('padding-top', $space-sm);
+    @include bp-md() {
+        min-height: calc(100vh - 80px);
+    }
+}

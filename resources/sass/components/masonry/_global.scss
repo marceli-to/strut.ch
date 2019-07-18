@@ -1,0 +1,12 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: component/masonry/global
+ * -----------------------------------------------------------------------------
+ *
+ */
+
+.masonry-row {
+    border-top: 2px solid $color--dark;
+    @include responsive-prop('padding-top', $space-xs);
+    @include responsive-prop('margin-bottom', $space-sm);    
+}

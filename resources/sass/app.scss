@@ -1,0 +1,88 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: dashboard
+ * -----------------------------------------------------------------------------
+ */
+
+
+// Settings
+@import 'config/colors';
+@import 'config/buttons';
+@import 'config/form';
+@import 'config/icons';
+@import 'config/global';
+@import 'config/spaces';
+@import 'config/typo';
+
+
+// Helpers 
+@import 'helpers/normalize';
+@import 'helpers/flexbox';
+@import 'helpers/functions';
+@import 'helpers/mixins';
+@import 'helpers/utilities';
+
+
+// Typo
+@import 'typo/webfonts';
+@import 'typo/mixins';
+@import 'typo/helpers'; 
+
+// Components
+@import 'components/blocks';
+@import 'components/boxes/global';
+@import 'components/buttons/global';
+@import 'components/buttons/add';
+@import 'components/cards/global';
+@import 'components/headings/global';
+@import 'components/headings/h1';
+@import 'components/headings/h2';
+@import 'components/headings/h3';
+@import 'components/icons/global';
+@import 'components/icons/menu';
+@import 'components/icons/close';
+@import 'components/icons/edit';
+@import 'components/icons/eye';
+@import 'components/icons/logout';
+@import 'components/icons/plus';
+@import 'components/icons/trash';
+@import 'components/lists/global';
+@import 'components/masonry/global';
+@import 'components/images';
+@import 'components/tables/global';
+@import 'components/pagination/global';
+
+// Forms
+@import 'form/global';
+@import 'form/input';
+@import 'form/forms';
+@import 'form/label';
+@import 'form/layout';
+@import 'form/validation';
+
+// Navigation
+@import 'navigation/global';
+@import 'navigation/site';
+@import 'navigation/tabs';
+
+
+// Layout
+@import 'layout/base';
+@import 'layout/container';
+@import 'layout/footer';
+@import 'layout/main';
+@import 'layout/header';
+@import 'layout/sidebar';
+
+
+// Theme
+@import 'theme/brand';
+
+
+// UI
+@import 'ui';
+
+
+// Vendor
+@import 'vendor/dropzone';
+@import 'vendor/dropzone-custom';

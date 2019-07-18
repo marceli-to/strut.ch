@@ -1,0 +1,33 @@
+Add admin user:
+
+1) php artisan tinker
+2) DB::table('users')->insert(['name'=>'marcel','email'=>'m@marceli.to','password'=>Hash::make('7aq31rr')])
+
+DB
+--
+
+nmd_app_marcelito | qrR6Bt4dD4GL0Newv3DGaK0FazSQGgcW
+
+nine: YuRME5WmG8CM
+
+
+DEPLOYING
+---------
+
+1. COMPRESS FILES
+tar --exclude="*.DS_Store" --exclude="node_modules/" --exclude=".source/" --exclude=".design/"  --exclude=".git*" --exclude=".env" --exclude=".editorconfig" --exclude="public/.htaccess" -cvzf app.tar.gz *
+
+2. COPY FILE
+scp app.tar.gz www-data@silverfish02.nine.ch:/home/www-data/app.marceli.to/
+
+3. SSH TO SERVER
+ssh www-data@silverfish02.nine.ch
+
+4. UNTAR FILE
+tar -zxvf app.tar.gz
+
+5. CLEANUP
+php composer.phar install --optimize-autoloader --no-dev
+php artisan config:clear
+php artisan cache:clear
+php artisan view:clear

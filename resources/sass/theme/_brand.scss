@@ -1,0 +1,20 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: theme/brand
+ * -----------------------------------------------------------------------------
+ *
+ */
+
+.brand {
+    @include background-default();
+    background-image: url($url-images + 'logo-marceli.to.svg');
+    background-size: contain;
+    display: block;
+    height: 40px;
+    width: 40px;
+
+    @include bp-md() {
+        height: 50px;
+        width: 50px;
+    }
+}
