@@ -24,7 +24,12 @@ class PostController extends Controller
      */
     public function index()
     {
-        return new PostCollection(Post::orderBy('order', 'ASC')->get());
+        //return new PostCollection(Post::orderBy('order', 'ASC')->get());
+        $posts = Post::with(['media' => function($query) {
+            $query->orderBy('order', 'ASC');
+        }])->orderBy('order', 'ASC')->get();
+
+        return new PostCollection($posts);
     }
 
     /**

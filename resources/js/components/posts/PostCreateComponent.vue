@@ -6,8 +6,8 @@
   </div>
 </template>
 <script>
-import PageHeaderComponent from '../layout/PageHeaderComponent.vue';
-import PostFormComponent from './partials/PostFormComponent.vue';
+import PageHeaderComponent from '@/components/layout/PageHeaderComponent.vue';
+import PostFormComponent from '@/components/posts/partials/PostFormComponent.vue';
   export default {
     components: {
       pageHeader: PageHeaderComponent,

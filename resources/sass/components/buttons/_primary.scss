@@ -1,0 +1,21 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: components/buttons/primary
+ * -----------------------------------------------------------------------------
+ */
+
+.btn-primary {
+    @extend %btn-ib;
+    border: 2px solid $color--dark;
+    color: $color--dark;
+    @include font-size($fs-sm);
+    margin-right: 10px;
+    padding: 10px;
+    min-width: 120px;
+    text-align: center;
+
+    &.is-light {
+        background-color: $color--light;
+        border: 2px solid $color--light;
+    }
+}

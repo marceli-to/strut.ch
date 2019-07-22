@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMasonryRowsTable extends Migration
+class CreateGridsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateMasonryRowsTable extends Migration
      */
     public function up()
     {
-        Schema::create('masonry_rows', function (Blueprint $table) {
+        Schema::create('grids', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('masonry_layout_id')->unsigned();
+            $table->integer('grid_layout_id')->unsigned();
             $table->integer('position')->default(0);
             $table->timestamps();
         });
@@ -28,6 +28,6 @@ class CreateMasonryRowsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('masonry_rows');
+        Schema::dropIfExists('grids');
     }
 }

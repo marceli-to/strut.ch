@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMasonryLayoutsTable extends Migration
+class CreateGridLayoutsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class CreateMasonryLayoutsTable extends Migration
      */
     public function up()
     {
-        Schema::create('masonry_layouts', function (Blueprint $table) {
+        Schema::create('grid_layouts', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('layout');
+            $table->string('key');
+            $table->boolean('is_home')->default(false);
+            $table->boolean('is_project')->default(false);
             $table->timestamps();
         });
     }
@@ -27,6 +29,6 @@ class CreateMasonryLayoutsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('masonry_layouts');
+        Schema::dropIfExists('grid_layouts');
     }
 }

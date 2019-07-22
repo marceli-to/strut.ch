@@ -31,10 +31,12 @@ Route::middleware('auth:api')->group(function () {
     Route::delete('post/delete/{id}', 'PostController@delete');
     Route::post('post/order', 'PostController@order');
 
-    // Masonry routes
-    Route::get('masonry', 'MasonryController@index');
-    Route::get('masonry/addRow/{layoutId}', 'MasonryController@addRow');
-    Route::delete('masonry/deleteRow/{id}', 'MasonryController@deleteRow');
+    // Grid routes
+    Route::get('grid', 'Backend\Grid\GridController@index');
+    Route::get('grid/store/{layoutId}', 'Backend\Grid\GridController@store');
+    Route::delete('grid/delete/{id}', 'Backend\Grid\GridController@destroy');
+
+    Route::get('gridlayout/fetch', 'Backend\Grid\GridLayoutController@fetch');
 
     // Media routes
     Route::post('media/upload','MediaController@upload');

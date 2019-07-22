@@ -11,3 +11,8 @@
     position: absolute;
     top: auto;
 }
+
+.icon-close-overlay {
+    background-image: url($url-icons + 'close-dark.svg');
+    top: -15px;
+}

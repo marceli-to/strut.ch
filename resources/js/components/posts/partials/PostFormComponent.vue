@@ -22,6 +22,17 @@
               </div>
               <div class="form-row" :class="errors.body ? 'has-error': ''">
                   <label>Body</label>
+                  <!-- <editor-menu-bar :editor="editor" v-slot="{ commands, isActive }">
+                    <div>
+                      <a href="javascript:;" :class="{ 'is-active': isActive.bold() }" @click="commands.bold">
+                        Bold
+                      </a>
+                      <a href="javascript:;"  :class="{ 'is-active': isActive.heading({ level: 2 }) }" @click="commands.heading({ level: 2 })">
+                        H2
+                      </a>
+                    </div>
+                  </editor-menu-bar>
+                  <editor-content :editor="editor" /> -->
                   <textarea @focus="removeError('body')" v-model="post.body" :class="errors.title ? 'has-error': ''" rows="5"></textarea>
               </div>
             </div>
@@ -59,12 +70,33 @@
 <script>
 import vue2Dropzone from 'vue2-dropzone';
 import draggable from 'vuedraggable';
+import { Editor, EditorContent, EditorMenuBar } from 'tiptap';
+import {
+  Blockquote,
+  CodeBlock,
+  HardBreak,
+  Heading,
+  OrderedList,
+  BulletList,
+  ListItem,
+  TodoItem,
+  TodoList,
+  Bold,
+  Code,
+  Italic,
+  Link,
+  Strike,
+  Underline,
+  History,
+} from 'tiptap-extensions';
 
 export default {
 
     components: {
       vueDropzone: vue2Dropzone,
       draggable,
+      EditorContent,
+      EditorMenuBar,
     },
 
     props: {
@@ -97,6 +129,33 @@ export default {
           media: []
         },
 
+        // editor
+        editor: new Editor({
+            extensions: [
+              new Blockquote(),
+              new BulletList(),
+              new CodeBlock(),
+              new HardBreak(),
+              new Heading({ levels: [1, 2, 3] }),
+              new ListItem(),
+              new OrderedList(),
+              new TodoItem(),
+              new TodoList(),
+              new Link(),
+              new Bold(),
+              new Code(),
+              new Italic(),
+              new Strike(),
+              new Underline(),
+              new History(),
+            ],
+            content: `
+              <p>
+                Hey, try to select some text here. There will popup a menu for selecting some inline styles. <em>Remember:</em> you have full control about content and styling of this menu.
+              </p>
+            `,
+        }),
+
         // dropzone options
         dropzoneOptions: {
           url: "/api/media/upload",
@@ -111,6 +170,10 @@ export default {
         }
       }
     },
+    
+    mounted() {
+
+    },
 
     created() {
 
@@ -121,6 +184,10 @@ export default {
           this.post = response.data;
         });
       }
+    },
+
+    beforeDestroy() {
+      this.editor.destroy()
     },
     
     methods: {

@@ -967,7 +967,7 @@ p {
  * -----------------------------------------------------------------------------
  *
  */
-header.site-header > div, main.content > div, nav.site-nav > div,
+header.site-header > div, main.content > div, nav.site-nav > div, .overlay > div,
 .page-block {
   margin-left: auto;
   margin-right: auto;
@@ -977,19 +977,19 @@ header.site-header > div, main.content > div, nav.site-nav > div,
   max-width: 640px;
 }
 @media screen and (min-width: 768px) {
-  header.site-header > div, main.content > div, nav.site-nav > div,
+  header.site-header > div, main.content > div, nav.site-nav > div, .overlay > div,
 .page-block {
     max-width: 728px;
   }
 }
 @media screen and (min-width: 1024px) {
-  header.site-header > div, main.content > div, nav.site-nav > div,
+  header.site-header > div, main.content > div, nav.site-nav > div, .overlay > div,
 .page-block {
     max-width: 964px;
   }
 }
 @media screen and (min-width: 1280px) {
-  header.site-header > div, main.content > div, nav.site-nav > div,
+  header.site-header > div, main.content > div, nav.site-nav > div, .overlay > div,
 .page-block {
     max-width: 1100px;
   }
@@ -1013,7 +1013,7 @@ header.site-header > div, main.content > div, nav.site-nav > div,
 .btn-add,
 .btn {
   background-color: transparent;
-  border-radius: 0px;
+  border-radius: 2px;
   border: none;
   line-height: 1;
   outline: none !important;
@@ -1022,11 +1022,13 @@ header.site-header > div, main.content > div, nav.site-nav > div,
   transition: background-color 0.1s ease-out 0.2s ease-in-out;
 }
 
-.btn-add,
+.btn-trash, .btn-toggle-layout, .btn-add-article, .btn-add-post, .btn-add, .btn-primary,
 .btn-ib {
+  border-radius: 2px;
   display: inline-block;
   line-height: 1;
   outline: none !important;
+  text-decoration: none;
   -webkit-appearance: none;
   -webkit-tap-highlight-color: #ffffff;
 }
@@ -1037,6 +1039,103 @@ header.site-header > div, main.content > div, nav.site-nav > div,
 }
 .btn-shadow:hover {
   box-shadow: 0 4px 6px rgba(100, 100, 100, 0.3);
+}
+
+.btn-bg {
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: top left;
+}
+
+.btn-trash, .btn-toggle-layout, .btn-add-article, .btn-add-post,
+.btn-icon {
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: top left;
+  background-size: 18px;
+  background-position: center left 5px;
+  font-size: 14px;
+  line-height: 1.25;
+  padding: 10px 10px 10px 30px;
+}
+@media screen and (min-width: 768px) {
+  .btn-trash, .btn-toggle-layout, .btn-add-article, .btn-add-post,
+.btn-icon {
+    font-size: 14px;
+    line-height: 1.25;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .btn-trash, .btn-toggle-layout, .btn-add-article, .btn-add-post,
+.btn-icon {
+    font-size: 15px;
+    line-height: 1.25;
+  }
+}
+@media screen and (min-width: 1280px) {
+  .btn-trash, .btn-toggle-layout, .btn-add-article, .btn-add-post,
+.btn-icon {
+    font-size: 15px;
+    line-height: 1.25;
+  }
+}
+
+.btn-dark {
+  background-color: #222222;
+  border: 2px solid color--dark;
+  color: #f9f9f9;
+}
+
+.btn-toggle-layout, .btn-add-article, .btn-add-post,
+.btn-light {
+  background-color: #ffffff;
+  border: 2px solid #ffffff;
+  color: #222222;
+}
+
+.btn-trash,
+.btn-danger {
+  background-color: #d9534f;
+  border: 2px solid color--danger;
+  color: #f9f9f9;
+}
+
+/**
+ * -----------------------------------------------------------------------------
+ * File: components/buttons/primary
+ * -----------------------------------------------------------------------------
+ */
+.btn-primary {
+  border: 2px solid #222222;
+  color: #222222;
+  font-size: 16px;
+  line-height: 1.25;
+  margin-right: 10px;
+  padding: 10px;
+  min-width: 120px;
+  text-align: center;
+}
+@media screen and (min-width: 768px) {
+  .btn-primary {
+    font-size: 16px;
+    line-height: 1.25;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .btn-primary {
+    font-size: 18px;
+    line-height: 1.25;
+  }
+}
+@media screen and (min-width: 1280px) {
+  .btn-primary {
+    font-size: 18px;
+    line-height: 1.25;
+  }
+}
+.btn-primary.is-light {
+  background-color: #f9f9f9;
+  border: 2px solid #f9f9f9;
 }
 
 /**
@@ -1063,10 +1162,99 @@ header.site-header > div, main.content > div, nav.site-nav > div,
 
 /**
  * -----------------------------------------------------------------------------
+ * File: components/buttons/add-post
+ * -----------------------------------------------------------------------------
+ */
+.btn-add-post {
+  background-image: url("../img/icons/file-plus.svg");
+}
+
+/**
+ * -----------------------------------------------------------------------------
+ * File: components/buttons/add-article
+ * -----------------------------------------------------------------------------
+ */
+.btn-add-article {
+  background-image: url("../img/icons/file-text.svg");
+}
+
+/**
+ * -----------------------------------------------------------------------------
+ * File: components/buttons/toggle-layout
+ * -----------------------------------------------------------------------------
+ */
+.btn-toggle-layout {
+  background-image: url("../img/icons/chevron-down.svg");
+  background-position: center right;
+  padding-left: 0;
+  padding-right: 20px;
+}
+
+/**
+ * -----------------------------------------------------------------------------
+ * File: components/buttons/trash
+ * -----------------------------------------------------------------------------
+ */
+.btn-trash {
+  background-image: url("../img/icons/trash-light.svg");
+  margin-bottom: 15px;
+  margin-top: 5px;
+}
+
+/**
+ * -----------------------------------------------------------------------------
  * File: component/cards/global
  * -----------------------------------------------------------------------------
  *
  */
+/**
+ * -----------------------------------------------------------------------------
+ * File: component/cards/post-preview
+ * -----------------------------------------------------------------------------
+ *
+ */
+.posts {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 20px;
+}
+
+.post {
+  border-radius: 2px;
+  border: 2px solid #222222;
+  padding: 10px;
+}
+@media screen and (min-width: 768px) {
+  .post {
+    padding: 10px;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .post {
+    padding: 10px;
+  }
+}
+@media screen and (min-width: 1280px) {
+  .post {
+    padding: 10px;
+  }
+}
+.post .post-text {
+  margin-bottom: 10px;
+}
+.post .post-media {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 10px;
+}
+.post .post-media figure img {
+  opacity: 0.6;
+  transition: opacity 0.1s ease-out;
+}
+.post .post-media figure:hover img {
+  opacity: 1;
+}
+
 /**
  * -----------------------------------------------------------------------------
  * File: component/headings/generic
@@ -1126,6 +1314,50 @@ h1 {
  * File: components/headings/h2
  * -----------------------------------------------------------------------------
  */
+h2 {
+  font-family: "Nunito", sans-serif;
+  font-display: auto;
+  font-style: normal;
+  font-stretch: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1.25;
+  margin-bottom: 15px;
+}
+@media screen and (min-width: 768px) {
+  h2 {
+    font-size: 22px;
+    line-height: 1.25;
+  }
+}
+@media screen and (min-width: 1024px) {
+  h2 {
+    font-size: 24px;
+    line-height: 1.25;
+  }
+}
+@media screen and (min-width: 1280px) {
+  h2 {
+    font-size: 26px;
+    line-height: 1.25;
+  }
+}
+@media screen and (min-width: 768px) {
+  h2 {
+    margin-bottom: 20px;
+  }
+}
+@media screen and (min-width: 1024px) {
+  h2 {
+    margin-bottom: 25px;
+  }
+}
+@media screen and (min-width: 1280px) {
+  h2 {
+    margin-bottom: 30px;
+  }
+}
+
 /**
  * -----------------------------------------------------------------------------
  * File: components/headings/h3
@@ -1262,6 +1494,11 @@ h3 {
   right: 20px;
   position: absolute;
   top: auto;
+}
+
+.icon-close-overlay {
+  background-image: url("../img/icons/close-dark.svg");
+  top: -15px;
 }
 
 /**
@@ -1440,7 +1677,7 @@ h3 {
   display: block;
 }
 .list-item-body h3 {
-  margin-top: 10px;
+  margin-top: 0;
 }
 .list-item-body p {
   margin-bottom: 10px !important;
@@ -1462,7 +1699,7 @@ h3 {
 .masonry-row {
   border-top: 2px solid #222222;
   padding-top: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 @media screen and (min-width: 768px) {
   .masonry-row {
@@ -1480,21 +1717,80 @@ h3 {
   }
 }
 @media screen and (min-width: 768px) {
-  .masonry-row {
-    margin-bottom: 15px;
-  }
-}
-@media screen and (min-width: 1024px) {
   .masonry-row {
     margin-bottom: 20px;
   }
 }
-@media screen and (min-width: 1280px) {
+@media screen and (min-width: 1024px) {
   .masonry-row {
     margin-bottom: 25px;
   }
 }
+@media screen and (min-width: 1280px) {
+  .masonry-row {
+    margin-bottom: 30px;
+  }
+}
 
+.masonry-layout-selector {
+  position: relative;
+}
+.masonry-layout-selector ul {
+  background-color: #ffffff;
+  border-top: 2px solid #222222;
+  display: none;
+  margin: 0;
+  padding: 0;
+}
+.masonry-layout-selector ul.is-visible {
+  display: block;
+  display: grid;
+  grid-template-columns: repeat(5, 102px);
+  grid-gap: 10px;
+}
+.masonry-layout-selector ul li {
+  display: block;
+}
+.masonry-layout-selector ul a {
+  display: block;
+  padding: 15px 15px 15px 10px;
+  width: 102px;
+}
+.masonry-layout-selector ul a img {
+  display: block;
+  height: auto;
+  width: 100%;
+}
+.masonry-layout-selector ul a:hover {
+  background-color: #eeeeee;
+}
+
+/**
+ * -----------------------------------------------------------------------------
+ * File: component/overlay/global
+ * -----------------------------------------------------------------------------
+ *
+ */
+.overlay {
+  background-color: white;
+  color: #222222;
+  display: block;
+  height: 100%;
+  left: 0;
+  padding: 40px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: -1;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.24s ease-out;
+}
+.overlay.is-visible {
+  opacity: 1;
+  pointer-events: all;
+  z-index: 101;
+}
 /**
  * -----------------------------------------------------------------------------
  * File: components/images
@@ -2407,16 +2703,6 @@ header.auth-header h1 {
  * File: layout/sidebar
  * -----------------------------------------------------------------------------
  */
-aside.sidebar {
-  background-color: #000000;
-  min-height: calc(100vh - 60px);
-}
-@media only screen and (min-width: 1024px) {
-  aside.sidebar {
-    min-height: calc(100vh - 80px);
-  }
-}
-
 /**
  * -----------------------------------------------------------------------------
  * File: theme/brand
@@ -2887,4 +3173,60 @@ aside.sidebar {
   padding-left: 20px;
   padding-top: 2px;
   min-height: 16px;
+}
+
+/**
+ * -----------------------------------------------------------------------------
+ * File: admin/vendor/notifications
+ * -----------------------------------------------------------------------------
+ *
+ * Source: https://www.npmjs.com/package/vue-notification
+ */
+.notification {
+  border-radius: 2px;
+  padding: 10px;
+  margin: 10px 10px 0 0;
+  font-size: 14px;
+  line-height: 1.25;
+  color: #ffffff;
+  background: #5bc0de;
+  border-left: 5px solid #187FE7;
+  border-left: none !important;
+}
+@media screen and (min-width: 768px) {
+  .notification {
+    font-size: 14px;
+    line-height: 1.25;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .notification {
+    font-size: 15px;
+    line-height: 1.25;
+  }
+}
+@media screen and (min-width: 1280px) {
+  .notification {
+    font-size: 15px;
+    line-height: 1.25;
+  }
+}
+.notification.warn {
+  background: #f0ad4e;
+  border-left-color: #f48a06;
+}
+.notification.error {
+  background: #d9534f;
+  border-left-color: #B82E24;
+}
+.notification.success {
+  background: #5cb85c;
+  border-left-color: #42A85F;
+}
+.notification .notification-title {
+  font-family: "Nunito", sans-serif;
+  font-display: auto;
+  font-style: normal;
+  font-stretch: normal;
+  font-weight: 700;
 }

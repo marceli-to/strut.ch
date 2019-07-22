@@ -4,7 +4,7 @@
  * -----------------------------------------------------------------------------
  */
 
- .icon-trash {
+.icon-trash {
     @extend %icon-dashboard;
     background-image: url($url-icons + 'trash.svg');
 }

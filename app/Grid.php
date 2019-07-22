@@ -4,16 +4,16 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class MasonryRow extends Model
+class Grid extends Model
 {
-    protected $fillable = ['masonry_layout_id', 'position'];
+    protected $fillable = ['grid_layout_id', 'position'];
 
     /**
      * Get the layout associated with the row.
      */
     public function layout()
     {
-        return $this->hasOne('App\MasonryLayout', 'id', 'masonry_layout_id');
+        return $this->hasOne('App\GridLayout', 'id', 'grid_layout_id');
     }
 
     /**
@@ -21,6 +21,7 @@ class MasonryRow extends Model
      */
     public function elements()
     {
-        return $this->hasMany('App\MasonryElement');
+        return $this->hasMany('App\GridElement');
     }
+
 }
