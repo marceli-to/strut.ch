@@ -44,6 +44,7 @@ Route::middleware('auth:api')->group(function () {
 
     // Delete a grid element
     Route::delete('gridelement/delete/{id}', 'Backend\Grid\GridElementController@destroy');
+    Route::get('gridelement/get/{id}', 'Backend\Grid\GridElementController@get');
 
     // Media routes
     Route::post('media/upload','MediaController@upload');

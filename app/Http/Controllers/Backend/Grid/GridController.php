@@ -35,7 +35,6 @@ class GridController extends Controller
         return 
             new GridCollection(
                     $this->grid->with('layout')
-                               ->with('elements.postmedia.post')
                                ->orderBy('position', 'ASC')
                                ->get()
 

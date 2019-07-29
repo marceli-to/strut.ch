@@ -2026,6 +2026,18 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mixins_grid__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/mixins/grid */ "./resources/js/mixins/grid.js");
+/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-loading-overlay */ "./node_modules/vue-loading-overlay/dist/vue-loading.min.js");
+/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _components_home_GridPostComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/home/GridPostComponent.vue */ "./resources/js/components/home/GridPostComponent.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2220,41 +2232,101 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    loading: vue_loading_overlay__WEBPACK_IMPORTED_MODULE_1___default.a,
+    gridPost: _components_home_GridPostComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+  },
   data: function data() {
     return {
-      gridElements: []
+      gridElements: [],
+      isLoading: false,
+      fullPage: false,
+      hasOverlay: false,
+      displayPosts: false,
+      tmpGridId: 0,
+      tmpPosition: 0
     };
   },
   props: {
     layout: String,
-    gridId: Number,
-    elements: Array
+    gridId: Number
   },
   mixins: [_mixins_grid__WEBPACK_IMPORTED_MODULE_0__["default"]],
   created: function created() {
-    var els = [];
-    this.$props.elements.forEach(function (e) {
-      els[e.position] = e;
-    });
-    this.gridElements = els;
-  },
-  updated: function updated() {
-    console.log(this.$props);
+    this.fetchElements();
   },
   methods: {
-    addPost: function addPost(rowId, position) {
-      this.$parent.addPost(rowId, position);
+    fetchElements: function fetchElements() {
+      var _this = this;
+
+      var uri = "/api/gridelement/get/".concat(this.$props.gridId);
+      this.isLoading = true;
+      this.axios.get(uri).then(function (response) {
+        var els = [];
+
+        if (response.data.data) {
+          response.data.data.forEach(function (e) {
+            els[e.position] = e;
+          });
+          _this.gridElements = els;
+        }
+
+        _this.isLoading = false;
+      });
     },
-    addArticle: function addArticle(rowId, position) {
-      this.$parent.addArticle(rowId, position);
+    addArticle: function addArticle(gridId, position) {},
+    addPost: function addPost(gridId, position) {
+      this.toggleOverlay();
+      this.displayPosts = true;
+      this.tmpGridId = gridId;
+      this.tmpPosition = position;
     },
-    deleteItem: function deleteItem(id) {
-      this.$parent.deleteItem(id); // const index = this.gridElements.findIndex(x => x.id === id);            
-      // this.gridElements.splice(index, 1);
+    insertPost: function insertPost(postMediaId) {
+      var _this2 = this;
+
+      var data = {
+        'grid_id': this.tmpGridId,
+        'position': this.tmpPosition,
+        'post_media_id': postMediaId
+      };
+      var uri = '/api/gridelement/store';
+      this.isLoading = true;
+      this.axios.post(uri, data).then(function (response) {
+        _this2.toggleOverlay();
+
+        _this2.$notify({
+          type: 'success',
+          title: 'Success!',
+          text: 'A new element was added successfully!'
+        });
+
+        _this2.fetchElements();
+      });
     },
-    getMediaSource: function getMediaSource(file) {
+    deleteElement: function deleteElement(id) {
+      var _this3 = this;
+
+      var uri = "/api/gridelement/delete/".concat(id);
+      this.isLoading = true;
+      this.axios["delete"](uri).then(function (response) {
+        _this3.$notify({
+          type: 'success',
+          title: 'Success!',
+          text: 'The grid element was deleted successfully!'
+        });
+
+        _this3.fetchElements();
+      });
+    },
+    // Helper methods
+    getPreviewImage: function getPreviewImage(file) {
       return "/media/".concat(file, "/sm");
+    },
+    toggleOverlay: function toggleOverlay() {
+      this.hasOverlay = this.hasOverlay ? false : true;
     }
   }
 });
@@ -2273,8 +2345,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_layout_PageHeaderComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/components/layout/PageHeaderComponent.vue */ "./resources/js/components/layout/PageHeaderComponent.vue");
 /* harmony import */ var _components_home_GridComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/components/home/GridComponent.vue */ "./resources/js/components/home/GridComponent.vue");
 /* harmony import */ var _components_home_GridSelectorComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/home/GridSelectorComponent.vue */ "./resources/js/components/home/GridSelectorComponent.vue");
-/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-loading-overlay */ "./node_modules/vue-loading-overlay/dist/vue-loading.min.js");
-/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay__WEBPACK_IMPORTED_MODULE_3__);
 //
 //
 //
@@ -2297,36 +2367,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
 
 
 
@@ -2334,19 +2374,11 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     pageHeader: _components_layout_PageHeaderComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     grid: _components_home_GridComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    gridSelector: _components_home_GridSelectorComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-    loading: vue_loading_overlay__WEBPACK_IMPORTED_MODULE_3___default.a
+    gridSelector: _components_home_GridSelectorComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   data: function data() {
     return {
-      grids: [],
-      posts: [],
-      isLoading: false,
-      fullPage: false,
-      hasOverlay: false,
-      selectPost: false,
-      tmpGridId: 0,
-      tmpPosition: 0
+      grids: []
     };
   },
   created: function created() {
@@ -2362,12 +2394,6 @@ __webpack_require__.r(__webpack_exports__);
 
       this.axios.get('/api/grid').then(function (response) {
         _this2.grids = response.data.data;
-
-        _this2.grids.forEach(function (g) {
-          if (g.length > 0) {
-            _this2.$emit.g.elements;
-          }
-        });
       });
     },
     addGrid: function addGrid(gridId) {
@@ -2403,63 +2429,60 @@ __webpack_require__.r(__webpack_exports__);
           text: 'The grid was deleted successfully!'
         });
       });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/home/GridPostComponent.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/home/GridPostComponent.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {},
+  data: function data() {
+    return {
+      posts: []
+    };
+  },
+  created: function created() {
+    var _this = this;
+
+    this.axios.get('/api/posts').then(function (response) {
+      _this.posts = response.data.data;
+    });
+  },
+  methods: {
+    insertPost: function insertPost(id) {
+      this.$parent.insertPost(id);
     },
-    // Computed property - Build media source string 
-    getMediaSource: function getMediaSource(file) {
+    getThumbnailImage: function getThumbnailImage(file) {
       return "/media/thumbnail/".concat(file);
-    },
-    toggleOverlay: function toggleOverlay() {
-      this.hasOverlay = this.hasOverlay ? false : true;
-    },
-    addPost: function addPost(gridId, position) {
-      var _this5 = this;
-
-      this.isLoading = true;
-      this.axios.get('/api/posts').then(function (response) {
-        _this5.isLoading = false;
-
-        _this5.toggleOverlay();
-
-        _this5.posts = response.data.data;
-        _this5.selectPost = true;
-        _this5.tmpGridId = gridId;
-        _this5.tmpPosition = position;
-      });
-    },
-    insertPost: function insertPost(postMediaId) {
-      var _this6 = this;
-
-      var data = {
-        'grid_id': this.tmpGridId,
-        'position': this.tmpPosition,
-        'post_media_id': postMediaId
-      };
-      var uri = '/api/gridelement/store';
-      this.axios.post(uri, data).then(function (response) {
-        _this6.toggleOverlay();
-
-        _this6.$notify({
-          type: 'success',
-          title: 'Success!',
-          text: 'A new element was added successfully!'
-        });
-
-        _this6.fetchGrids();
-      });
-    },
-    deleteItem: function deleteItem(id) {
-      var _this7 = this;
-
-      var uri = "/api/gridelement/delete/".concat(id);
-      this.axios["delete"](uri).then(function (response) {
-        _this7.$notify({
-          type: 'success',
-          title: 'Success!',
-          text: 'The grid element was deleted successfully!'
-        });
-
-        _this7.fetchGrids();
-      });
     }
   }
 });
@@ -32466,675 +32489,179 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("div", { staticClass: "grids" }, [
-      _vm.layout == "1fr"
-        ? _c("div", [
-            _c("div", { staticClass: "grid-1fr" }, [
-              _c("div", { staticClass: "span" }, [
-                _vm.gridElements[0] && _vm.gridElements[0].position == "0"
-                  ? _c("div", [
-                      _c("figure", [
+  return _c(
+    "div",
+    [
+      _c("loading", {
+        attrs: {
+          active: _vm.isLoading,
+          "is-full-page": _vm.fullPage,
+          height: 30,
+          width: 30
+        },
+        on: {
+          "update:active": function($event) {
+            _vm.isLoading = $event
+          }
+        }
+      }),
+      _vm._v(" "),
+      _c("div", { staticClass: "grids" }, [
+        _vm.layout == "1fr"
+          ? _c("div", [
+              _c("div", { staticClass: "grid-1fr" }, [
+                _c("div", { staticClass: "span" }, [
+                  _vm.gridElements[0] && _vm.gridElements[0].position == "0"
+                    ? _c("div", [
+                        _c("figure", [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn-trash",
+                              attrs: { href: "javascript:;" },
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.deleteElement(
+                                    _vm.gridElements[0].id
+                                  )
+                                }
+                              }
+                            },
+                            [_vm._v("Delete item")]
+                          ),
+                          _vm._v(" "),
+                          _c("img", {
+                            attrs: {
+                              src: _vm.getPreviewImage(
+                                _vm.gridElements[0].postmedia.name
+                              ),
+                              height: "50",
+                              width: "50"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("figcaption", [
+                            _c("strong", [
+                              _vm._v(
+                                _vm._s(_vm.gridElements[0].postmedia.post.title)
+                              )
+                            ])
+                          ])
+                        ])
+                      ])
+                    : _c("div", [
                         _c(
                           "a",
                           {
-                            staticClass: "btn-trash",
+                            staticClass: "btn-add-article",
                             attrs: { href: "javascript:;" },
                             on: {
                               click: function($event) {
                                 $event.preventDefault()
-                                return _vm.deleteItem(_vm.gridElements[0].id)
+                                return _vm.addArticle(_vm.gridId, 0)
                               }
                             }
                           },
-                          [_vm._v("Delete item")]
+                          [_vm._v("Add teaser")]
                         ),
-                        _vm._v(" "),
-                        _c("img", {
-                          attrs: {
-                            src: _vm.getMediaSource(
-                              _vm.gridElements[0].postmedia.name
-                            ),
-                            height: "50",
-                            width: "50"
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("figcaption", [
-                          _c("strong", [
-                            _vm._v(
-                              _vm._s(_vm.gridElements[0].postmedia.post.title)
-                            )
-                          ])
-                        ])
+                        _vm._v(" \n                        "),
+                        _c(
+                          "a",
+                          {
+                            staticClass: "btn-add-post",
+                            attrs: { href: "javascript:;" },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.addPost(_vm.gridId, 0)
+                              }
+                            }
+                          },
+                          [_vm._v("Add post")]
+                        )
                       ])
-                    ])
-                  : _c("div", [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "btn-add-article",
-                          attrs: { href: "javascript:;" },
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              return _vm.addArticle(_vm.gridId, 0)
-                            }
-                          }
-                        },
-                        [_vm._v("Add teaser")]
-                      ),
-                      _vm._v(" \n                        "),
-                      _c(
-                        "a",
-                        {
-                          staticClass: "btn-add-post",
-                          attrs: { href: "javascript:;" },
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              return _vm.addPost(_vm.gridId, 0)
-                            }
-                          }
-                        },
-                        [_vm._v("Add post")]
-                      )
-                    ])
+                ])
               ])
             ])
-          ])
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.layout == "2fr"
-        ? _c("div", [
-            _c("div", { staticClass: "grid-2fr" }, [
-              _c("div", { staticClass: "span" }, [
-                _vm.gridElements[0] && _vm.gridElements[0].position == "0"
-                  ? _c("div", [
-                      _c("figure", [
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.layout == "2fr"
+          ? _c("div", [
+              _c("div", { staticClass: "grid-2fr" }, [
+                _c("div", { staticClass: "span" }, [
+                  _vm.gridElements[0] && _vm.gridElements[0].position == "0"
+                    ? _c("div", [
+                        _c("figure", [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn-trash",
+                              attrs: { href: "javascript:;" },
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.deleteElement(
+                                    _vm.gridElements[0].id
+                                  )
+                                }
+                              }
+                            },
+                            [_vm._v("Delete item")]
+                          ),
+                          _vm._v(" "),
+                          _c("img", {
+                            attrs: {
+                              src: _vm.getPreviewImage(
+                                _vm.gridElements[0].postmedia.name
+                              ),
+                              height: "50",
+                              width: "50"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("figcaption", [
+                            _c("strong", [
+                              _vm._v(
+                                _vm._s(_vm.gridElements[0].postmedia.post.title)
+                              )
+                            ])
+                          ])
+                        ])
+                      ])
+                    : _c("div", [
                         _c(
                           "a",
                           {
-                            staticClass: "btn-trash",
+                            staticClass: "btn-add-article",
                             attrs: { href: "javascript:;" },
                             on: {
                               click: function($event) {
                                 $event.preventDefault()
-                                return _vm.deleteItem(_vm.gridElements[0].id)
+                                return _vm.addArticle(_vm.gridId, 0)
                               }
                             }
                           },
-                          [_vm._v("Delete item")]
+                          [_vm._v("Add teaser")]
                         ),
-                        _vm._v(" "),
-                        _c("img", {
-                          attrs: {
-                            src: _vm.getMediaSource(
-                              _vm.gridElements[0].postmedia.name
-                            ),
-                            height: "50",
-                            width: "50"
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("figcaption", [
-                          _c("strong", [
-                            _vm._v(
-                              _vm._s(_vm.gridElements[0].postmedia.post.title)
-                            )
-                          ])
-                        ])
-                      ])
-                    ])
-                  : _c("div", [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "btn-add-article",
-                          attrs: { href: "javascript:;" },
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              return _vm.addArticle(_vm.gridId, 0)
-                            }
-                          }
-                        },
-                        [_vm._v("Add teaser")]
-                      ),
-                      _vm._v(" \n                        "),
-                      _c(
-                        "a",
-                        {
-                          staticClass: "btn-add-post",
-                          attrs: { href: "javascript:;" },
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              return _vm.addPost(_vm.gridId, 0)
-                            }
-                          }
-                        },
-                        [_vm._v("Add post")]
-                      )
-                    ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "span" }, [
-                _vm.gridElements[1] && _vm.gridElements[1].position == "1"
-                  ? _c("div", [
-                      _c("figure", [
+                        _vm._v(" \n                        "),
                         _c(
                           "a",
                           {
-                            staticClass: "btn-trash",
+                            staticClass: "btn-add-post",
                             attrs: { href: "javascript:;" },
                             on: {
                               click: function($event) {
                                 $event.preventDefault()
-                                return _vm.deleteItem(_vm.gridElements[1].id)
+                                return _vm.addPost(_vm.gridId, 0)
                               }
                             }
                           },
-                          [_vm._v("Delete item")]
-                        ),
-                        _vm._v(" "),
-                        _c("img", {
-                          attrs: {
-                            src: _vm.getMediaSource(
-                              _vm.gridElements[1].postmedia.name
-                            ),
-                            height: "50",
-                            width: "50"
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("figcaption", [
-                          _c("strong", [
-                            _vm._v(
-                              _vm._s(_vm.gridElements[1].postmedia.post.title)
-                            )
-                          ])
-                        ])
+                          [_vm._v("Add post")]
+                        )
                       ])
-                    ])
-                  : _c("div", [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "btn-add-article",
-                          attrs: { href: "javascript:;" },
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              return _vm.addArticle(_vm.gridId, 1)
-                            }
-                          }
-                        },
-                        [_vm._v("Add teaser")]
-                      ),
-                      _vm._v(" \n                        "),
-                      _c(
-                        "a",
-                        {
-                          staticClass: "btn-add-post",
-                          attrs: { href: "javascript:;" },
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              return _vm.addPost(_vm.gridId, 1)
-                            }
-                          }
-                        },
-                        [_vm._v("Add post")]
-                      )
-                    ])
-              ])
-            ])
-          ])
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.layout == "3fr"
-        ? _c("div", [
-            _c("div", { staticClass: "grid-3fr" }, [
-              _c("div", { staticClass: "span" }, [
-                _vm.gridElements[0] && _vm.gridElements[0].position == "0"
-                  ? _c("div", [
-                      _c("figure", [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "btn-trash",
-                            attrs: { href: "javascript:;" },
-                            on: {
-                              click: function($event) {
-                                $event.preventDefault()
-                                return _vm.deleteItem(_vm.gridElements[0].id)
-                              }
-                            }
-                          },
-                          [_vm._v("Delete item")]
-                        ),
-                        _vm._v(" "),
-                        _c("img", {
-                          attrs: {
-                            src: _vm.getMediaSource(
-                              _vm.gridElements[0].postmedia.name
-                            ),
-                            height: "50",
-                            width: "50"
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("figcaption", [
-                          _c("strong", [
-                            _vm._v(
-                              _vm._s(_vm.gridElements[0].postmedia.post.title)
-                            )
-                          ])
-                        ])
-                      ])
-                    ])
-                  : _c("div", [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "btn-add-article",
-                          attrs: { href: "javascript:;" },
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              return _vm.addArticle(_vm.gridId, 0)
-                            }
-                          }
-                        },
-                        [_vm._v("Add teaser")]
-                      ),
-                      _vm._v(" \n                        "),
-                      _c(
-                        "a",
-                        {
-                          staticClass: "btn-add-post",
-                          attrs: { href: "javascript:;" },
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              return _vm.addPost(_vm.gridId, 0)
-                            }
-                          }
-                        },
-                        [_vm._v("Add post")]
-                      )
-                    ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "span" }, [
-                _vm.gridElements[1] && _vm.gridElements[1].position == "1"
-                  ? _c("div", [
-                      _c("figure", [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "btn-trash",
-                            attrs: { href: "javascript:;" },
-                            on: {
-                              click: function($event) {
-                                $event.preventDefault()
-                                return _vm.deleteItem(_vm.gridElements[1].id)
-                              }
-                            }
-                          },
-                          [_vm._v("Delete item")]
-                        ),
-                        _vm._v(" "),
-                        _c("img", {
-                          attrs: {
-                            src: _vm.getMediaSource(
-                              _vm.gridElements[1].postmedia.name
-                            ),
-                            height: "50",
-                            width: "50"
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("figcaption", [
-                          _c("strong", [
-                            _vm._v(
-                              _vm._s(_vm.gridElements[1].postmedia.post.title)
-                            )
-                          ])
-                        ])
-                      ])
-                    ])
-                  : _c("div", [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "btn-add-article",
-                          attrs: { href: "javascript:;" },
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              return _vm.addArticle(_vm.gridId, 1)
-                            }
-                          }
-                        },
-                        [_vm._v("Add teaser")]
-                      ),
-                      _vm._v(" \n                        "),
-                      _c(
-                        "a",
-                        {
-                          staticClass: "btn-add-post",
-                          attrs: { href: "javascript:;" },
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              return _vm.addPost(_vm.gridId, 1)
-                            }
-                          }
-                        },
-                        [_vm._v("Add post")]
-                      )
-                    ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "span" }, [
-                _vm.gridElements[2] && _vm.gridElements[2].position == "2"
-                  ? _c("div", [
-                      _c("figure", [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "btn-trash",
-                            attrs: { href: "javascript:;" },
-                            on: {
-                              click: function($event) {
-                                $event.preventDefault()
-                                return _vm.deleteItem(_vm.gridElements[2].id)
-                              }
-                            }
-                          },
-                          [_vm._v("Delete item")]
-                        ),
-                        _vm._v(" "),
-                        _c("img", {
-                          attrs: {
-                            src: _vm.getMediaSource(
-                              _vm.gridElements[2].postmedia.name
-                            ),
-                            height: "50",
-                            width: "50"
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("figcaption", [
-                          _c("strong", [
-                            _vm._v(
-                              _vm._s(_vm.gridElements[2].postmedia.post.title)
-                            )
-                          ])
-                        ])
-                      ])
-                    ])
-                  : _c("div", [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "btn-add-article",
-                          attrs: { href: "javascript:;" },
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              return _vm.addArticle(_vm.gridId, 2)
-                            }
-                          }
-                        },
-                        [_vm._v("Add teaser")]
-                      ),
-                      _vm._v(" \n                        "),
-                      _c(
-                        "a",
-                        {
-                          staticClass: "btn-add-post",
-                          attrs: { href: "javascript:;" },
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              return _vm.addPost(_vm.gridId, 2)
-                            }
-                          }
-                        },
-                        [_vm._v("Add post")]
-                      )
-                    ])
-              ])
-            ])
-          ])
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.layout == "2fr1fr"
-        ? _c("div", [
-            _c("div", { staticClass: "grid-2fr1fr" }, [
-              _c("div", { staticClass: "span" }, [
-                _vm.gridElements[0] && _vm.gridElements[0].position == "0"
-                  ? _c("div", [
-                      _c("figure", [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "btn-trash",
-                            attrs: { href: "javascript:;" },
-                            on: {
-                              click: function($event) {
-                                $event.preventDefault()
-                                return _vm.deleteItem(_vm.gridElements[0].id)
-                              }
-                            }
-                          },
-                          [_vm._v("Delete item")]
-                        ),
-                        _vm._v(" "),
-                        _c("img", {
-                          attrs: {
-                            src: _vm.getMediaSource(
-                              _vm.gridElements[0].postmedia.name
-                            ),
-                            height: "50",
-                            width: "50"
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("figcaption", [
-                          _c("strong", [
-                            _vm._v(
-                              _vm._s(_vm.gridElements[0].postmedia.post.title)
-                            )
-                          ])
-                        ])
-                      ])
-                    ])
-                  : _c("div", [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "btn-add-article",
-                          attrs: { href: "javascript:;" },
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              return _vm.addArticle(_vm.gridId, 0)
-                            }
-                          }
-                        },
-                        [_vm._v("Add teaser")]
-                      ),
-                      _vm._v(" \n                        "),
-                      _c(
-                        "a",
-                        {
-                          staticClass: "btn-add-post",
-                          attrs: { href: "javascript:;" },
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              return _vm.addPost(_vm.gridId, 0)
-                            }
-                          }
-                        },
-                        [_vm._v("Add post")]
-                      )
-                    ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "span" }, [
-                _vm.gridElements[1] && _vm.gridElements[1].position == "1"
-                  ? _c("div", [
-                      _c("figure", [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "btn-trash",
-                            attrs: { href: "javascript:;" },
-                            on: {
-                              click: function($event) {
-                                $event.preventDefault()
-                                return _vm.deleteItem(_vm.gridElements[1].id)
-                              }
-                            }
-                          },
-                          [_vm._v("Delete item")]
-                        ),
-                        _vm._v(" "),
-                        _c("img", {
-                          attrs: {
-                            src: _vm.getMediaSource(
-                              _vm.gridElements[1].postmedia.name
-                            ),
-                            height: "50",
-                            width: "50"
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("figcaption", [
-                          _c("strong", [
-                            _vm._v(
-                              _vm._s(_vm.gridElements[1].postmedia.post.title)
-                            )
-                          ])
-                        ])
-                      ])
-                    ])
-                  : _c("div", [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "btn-add-article",
-                          attrs: { href: "javascript:;" },
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              return _vm.addArticle(_vm.gridId, 1)
-                            }
-                          }
-                        },
-                        [_vm._v("Add teaser")]
-                      ),
-                      _vm._v(" \n                        "),
-                      _c(
-                        "a",
-                        {
-                          staticClass: "btn-add-post",
-                          attrs: { href: "javascript:;" },
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              return _vm.addPost(_vm.gridId, 1)
-                            }
-                          }
-                        },
-                        [_vm._v("Add post")]
-                      )
-                    ])
-              ])
-            ])
-          ])
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.layout == "2fr1fr-stacked"
-        ? _c("div", [
-            _c("div", { staticClass: "grid-2fr1fr-stacked" }, [
-              _c("div", { staticClass: "span" }, [
-                _vm.gridElements[0] && _vm.gridElements[0].position == "0"
-                  ? _c("div", [
-                      _c("figure", [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "btn-trash",
-                            attrs: { href: "javascript:;" },
-                            on: {
-                              click: function($event) {
-                                $event.preventDefault()
-                                return _vm.deleteItem(_vm.gridElements[0].id)
-                              }
-                            }
-                          },
-                          [_vm._v("Delete item")]
-                        ),
-                        _vm._v(" "),
-                        _c("img", {
-                          attrs: {
-                            src: _vm.getMediaSource(
-                              _vm.gridElements[0].postmedia.name
-                            ),
-                            height: "50",
-                            width: "50"
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("figcaption", [
-                          _c("strong", [
-                            _vm._v(
-                              _vm._s(_vm.gridElements[0].postmedia.post.title)
-                            )
-                          ])
-                        ])
-                      ])
-                    ])
-                  : _c("div", [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "btn-add-article",
-                          attrs: { href: "javascript:;" },
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              return _vm.addArticle(_vm.gridId, 0)
-                            }
-                          }
-                        },
-                        [_vm._v("Add teaser")]
-                      ),
-                      _vm._v(" \n                        "),
-                      _c(
-                        "a",
-                        {
-                          staticClass: "btn-add-post",
-                          attrs: { href: "javascript:;" },
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              return _vm.addPost(_vm.gridId, 0)
-                            }
-                          }
-                        },
-                        [_vm._v("Add post")]
-                      )
-                    ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "span grid-stacked" }, [
+                ]),
+                _vm._v(" "),
                 _c("div", { staticClass: "span" }, [
                   _vm.gridElements[1] && _vm.gridElements[1].position == "1"
                     ? _c("div", [
@@ -33147,7 +32674,9 @@ var render = function() {
                               on: {
                                 click: function($event) {
                                   $event.preventDefault()
-                                  return _vm.deleteItem(_vm.gridElements[1].id)
+                                  return _vm.deleteElement(
+                                    _vm.gridElements[1].id
+                                  )
                                 }
                               }
                             },
@@ -33156,7 +32685,7 @@ var render = function() {
                           _vm._v(" "),
                           _c("img", {
                             attrs: {
-                              src: _vm.getMediaSource(
+                              src: _vm.getPreviewImage(
                                 _vm.gridElements[1].postmedia.name
                               ),
                               height: "50",
@@ -33188,7 +32717,159 @@ var render = function() {
                           },
                           [_vm._v("Add teaser")]
                         ),
-                        _vm._v(" \n                            "),
+                        _vm._v(" \n                        "),
+                        _c(
+                          "a",
+                          {
+                            staticClass: "btn-add-post",
+                            attrs: { href: "javascript:;" },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.addPost(_vm.gridId, 1)
+                              }
+                            }
+                          },
+                          [_vm._v("Add post")]
+                        )
+                      ])
+                ])
+              ])
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.layout == "3fr"
+          ? _c("div", [
+              _c("div", { staticClass: "grid-3fr" }, [
+                _c("div", { staticClass: "span" }, [
+                  _vm.gridElements[0] && _vm.gridElements[0].position == "0"
+                    ? _c("div", [
+                        _c("figure", [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn-trash",
+                              attrs: { href: "javascript:;" },
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.deleteElement(
+                                    _vm.gridElements[0].id
+                                  )
+                                }
+                              }
+                            },
+                            [_vm._v("Delete item")]
+                          ),
+                          _vm._v(" "),
+                          _c("img", {
+                            attrs: {
+                              src: _vm.getPreviewImage(
+                                _vm.gridElements[0].postmedia.name
+                              ),
+                              height: "50",
+                              width: "50"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("figcaption", [
+                            _c("strong", [
+                              _vm._v(
+                                _vm._s(_vm.gridElements[0].postmedia.post.title)
+                              )
+                            ])
+                          ])
+                        ])
+                      ])
+                    : _c("div", [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "btn-add-article",
+                            attrs: { href: "javascript:;" },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.addArticle(_vm.gridId, 0)
+                              }
+                            }
+                          },
+                          [_vm._v("Add teaser")]
+                        ),
+                        _vm._v(" \n                        "),
+                        _c(
+                          "a",
+                          {
+                            staticClass: "btn-add-post",
+                            attrs: { href: "javascript:;" },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.addPost(_vm.gridId, 0)
+                              }
+                            }
+                          },
+                          [_vm._v("Add post")]
+                        )
+                      ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "span" }, [
+                  _vm.gridElements[1] && _vm.gridElements[1].position == "1"
+                    ? _c("div", [
+                        _c("figure", [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn-trash",
+                              attrs: { href: "javascript:;" },
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.deleteElement(
+                                    _vm.gridElements[1].id
+                                  )
+                                }
+                              }
+                            },
+                            [_vm._v("Delete item")]
+                          ),
+                          _vm._v(" "),
+                          _c("img", {
+                            attrs: {
+                              src: _vm.getPreviewImage(
+                                _vm.gridElements[1].postmedia.name
+                              ),
+                              height: "50",
+                              width: "50"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("figcaption", [
+                            _c("strong", [
+                              _vm._v(
+                                _vm._s(_vm.gridElements[1].postmedia.post.title)
+                              )
+                            ])
+                          ])
+                        ])
+                      ])
+                    : _c("div", [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "btn-add-article",
+                            attrs: { href: "javascript:;" },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.addArticle(_vm.gridId, 1)
+                              }
+                            }
+                          },
+                          [_vm._v("Add teaser")]
+                        ),
+                        _vm._v(" \n                        "),
                         _c(
                           "a",
                           {
@@ -33218,7 +32899,9 @@ var render = function() {
                               on: {
                                 click: function($event) {
                                   $event.preventDefault()
-                                  return _vm.deleteItem(_vm.gridElements[2].id)
+                                  return _vm.deleteElement(
+                                    _vm.gridElements[2].id
+                                  )
                                 }
                               }
                             },
@@ -33227,7 +32910,7 @@ var render = function() {
                           _vm._v(" "),
                           _c("img", {
                             attrs: {
-                              src: _vm.getMediaSource(
+                              src: _vm.getPreviewImage(
                                 _vm.gridElements[2].postmedia.name
                               ),
                               height: "50",
@@ -33259,7 +32942,7 @@ var render = function() {
                           },
                           [_vm._v("Add teaser")]
                         ),
-                        _vm._v(" \n                            "),
+                        _vm._v(" \n                        "),
                         _c(
                           "a",
                           {
@@ -33278,10 +32961,425 @@ var render = function() {
                 ])
               ])
             ])
-          ])
-        : _vm._e()
-    ])
-  ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.layout == "2fr1fr"
+          ? _c("div", [
+              _c("div", { staticClass: "grid-2fr1fr" }, [
+                _c("div", { staticClass: "span" }, [
+                  _vm.gridElements[0] && _vm.gridElements[0].position == "0"
+                    ? _c("div", [
+                        _c("figure", [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn-trash",
+                              attrs: { href: "javascript:;" },
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.deleteElement(
+                                    _vm.gridElements[0].id
+                                  )
+                                }
+                              }
+                            },
+                            [_vm._v("Delete item")]
+                          ),
+                          _vm._v(" "),
+                          _c("img", {
+                            attrs: {
+                              src: _vm.getPreviewImage(
+                                _vm.gridElements[0].postmedia.name
+                              ),
+                              height: "50",
+                              width: "50"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("figcaption", [
+                            _c("strong", [
+                              _vm._v(
+                                _vm._s(_vm.gridElements[0].postmedia.post.title)
+                              )
+                            ])
+                          ])
+                        ])
+                      ])
+                    : _c("div", [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "btn-add-article",
+                            attrs: { href: "javascript:;" },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.addArticle(_vm.gridId, 0)
+                              }
+                            }
+                          },
+                          [_vm._v("Add teaser")]
+                        ),
+                        _vm._v(" \n                        "),
+                        _c(
+                          "a",
+                          {
+                            staticClass: "btn-add-post",
+                            attrs: { href: "javascript:;" },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.addPost(_vm.gridId, 0)
+                              }
+                            }
+                          },
+                          [_vm._v("Add post")]
+                        )
+                      ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "span" }, [
+                  _vm.gridElements[1] && _vm.gridElements[1].position == "1"
+                    ? _c("div", [
+                        _c("figure", [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn-trash",
+                              attrs: { href: "javascript:;" },
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.deleteElement(
+                                    _vm.gridElements[1].id
+                                  )
+                                }
+                              }
+                            },
+                            [_vm._v("Delete item")]
+                          ),
+                          _vm._v(" "),
+                          _c("img", {
+                            attrs: {
+                              src: _vm.getPreviewImage(
+                                _vm.gridElements[1].postmedia.name
+                              ),
+                              height: "50",
+                              width: "50"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("figcaption", [
+                            _c("strong", [
+                              _vm._v(
+                                _vm._s(_vm.gridElements[1].postmedia.post.title)
+                              )
+                            ])
+                          ])
+                        ])
+                      ])
+                    : _c("div", [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "btn-add-article",
+                            attrs: { href: "javascript:;" },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.addArticle(_vm.gridId, 1)
+                              }
+                            }
+                          },
+                          [_vm._v("Add teaser")]
+                        ),
+                        _vm._v(" \n                        "),
+                        _c(
+                          "a",
+                          {
+                            staticClass: "btn-add-post",
+                            attrs: { href: "javascript:;" },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.addPost(_vm.gridId, 1)
+                              }
+                            }
+                          },
+                          [_vm._v("Add post")]
+                        )
+                      ])
+                ])
+              ])
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.layout == "2fr1fr-stacked"
+          ? _c("div", [
+              _c("div", { staticClass: "grid-2fr1fr-stacked" }, [
+                _c("div", { staticClass: "span" }, [
+                  _vm.gridElements[0] && _vm.gridElements[0].position == "0"
+                    ? _c("div", [
+                        _c("figure", [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn-trash",
+                              attrs: { href: "javascript:;" },
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.deleteElement(
+                                    _vm.gridElements[0].id
+                                  )
+                                }
+                              }
+                            },
+                            [_vm._v("Delete item")]
+                          ),
+                          _vm._v(" "),
+                          _c("img", {
+                            attrs: {
+                              src: _vm.getPreviewImage(
+                                _vm.gridElements[0].postmedia.name
+                              ),
+                              height: "50",
+                              width: "50"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("figcaption", [
+                            _c("strong", [
+                              _vm._v(
+                                _vm._s(_vm.gridElements[0].postmedia.post.title)
+                              )
+                            ])
+                          ])
+                        ])
+                      ])
+                    : _c("div", [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "btn-add-article",
+                            attrs: { href: "javascript:;" },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.addArticle(_vm.gridId, 0)
+                              }
+                            }
+                          },
+                          [_vm._v("Add teaser")]
+                        ),
+                        _vm._v(" \n                        "),
+                        _c(
+                          "a",
+                          {
+                            staticClass: "btn-add-post",
+                            attrs: { href: "javascript:;" },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.addPost(_vm.gridId, 0)
+                              }
+                            }
+                          },
+                          [_vm._v("Add post")]
+                        )
+                      ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "span grid-stacked" }, [
+                  _c("div", { staticClass: "span" }, [
+                    _vm.gridElements[1] && _vm.gridElements[1].position == "1"
+                      ? _c("div", [
+                          _c("figure", [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "btn-trash",
+                                attrs: { href: "javascript:;" },
+                                on: {
+                                  click: function($event) {
+                                    $event.preventDefault()
+                                    return _vm.deleteElement(
+                                      _vm.gridElements[1].id
+                                    )
+                                  }
+                                }
+                              },
+                              [_vm._v("Delete item")]
+                            ),
+                            _vm._v(" "),
+                            _c("img", {
+                              attrs: {
+                                src: _vm.getPreviewImage(
+                                  _vm.gridElements[1].postmedia.name
+                                ),
+                                height: "50",
+                                width: "50"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("figcaption", [
+                              _c("strong", [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.gridElements[1].postmedia.post.title
+                                  )
+                                )
+                              ])
+                            ])
+                          ])
+                        ])
+                      : _c("div", [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn-add-article",
+                              attrs: { href: "javascript:;" },
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.addArticle(_vm.gridId, 1)
+                                }
+                              }
+                            },
+                            [_vm._v("Add teaser")]
+                          ),
+                          _vm._v(" \n                            "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn-add-post",
+                              attrs: { href: "javascript:;" },
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.addPost(_vm.gridId, 1)
+                                }
+                              }
+                            },
+                            [_vm._v("Add post")]
+                          )
+                        ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "span" }, [
+                    _vm.gridElements[2] && _vm.gridElements[2].position == "2"
+                      ? _c("div", [
+                          _c("figure", [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "btn-trash",
+                                attrs: { href: "javascript:;" },
+                                on: {
+                                  click: function($event) {
+                                    $event.preventDefault()
+                                    return _vm.deleteElement(
+                                      _vm.gridElements[2].id
+                                    )
+                                  }
+                                }
+                              },
+                              [_vm._v("Delete item")]
+                            ),
+                            _vm._v(" "),
+                            _c("img", {
+                              attrs: {
+                                src: _vm.getPreviewImage(
+                                  _vm.gridElements[2].postmedia.name
+                                ),
+                                height: "50",
+                                width: "50"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("figcaption", [
+                              _c("strong", [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.gridElements[2].postmedia.post.title
+                                  )
+                                )
+                              ])
+                            ])
+                          ])
+                        ])
+                      : _c("div", [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn-add-article",
+                              attrs: { href: "javascript:;" },
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.addArticle(_vm.gridId, 2)
+                                }
+                              }
+                            },
+                            [_vm._v("Add teaser")]
+                          ),
+                          _vm._v(" \n                            "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn-add-post",
+                              attrs: { href: "javascript:;" },
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.addPost(_vm.gridId, 2)
+                                }
+                              }
+                            },
+                            [_vm._v("Add post")]
+                          )
+                        ])
+                  ])
+                ])
+              ])
+            ])
+          : _vm._e()
+      ]),
+      _vm._v(" "),
+      _c("div", { class: [_vm.hasOverlay ? "is-visible" : "", "overlay"] }, [
+        _c("div", [
+          _c("a", {
+            staticClass: "icon-close icon-close-overlay",
+            attrs: { href: "javascript:;" },
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                return _vm.toggleOverlay()
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.displayPosts,
+                  expression: "displayPosts"
+                }
+              ]
+            },
+            [_c("grid-post")],
+            1
+          )
+        ])
+      ])
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -33311,20 +33409,6 @@ var render = function() {
       _c("page-header"),
       _vm._v(" "),
       _c("notifications", { attrs: { classes: "notification" } }),
-      _vm._v(" "),
-      _c("loading", {
-        attrs: {
-          active: _vm.isLoading,
-          "is-full-page": _vm.fullPage,
-          height: 30,
-          width: 30
-        },
-        on: {
-          "update:active": function($event) {
-            _vm.isLoading = $event
-          }
-        }
-      }),
       _vm._v(" "),
       _c("div", { staticClass: "container" }, [
         _c("main", { staticClass: "content", attrs: { role: "main" } }, [
@@ -33359,109 +33443,13 @@ var render = function() {
                       ),
                       _vm._v(" "),
                       _c("grid", {
-                        attrs: {
-                          layout: grid.layout.key,
-                          gridId: grid.id,
-                          elements: grid.elements
-                        }
+                        attrs: { layout: grid.layout.key, gridId: grid.id }
                       })
                     ],
                     1
                   )
                 }),
                 0
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { class: [_vm.hasOverlay ? "is-visible" : "", "overlay"] },
-                [
-                  _c("div", [
-                    _c("a", {
-                      staticClass: "icon-close icon-close-overlay",
-                      attrs: { href: "javascript:;" },
-                      on: {
-                        click: function($event) {
-                          $event.preventDefault()
-                          return _vm.toggleOverlay()
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: _vm.selectPost,
-                            expression: "selectPost"
-                          }
-                        ]
-                      },
-                      [
-                        _c("h2", [_vm._v("Select a post")]),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "posts" },
-                          _vm._l(_vm.posts, function(post) {
-                            return _c(
-                              "div",
-                              { key: post.id, staticClass: "post" },
-                              [
-                                _c("div", { staticClass: "post-text" }, [
-                                  _c("strong", [_vm._v(_vm._s(post.title))]),
-                                  _c("br"),
-                                  _vm._v(
-                                    _vm._s(
-                                      _vm._f("truncate")(post.body, 20, "...")
-                                    ) + "\n                                    "
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  { staticClass: "post-media" },
-                                  _vm._l(post.media, function(media) {
-                                    return _c("figure", { key: media.id }, [
-                                      _c(
-                                        "a",
-                                        {
-                                          attrs: { href: "" },
-                                          on: {
-                                            click: function($event) {
-                                              $event.preventDefault()
-                                              return _vm.insertPost(media.id)
-                                            }
-                                          }
-                                        },
-                                        [
-                                          _c("img", {
-                                            attrs: {
-                                              src: _vm.getMediaSource(
-                                                media.name
-                                              ),
-                                              height: "50",
-                                              width: "50"
-                                            }
-                                          })
-                                        ]
-                                      )
-                                    ])
-                                  }),
-                                  0
-                                )
-                              ]
-                            )
-                          }),
-                          0
-                        )
-                      ]
-                    )
-                  ])
-                ]
               )
             ],
             1
@@ -33471,6 +33459,81 @@ var render = function() {
     ],
     1
   )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/home/GridPostComponent.vue?vue&type=template&id=3e0f245c&":
+/*!*************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/home/GridPostComponent.vue?vue&type=template&id=3e0f245c& ***!
+  \*************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("h2", [_vm._v("Select a post")]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "posts" },
+      _vm._l(_vm.posts, function(post) {
+        return _c("div", { key: post.id, staticClass: "post" }, [
+          _c("div", { staticClass: "post-text" }, [
+            _c("strong", [_vm._v(_vm._s(post.title))]),
+            _c("br"),
+            _vm._v(
+              _vm._s(_vm._f("truncate")(post.body, 20, "...")) +
+                "\n            "
+            )
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "post-media" },
+            _vm._l(post.media, function(media) {
+              return _c("figure", { key: media.id }, [
+                _c(
+                  "a",
+                  {
+                    attrs: { href: "" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.insertPost(media.id)
+                      }
+                    }
+                  },
+                  [
+                    _c("img", {
+                      attrs: {
+                        src: _vm.getThumbnailImage(media.name),
+                        height: "50",
+                        width: "50"
+                      }
+                    })
+                  ]
+                )
+              ])
+            }),
+            0
+          )
+        ])
+      }),
+      0
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -55112,6 +55175,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/home/GridPostComponent.vue":
+/*!************************************************************!*\
+  !*** ./resources/js/components/home/GridPostComponent.vue ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _GridPostComponent_vue_vue_type_template_id_3e0f245c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./GridPostComponent.vue?vue&type=template&id=3e0f245c& */ "./resources/js/components/home/GridPostComponent.vue?vue&type=template&id=3e0f245c&");
+/* harmony import */ var _GridPostComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./GridPostComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/home/GridPostComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _GridPostComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _GridPostComponent_vue_vue_type_template_id_3e0f245c___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _GridPostComponent_vue_vue_type_template_id_3e0f245c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/home/GridPostComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/home/GridPostComponent.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/home/GridPostComponent.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_GridPostComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./GridPostComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/home/GridPostComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_GridPostComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/home/GridPostComponent.vue?vue&type=template&id=3e0f245c&":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/components/home/GridPostComponent.vue?vue&type=template&id=3e0f245c& ***!
+  \*******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_GridPostComponent_vue_vue_type_template_id_3e0f245c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./GridPostComponent.vue?vue&type=template&id=3e0f245c& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/home/GridPostComponent.vue?vue&type=template&id=3e0f245c&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_GridPostComponent_vue_vue_type_template_id_3e0f245c___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_GridPostComponent_vue_vue_type_template_id_3e0f245c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/home/GridSelectorComponent.vue":
 /*!****************************************************************!*\
   !*** ./resources/js/components/home/GridSelectorComponent.vue ***!
@@ -55589,21 +55721,7 @@ Vue.filter('truncate', function (text, length, suffix) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
-  methods: {// addPost(rowId, position) {
-    //     this.$parent.addPost(rowId, position);
-    // },
-    // addArticle(rowId, position) {
-    //     this.$parent.addArticle(rowId, position);
-    // },
-    // deleteItem(id) {
-    //     this.$parent.deleteItem(id);
-    //     const index = this.gridElements.findIndex(x => x.id === id);            
-    //     this.gridElements.splice(index, 1);
-    // },
-    // getMediaSource(file) {
-    //     return `/media/${file}/sm`;
-    // },
-  }
+  methods: {}
 });
 
 /***/ }),

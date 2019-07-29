@@ -37,6 +37,15 @@ class GridElementController extends Controller
         //
     }
 
+    public function get($id)
+    {
+        return new GridCollection(
+                $this->grid_element->with('postmedia.post')
+                                   ->where('grid_id', '=', $id)
+                                   ->get()
+                );
+    }
+
     /**
      * Store a newly created resource in storage.
      *
