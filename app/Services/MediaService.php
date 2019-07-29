@@ -47,6 +47,16 @@ class MediaService
     /**
      * Maximum width for large landscape images
      */    
+    protected $max_width_sm = 900;    
+
+    /**
+     * Maximum height for large portrait images
+     */    
+    protected $max_height_sm = 500;
+
+    /**
+     * Maximum width for large landscape images
+     */    
     protected $max_width_lg = 1600;    
 
     /**
@@ -125,7 +135,27 @@ class MediaService
             {
                 if (!File::exists($this->path_small . $image))
                 {
-                    $image = \Image::make($this->path_source . $image)->fit($this->size_sm);
+                    // Create image instance
+                    $image = \Image::make($this->path_source . $image);
+
+                    // Get width and height
+                    $width  = $image->getWidth();
+                    $height = $image->getHeight();
+                    
+                    // Resize landscape image
+                    if ($width > $height)
+                    {
+                        $image->resize($this->max_width_sm, null, function ($constraint) {
+                            $constraint->aspectRatio();
+                        });
+                    }
+                    else
+                    {
+                        $image->resize(null, $this->max_height_sm, function ($constraint) {
+                            $constraint->aspectRatio();
+                        });
+                    }
+
                     $image->save($this->path_small . $image->basename);
                 }
                 else

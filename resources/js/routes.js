@@ -4,7 +4,7 @@ import PostCreateComponent from '@/components/posts/PostCreateComponent.vue';
 import PostEditComponent from '@/components/posts/PostEditComponent.vue';
 
 // Masonry
-import MasonryIndexComponent from '@/components/masonry/MasonryIndexComponent.vue';
+import GridIndexComponent from '@/components/home/GridIndexComponent.vue';
 
 // Dashboard
 import DashboardComponent from '@/components/DashboardComponent.vue';
@@ -55,7 +55,7 @@ const routes = [
     {
         name: 'masonry',
         path: '/masonry',
-        component: MasonryIndexComponent,
+        component: GridIndexComponent,
         meta: { requiresAuth: true },
     },
 ];

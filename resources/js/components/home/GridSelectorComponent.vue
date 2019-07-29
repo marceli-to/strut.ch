@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="masonry-layout-selector">
+        <div class="grid-layout-selector">
             <a href="" class="btn-toggle-layout" @click.prevent="toggleSelect()">Add row</a>
             <ul :class="showSelect ? 'is-visible': ''" ref="dropdown">
                 <li v-for="layout in layouts" :key="layout.id">

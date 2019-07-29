@@ -12,6 +12,7 @@
 */
 
 Route::get('media/thumbnail/{file}', 'MediaController@thumbnail');
+Route::get('media/{file}/{size?}', 'MediaController@resize');
 
 Route::get('/{any}', function () {
 	return view('app');

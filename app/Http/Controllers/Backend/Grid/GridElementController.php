@@ -2,11 +2,21 @@
 
 namespace App\Http\Controllers\Backend\Grid;
 
+use App\GridElement;
+use App\Http\Resources\GridCollection;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class GridElementController extends Controller
 {
+    protected $grid_element;
+
+    public function __construct(GridElement $grid_element)
+    {
+        $this->grid_element = $grid_element;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -35,7 +45,14 @@ class GridElementController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $grid_element = new GridElement([
+            'grid_id'       => $request->get('grid_id'),
+            'post_media_id' => $request->get('post_media_id'),
+            'position'      => $request->get('position')
+        ]);
+
+        $grid_element->save();
+        return response()->json('success');
     }
 
     /**
@@ -80,6 +97,7 @@ class GridElementController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->grid_element->find($id)->delete();
+        return response()->json('successfully deleted');
     }
 }

@@ -1696,73 +1696,137 @@ h3 {
  * -----------------------------------------------------------------------------
  *
  */
-.masonry-row {
+.grid-row {
   border-top: 2px solid #222222;
   padding-top: 10px;
   margin-bottom: 15px;
 }
 @media screen and (min-width: 768px) {
-  .masonry-row {
+  .grid-row {
     padding-top: 10px;
   }
 }
 @media screen and (min-width: 1024px) {
-  .masonry-row {
+  .grid-row {
     padding-top: 10px;
   }
 }
 @media screen and (min-width: 1280px) {
-  .masonry-row {
+  .grid-row {
     padding-top: 10px;
   }
 }
 @media screen and (min-width: 768px) {
-  .masonry-row {
+  .grid-row {
     margin-bottom: 20px;
   }
 }
 @media screen and (min-width: 1024px) {
-  .masonry-row {
+  .grid-row {
     margin-bottom: 25px;
   }
 }
 @media screen and (min-width: 1280px) {
-  .masonry-row {
+  .grid-row {
     margin-bottom: 30px;
   }
 }
 
-.masonry-layout-selector {
+.grid-layout-selector {
   position: relative;
 }
-.masonry-layout-selector ul {
+.grid-layout-selector ul {
   background-color: #ffffff;
   border-top: 2px solid #222222;
   display: none;
   margin: 0;
   padding: 0;
 }
-.masonry-layout-selector ul.is-visible {
+.grid-layout-selector ul.is-visible {
   display: block;
   display: grid;
   grid-template-columns: repeat(5, 102px);
   grid-gap: 10px;
 }
-.masonry-layout-selector ul li {
+.grid-layout-selector ul li {
   display: block;
 }
-.masonry-layout-selector ul a {
+.grid-layout-selector ul a {
   display: block;
   padding: 15px 15px 15px 10px;
   width: 102px;
 }
-.masonry-layout-selector ul a img {
+.grid-layout-selector ul a img {
   display: block;
   height: auto;
   width: 100%;
 }
-.masonry-layout-selector ul a:hover {
+.grid-layout-selector ul a:hover {
   background-color: #eeeeee;
+}
+
+.grids .span {
+  border: 2px dashed #999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+}
+.grids .span figure {
+  padding: 10px;
+  position: relative;
+}
+.grids .span figure .btn-trash {
+  margin: 0;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+.grids .span figure figcaption {
+  display: block;
+  padding: 10px 0 0 0;
+}
+.grids .span img {
+  display: block;
+  height: auto;
+  width: 100%;
+}
+.grids .grid-1fr {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+.grids .grid-2fr {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 20px;
+}
+.grids .grid-3fr {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
+}
+.grids .grid-2fr1fr {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-gap: 20px;
+}
+.grids .grid-2fr1fr-stacked {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-gap: 20px;
+}
+.grids .grid-2fr1fr-stacked .span {
+  min-height: 200px;
+}
+.grids .grid-stacked {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: 1fr;
+  padding: 10px;
+}
+.grids .grid-stacked .span {
+  min-height: 100px;
+  width: 100%;
 }
 
 /**

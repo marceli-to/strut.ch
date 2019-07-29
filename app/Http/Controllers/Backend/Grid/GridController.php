@@ -16,10 +16,13 @@ class GridController extends Controller
 
     protected $grid;
 
-    public function __construct(MediaService $service, Grid $grid)
+    protected $grid_element;
+
+    public function __construct(MediaService $service, Grid $grid, GridElement $grid_element)
     {
         $this->mediaService = $service;
         $this->grid = $grid;
+        $this->grid_element = $grid_element;
     }
     
     /**
@@ -32,9 +35,10 @@ class GridController extends Controller
         return 
             new GridCollection(
                     $this->grid->with('layout')
-                               ->with('elements')
+                               ->with('elements.postmedia.post')
                                ->orderBy('position', 'ASC')
                                ->get()
+
             );
     }
 
@@ -57,7 +61,7 @@ class GridController extends Controller
     {
         $row = new Grid([
             'grid_layout_id' => $layoutId,
-            'position'          => 999,
+            'position'       => 999,
         ]);
         $row->save();
 
@@ -108,6 +112,7 @@ class GridController extends Controller
     public function destroy($id)
     {
         $this->grid->find($id)->delete();
+        $this->grid_element->where('grid_id', '=', $id)->delete();
         return response()->json('successfully deleted');
     }
 }

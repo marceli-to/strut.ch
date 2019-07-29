@@ -23,5 +23,4 @@ class Grid extends Model
     {
         return $this->hasMany('App\GridElement');
     }
-
 }

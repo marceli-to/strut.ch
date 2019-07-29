@@ -36,10 +36,18 @@ Route::middleware('auth:api')->group(function () {
     Route::get('grid/store/{layoutId}', 'Backend\Grid\GridController@store');
     Route::delete('grid/delete/{id}', 'Backend\Grid\GridController@destroy');
 
+    // Get all grid layouts
     Route::get('gridlayout/fetch', 'Backend\Grid\GridLayoutController@fetch');
+
+    // Insert a new grid element
+    Route::post('gridelement/store', 'Backend\Grid\GridElementController@store');
+
+    // Delete a grid element
+    Route::delete('gridelement/delete/{id}', 'Backend\Grid\GridElementController@destroy');
 
     // Media routes
     Route::post('media/upload','MediaController@upload');
+    Route::get('media/{file}/{size?}', 'MediaController@resize');
 
     // PostMedia routes
     Route::delete('postmedia/delete/{file}', 'PostMediaController@delete');

@@ -14,7 +14,7 @@
     import PageHeaderComponent from './layout/PageHeaderComponent.vue';
     export default {
         components: {
-            pageHeader: PageHeaderComponent,
+            PageHeader: PageHeaderComponent,
         },
     }
 </script>
