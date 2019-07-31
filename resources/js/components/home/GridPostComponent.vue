@@ -8,7 +8,7 @@
                 </div>
                 <div class="post-media">
                     <figure v-for="media in post.media" :key="media.id">
-                        <a href="" @click.prevent="insertPost(media.id)">
+                        <a href="" @click.prevent="insertPost(media.id, post.id)">
                             <img :src="getThumbnailImage(media.name)" height="50" width="50">
                         </a>
                     </figure>
@@ -19,25 +19,15 @@
 </template>
 <script>
 export default {
-    components: {
-    },
 
-    data() {
-        return {
-            posts: [],
-        }
-    },
-
-    created() {
-        this.axios.get('/api/posts').then(response => {
-            this.posts = response.data.data;
-        });
+    props: {
+        posts: Array,
     },
 
     methods: {
 
-        insertPost(id) {
-            this.$parent.insertPost(id)
+        insertPost(postMediaId, postId) {
+            this.$parent.insertPost(postMediaId, postId);
         },
 
         getThumbnailImage(file) {

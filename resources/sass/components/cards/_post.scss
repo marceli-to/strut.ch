@@ -7,8 +7,8 @@
 
 .posts {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(220px, .5fr));
+    grid-gap: 10px;
 }
 
 .post {
@@ -22,7 +22,7 @@
 
     .post-media {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(auto-fit, 50px);
         grid-gap: 10px;
 
         figure {

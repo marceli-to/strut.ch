@@ -7,25 +7,45 @@ use App\Services\MediaService;
 use App\Http\Resources\PostCollection;
 use App\Post;
 use App\PostMedia;
+use App\GridElement;
 
 class PostController extends Controller
 {
     protected $mediaService;
 
-    public function __construct(MediaService $service)
+    protected $post;
+
+    protected $grid_element;
+
+    public function __construct(MediaService $service, Post $post, GridElement $grid_element)
     {
         $this->mediaService = $service;
+        $this->post = $post;
+        $this->grid_element = $grid_element;
     }
 
     /**
-     * Display a listing of the resource.
+     * Get all posts
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function get()
     {
-        //return new PostCollection(Post::orderBy('order', 'ASC')->get());
-        $posts = Post::with(['media' => function($query) {
+        $posts = $this->post->with(['media' => function($query) {
+            $query->orderBy('order', 'ASC');
+        }])->orderBy('order', 'ASC')->get();
+
+        return new PostCollection($posts);
+    }
+
+    /**
+     * Get all posts which are not used by a grid
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function grid()
+    {
+        $posts = $this->post->noGridElement()->with(['media' => function($query) {
             $query->orderBy('order', 'ASC');
         }])->orderBy('order', 'ASC')->get();
 
@@ -71,7 +91,7 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        $post = Post::with(['media' => function($query) {
+        $post = $this->post->with(['media' => function($query) {
             $query->orderBy('order', 'ASC');
         }])->find($id);
 
@@ -87,9 +107,23 @@ class PostController extends Controller
      */
     public function update($id, Request $request)
     {
-        $post = Post::find($id);
-        $post->title = $request->get('title');
-        $post->body  = $request->get('body');
+        $post = $this->post->find($id);
+
+        if ($request->get('title'))
+        {
+            $post->title = $request->get('title');
+        }
+
+        if ($request->get('body'))
+        {
+            $post->title = $request->get('body');
+        }
+
+        if ($request->get('isGridElement') !== null)
+        {
+            $post->isGridElement = $request->get('isGridElement');
+        }
+
         $post->save();
 
         if (!empty($request->media))
@@ -121,7 +155,7 @@ class PostController extends Controller
     public function delete($id)
     {
         // Get the post with post_media
-        $post = Post::with('media')->find($id);
+        $post = $this->post->with('media')->find($id);
 
         // Delete file & post_media
         if (isset($post->media))
@@ -146,7 +180,7 @@ class PostController extends Controller
      */
     public function status($id)
     {
-        $post = Post::findOrFail($id);
+        $post = $this->post->findOrFail($id);
         $post->publish = $post->publish == 0 ? 1 : 0;
         $post->save();
         return response()->json($post->publish);

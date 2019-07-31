@@ -49,7 +49,7 @@
     },
 
     created() {
-        let uri = '/api/posts';
+        let uri = '/api/posts/get';
         this.axios.get(uri).then(response => {
           this.posts = response.data.data;
         });

@@ -2026,9 +2026,6 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mixins_grid__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/mixins/grid */ "./resources/js/mixins/grid.js");
-/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-loading-overlay */ "./node_modules/vue-loading-overlay/dist/vue-loading.min.js");
-/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _components_home_GridPostComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/home/GridPostComponent.vue */ "./resources/js/components/home/GridPostComponent.vue");
 //
 //
 //
@@ -2231,25 +2228,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
-
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  components: {
-    loading: vue_loading_overlay__WEBPACK_IMPORTED_MODULE_1___default.a,
-    gridPost: _components_home_GridPostComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
-  },
-  data: function data() {
-    return {
-      gridElements: [],
-      isLoading: false,
-      fullPage: false,
-      hasOverlay: false,
-      displayPosts: false,
-      tmpGridId: 0,
-      tmpPosition: 0
-    };
-  },
   props: {
     layout: String,
     gridId: Number
@@ -2276,57 +2256,70 @@ __webpack_require__.r(__webpack_exports__);
 
         _this.isLoading = false;
       });
-    },
-    addArticle: function addArticle(gridId, position) {},
-    addPost: function addPost(gridId, position) {
-      this.toggleOverlay();
-      this.displayPosts = true;
-      this.tmpGridId = gridId;
-      this.tmpPosition = position;
-    },
-    insertPost: function insertPost(postMediaId) {
-      var _this2 = this;
+    }
+  }
+});
 
-      var data = {
-        'grid_id': this.tmpGridId,
-        'position': this.tmpPosition,
-        'post_media_id': postMediaId
-      };
-      var uri = '/api/gridelement/store';
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/home/GridHighlightComponent.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/home/GridHighlightComponent.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _mixins_grid__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/mixins/grid */ "./resources/js/mixins/grid.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    gridId: Number
+  },
+  mixins: [_mixins_grid__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  created: function created() {
+    this.fetchElements();
+  },
+  methods: {
+    fetchElements: function fetchElements() {
+      var _this = this;
+
+      var uri = "/api/gridelement/get/".concat(this.$props.gridId);
       this.isLoading = true;
-      this.axios.post(uri, data).then(function (response) {
-        _this2.toggleOverlay();
-
-        _this2.$notify({
-          type: 'success',
-          title: 'Success!',
-          text: 'A new element was added successfully!'
-        });
-
-        _this2.fetchElements();
+      this.axios.get(uri).then(function (response) {
+        _this.gridElements = response.data.data;
+        _this.isLoading = false;
       });
-    },
-    deleteElement: function deleteElement(id) {
-      var _this3 = this;
-
-      var uri = "/api/gridelement/delete/".concat(id);
-      this.isLoading = true;
-      this.axios["delete"](uri).then(function (response) {
-        _this3.$notify({
-          type: 'success',
-          title: 'Success!',
-          text: 'The grid element was deleted successfully!'
-        });
-
-        _this3.fetchElements();
-      });
-    },
-    // Helper methods
-    getPreviewImage: function getPreviewImage(file) {
-      return "/media/".concat(file, "/sm");
-    },
-    toggleOverlay: function toggleOverlay() {
-      this.hasOverlay = this.hasOverlay ? false : true;
     }
   }
 });
@@ -2344,7 +2337,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_layout_PageHeaderComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/components/layout/PageHeaderComponent.vue */ "./resources/js/components/layout/PageHeaderComponent.vue");
 /* harmony import */ var _components_home_GridComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/components/home/GridComponent.vue */ "./resources/js/components/home/GridComponent.vue");
-/* harmony import */ var _components_home_GridSelectorComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/home/GridSelectorComponent.vue */ "./resources/js/components/home/GridSelectorComponent.vue");
+/* harmony import */ var _components_home_GridHighlightComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/home/GridHighlightComponent.vue */ "./resources/js/components/home/GridHighlightComponent.vue");
+/* harmony import */ var _components_home_GridSelectorComponent_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/components/home/GridSelectorComponent.vue */ "./resources/js/components/home/GridSelectorComponent.vue");
 //
 //
 //
@@ -2367,6 +2361,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -2374,7 +2377,8 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     pageHeader: _components_layout_PageHeaderComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     grid: _components_home_GridComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    gridSelector: _components_home_GridSelectorComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+    gridHighlight: _components_home_GridHighlightComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    gridSelector: _components_home_GridSelectorComponent_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   data: function data() {
     return {
@@ -2464,22 +2468,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  components: {},
-  data: function data() {
-    return {
-      posts: []
-    };
-  },
-  created: function created() {
-    var _this = this;
-
-    this.axios.get('/api/posts').then(function (response) {
-      _this.posts = response.data.data;
-    });
+  props: {
+    posts: Array
   },
   methods: {
-    insertPost: function insertPost(id) {
-      this.$parent.insertPost(id);
+    insertPost: function insertPost(postMediaId, postId) {
+      this.$parent.insertPost(postMediaId, postId);
     },
     getThumbnailImage: function getThumbnailImage(file) {
       return "/media/thumbnail/".concat(file);
@@ -2710,7 +2704,7 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
 
-    var uri = '/api/posts';
+    var uri = '/api/posts/get';
     this.axios.get(uri).then(function (response) {
       _this.posts = response.data.data;
     });
@@ -32523,12 +32517,13 @@ var render = function() {
                                 click: function($event) {
                                   $event.preventDefault()
                                   return _vm.deleteElement(
-                                    _vm.gridElements[0].id
+                                    _vm.gridElements[0].id,
+                                    _vm.gridElements[0].postmedia.post.id
                                   )
                                 }
                               }
                             },
-                            [_vm._v("Delete item")]
+                            [_vm._v("Delete")]
                           ),
                           _vm._v(" "),
                           _c("img", {
@@ -32569,7 +32564,7 @@ var render = function() {
                         _c(
                           "a",
                           {
-                            staticClass: "btn-add-post",
+                            staticClass: "btn-add-media",
                             attrs: { href: "javascript:;" },
                             on: {
                               click: function($event) {
@@ -32602,12 +32597,13 @@ var render = function() {
                                 click: function($event) {
                                   $event.preventDefault()
                                   return _vm.deleteElement(
-                                    _vm.gridElements[0].id
+                                    _vm.gridElements[0].id,
+                                    _vm.gridElements[0].postmedia.post.id
                                   )
                                 }
                               }
                             },
-                            [_vm._v("Delete item")]
+                            [_vm._v("Delete")]
                           ),
                           _vm._v(" "),
                           _c("img", {
@@ -32648,7 +32644,7 @@ var render = function() {
                         _c(
                           "a",
                           {
-                            staticClass: "btn-add-post",
+                            staticClass: "btn-add-media",
                             attrs: { href: "javascript:;" },
                             on: {
                               click: function($event) {
@@ -32675,12 +32671,13 @@ var render = function() {
                                 click: function($event) {
                                   $event.preventDefault()
                                   return _vm.deleteElement(
-                                    _vm.gridElements[1].id
+                                    _vm.gridElements[1].id,
+                                    _vm.gridElements[1].postmedia.post.id
                                   )
                                 }
                               }
                             },
-                            [_vm._v("Delete item")]
+                            [_vm._v("Delete")]
                           ),
                           _vm._v(" "),
                           _c("img", {
@@ -32721,7 +32718,7 @@ var render = function() {
                         _c(
                           "a",
                           {
-                            staticClass: "btn-add-post",
+                            staticClass: "btn-add-media",
                             attrs: { href: "javascript:;" },
                             on: {
                               click: function($event) {
@@ -32754,12 +32751,13 @@ var render = function() {
                                 click: function($event) {
                                   $event.preventDefault()
                                   return _vm.deleteElement(
-                                    _vm.gridElements[0].id
+                                    _vm.gridElements[0].id,
+                                    _vm.gridElements[0].postmedia.post.id
                                   )
                                 }
                               }
                             },
-                            [_vm._v("Delete item")]
+                            [_vm._v("Delete")]
                           ),
                           _vm._v(" "),
                           _c("img", {
@@ -32800,7 +32798,7 @@ var render = function() {
                         _c(
                           "a",
                           {
-                            staticClass: "btn-add-post",
+                            staticClass: "btn-add-media",
                             attrs: { href: "javascript:;" },
                             on: {
                               click: function($event) {
@@ -32827,12 +32825,13 @@ var render = function() {
                                 click: function($event) {
                                   $event.preventDefault()
                                   return _vm.deleteElement(
-                                    _vm.gridElements[1].id
+                                    _vm.gridElements[1].id,
+                                    _vm.gridElements[1].postmedia.post.id
                                   )
                                 }
                               }
                             },
-                            [_vm._v("Delete item")]
+                            [_vm._v("Delete")]
                           ),
                           _vm._v(" "),
                           _c("img", {
@@ -32873,7 +32872,7 @@ var render = function() {
                         _c(
                           "a",
                           {
-                            staticClass: "btn-add-post",
+                            staticClass: "btn-add-media",
                             attrs: { href: "javascript:;" },
                             on: {
                               click: function($event) {
@@ -32900,12 +32899,13 @@ var render = function() {
                                 click: function($event) {
                                   $event.preventDefault()
                                   return _vm.deleteElement(
-                                    _vm.gridElements[2].id
+                                    _vm.gridElements[2].id,
+                                    _vm.gridElements[2].postmedia.post.id
                                   )
                                 }
                               }
                             },
-                            [_vm._v("Delete item")]
+                            [_vm._v("Delete")]
                           ),
                           _vm._v(" "),
                           _c("img", {
@@ -32946,7 +32946,7 @@ var render = function() {
                         _c(
                           "a",
                           {
-                            staticClass: "btn-add-post",
+                            staticClass: "btn-add-media",
                             attrs: { href: "javascript:;" },
                             on: {
                               click: function($event) {
@@ -32979,12 +32979,13 @@ var render = function() {
                                 click: function($event) {
                                   $event.preventDefault()
                                   return _vm.deleteElement(
-                                    _vm.gridElements[0].id
+                                    _vm.gridElements[0].id,
+                                    _vm.gridElements[0].postmedia.post.id
                                   )
                                 }
                               }
                             },
-                            [_vm._v("Delete item")]
+                            [_vm._v("Delete")]
                           ),
                           _vm._v(" "),
                           _c("img", {
@@ -33025,7 +33026,7 @@ var render = function() {
                         _c(
                           "a",
                           {
-                            staticClass: "btn-add-post",
+                            staticClass: "btn-add-media",
                             attrs: { href: "javascript:;" },
                             on: {
                               click: function($event) {
@@ -33052,12 +33053,13 @@ var render = function() {
                                 click: function($event) {
                                   $event.preventDefault()
                                   return _vm.deleteElement(
-                                    _vm.gridElements[1].id
+                                    _vm.gridElements[1].id,
+                                    _vm.gridElements[1].postmedia.post.id
                                   )
                                 }
                               }
                             },
-                            [_vm._v("Delete item")]
+                            [_vm._v("Delete")]
                           ),
                           _vm._v(" "),
                           _c("img", {
@@ -33098,7 +33100,7 @@ var render = function() {
                         _c(
                           "a",
                           {
-                            staticClass: "btn-add-post",
+                            staticClass: "btn-add-media",
                             attrs: { href: "javascript:;" },
                             on: {
                               click: function($event) {
@@ -33131,12 +33133,13 @@ var render = function() {
                                 click: function($event) {
                                   $event.preventDefault()
                                   return _vm.deleteElement(
-                                    _vm.gridElements[0].id
+                                    _vm.gridElements[0].id,
+                                    _vm.gridElements[0].postmedia.post.id
                                   )
                                 }
                               }
                             },
-                            [_vm._v("Delete item")]
+                            [_vm._v("Delete")]
                           ),
                           _vm._v(" "),
                           _c("img", {
@@ -33177,7 +33180,7 @@ var render = function() {
                         _c(
                           "a",
                           {
-                            staticClass: "btn-add-post",
+                            staticClass: "btn-add-media",
                             attrs: { href: "javascript:;" },
                             on: {
                               click: function($event) {
@@ -33205,12 +33208,13 @@ var render = function() {
                                   click: function($event) {
                                     $event.preventDefault()
                                     return _vm.deleteElement(
-                                      _vm.gridElements[1].id
+                                      _vm.gridElements[1].id,
+                                      _vm.gridElements[1].postmedia.post.id
                                     )
                                   }
                                 }
                               },
-                              [_vm._v("Delete item")]
+                              [_vm._v("Delete")]
                             ),
                             _vm._v(" "),
                             _c("img", {
@@ -33253,7 +33257,7 @@ var render = function() {
                           _c(
                             "a",
                             {
-                              staticClass: "btn-add-post",
+                              staticClass: "btn-add-media",
                               attrs: { href: "javascript:;" },
                               on: {
                                 click: function($event) {
@@ -33280,12 +33284,13 @@ var render = function() {
                                   click: function($event) {
                                     $event.preventDefault()
                                     return _vm.deleteElement(
-                                      _vm.gridElements[2].id
+                                      _vm.gridElements[2].id,
+                                      _vm.gridElements[2].postmedia.post.id
                                     )
                                   }
                                 }
                               },
-                              [_vm._v("Delete item")]
+                              [_vm._v("Delete")]
                             ),
                             _vm._v(" "),
                             _c("img", {
@@ -33328,7 +33333,7 @@ var render = function() {
                           _c(
                             "a",
                             {
-                              staticClass: "btn-add-post",
+                              staticClass: "btn-add-media",
                               attrs: { href: "javascript:;" },
                               on: {
                                 click: function($event) {
@@ -33372,7 +33377,140 @@ var render = function() {
                 }
               ]
             },
-            [_c("grid-post")],
+            [_c("grid-post", { attrs: { posts: _vm.posts } })],
+            1
+          )
+        ])
+      ])
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/home/GridHighlightComponent.vue?vue&type=template&id=4e638d64&":
+/*!******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/home/GridHighlightComponent.vue?vue&type=template&id=4e638d64& ***!
+  \******************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("loading", {
+        attrs: {
+          active: _vm.isLoading,
+          "is-full-page": _vm.fullPage,
+          height: 30,
+          width: 30
+        },
+        on: {
+          "update:active": function($event) {
+            _vm.isLoading = $event
+          }
+        }
+      }),
+      _vm._v(" "),
+      _c("div", { staticClass: "grids" }, [
+        _c(
+          "a",
+          {
+            staticClass: "btn-add-media-highlight",
+            attrs: { href: "javascript:;" },
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                return _vm.addPost(_vm.gridId, 0)
+              }
+            }
+          },
+          [_vm._v("Add highlight")]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "grid-1fr" }, [
+          _c("div", { staticClass: "span" }, [
+            _c(
+              "div",
+              { staticClass: "grid-1fr-highlight" },
+              _vm._l(_vm.gridElements, function(element) {
+                return _c("figure", { key: element.id, staticClass: "span" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "btn-trash",
+                      attrs: { href: "javascript:;" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.deleteElement(
+                            element.id,
+                            element.postmedia.post.id
+                          )
+                        }
+                      }
+                    },
+                    [_vm._v("Delete")]
+                  ),
+                  _vm._v(" "),
+                  _c("img", {
+                    attrs: {
+                      src: _vm.getPreviewImage(element.postmedia.name),
+                      height: "50",
+                      width: "50"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("figcaption", [
+                    _c("strong", [_vm._v(_vm._s(element.postmedia.post.title))])
+                  ])
+                ])
+              }),
+              0
+            )
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { class: [_vm.hasOverlay ? "is-visible" : "", "overlay"] }, [
+        _c("div", [
+          _c("a", {
+            staticClass: "icon-close icon-close-overlay",
+            attrs: { href: "javascript:;" },
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                return _vm.toggleOverlay()
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.displayPosts,
+                  expression: "displayPosts"
+                }
+              ]
+            },
+            [_c("grid-post", { attrs: { posts: _vm.posts } })],
             1
           )
         ])
@@ -33415,7 +33553,30 @@ var render = function() {
           _c(
             "div",
             [
-              _c("h1", [_vm._v("Masonry")]),
+              _c("h1", [_vm._v("Highlights")]),
+              _vm._v(" "),
+              _c("p", [
+                _vm._v(
+                  "Elements of the highlight section will be displayed randomly."
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "grid-rows" }, [
+                _c(
+                  "div",
+                  { staticClass: "grid-row grid-row--highlight" },
+                  [_c("grid-highlight", { attrs: { gridId: 1 } })],
+                  1
+                )
+              ]),
+              _vm._v(" "),
+              _c("h1", [_vm._v("Teasers")]),
+              _vm._v(" "),
+              _c("p", [
+                _vm._v(
+                  "Select a grid and add a project or a news teaser. Projects or teasers will be displayed as defined by its grid layout."
+                )
+              ]),
               _vm._v(" "),
               _c("grid-selector"),
               _vm._v(" "),
@@ -33511,7 +33672,7 @@ var render = function() {
                     on: {
                       click: function($event) {
                         $event.preventDefault()
-                        return _vm.insertPost(media.id)
+                        return _vm.insertPost(media.id, post.id)
                       }
                     }
                   },
@@ -33571,7 +33732,7 @@ var render = function() {
             }
           }
         },
-        [_vm._v("Add row")]
+        [_vm._v("Select grid layout")]
       ),
       _vm._v(" "),
       _c(
@@ -55106,6 +55267,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/home/GridHighlightComponent.vue":
+/*!*****************************************************************!*\
+  !*** ./resources/js/components/home/GridHighlightComponent.vue ***!
+  \*****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _GridHighlightComponent_vue_vue_type_template_id_4e638d64___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./GridHighlightComponent.vue?vue&type=template&id=4e638d64& */ "./resources/js/components/home/GridHighlightComponent.vue?vue&type=template&id=4e638d64&");
+/* harmony import */ var _GridHighlightComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./GridHighlightComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/home/GridHighlightComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _GridHighlightComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _GridHighlightComponent_vue_vue_type_template_id_4e638d64___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _GridHighlightComponent_vue_vue_type_template_id_4e638d64___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/home/GridHighlightComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/home/GridHighlightComponent.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/components/home/GridHighlightComponent.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_GridHighlightComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./GridHighlightComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/home/GridHighlightComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_GridHighlightComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/home/GridHighlightComponent.vue?vue&type=template&id=4e638d64&":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/components/home/GridHighlightComponent.vue?vue&type=template&id=4e638d64& ***!
+  \************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_GridHighlightComponent_vue_vue_type_template_id_4e638d64___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./GridHighlightComponent.vue?vue&type=template&id=4e638d64& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/home/GridHighlightComponent.vue?vue&type=template&id=4e638d64&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_GridHighlightComponent_vue_vue_type_template_id_4e638d64___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_GridHighlightComponent_vue_vue_type_template_id_4e638d64___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/home/GridIndexComponent.vue":
 /*!*************************************************************!*\
   !*** ./resources/js/components/home/GridIndexComponent.vue ***!
@@ -55720,8 +55950,98 @@ Vue.filter('truncate', function (text, length, suffix) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-loading-overlay */ "./node_modules/vue-loading-overlay/dist/vue-loading.min.js");
+/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _components_home_GridPostComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/components/home/GridPostComponent.vue */ "./resources/js/components/home/GridPostComponent.vue");
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  methods: {}
+  components: {
+    loading: vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0___default.a,
+    gridPost: _components_home_GridPostComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  data: function data() {
+    return {
+      gridElements: [],
+      posts: [],
+      isLoading: false,
+      fullPage: false,
+      hasOverlay: false,
+      displayPosts: false,
+      tmpGridId: 0,
+      tmpPosition: 0
+    };
+  },
+  methods: {
+    addArticle: function addArticle(gridId, position) {},
+    addPost: function addPost(gridId, position) {
+      var _this = this;
+
+      this.isLoading = true;
+      this.axios.get('/api/posts/grid').then(function (response) {
+        _this.posts = response.data.data;
+
+        _this.toggleOverlay();
+
+        _this.isLoading = false;
+        _this.displayPosts = true;
+        _this.tmpGridId = gridId;
+        _this.tmpPosition = position;
+      });
+    },
+    insertPost: function insertPost(postMediaId, postId) {
+      var _this2 = this;
+
+      var data = {
+        'grid_id': this.tmpGridId,
+        'position': this.tmpPosition,
+        'post_media_id': postMediaId
+      };
+      var uri = '/api/gridelement/store';
+      this.isLoading = true;
+      this.axios.post(uri, data).then(function (response) {
+        _this2.axios.post("/api/post/update/".concat(postId), {
+          'isGridElement': true
+        }).then(function (response) {
+          _this2.toggleOverlay();
+
+          _this2.$notify({
+            type: 'success',
+            title: 'Success!',
+            text: 'A new element was added successfully!'
+          });
+
+          _this2.fetchElements();
+        });
+      });
+    },
+    deleteElement: function deleteElement(gridElementId, postId) {
+      var _this3 = this;
+
+      var uri = "/api/gridelement/delete/".concat(gridElementId);
+      this.isLoading = true;
+      this.axios["delete"](uri).then(function (response) {
+        _this3.axios.post("/api/post/update/".concat(postId), {
+          'isGridElement': false
+        }).then(function (response) {
+          _this3.$notify({
+            type: 'success',
+            title: 'Success!',
+            text: 'The grid element was deleted successfully!'
+          });
+
+          _this3.fetchElements();
+        });
+      });
+    },
+    // Helper methods
+    getPreviewImage: function getPreviewImage(file) {
+      return "/media/".concat(file, "/sm");
+    },
+    toggleOverlay: function toggleOverlay() {
+      this.hasOverlay = this.hasOverlay ? false : true;
+    }
+  }
 });
 
 /***/ }),

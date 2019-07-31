@@ -7,5 +7,5 @@
 h1 {
     @include font-bold();
     @include font-size($fs-lg);
-    @include responsive-prop('margin-bottom', $space-md);
+    @include responsive-prop('margin-bottom', $space-sm);
 }

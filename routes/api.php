@@ -23,7 +23,8 @@ Route::middleware('auth:api')->group(function () {
     });
 
     // Post routes
-    Route::get('posts', 'PostController@index');
+    Route::get('posts/get', 'PostController@get');
+    Route::get('posts/grid', 'PostController@grid');
     Route::post('post/create', 'PostController@store');
     Route::get('post/edit/{id}', 'PostController@edit');
     Route::post('post/update/{id}', 'PostController@update');

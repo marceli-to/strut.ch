@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="grid-layout-selector">
-            <a href="" class="btn-toggle-layout" @click.prevent="toggleSelect()">Add row</a>
+            <a href="" class="btn-toggle-layout" @click.prevent="toggleSelect()">Select grid layout</a>
             <ul :class="showSelect ? 'is-visible': ''" ref="dropdown">
                 <li v-for="layout in layouts" :key="layout.id">
                     <a href="" @click.prevent="addGrid(layout.id)">

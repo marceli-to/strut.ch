@@ -8,7 +8,11 @@
 .grid-row {
     border-top: 2px solid $color--dark;
     @include responsive-prop('padding-top', $space-xs);
-    @include responsive-prop('margin-bottom', $space-md);    
+    @include responsive-prop('margin-bottom', $space-md);
+    
+    &.grid-row--highlight {
+        @include responsive-prop('margin-bottom', $space-lg); 
+    }
 }
 
 .grid-layout-selector {
@@ -64,6 +68,11 @@
         justify-content:center;
         min-height: 200px;
 
+        div {
+            text-align: center;
+            width: 100%;
+        }
+
         figure {
             padding: 10px;
             position: relative;
@@ -78,6 +87,7 @@
             figcaption {
                 display: block;
                 padding: 10px 0 0 0;
+                text-align: left;
             }
         }
 
@@ -131,6 +141,17 @@
     .grid-stacked .span {
         min-height: 100px;
         width: 100%;
+    }
+
+    .grid-1fr-highlight {
+        display: grid;
+        grid-gap: 10px;
+        grid-template-columns: repeat(auto-fit, minmax(180px, .5fr));
+        padding: 10px;
+
+        .span {
+            display: block;
+        }
     }
 }
 
