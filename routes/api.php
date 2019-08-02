@@ -32,6 +32,9 @@ Route::middleware('auth:api')->group(function () {
     Route::delete('post/delete/{id}', 'PostController@delete');
     Route::post('post/order', 'PostController@order');
 
+    // News routes
+    Route::post('news/create', 'Backend\NewsController@store');
+
     // Grid routes
     Route::get('grid', 'Backend\Grid\GridController@index');
     Route::get('grid/store/{layoutId}', 'Backend\Grid\GridController@store');

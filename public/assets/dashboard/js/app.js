@@ -2026,6 +2026,9 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mixins_grid__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/mixins/grid */ "./resources/js/mixins/grid.js");
+/* harmony import */ var _components_home_GridPostItemComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/components/home/GridPostItemComponent.vue */ "./resources/js/components/home/GridPostItemComponent.vue");
+//
+//
 //
 //
 //
@@ -2229,7 +2232,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    gridPostItem: _components_home_GridPostItemComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
   props: {
     layout: String,
     gridId: Number
@@ -2439,6 +2446,142 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/home/GridNewsComponent.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/home/GridNewsComponent.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      // model
+      news: {
+        date: {
+          de: null,
+          en: null
+        },
+        title: {
+          de: null,
+          en: null
+        },
+        text: {
+          de: null,
+          en: null
+        }
+      },
+      // fields to validate
+      errors: {
+        date: {
+          de: false,
+          en: false
+        },
+        title: {
+          de: false,
+          en: false
+        },
+        text: {
+          de: false,
+          en: false
+        }
+      },
+      // tabs
+      tabs: {
+        data: {
+          active: true,
+          error: false
+        },
+        translation: {
+          active: false,
+          error: false
+        },
+        media: {
+          active: false,
+          error: false
+        }
+      }
+    };
+  },
+  created: function created() {},
+  methods: {
+    createNews: function createNews() {
+      this.$parent.createNews(this.news);
+    },
+    changeTab: function changeTab(tab) {
+      // set all tabs inactive
+      // remove errors if any
+      for (var prop in this.tabs) {
+        this.tabs[prop].active = false;
+        this.tabs[prop].error = false;
+      }
+
+      ; // set active tab
+
+      this.tabs[tab].active = true;
+    },
+    removeError: function removeError(field, language) {
+      this.errors[field][language] = false;
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/home/GridPostComponent.vue?vue&type=script&lang=js&":
 /*!*********************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/home/GridPostComponent.vue?vue&type=script&lang=js& ***!
@@ -2472,11 +2615,50 @@ __webpack_require__.r(__webpack_exports__);
     posts: Array
   },
   methods: {
-    insertPost: function insertPost(postMediaId, postId) {
-      this.$parent.insertPost(postMediaId, postId);
+    createPost: function createPost(postMediaId, postId) {
+      this.$parent.createPost(postMediaId, postId);
     },
     getThumbnailImage: function getThumbnailImage(file) {
       return "/media/thumbnail/".concat(file);
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/home/GridPostItemComponent.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/home/GridPostItemComponent.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _mixins_grid__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/mixins/grid */ "./resources/js/mixins/grid.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    element: Object
+  },
+  mixins: [_mixins_grid__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  created: function created() {
+    console.log(this.$props.element);
+  },
+  methods: {
+    deletePostElement: function deletePostElement(elementId, postId) {
+      this.$parent.deletePostElement(elementId, postId);
     }
   }
 });
@@ -32554,11 +32736,11 @@ var render = function() {
                             on: {
                               click: function($event) {
                                 $event.preventDefault()
-                                return _vm.addArticle(_vm.gridId, 0)
+                                return _vm.addNews(_vm.gridId, 0)
                               }
                             }
                           },
-                          [_vm._v("Add teaser")]
+                          [_vm._v("Add news")]
                         ),
                         _vm._v(" \n                        "),
                         _c(
@@ -32634,11 +32816,11 @@ var render = function() {
                             on: {
                               click: function($event) {
                                 $event.preventDefault()
-                                return _vm.addArticle(_vm.gridId, 0)
+                                return _vm.addNews(_vm.gridId, 0)
                               }
                             }
                           },
-                          [_vm._v("Add teaser")]
+                          [_vm._v("Add news")]
                         ),
                         _vm._v(" \n                        "),
                         _c(
@@ -32708,11 +32890,11 @@ var render = function() {
                             on: {
                               click: function($event) {
                                 $event.preventDefault()
-                                return _vm.addArticle(_vm.gridId, 1)
+                                return _vm.addNews(_vm.gridId, 1)
                               }
                             }
                           },
-                          [_vm._v("Add teaser")]
+                          [_vm._v("Add news")]
                         ),
                         _vm._v(" \n                        "),
                         _c(
@@ -32788,11 +32970,11 @@ var render = function() {
                             on: {
                               click: function($event) {
                                 $event.preventDefault()
-                                return _vm.addArticle(_vm.gridId, 0)
+                                return _vm.addNews(_vm.gridId, 0)
                               }
                             }
                           },
-                          [_vm._v("Add teaser")]
+                          [_vm._v("Add news")]
                         ),
                         _vm._v(" \n                        "),
                         _c(
@@ -32862,11 +33044,11 @@ var render = function() {
                             on: {
                               click: function($event) {
                                 $event.preventDefault()
-                                return _vm.addArticle(_vm.gridId, 1)
+                                return _vm.addNews(_vm.gridId, 1)
                               }
                             }
                           },
-                          [_vm._v("Add teaser")]
+                          [_vm._v("Add news")]
                         ),
                         _vm._v(" \n                        "),
                         _c(
@@ -32936,11 +33118,11 @@ var render = function() {
                             on: {
                               click: function($event) {
                                 $event.preventDefault()
-                                return _vm.addArticle(_vm.gridId, 2)
+                                return _vm.addNews(_vm.gridId, 2)
                               }
                             }
                           },
-                          [_vm._v("Add teaser")]
+                          [_vm._v("Add news")]
                         ),
                         _vm._v(" \n                        "),
                         _c(
@@ -32969,43 +33151,49 @@ var render = function() {
                 _c("div", { staticClass: "span" }, [
                   _vm.gridElements[0] && _vm.gridElements[0].position == "0"
                     ? _c("div", [
-                        _c("figure", [
-                          _c(
-                            "a",
-                            {
-                              staticClass: "btn-trash",
-                              attrs: { href: "javascript:;" },
-                              on: {
-                                click: function($event) {
-                                  $event.preventDefault()
-                                  return _vm.deleteElement(
-                                    _vm.gridElements[0].id,
-                                    _vm.gridElements[0].postmedia.post.id
-                                  )
-                                }
-                              }
-                            },
-                            [_vm._v("Delete")]
-                          ),
-                          _vm._v(" "),
-                          _c("img", {
-                            attrs: {
-                              src: _vm.getPreviewImage(
-                                _vm.gridElements[0].postmedia.name
-                              ),
-                              height: "50",
-                              width: "50"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("figcaption", [
-                            _c("strong", [
-                              _vm._v(
-                                _vm._s(_vm.gridElements[0].postmedia.post.title)
-                              )
+                        _vm.gridElements[0].post_media_id
+                          ? _c("div", [
+                              _c("figure", [
+                                _c(
+                                  "a",
+                                  {
+                                    staticClass: "btn-trash",
+                                    attrs: { href: "javascript:;" },
+                                    on: {
+                                      click: function($event) {
+                                        $event.preventDefault()
+                                        return _vm.deleteElement(
+                                          _vm.gridElements[0].id,
+                                          _vm.gridElements[0].postmedia.post.id
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Delete")]
+                                ),
+                                _vm._v(" "),
+                                _c("img", {
+                                  attrs: {
+                                    src: _vm.getPreviewImage(
+                                      _vm.gridElements[0].postmedia.name
+                                    ),
+                                    height: "50",
+                                    width: "50"
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("figcaption", [
+                                  _c("strong", [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm.gridElements[0].postmedia.post.title
+                                      )
+                                    )
+                                  ])
+                                ])
+                              ])
                             ])
-                          ])
-                        ])
+                          : _vm._e()
                       ])
                     : _c("div", [
                         _c(
@@ -33016,11 +33204,11 @@ var render = function() {
                             on: {
                               click: function($event) {
                                 $event.preventDefault()
-                                return _vm.addArticle(_vm.gridId, 0)
+                                return _vm.addNews(_vm.gridId, 0)
                               }
                             }
                           },
-                          [_vm._v("Add teaser")]
+                          [_vm._v("Add news")]
                         ),
                         _vm._v(" \n                        "),
                         _c(
@@ -33043,43 +33231,49 @@ var render = function() {
                 _c("div", { staticClass: "span" }, [
                   _vm.gridElements[1] && _vm.gridElements[1].position == "1"
                     ? _c("div", [
-                        _c("figure", [
-                          _c(
-                            "a",
-                            {
-                              staticClass: "btn-trash",
-                              attrs: { href: "javascript:;" },
-                              on: {
-                                click: function($event) {
-                                  $event.preventDefault()
-                                  return _vm.deleteElement(
-                                    _vm.gridElements[1].id,
-                                    _vm.gridElements[1].postmedia.post.id
-                                  )
-                                }
-                              }
-                            },
-                            [_vm._v("Delete")]
-                          ),
-                          _vm._v(" "),
-                          _c("img", {
-                            attrs: {
-                              src: _vm.getPreviewImage(
-                                _vm.gridElements[1].postmedia.name
-                              ),
-                              height: "50",
-                              width: "50"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("figcaption", [
-                            _c("strong", [
-                              _vm._v(
-                                _vm._s(_vm.gridElements[1].postmedia.post.title)
-                              )
+                        _vm.gridElements[1].post_media_id
+                          ? _c("div", [
+                              _c("figure", [
+                                _c(
+                                  "a",
+                                  {
+                                    staticClass: "btn-trash",
+                                    attrs: { href: "javascript:;" },
+                                    on: {
+                                      click: function($event) {
+                                        $event.preventDefault()
+                                        return _vm.deleteElement(
+                                          _vm.gridElements[1].id,
+                                          _vm.gridElements[1].postmedia.post.id
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Delete")]
+                                ),
+                                _vm._v(" "),
+                                _c("img", {
+                                  attrs: {
+                                    src: _vm.getPreviewImage(
+                                      _vm.gridElements[1].postmedia.name
+                                    ),
+                                    height: "50",
+                                    width: "50"
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("figcaption", [
+                                  _c("strong", [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm.gridElements[1].postmedia.post.title
+                                      )
+                                    )
+                                  ])
+                                ])
+                              ])
                             ])
-                          ])
-                        ])
+                          : _vm._e()
                       ])
                     : _c("div", [
                         _c(
@@ -33090,11 +33284,11 @@ var render = function() {
                             on: {
                               click: function($event) {
                                 $event.preventDefault()
-                                return _vm.addArticle(_vm.gridId, 1)
+                                return _vm.addNews(_vm.gridId, 1)
                               }
                             }
                           },
-                          [_vm._v("Add teaser")]
+                          [_vm._v("Add news")]
                         ),
                         _vm._v(" \n                        "),
                         _c(
@@ -33123,43 +33317,17 @@ var render = function() {
                 _c("div", { staticClass: "span" }, [
                   _vm.gridElements[0] && _vm.gridElements[0].position == "0"
                     ? _c("div", [
-                        _c("figure", [
-                          _c(
-                            "a",
-                            {
-                              staticClass: "btn-trash",
-                              attrs: { href: "javascript:;" },
-                              on: {
-                                click: function($event) {
-                                  $event.preventDefault()
-                                  return _vm.deleteElement(
-                                    _vm.gridElements[0].id,
-                                    _vm.gridElements[0].postmedia.post.id
-                                  )
-                                }
-                              }
-                            },
-                            [_vm._v("Delete")]
-                          ),
-                          _vm._v(" "),
-                          _c("img", {
-                            attrs: {
-                              src: _vm.getPreviewImage(
-                                _vm.gridElements[0].postmedia.name
-                              ),
-                              height: "50",
-                              width: "50"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("figcaption", [
-                            _c("strong", [
-                              _vm._v(
-                                _vm._s(_vm.gridElements[0].postmedia.post.title)
-                              )
-                            ])
-                          ])
-                        ])
+                        _vm.gridElements[0].post_media_id
+                          ? _c(
+                              "div",
+                              [
+                                _c("grid-post-item", {
+                                  attrs: { element: _vm.gridElements[0] }
+                                })
+                              ],
+                              1
+                            )
+                          : _vm._e()
                       ])
                     : _c("div", [
                         _c(
@@ -33170,11 +33338,11 @@ var render = function() {
                             on: {
                               click: function($event) {
                                 $event.preventDefault()
-                                return _vm.addArticle(_vm.gridId, 0)
+                                return _vm.addNews(_vm.gridId, 0)
                               }
                             }
                           },
-                          [_vm._v("Add teaser")]
+                          [_vm._v("Add news")]
                         ),
                         _vm._v(" \n                        "),
                         _c(
@@ -33198,45 +33366,41 @@ var render = function() {
                   _c("div", { staticClass: "span" }, [
                     _vm.gridElements[1] && _vm.gridElements[1].position == "1"
                       ? _c("div", [
-                          _c("figure", [
-                            _c(
-                              "a",
-                              {
-                                staticClass: "btn-trash",
-                                attrs: { href: "javascript:;" },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.deleteElement(
-                                      _vm.gridElements[1].id,
-                                      _vm.gridElements[1].postmedia.post.id
-                                    )
-                                  }
-                                }
-                              },
-                              [_vm._v("Delete")]
-                            ),
-                            _vm._v(" "),
-                            _c("img", {
-                              attrs: {
-                                src: _vm.getPreviewImage(
-                                  _vm.gridElements[1].postmedia.name
-                                ),
-                                height: "50",
-                                width: "50"
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c("figcaption", [
-                              _c("strong", [
-                                _vm._v(
-                                  _vm._s(
-                                    _vm.gridElements[1].postmedia.post.title
+                          _vm.gridElements[1].post_media_id
+                            ? _c(
+                                "div",
+                                [
+                                  _c("grid-post-item", {
+                                    attrs: { element: _vm.gridElements[1] }
+                                  })
+                                ],
+                                1
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.gridElements[1].news_id
+                            ? _c("div", [
+                                _c("div", [
+                                  _vm._v(
+                                    _vm._s(_vm.gridElements[1].news.date.de)
                                   )
-                                )
+                                ]),
+                                _vm._v(" "),
+                                _c("div", [
+                                  _c("strong", [
+                                    _vm._v(
+                                      _vm._s(_vm.gridElements[1].news.title.de)
+                                    )
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("div", [
+                                  _vm._v(
+                                    _vm._s(_vm.gridElements[1].news.text.de)
+                                  )
+                                ])
                               ])
-                            ])
-                          ])
+                            : _vm._e()
                         ])
                       : _c("div", [
                           _c(
@@ -33247,11 +33411,11 @@ var render = function() {
                               on: {
                                 click: function($event) {
                                   $event.preventDefault()
-                                  return _vm.addArticle(_vm.gridId, 1)
+                                  return _vm.addNews(_vm.gridId, 1)
                                 }
                               }
                             },
-                            [_vm._v("Add teaser")]
+                            [_vm._v("Add news")]
                           ),
                           _vm._v(" \n                            "),
                           _c(
@@ -33273,47 +33437,15 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { staticClass: "span" }, [
                     _vm.gridElements[2] && _vm.gridElements[2].position == "2"
-                      ? _c("div", [
-                          _c("figure", [
-                            _c(
-                              "a",
-                              {
-                                staticClass: "btn-trash",
-                                attrs: { href: "javascript:;" },
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.deleteElement(
-                                      _vm.gridElements[2].id,
-                                      _vm.gridElements[2].postmedia.post.id
-                                    )
-                                  }
-                                }
-                              },
-                              [_vm._v("Delete")]
-                            ),
-                            _vm._v(" "),
-                            _c("img", {
-                              attrs: {
-                                src: _vm.getPreviewImage(
-                                  _vm.gridElements[2].postmedia.name
-                                ),
-                                height: "50",
-                                width: "50"
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c("figcaption", [
-                              _c("strong", [
-                                _vm._v(
-                                  _vm._s(
-                                    _vm.gridElements[2].postmedia.post.title
-                                  )
-                                )
-                              ])
-                            ])
-                          ])
-                        ])
+                      ? _c(
+                          "div",
+                          [
+                            _c("grid-post-item", {
+                              attrs: { element: _vm.gridElements[2] }
+                            })
+                          ],
+                          1
+                        )
                       : _c("div", [
                           _c(
                             "a",
@@ -33323,11 +33455,11 @@ var render = function() {
                               on: {
                                 click: function($event) {
                                   $event.preventDefault()
-                                  return _vm.addArticle(_vm.gridId, 2)
+                                  return _vm.addNews(_vm.gridId, 2)
                                 }
                               }
                             },
-                            [_vm._v("Add teaser")]
+                            [_vm._v("Add news")]
                           ),
                           _vm._v(" \n                            "),
                           _c(
@@ -33378,6 +33510,22 @@ var render = function() {
               ]
             },
             [_c("grid-post", { attrs: { posts: _vm.posts } })],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.displayNewsForm,
+                  expression: "displayNewsForm"
+                }
+              ]
+            },
+            [_c("grid-news")],
             1
           )
         ])
@@ -33628,6 +33776,358 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/home/GridNewsComponent.vue?vue&type=template&id=14fc3302&":
+/*!*************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/home/GridNewsComponent.vue?vue&type=template&id=14fc3302& ***!
+  \*************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("h2", [_vm._v("Create a news entry")]),
+    _vm._v(" "),
+    _c("nav", { staticClass: "tabs" }, [
+      _c("ul", [
+        _c("li", [
+          _c(
+            "a",
+            {
+              class: [
+                _vm.tabs.data.active ? "is-active" : "",
+                _vm.tabs.data.error ? "has-error" : ""
+              ],
+              attrs: { href: "javascript:;" },
+              on: {
+                click: function($event) {
+                  return _vm.changeTab("data")
+                }
+              }
+            },
+            [_vm._v("Data")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c(
+            "a",
+            {
+              class: [
+                _vm.tabs.translation.active ? "is-active" : "",
+                _vm.tabs.translation.error ? "has-error" : ""
+              ],
+              attrs: { href: "javascript:;" },
+              on: {
+                click: function($event) {
+                  return _vm.changeTab("translation")
+                }
+              }
+            },
+            [_vm._v("Translation")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c(
+            "a",
+            {
+              class: _vm.tabs.media.active ? "is-active" : "",
+              attrs: { href: "javascript:;" },
+              on: {
+                click: function($event) {
+                  return _vm.changeTab("media")
+                }
+              }
+            },
+            [_vm._v("Media")]
+          )
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "form",
+      {
+        on: {
+          submit: function($event) {
+            $event.preventDefault()
+            return _vm.createNews($event)
+          }
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.tabs.data.active,
+                expression: "tabs.data.active"
+              }
+            ],
+            staticClass: "span"
+          },
+          [
+            _c(
+              "div",
+              {
+                staticClass: "form-row",
+                class: _vm.errors.date.de ? "has-error" : ""
+              },
+              [
+                _c("label", [_vm._v("Date")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.news.date.de,
+                      expression: "news.date.de"
+                    }
+                  ],
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.news.date.de },
+                  on: {
+                    focus: function($event) {
+                      return _vm.removeError("date", "de")
+                    },
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.news.date, "de", $event.target.value)
+                    }
+                  }
+                })
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "form-row",
+                class: _vm.errors.title.de ? "has-error" : ""
+              },
+              [
+                _c("label", [_vm._v("Title *")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.news.title.de,
+                      expression: "news.title.de"
+                    }
+                  ],
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.news.title.de },
+                  on: {
+                    focus: function($event) {
+                      return _vm.removeError("title", "de")
+                    },
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.news.title, "de", $event.target.value)
+                    }
+                  }
+                })
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "form-row",
+                class: _vm.errors.text.de ? "has-error" : ""
+              },
+              [
+                _c("label", [_vm._v("Text")]),
+                _vm._v(" "),
+                _c("textarea", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.news.text.de,
+                      expression: "news.text.de"
+                    }
+                  ],
+                  class: _vm.errors.text.de ? "has-error" : "",
+                  attrs: { rows: "5" },
+                  domProps: { value: _vm.news.text.de },
+                  on: {
+                    focus: function($event) {
+                      return _vm.removeError("text", "de")
+                    },
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.news.text, "de", $event.target.value)
+                    }
+                  }
+                })
+              ]
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.tabs.translation.active,
+                expression: "tabs.translation.active"
+              }
+            ],
+            staticClass: "span"
+          },
+          [
+            _c(
+              "div",
+              {
+                staticClass: "form-row",
+                class: _vm.errors.date.en ? "has-error" : ""
+              },
+              [
+                _c("label", [_vm._v("Date")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.news.date.en,
+                      expression: "news.date.en"
+                    }
+                  ],
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.news.date.en },
+                  on: {
+                    focus: function($event) {
+                      return _vm.removeError("date", "en")
+                    },
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.news.date, "en", $event.target.value)
+                    }
+                  }
+                })
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "form-row",
+                class: _vm.errors.title.en ? "has-error" : ""
+              },
+              [
+                _c("label", [_vm._v("Title *")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.news.title.en,
+                      expression: "news.title.en"
+                    }
+                  ],
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.news.title.en },
+                  on: {
+                    focus: function($event) {
+                      return _vm.removeError("title", "en")
+                    },
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.news.title, "en", $event.target.value)
+                    }
+                  }
+                })
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "form-row",
+                class: _vm.errors.text.en ? "has-error" : ""
+              },
+              [
+                _c("label", [_vm._v("Text")]),
+                _vm._v(" "),
+                _c("textarea", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.news.text.en,
+                      expression: "news.text.en"
+                    }
+                  ],
+                  class: _vm.errors.text.en ? "has-error" : "",
+                  attrs: { rows: "5" },
+                  domProps: { value: _vm.news.text.en },
+                  on: {
+                    focus: function($event) {
+                      return _vm.removeError("text", "en")
+                    },
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.news.text, "en", $event.target.value)
+                    }
+                  }
+                })
+              ]
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _vm._m(0)
+      ]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-row form-buttons" }, [
+      _c("button", { attrs: { type: "submit" } }, [_vm._v("Speichern")])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/home/GridPostComponent.vue?vue&type=template&id=3e0f245c&":
 /*!*************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/home/GridPostComponent.vue?vue&type=template&id=3e0f245c& ***!
@@ -33672,7 +34172,7 @@ var render = function() {
                     on: {
                       click: function($event) {
                         $event.preventDefault()
-                        return _vm.insertPost(media.id, post.id)
+                        return _vm.createPost(media.id, post.id)
                       }
                     }
                   },
@@ -33694,6 +34194,62 @@ var render = function() {
       }),
       0
     )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/home/GridPostItemComponent.vue?vue&type=template&id=b51d5a02&":
+/*!*****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/home/GridPostItemComponent.vue?vue&type=template&id=b51d5a02& ***!
+  \*****************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("figure", [
+      _c(
+        "a",
+        {
+          staticClass: "btn-trash",
+          attrs: { href: "javascript:;" },
+          on: {
+            click: function($event) {
+              $event.preventDefault()
+              return _vm.deletePostElement(
+                _vm.element.id,
+                _vm.element.postmedia.post.id
+              )
+            }
+          }
+        },
+        [_vm._v("Delete")]
+      ),
+      _vm._v(" "),
+      _c("img", {
+        attrs: {
+          src: _vm.getPreviewImage(_vm.element.postmedia.name),
+          height: "50",
+          width: "50"
+        }
+      }),
+      _vm._v(" "),
+      _c("figcaption", [
+        _c("strong", [_vm._v(_vm._s(_vm.element.postmedia.post.title))])
+      ])
+    ])
   ])
 }
 var staticRenderFns = []
@@ -55405,6 +55961,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/home/GridNewsComponent.vue":
+/*!************************************************************!*\
+  !*** ./resources/js/components/home/GridNewsComponent.vue ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _GridNewsComponent_vue_vue_type_template_id_14fc3302___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./GridNewsComponent.vue?vue&type=template&id=14fc3302& */ "./resources/js/components/home/GridNewsComponent.vue?vue&type=template&id=14fc3302&");
+/* harmony import */ var _GridNewsComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./GridNewsComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/home/GridNewsComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _GridNewsComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _GridNewsComponent_vue_vue_type_template_id_14fc3302___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _GridNewsComponent_vue_vue_type_template_id_14fc3302___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/home/GridNewsComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/home/GridNewsComponent.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/home/GridNewsComponent.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_GridNewsComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./GridNewsComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/home/GridNewsComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_GridNewsComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/home/GridNewsComponent.vue?vue&type=template&id=14fc3302&":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/components/home/GridNewsComponent.vue?vue&type=template&id=14fc3302& ***!
+  \*******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_GridNewsComponent_vue_vue_type_template_id_14fc3302___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./GridNewsComponent.vue?vue&type=template&id=14fc3302& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/home/GridNewsComponent.vue?vue&type=template&id=14fc3302&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_GridNewsComponent_vue_vue_type_template_id_14fc3302___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_GridNewsComponent_vue_vue_type_template_id_14fc3302___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/home/GridPostComponent.vue":
 /*!************************************************************!*\
   !*** ./resources/js/components/home/GridPostComponent.vue ***!
@@ -55469,6 +56094,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_GridPostComponent_vue_vue_type_template_id_3e0f245c___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_GridPostComponent_vue_vue_type_template_id_3e0f245c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/home/GridPostItemComponent.vue":
+/*!****************************************************************!*\
+  !*** ./resources/js/components/home/GridPostItemComponent.vue ***!
+  \****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _GridPostItemComponent_vue_vue_type_template_id_b51d5a02___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./GridPostItemComponent.vue?vue&type=template&id=b51d5a02& */ "./resources/js/components/home/GridPostItemComponent.vue?vue&type=template&id=b51d5a02&");
+/* harmony import */ var _GridPostItemComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./GridPostItemComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/home/GridPostItemComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _GridPostItemComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _GridPostItemComponent_vue_vue_type_template_id_b51d5a02___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _GridPostItemComponent_vue_vue_type_template_id_b51d5a02___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/home/GridPostItemComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/home/GridPostItemComponent.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/home/GridPostItemComponent.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_GridPostItemComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./GridPostItemComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/home/GridPostItemComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_GridPostItemComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/home/GridPostItemComponent.vue?vue&type=template&id=b51d5a02&":
+/*!***********************************************************************************************!*\
+  !*** ./resources/js/components/home/GridPostItemComponent.vue?vue&type=template&id=b51d5a02& ***!
+  \***********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_GridPostItemComponent_vue_vue_type_template_id_b51d5a02___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./GridPostItemComponent.vue?vue&type=template&id=b51d5a02& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/home/GridPostItemComponent.vue?vue&type=template&id=b51d5a02&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_GridPostItemComponent_vue_vue_type_template_id_b51d5a02___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_GridPostItemComponent_vue_vue_type_template_id_b51d5a02___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -55953,44 +56647,86 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-loading-overlay */ "./node_modules/vue-loading-overlay/dist/vue-loading.min.js");
 /* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _components_home_GridPostComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/components/home/GridPostComponent.vue */ "./resources/js/components/home/GridPostComponent.vue");
+/* harmony import */ var _components_home_GridNewsComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/home/GridNewsComponent.vue */ "./resources/js/components/home/GridNewsComponent.vue");
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     loading: vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0___default.a,
-    gridPost: _components_home_GridPostComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+    gridPost: _components_home_GridPostComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    //gridPostItem: GridPostItemComponent,
+    gridNews: _components_home_GridNewsComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   data: function data() {
     return {
+      // grid data
       gridElements: [],
       posts: [],
+      // loading
       isLoading: false,
       fullPage: false,
+      // overlay
       hasOverlay: false,
       displayPosts: false,
+      displayNewsForm: false,
+      // temp. data
       tmpGridId: 0,
       tmpPosition: 0
     };
   },
   methods: {
-    addArticle: function addArticle(gridId, position) {},
-    addPost: function addPost(gridId, position) {
+    addNews: function addNews(gridId, position) {
+      this.toggleOverlay();
+      this.displayNewsForm = true;
+      this.tmpGridId = gridId;
+      this.tmpPosition = position;
+    },
+    createNews: function createNews(data) {
       var _this = this;
+
+      // store the news entry
+      var uri = '/api/news/create';
+      this.isLoading = true;
+      this.axios.post(uri, data).then(function (response) {
+        // store the grid element
+        var data = {
+          'grid_id': _this.tmpGridId,
+          'position': _this.tmpPosition,
+          'news_id': response.data.newsId
+        };
+        var uri = '/api/gridelement/store';
+
+        _this.axios.post(uri, data).then(function (response) {
+          _this.toggleOverlay();
+
+          _this.$notify({
+            type: 'success',
+            title: 'Success!',
+            text: 'A new element was added successfully!'
+          });
+
+          _this.fetchElements();
+        });
+      });
+    },
+    addPost: function addPost(gridId, position) {
+      var _this2 = this;
 
       this.isLoading = true;
       this.axios.get('/api/posts/grid').then(function (response) {
-        _this.posts = response.data.data;
+        _this2.posts = response.data.data;
 
-        _this.toggleOverlay();
+        _this2.toggleOverlay();
 
-        _this.isLoading = false;
-        _this.displayPosts = true;
-        _this.tmpGridId = gridId;
-        _this.tmpPosition = position;
+        _this2.isLoading = false;
+        _this2.displayPosts = true;
+        _this2.tmpGridId = gridId;
+        _this2.tmpPosition = position;
       });
     },
-    insertPost: function insertPost(postMediaId, postId) {
-      var _this2 = this;
+    createPost: function createPost(postMediaId, postId) {
+      var _this3 = this;
 
       var data = {
         'grid_id': this.tmpGridId,
@@ -56000,37 +56736,37 @@ __webpack_require__.r(__webpack_exports__);
       var uri = '/api/gridelement/store';
       this.isLoading = true;
       this.axios.post(uri, data).then(function (response) {
-        _this2.axios.post("/api/post/update/".concat(postId), {
+        _this3.axios.post("/api/post/update/".concat(postId), {
           'isGridElement': true
         }).then(function (response) {
-          _this2.toggleOverlay();
+          _this3.toggleOverlay();
 
-          _this2.$notify({
+          _this3.$notify({
             type: 'success',
             title: 'Success!',
             text: 'A new element was added successfully!'
           });
 
-          _this2.fetchElements();
+          _this3.fetchElements();
         });
       });
     },
-    deleteElement: function deleteElement(gridElementId, postId) {
-      var _this3 = this;
+    deletePostElement: function deletePostElement(gridElementId, postId) {
+      var _this4 = this;
 
       var uri = "/api/gridelement/delete/".concat(gridElementId);
       this.isLoading = true;
       this.axios["delete"](uri).then(function (response) {
-        _this3.axios.post("/api/post/update/".concat(postId), {
+        _this4.axios.post("/api/post/update/".concat(postId), {
           'isGridElement': false
         }).then(function (response) {
-          _this3.$notify({
+          _this4.$notify({
             type: 'success',
             title: 'Success!',
             text: 'The grid element was deleted successfully!'
           });
 
-          _this3.fetchElements();
+          _this4.fetchElements();
         });
       });
     },
@@ -56039,7 +56775,16 @@ __webpack_require__.r(__webpack_exports__);
       return "/media/".concat(file, "/sm");
     },
     toggleOverlay: function toggleOverlay() {
-      this.hasOverlay = this.hasOverlay ? false : true;
+      // toggle class on html to prevent double scrollbars
+      var html = document.querySelector('html');
+      html.classList.toggle('has-overlay'); // toggle the overlay itself
+
+      this.hasOverlay = this.hasOverlay ? false : true; // reset news/posts
+
+      if (!this.hasOverlay) {
+        this.displayNewsForm = false;
+        this.displayPosts = false;
+      }
     }
   }
 });

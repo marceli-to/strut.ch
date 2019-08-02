@@ -74,19 +74,20 @@
         }
 
         figure {
-            padding: 10px;
+            padding: 0;
             position: relative;
 
             .btn-trash {
                 margin: 0;
                 position: absolute;
-                right: 20px;
-                top: 20px;
+                right: 10px;
+                top: 10px;
             }
 
             figcaption {
+                background-color: $color--light;
                 display: block;
-                padding: 10px 0 0 0;
+                padding: 10px;
                 text-align: left;
             }
         }
@@ -150,7 +151,10 @@
         padding: 10px;
 
         .span {
+            border: none;
             display: block;
+            min-height: auto;
+            padding: 0;
         }
     }
 }

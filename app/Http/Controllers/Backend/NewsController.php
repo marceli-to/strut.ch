@@ -1,20 +1,24 @@
 <?php
 
-namespace App\Http\Controllers\Backend\Grid;
+namespace App\Http\Controllers\Backend;
 
-use App\GridElement;
-use App\Http\Resources\GridCollection;
+use App\Services\MediaService;
+use App\News;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class GridElementController extends Controller
+class NewsController extends Controller
 {
-    protected $grid_element;
 
-    public function __construct(GridElement $grid_element)
+    protected $mediaService;
+
+    protected $news;
+
+    public function __construct(MediaService $service, News $news)
     {
-        $this->grid_element = $grid_element;
+        $this->mediaService = $service;
+        $this->news = $news;
     }
 
     /**
@@ -37,16 +41,6 @@ class GridElementController extends Controller
         //
     }
 
-    public function get($id)
-    {
-        return new GridCollection(
-                $this->grid_element->with('postmedia.post')
-                                   ->with('news')
-                                   ->where('grid_id', '=', $id)
-                                   ->get()
-                );
-    }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -54,16 +48,25 @@ class GridElementController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        $grid_element = new GridElement([
-            'grid_id'       => $request->get('grid_id'),
-            'post_media_id' => $request->get('post_media_id'),
-            'news_id'       => $request->get('news_id'),
-            'position'      => $request->get('position')
+    {   
+        $news = new News([
+            'date' => [
+                'de' => $request->input('date.de'),
+                'en' => $request->input('date.en')
+            ],
+            'title' => [
+                'de' => $request->input('title.de'),
+                'en' => $request->input('title.en')
+            ],
+            'text' => [
+                'de' => $request->input('text.de'),
+                'en' => $request->input('text.en')
+            ],          
         ]);
 
-        $grid_element->save();
-        return response()->json('success');
+        $news->save();
+
+        return response()->json(['newsId' => $news->id]);
     }
 
     /**
@@ -108,7 +111,6 @@ class GridElementController extends Controller
      */
     public function destroy($id)
     {
-        $this->grid_element->find($id)->delete();
-        return response()->json('successfully deleted');
+        //
     }
 }

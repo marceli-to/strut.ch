@@ -8,7 +8,7 @@
                 </div>
                 <div class="post-media">
                     <figure v-for="media in post.media" :key="media.id">
-                        <a href="" @click.prevent="insertPost(media.id, post.id)">
+                        <a href="" @click.prevent="createPost(media.id, post.id)">
                             <img :src="getThumbnailImage(media.name)" height="50" width="50">
                         </a>
                     </figure>
@@ -26,8 +26,8 @@ export default {
 
     methods: {
 
-        insertPost(postMediaId, postId) {
-            this.$parent.insertPost(postMediaId, postId);
+        createPost(postMediaId, postId) {
+            this.$parent.createPost(postMediaId, postId);
         },
 
         getThumbnailImage(file) {

@@ -1,21 +1,32 @@
 import Loading from 'vue-loading-overlay';
 import GridPostComponent from '@/components/home/GridPostComponent.vue';
+import GridNewsComponent from '@/components/home/GridNewsComponent.vue';
 
 export default {
 
     components: {
         loading: Loading,
         gridPost: GridPostComponent,
+        //gridPostItem: GridPostItemComponent,
+        gridNews: GridNewsComponent
     },
 
     data() {
         return {
+            // grid data
             gridElements: [],
             posts: [],
+
+            // loading
             isLoading: false,
             fullPage: false,
+
+            // overlay
             hasOverlay: false,
             displayPosts: false,
+            displayNewsForm: false,
+
+            // temp. data
             tmpGridId: 0,
             tmpPosition: 0
         }
@@ -23,8 +34,34 @@ export default {
 
     methods: {
 
-        addArticle(gridId, position) {
-            
+        addNews(gridId, position) {
+            this.toggleOverlay();
+            this.displayNewsForm = true;
+            this.tmpGridId = gridId;
+            this.tmpPosition = position;
+        },
+
+        createNews(data) {
+        
+            // store the news entry
+            let uri = '/api/news/create';
+            this.isLoading = true;
+            this.axios.post(uri, data).then((response) => {
+                
+                // store the grid element
+                let data = {
+                    'grid_id': this.tmpGridId,
+                    'position': this.tmpPosition,
+                    'news_id': response.data.newsId
+                };
+
+                let uri = '/api/gridelement/store';
+                this.axios.post(uri, data).then((response) => {
+                    this.toggleOverlay();
+                    this.$notify({type: 'success', title: 'Success!', text: 'A new element was added successfully!'});
+                    this.fetchElements();
+                });
+            });
         },
 
         addPost(gridId, position) {
@@ -39,7 +76,7 @@ export default {
             });
         },
 
-        insertPost(postMediaId, postId) {
+        createPost(postMediaId, postId) {
 
             let data = {
                 'grid_id': this.tmpGridId,
@@ -58,7 +95,7 @@ export default {
             });
         },
 
-        deleteElement(gridElementId, postId) {
+        deletePostElement(gridElementId, postId) {
             let uri = `/api/gridelement/delete/${gridElementId}`;
             this.isLoading = true;
             this.axios.delete(uri).then(response => {
@@ -75,7 +112,19 @@ export default {
         },
 
         toggleOverlay() {
+
+            // toggle class on html to prevent double scrollbars
+            let html = document.querySelector('html');
+            html.classList.toggle('has-overlay');
+
+            // toggle the overlay itself
             this.hasOverlay = this.hasOverlay ? false : true;
+            
+            // reset news/posts
+            if (!this.hasOverlay) {
+                this.displayNewsForm = false;
+                this.displayPosts = false;
+            }
         },
     }
 };
