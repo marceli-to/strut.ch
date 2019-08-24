@@ -14,15 +14,12 @@
 Route::get('media/thumbnail/{file}', 'MediaController@thumbnail');
 Route::get('media/{file}/{size?}', 'MediaController@resize');
 
-Route::get('/{any}', function () {
-	return view('app');
+// Development Routes
+Route::view('/', 'web.pages.index');
+
+
+// Admin Routes
+Route::view('admin', 'admin.app');
+Route::get('admin/{any}', function () {
+	return view('admin.app');
 })->where('any', '.*');
-
-// Route::get('/{any}', function () {
-// 	return view('app');
-// })->where('any', '^((?!api).)*');
-
-// Route::get('/', function () {
-//     return view('app');
-// });
-

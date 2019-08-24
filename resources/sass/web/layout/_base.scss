@@ -1,0 +1,22 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: layout/base
+ * -----------------------------------------------------------------------------
+ */
+
+
+html {
+    overflow-y: scroll;
+}
+
+html,
+body {
+    min-height: 100%;
+}
+
+body {
+    text-rendering: optimizeLegibility;
+}
+
+// Scrollbars
+@include scrollbar(8px, #dddddd, #ffffff);

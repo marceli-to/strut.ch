@@ -1,0 +1,32 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: component/blocks
+ * -----------------------------------------------------------------------------
+ *
+ */
+
+// Page block a.k.a outer layout 
+%page-block,
+.page-block {
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+    position: relative;
+    @include responsive-prop('max-width', $page-max-width);
+
+    @include bp-sm() {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+%page-block-inner,
+.page-block-inner,
+.page__inner {
+    @include bp-md() {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 80%;
+    }
+}

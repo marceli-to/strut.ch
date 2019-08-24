@@ -1,0 +1,21 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: components/typo/webfonts
+ * -----------------------------------------------------------------------------
+ *
+ * Typography - Webfonts
+ *
+ */
+
+// Akkurat mono 
+@font-face {
+	font-family: 'AkkuratStd-Mono';
+	src: url('fonts/AkkuratStd-Mono.eot');
+	src: url('fonts/AkkuratStd-Mono.woff') format('woff'), url('fonts/AkkuratStd-Mono.svg#AkkuratStd-Mono') format('svg');
+}
+
+@font-face {
+	font-family: 'KapraNeueRegular';
+	src: url('fonts/KapraNeueRegular.eot');
+	src: url('fonts/KapraNeueRegular.eot?#iefix') format('embedded-opentype'), url('fonts/KapraNeueRegular.woff2') format('woff2'), url('fonts/KapraNeueRegular.woff') format('woff'), url('fonts/KapraNeueRegular.svg#KapraNeue-Regular') format('svg');
+}

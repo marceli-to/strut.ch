@@ -65,7 +65,6 @@ class NewsController extends Controller
         ]);
 
         $news->save();
-
         return response()->json(['newsId' => $news->id]);
     }
 

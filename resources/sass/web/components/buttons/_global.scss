@@ -1,0 +1,43 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: components/buttons/global
+ * -----------------------------------------------------------------------------
+ */
+
+%btn,
+.btn {
+	background-color: transparent;
+    border-radius: 0;
+    border: none;
+    display: block;
+    line-height: 1;
+	outline: none !important;
+    -webkit-appearance: none;
+    -webkit-tap-highlight-color: $color--white;
+}
+
+%btn-ib,
+.btn-ib {
+    border-radius: 0;
+    display: inline-block;
+    line-height: 1;
+    outline: none !important;
+    text-decoration: none;
+    -webkit-appearance: none;
+    -webkit-tap-highlight-color: $color--white;
+}
+
+%btn-shadow,
+.btn-shadow {
+    box-shadow: none;
+    transition: box-shadow .1s ease-in;
+    &:hover {
+        box-shadow: $box-shadow;
+    }
+}
+
+%btn-bg,
+.btn-bg {
+    @include background-default();
+}
+
