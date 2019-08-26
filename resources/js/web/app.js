@@ -15,3 +15,9 @@ require('./bootstrap');
 
 // Menu
 require('./modules/menu.js');
+
+// Team
+require('./modules/team.js');
+
+// Masonry
+require('./modules/packery.js');

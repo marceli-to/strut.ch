@@ -8,10 +8,10 @@ var Menu = (function() {
 	var selectors = {
         html:           'html',
         body:           'body',
-        menuBtn:        '.js-btn-menu',
+        header:         'header',
+        btnMenu:        '.js-btn-menu',
         menu:           '.js-menu',
-        subMenuBtn:     '.js-btn-sub',
-        subMenu:        'nav ul ul',
+        btnSub:         '.js-btn-sub-menu',
 	};
 
     // css classes
@@ -19,21 +19,14 @@ var Menu = (function() {
         active:  'is-active',
         visible: 'is-visible',
         open:    'is-open',
-        hasMenu: 'has-menu',
-        hasSub:  'has-sub',
+        parent:  'is-parent',
     };
 
     // media queries
     var mq = {
-        xs: window.matchMedia("(max-width: 767px)"),
-        sm: window.matchMedia("(min-width: 768px)"),
-        md: window.matchMedia("(min-width: 1024px)"),
-        lg: window.matchMedia("(min-width: 1440px)")
-    };
-
-    var menuText = {
-        close: 'Schliessen',
-        open: 'Menü'
+        sm: window.matchMedia("(min-width: 600px)"),
+        md: window.matchMedia("(min-width: 900px)"),
+        lg: window.matchMedia("(min-width: 1200px)")
     };
 
     /* --------------------------------------------------------------
@@ -48,46 +41,81 @@ var Menu = (function() {
     // Bind events
     var _bind = function() {
 
-        $(selectors.body).on('click', selectors.menuBtn, function(){
+        $(selectors.body).on('click', selectors.btnMenu, function(){
             _toggle();
         });
 
-        $(selectors.body).on('click', selectors.subMenuBtn, function(){
+        $(selectors.body).on('click', selectors.btnSub, function(){
             _toggleSub(this);
         });
+
     };
 
     var _toggle = function() {
         $(selectors.menu).toggleClass(classes.visible);
-        $(selectors.menuBtn).toggleClass(classes.active);
-
-        // Change menu text
-        if ($(selectors.menuBtn).hasClass(classes.active)) {
-            $(selectors.menuBtn).html(menuText.close);
-        }
-        else {
-            $(selectors.menuBtn).html(menuText.open);
-        }
+        $(selectors.btnMenu).toggleClass(classes.active);
     };
 
     var _toggleSub = function(btn) {
 
-        if ($(selectors.menu).hasClass(classes.hasSub)) {
-            if ($(btn).next('ul').hasClass(classes.visible)) {
-                $(btn).next('ul').removeClass(classes.visible);
-                $(selectors.menu).removeClass(classes.hasSub);
-            }
-            else {
-                $(selectors.subMenu).removeClass(classes.visible);
-                $(btn).next('ul').addClass(classes.visible);
-            }
+        // The clicked item is parent (= top level) and child item is visible,
+        // 1. hide all child items
+        // 2. reset the menu
+        if ($(btn).hasClass(classes.parent) && $(btn).next('ul').is(':visible')) {
+            $(btn).parent('li').find('ul').each(function(){
+                $(this).hide();
+                $(this).removeClass(classes.open).hide();
+            });
+            _resetMenuHeight();
         }
+        // The clicked item is parent (= top level) but child item is not visible,
+        // 1. close all parent siblings
+        // 2. reset the menu
+        // 3. open child item
+        // 4. increment menu
+        else if ($(btn).hasClass(classes.parent) && $(btn).next('ul').is(':visible') == false) {
+            $(selectors.menu).find('ul ul').each(function(){
+                $(this).hide();
+                $(this).removeClass(classes.open).hide();
+            });
+
+            $(btn).next('ul').addClass(classes.open).show();
+            _incrementMenuHeight();
+        }
+        // The clicked item is NOT a parent but has visible child items
+        // 1. save child items height
+        // 2. hide child and its children
+        // 3. decrement menu
+        else if ($(btn).next('ul').is(':visible')) {
+            let height = $(btn).next('ul').height();
+            $(btn).next('ul').removeClass(classes.open).hide();
+            $(btn).parent('li').find('ul').each(function(){
+                $(this).hide();
+                $(this).removeClass(classes.open).hide();
+            });
+            _incrementMenuHeight(height);
+        }
+        // The clicked its is NOT a parent and has no visible child items
+        // 1. show child item
+        // 2. increment menu
         else {
-            $(btn).next('ul').addClass(classes.visible);
-            $(selectors.menu).addClass(classes.hasSub);
+            $(btn).next('ul').addClass(classes.open).show();
+            _incrementMenuHeight();
         }
     };
 
+    var _incrementMenuHeight = function() {
+        if (mq.md.matches) {
+            let h = $(selectors.menu).find('ul.is-open').first().height();
+            $(selectors.menu).height(h + 40);
+        }
+    }
+
+    var _resetMenuHeight = function() {
+        if (mq.md.matches) {
+            $(selectors.menu).css('height', '');
+        }
+    };
 
     /* --------------------------------------------------------------
      * RETURN PUBLIC METHODS

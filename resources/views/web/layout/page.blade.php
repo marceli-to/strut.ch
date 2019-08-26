@@ -10,7 +10,79 @@
 <link href="{{ asset('assets/css/app.css') }}" type="text/css" rel="stylesheet" />
 </head>
 <body>
-<main>@yield('content')</main>
+<header class="site-header">
+    <div>
+        <a href="javascript:;" class="icon-menu js-btn-menu" title=""></a>
+        <a href="/" class="brand" title="Home | strut.ch">
+            <img src="/assets/img/logo-strut.svg" height="161" width="313">
+        </a>
+    </div>
+    <nav class="site-nav js-menu" role="navigation">
+        <div>
+            <ul>
+                <li>
+                    <a href="javascript:;" class="js-btn-sub-menu is-parent">Bauten</a>
+                    <ul>
+                        <li>
+                            <a href="javascript:;" class="js-btn-sub-menu">Wohnen</a>
+                            <ul>
+                                <li>
+                                    <a href="javascript:;" class="js-btn-sub-menu">Einfamilienhäuser</a>
+                                    <ul class="has-indent">
+                                        <li><a href="">Einfamilienhaus, Volketswil</a></li>
+                                        <li><a href="">Einfamilienhaus, Winterthur</a></li>
+                                        <li><a href="">Einfamilienhaus, Frauenfeld</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="">Villen</a></li>
+                                <li><a href="">Villenzeilen</a></li>
+                                <li><a href="">Mehrfamilienhäuser</a></li>
+                                <li><a href="">Atelierhäuser</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript:;" class="js-btn-sub-menu">Gewerbe</a>
+                            <ul class="has-indent">
+                                <li><a href="">Gewerberaum, Winterthur</a></li>
+                                <li><a href="">Gewerberaum, Pfungen</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript:;" class="js-btn-sub-menu">Öffentlich</a>
+                            <ul class="has-indent">
+                                <li><a href="">Öffentlich, Winterthur</a></li>
+                                <li><a href="">Öffentlich, Pfungen</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li><a href="">Werkliste</a></li>
+                <li>
+                    <a href="javascript:;" class="js-btn-sub-menu is-parent">Publikationen</a>
+                    <ul>
+                        <li><a href="">Presse</a></li>
+                        <li><a href="">Bücher</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript:;" class="js-btn-sub-menu is-parent">Büro</a>
+                    <ul>
+                        <li><a href="/ueber-uns">Über uns</a></li>
+                        <li><a href="">Jobs</a></li>
+                        <li><a href="">Auszeichnungen</a></li>
+                        <li><a href="">Vorträge</a></li>
+                    </ul>
+                </li>
+                <li><a href="">Kontakt</a></li>
+                <li class="is-inline is-language"><a href="">De</a></li>
+                <li class="is-inline is-language"><a href="" class="is-inactive">En</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<main class="site-content" role="main">
+    <div>@yield('content')</div>
+</main>
 <script src="{{ asset('assets/js/app.js') }}" type="text/javascript"></script>
 </body>
 <!-- made with ❤ by marceli.to -->

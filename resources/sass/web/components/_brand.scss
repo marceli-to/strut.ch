@@ -4,41 +4,23 @@
  * -----------------------------------------------------------------------------
  */
 
-$brand-dimensions: (
-    null: 70px,
-    sm:  108px,
-    md:  148px,
-    lg:  186px
-);
-
-$brand-top: (
-    null: 20px,
-    sm:   24px,
-    md:   24px,
-    lg:   24px
-);
-
 .brand {
+    height: 60px;
     display: block;
-    @include responsive-prop('height', $brand-dimensions);
+    //@include responsive-prop('right', $space-xs);
+    left: calc(100% - 126px);
     position: absolute;
-    left: 50%;
-    margin-left: -35px;
-    @include responsive-prop('top', $brand-top);
-    @include responsive-prop('width', $brand-dimensions);
-    z-index: 110;
-    @include bp-sm() {
-        margin-left: -54px;
-    }
+    @include responsive-prop('top', $space-xs);
+    width: 116px;
+    z-index: 15;
 
     @include bp-md() {
-        margin-left: -74px;
+        left: auto;
+        height: 80px;
+        right: 20px;
+        width: 155px;
     }
     
-    @include bp-lg() {
-        margin-left: -93px;
-    }
-
     img {
         @extend %is-responsive;
     }

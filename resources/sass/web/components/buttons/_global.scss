@@ -27,15 +27,6 @@
     -webkit-tap-highlight-color: $color--white;
 }
 
-%btn-shadow,
-.btn-shadow {
-    box-shadow: none;
-    transition: box-shadow .1s ease-in;
-    &:hover {
-        box-shadow: $box-shadow;
-    }
-}
-
 %btn-bg,
 .btn-bg {
     @include background-default();

@@ -15,7 +15,8 @@ Route::get('media/thumbnail/{file}', 'MediaController@thumbnail');
 Route::get('media/{file}/{size?}', 'MediaController@resize');
 
 // Development Routes
-Route::view('/', 'web.pages.index');
+Route::view('/', 'web.pages.home');
+Route::view('/ueber-uns', 'web.pages.about-us');
 
 
 // Admin Routes

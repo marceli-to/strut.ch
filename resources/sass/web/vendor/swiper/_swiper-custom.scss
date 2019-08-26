@@ -13,7 +13,7 @@
 }
 .swiper-pagination-bullet {
     background-color: transparent;
-    border: 1px solid $color--primary;
+    border: 1px solid $color--black;
 
     @include bp-sm() {
         height: 10px;
@@ -24,7 +24,7 @@
 
 .swiper-pagination-bullet {
     background-color: transparent;
-    border: 2px solid $color--primary;
+    border: 2px solid $color--black;
     opacity: 1;
 
     @include bp-sm() {
@@ -34,7 +34,7 @@
 
 .swiper-pagination-bullet.swiper-pagination-bullet-active {
     border: 2px solid transparent;
-    background-color: $color--primary;
+    background-color: $color--black;
 
     @include bp-sm() {
         background-color: $color--white;

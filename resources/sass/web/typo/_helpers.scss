@@ -15,30 +15,6 @@
 
 .nobr { white-space: nowrap; }
 
-
-.fs-xs {
-	@include font-size($fs-xs);
-}
-
-.fs-sm {
-	@include font-size($fs-sm);
-}
-
-.fs-md {
-	@include font-size($fs-md);
-}
-
-.fs-lg {
-	@include font-size($fs-lg);
-}
-
-/**
- * Typography - Font size helpers
- * -----------------------------------------------------------------------------
- */
-
-
-
 /**
  * Typography - Generic elements
  * -----------------------------------------------------------------------------
@@ -49,5 +25,9 @@ strong, b {
 }
 
 p {
-	@include responsive-prop('margin-bottom', $space-sm);
+	margin-bottom: 24px;
+	&:last-child,
+	&:last-of-type {
+		margin-bottom: 0;
+	}
 }

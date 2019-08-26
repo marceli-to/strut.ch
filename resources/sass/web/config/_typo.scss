@@ -6,47 +6,37 @@
  *
  */
 
-$fs-xs: (
-    null: (16px,1.2),
-    sm:   (16px,1.2),
-    md:   (17px,1.2),
-    lg:   (18px,1.2),
-);
-
-$fs-sm: (
-    null: (18px,1.25),
-    sm:   (20px,1.25),
-    md:   (23px,1.25),
+$fs-nav: (
+    null: (24px,1.29),
+    sm:   (24px,1.25), // @check (changed from 1.125 to 1.25 due to cropped umlaut)
+    md:   (24px,1.25),
     lg:   (24px,1.25),
 );
 
+$fs-subnav: (
+    null: (20px,1.4),
+    sm:   (20px,1.2),
+    md:   (20px,1.2),
+    lg:   (20px,1.2),
+);
+
+$fs-sm: (
+    null: (15px,1.13),
+    sm:   (20px,1.2),
+    md:   (20px,1.2),
+    lg:   (20px,1.2),
+);
+
 $fs-md: (
-    null: (23px,1.1),
-    sm:   (26px,1.1),
-    md:   (36px,1.1),
-    lg:   (36px,1.1),
+    null: (19px,1.21),
+    sm:   (31px,1.129),
+    md:   (31px,1.129),
+    lg:   (31px,1.129),
 );
 
 $fs-lg: (
-    null: (25px,1.1),
-    sm:   (30px,1.1),
-    md:   (36px,1.1),
-    lg:   (48px,1.1),
+    null: (38px,1.05),
+    sm:   (51px,1.03),
+    md:   (51px,1.03),
+    lg:   (51px,1.03),
 );
-
-$fs-xl: (
-    null: (30px,1.1),
-    sm:   (40px,1.1),
-    md:   (54px,1.1),
-    lg:   (72px,1.1),
-);
-
-$fs-xxl: (
-    null: (30px,1.1),
-    sm:   (70px,1.1),
-    md:   (90px,1.1),
-    lg:   (120px,1.1),
-);
-
-
-
