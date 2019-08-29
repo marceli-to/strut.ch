@@ -62,14 +62,14 @@ Vue.axios.interceptors.response.use((response) => {
     return response;
   }, (error) => {
   if (error.response.status == 401) {
-    window.location.href = '/login';
+    window.location.href = '/admin/login';
   }
   return Promise.reject(error);
 });
 
 
-// App
-import AppComponent from '@/components/AppComponent.vue';
+// Mount App
+import AppComponent from '@/components/App.vue';
 
 const app = new Vue({
   components: { AppComponent },

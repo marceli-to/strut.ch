@@ -18,7 +18,6 @@ Route::get('media/{file}/{size?}', 'MediaController@resize');
 Route::view('/', 'web.pages.home');
 Route::view('/ueber-uns', 'web.pages.about-us');
 
-
 // Admin Routes
 Route::view('admin', 'admin.app');
 Route::get('admin/{any}', function () {

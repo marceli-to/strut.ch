@@ -110,6 +110,8 @@ class NewsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $news = $this->news->find($id);
+        $news->delete();
+        return response()->json('success');
     }
 }

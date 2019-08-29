@@ -116,7 +116,7 @@ class PostController extends Controller
 
         if ($request->get('body'))
         {
-            $post->title = $request->get('body');
+            $post->body = $request->get('body');
         }
 
         if ($request->get('isGridElement') !== null)

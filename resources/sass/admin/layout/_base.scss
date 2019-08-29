@@ -18,6 +18,7 @@ body {
 	color: $color--dark;
 	@include font-smoothing();
 	@include font-regular();
+	min-width: $page-min-width;
 	text-rendering: optimizeLegibility;
 }
 

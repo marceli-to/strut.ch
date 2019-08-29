@@ -1,13 +1,13 @@
 // Posts
-import PostIndexComponent from '@/components/posts/PostIndexComponent.vue';
-import PostCreateComponent from '@/components/posts/PostCreateComponent.vue';
-import PostEditComponent from '@/components/posts/PostEditComponent.vue';
+import PostIndex from '@/components/posts/Index.vue';
+import PostCreate from '@/components/posts/Create.vue';
+import PostEdit from '@/components/posts/Edit.vue';
 
 // Masonry
-import GridIndexComponent from '@/components/home/GridIndexComponent.vue';
+import GridIndex from '@/components/home/GridIndex.vue';
 
-// Dashboard
-import DashboardComponent from '@/components/DashboardComponent.vue';
+// Page
+import PageComponent from '@/layout/Page.vue';
 
 // Auth 
 import LoginComponent from '@/components/auth/LoginComponent.vue';
@@ -21,13 +21,13 @@ const routes = [
     {
         path: '/admin',
         name: 'admin',
-        component: DashboardComponent,
+        component: PageComponent,
         meta: { requiresAuth: true },
     },
     {
         path: '/admin/dashboard',
         name: 'dashboard',
-        component: DashboardComponent,
+        component: PageComponent,
         meta: { requiresAuth: true },
     },
     {
@@ -43,25 +43,25 @@ const routes = [
     {
         name: 'posts',
         path: '/admin/posts',
-        component: PostIndexComponent,
+        component: PostIndex,
         meta: { requiresAuth: true },
     },
     {
         name: 'post-create',
         path: '/admin/post/create',
-        component: PostCreateComponent,
+        component: PostCreate,
         meta: { requiresAuth: true },
     },
     {
         name: 'post-edit',
         path: '/admin/post/edit/:id',
-        component: PostEditComponent,
+        component: PostEdit,
         meta: { requiresAuth: true },
     },
     {
         name: 'masonry',
         path: '/admin/masonry',
-        component: GridIndexComponent,
+        component: GridIndex,
         meta: { requiresAuth: true },
     },
 ];

@@ -33,8 +33,12 @@ Route::middleware('auth:api')->group(function() {
     Route::delete('post/delete/{id}', 'PostController@delete');
     Route::post('post/order', 'PostController@order');
 
+    // PostMedia routes
+    Route::delete('postmedia/delete/{file}', 'PostMediaController@delete');
+
     // News routes
     Route::post('news/create', 'Backend\NewsController@store');
+    Route::post('news/delete/{id}', 'Backend\NewsController@destroy');
 
     // Grid routes
     Route::get('grid', 'Backend\Grid\GridController@index');
@@ -55,8 +59,6 @@ Route::middleware('auth:api')->group(function() {
     Route::post('media/upload','MediaController@upload');
     Route::get('media/{file}/{size?}', 'MediaController@resize');
 
-    // PostMedia routes
-    Route::delete('postmedia/delete/{file}', 'PostMediaController@delete');
 });
 
 Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
