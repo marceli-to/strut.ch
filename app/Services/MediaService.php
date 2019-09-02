@@ -66,11 +66,12 @@ class MediaService
     
     public function __construct()
     {
-        $this->path_source  = storage_path('app/public/media/');
-        $this->path_large   = storage_path('app/public/media/large/');
-        $this->path_small   = storage_path('app/public/media/small/');
-        $this->path_thumbs  = storage_path('app/public/media/thumbs/');
-        $this->path_uploads = storage_path('app/public/tmp/uploads');
+        $this->path_source    = storage_path('app/public/media/');
+        $this->path_large     = storage_path('app/public/media/large/');
+        $this->path_small     = storage_path('app/public/media/small/');
+        $this->path_thumbs    = storage_path('app/public/media/thumbs/');
+        $this->path_downloads = storage_path('app/public/media/downloads');
+        $this->path_uploads   = storage_path('app/public/tmp/uploads');
         $this->_mkdir();
     }
 
@@ -92,6 +93,25 @@ class MediaService
 
         // Create thumbnail for preview
         $this->thumbnail($name);
+
+        return ['name' => $name, 'filetype' => $filetype];
+    }
+
+    /**
+     * Upload the specified resource.
+     *
+     * @return array
+     */
+
+    public function uploadDocument(Request $request)
+    {
+        $file = $request->file('file');
+        $name = $this->_sanitizeFilename(trim($file->getClientOriginalName()));
+        $name = uniqid() . '_' . $name;
+        $file->move($this->path_downloads, $name);
+
+        // Get file extension to store in media model
+        $filetype = \File::extension($this->path_downloads . $name);
 
         return ['name' => $name, 'filetype' => $filetype];
     }
@@ -246,6 +266,11 @@ class MediaService
             File::makeDirectory($this->path_uploads, 0775, true, true);
         }
 
+        if (!File::isDirectory($this->path_downloads))
+        {
+            File::makeDirectory($this->path_downloads, 0775, true, true);
+        }
+        
         if (!File::isDirectory($this->path_source))
         {
             File::makeDirectory($this->path_source, 0775, true, true);

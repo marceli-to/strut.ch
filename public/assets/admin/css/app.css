@@ -1661,24 +1661,27 @@ h3 {
     margin-bottom: 10px;
   }
 }
-.list-item.is-last {
+.list-item.is-last, .list-item:last-child {
   border-bottom: 2px solid #222222;
   padding-bottom: 10px;
 }
 @media screen and (min-width: 768px) {
-  .list-item.is-last {
+  .list-item.is-last, .list-item:last-child {
     padding-bottom: 10px;
   }
 }
 @media screen and (min-width: 1024px) {
-  .list-item.is-last {
+  .list-item.is-last, .list-item:last-child {
     padding-bottom: 10px;
   }
 }
 @media screen and (min-width: 1280px) {
-  .list-item.is-last {
+  .list-item.is-last, .list-item:last-child {
     padding-bottom: 10px;
   }
+}
+.list-item.is-disabled {
+  text-decoration: line-through;
 }
 .list-item.list-item--sortable {
   cursor: move;
@@ -2752,6 +2755,27 @@ main.content-auth {
 
 /**
  * -----------------------------------------------------------------------------
+ * File: layout/grid
+ * -----------------------------------------------------------------------------
+ */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 40px;
+  margin-bottom: 40px;
+}
+.grid .form-row {
+  margin-bottom: 0 !important;
+}
+
+.grid-1-2 {
+  display: grid;
+  grid-template-columns: 0.5fr auto;
+  grid-gap: 60px;
+}
+
+/**
+ * -----------------------------------------------------------------------------
  * File: layout/header
  * -----------------------------------------------------------------------------
  */
@@ -3287,6 +3311,11 @@ header.auth-header h1 {
   height: auto;
   width: 100%;
 }
+.dropzone-existing-images .dz-file-preview {
+  display: inline-block;
+  text-decoration: none;
+  margin-bottom: 6px;
+}
 
 .dz-remove {
   background-repeat: no-repeat;
@@ -3358,4 +3387,16 @@ header.auth-header h1 {
   font-style: normal;
   font-stretch: normal;
   font-weight: normal;
+}
+
+/**
+ * -----------------------------------------------------------------------------
+ * File: admin/vendor/draggable
+ * -----------------------------------------------------------------------------
+ */
+.draggable-ghost {
+  opacity: 0.6;
+  background: #f9f9f9;
+  border: 2px dashed #222222;
+  padding: 5px;
 }

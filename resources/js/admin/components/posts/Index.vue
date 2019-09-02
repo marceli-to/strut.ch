@@ -90,11 +90,3 @@
     }
   }
 </script>
-<style scoped>
-.ghost {
-  opacity: .6;
-  background: #f9f9f9;
-  border: 2px dashed #222222;
-  padding: 5px;
-}
-</style>

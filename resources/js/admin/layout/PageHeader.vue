@@ -18,6 +18,12 @@
                 <li>
                     <router-link :to="{ name: 'masonry' }">Masonry</router-link>
                 </li>
+                <li>
+                    <router-link :to="{ name: 'jobs' }">Jobs</router-link>
+                </li>
+                <li>
+                    <router-link :to="{ name: 'team' }">Team</router-link>
+                </li>
             </ul>
         </nav>
     </div>

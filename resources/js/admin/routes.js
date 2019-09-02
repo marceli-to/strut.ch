@@ -3,6 +3,16 @@ import PostIndex from '@/components/posts/Index.vue';
 import PostCreate from '@/components/posts/Create.vue';
 import PostEdit from '@/components/posts/Edit.vue';
 
+// Jobs
+import JobIndex from '@/components/jobs/Index.vue';
+import JobCreate from '@/components/jobs/Create.vue';
+import JobEdit from '@/components/jobs/Edit.vue';
+
+// Team
+import TeamIndex from '@/components/team/Index.vue';
+import TeamCreate from '@/components/team/Create.vue';
+import TeamEdit from '@/components/team/Edit.vue';
+
 // Masonry
 import GridIndex from '@/components/home/GridIndex.vue';
 
@@ -62,6 +72,46 @@ const routes = [
         name: 'masonry',
         path: '/admin/masonry',
         component: GridIndex,
+        meta: { requiresAuth: true },
+    },
+
+    // Jobs
+    {
+        name: 'jobs',
+        path: '/admin/jobs',
+        component: JobIndex,
+        meta: { requiresAuth: true },
+    },
+    {
+        name: 'job-create',
+        path: '/admin/job/create',
+        component: JobCreate,
+        meta: { requiresAuth: true },
+    },
+    {
+        name: 'job-edit',
+        path: '/admin/jobs/edit/:id',
+        component: JobEdit,
+        meta: { requiresAuth: true },
+    },
+
+    // Team
+    {
+        name: 'team',
+        path: '/admin/team',
+        component: TeamIndex,
+        meta: { requiresAuth: true },
+    },
+    {
+        name: 'team-create',
+        path: '/admin/team/create',
+        component: TeamCreate,
+        meta: { requiresAuth: true },
+    },
+    {
+        name: 'team-edit',
+        path: '/admin/team/edit/:id',
+        component: TeamEdit,
         meta: { requiresAuth: true },
     },
 ];

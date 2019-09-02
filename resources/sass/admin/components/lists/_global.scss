@@ -12,9 +12,14 @@
     @include responsive-prop('padding-top', $space-xs);
     @include responsive-prop('margin-bottom', $space-xs);
 
-    &.is-last {
+    &.is-last,
+    &:last-child {
         border-bottom: 2px solid $color--dark;
         @include responsive-prop('padding-bottom', $space-xs);
+    }
+
+    &.is-disabled {
+        text-decoration: line-through;
     }
 
     &.list-item--sortable {

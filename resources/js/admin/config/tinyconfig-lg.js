@@ -8,4 +8,5 @@ export default {
     },
     toolbar: 'bold | link | code | removeformat undo redo',
     paste_as_text: true,
+    height : "360px"
 }

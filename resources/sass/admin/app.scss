@@ -79,6 +79,7 @@
 @import 'layout/container';
 @import 'layout/footer';
 @import 'layout/main';
+@import 'layout/grid';
 @import 'layout/header';
 @import 'layout/sidebar';
 
@@ -97,3 +98,6 @@
 
 // Vendor - Notifications
 @import 'vendor/notifications';
+
+// Vendor - Draggable
+@import 'vendor/draggable';

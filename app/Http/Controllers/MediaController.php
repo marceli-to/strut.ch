@@ -19,6 +19,12 @@ class MediaController extends Controller
         $media = $this->mediaService->upload($request);
         return response()->json($media, 200);
     }
+
+    public function uploadDocument(Request $request)
+    {
+        $media = $this->mediaService->uploadDocument($request);
+        return response()->json($media, 200);
+    }
     
     public function thumbnail($image = NULL)
     {

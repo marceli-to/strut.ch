@@ -36,6 +36,26 @@ Route::middleware('auth:api')->group(function() {
     // PostMedia routes
     Route::delete('postmedia/delete/{file}', 'PostMediaController@delete');
 
+    // Job routes
+    Route::get('jobs/get', 'Backend\Job\JobController@get');
+    Route::post('job/create', 'Backend\Job\JobController@store');
+    Route::get('job/edit/{id}', 'Backend\Job\JobController@edit');
+    Route::post('job/update/{id}', 'Backend\Job\JobController@update');
+    Route::get('job/status/{id}', 'Backend\Job\JobController@status');
+    Route::delete('job/destroy/{id}', 'Backend\Job\JobController@destroy');
+    Route::post('job/order', 'Backend\Job\JobController@order');
+    Route::delete('job/delete/file/{file}', 'Backend\Job\JobController@unlink');
+
+    // Team routes
+    Route::get('team/get', 'Backend\Team\TeamController@get');
+    Route::post('team/create', 'Backend\Team\TeamController@store');
+    Route::get('team/edit/{id}', 'Backend\Team\TeamController@edit');
+    Route::post('team/update/{id}', 'Backend\Team\TeamController@update');
+    Route::get('team/status/{id}', 'Backend\Team\TeamController@status');
+    Route::delete('team/destroy/{id}', 'Backend\Team\TeamController@destroy');
+    Route::post('team/order', 'Backend\Team\TeamController@order');
+    Route::delete('team/delete/file/{file}', 'Backend\Team\TeamController@unlink');
+
     // News routes
     Route::post('news/create', 'Backend\NewsController@store');
     Route::post('news/delete/{id}', 'Backend\NewsController@destroy');
@@ -57,6 +77,7 @@ Route::middleware('auth:api')->group(function() {
 
     // Media routes
     Route::post('media/upload','MediaController@upload');
+    Route::post('media/upload/document','MediaController@uploadDocument');
     Route::get('media/{file}/{size?}', 'MediaController@resize');
 
 });
