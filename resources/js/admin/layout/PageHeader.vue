@@ -8,7 +8,6 @@
         </header>
         <nav class="site-nav" :class="{'is-visible': menuVisible}">
             <div>
-                <router-link :to="{ name: 'logout' }" class="icon-logout">Logout</router-link>
                 <a href="javascript:;" @click="toggleMenu()" class="icon-close"></a>
             </div>
             <ul>
@@ -24,7 +23,11 @@
                 <li>
                     <router-link :to="{ name: 'team' }">Team</router-link>
                 </li>
+                <li>
+                    <router-link :to="{ name: 'books' }">Bücher</router-link>
+                </li>
             </ul>
+            <router-link :to="{ name: 'logout' }" class="icon-logout">Logout</router-link>
         </nav>
     </div>
 </template>

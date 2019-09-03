@@ -1,5 +1,6 @@
 <template>
     <div class="container">
+      <notifications classes="notification" />
       <main class="content" role="main">
         <div>
           <h1>{{title}}</h1>
@@ -12,7 +13,7 @@
                   <a href="javascript:;" @click="changeTab('translation')" :class="[tabs.translation.active ? 'is-active' : '', tabs.translation.error ? 'has-error' : '']">Übersetzung</a>
               </li> -->
               <li>
-                <a href="javascript:;" @click="changeTab('documents')" :class="tabs.documents.active ? 'is-active' : ''">Dokumente</a>
+                <a href="javascript:;" @click="changeTab('uploads')" :class="tabs.uploads.active ? 'is-active' : ''">Upload</a>
               </li>
             </ul>
           </nav>
@@ -31,7 +32,7 @@
                   <tinymce-editor api-key="vuaywur9klvlt3excnrd9xki1a5lj25v18b2j0d0nu5tbwro" :init="tinyConfig" v-model="job.info.de"></tinymce-editor>
               </div>
             </div>
-            <div class="span" v-show="tabs.documents.active">
+            <div class="span" v-show="tabs.uploads.active">
               <div class="form-row" v-if="job.media == null">
                 <label for="document">Datei hochladen <span class="fs-xs">(PDF, max. 8 MB)</span></label>
                 <vue-dropzone ref="dropzone" id="dropzone" :options="dropzoneOptions" @vdropzone-complete="afterComplete"></vue-dropzone>
@@ -99,7 +100,7 @@ export default {
             active: false,
             error: false
         },
-        documents: {
+        uploads: {
           active: false,
           error: false
         }
@@ -129,7 +130,6 @@ export default {
         maxFiles: 1,
         createImageThumbnails: false,
         acceptedFiles: '.pdf',
-        addRemoveLinks: true,
         headers: {
           'Authorization': 'Bearer ' + localStorage.getItem('token')
         }
@@ -157,28 +157,35 @@ export default {
     validate() {
 
       if (this.job.title.de && this.job.lead.de) {
-          return true;
+        return true;
       }
 
       if (!this.job.title.de) {
-          this.errors.title.de = true;
-          this.tabs.data.error = true;
+        this.errors.title.de = true;
+        this.tabs.data.error = true;
       }
 
       if (!this.job.lead.de) {
-          this.errors.lead.de = true;
-          this.tabs.data.error = true;
+        this.errors.lead.de = true;
+        this.tabs.data.error = true;
       }
 
       return false;
     },
 
-    removeError(el) {
-      this.errors[el] = false;
+    validationError() {
+      this.$notify({type: 'error', text: 'Bitte markierte Felder prüfen!'});
+      window.scrollTo({top: 0, behavior: 'smooth'});
     },
 
     // Submit method
     submit() {
+      
+      if (!this.validate()) {
+        this.validationError();
+        return;
+      }
+
       if (this.$props.type == 'edit') {
         this.update();
       }
@@ -189,29 +196,30 @@ export default {
 
     // Add the job
     store() {
-      if (this.validate()) {
-        let uri = '/api/job/create';
-        this.axios.post(uri, this.job).then((response) => {
-          this.$router.push({name: 'jobs'});
-        });
-      }
+      let uri = '/api/job/create';
+      this.axios.post(uri, this.job).then((response) => {
+        this.$router.push({name: 'jobs'});
+      });
     },
 
     // Update the job
     update() {
-      if (this.validate()) {
-        let uri = `/api/job/update/${this.$route.params.id}`;
-        this.axios.post(uri, this.job).then((response) => {
-          this.$router.push({name: 'jobs'});
-        });
-      }
+      let uri = `/api/job/update/${this.$route.params.id}`;
+      this.axios.post(uri, this.job).then((response) => {
+        this.$router.push({name: 'jobs'});
+      });
     },
 
     // FileUpload Callback
     afterComplete(file) {
+      if (file.status == 'error' && file.accepted == false) {
+        this.$notify({type: 'error', text: 'Ungültiges Dateiformat.'});
+      }
+      else {
         let file_response = JSON.parse(file.xhr.response);
         this.job.media = file_response.name;
-        this.$refs.dropzone.removeFile(file);
+      }
+      this.$refs.dropzone.removeFile(file);
     },
     
     // Build media source string 
@@ -250,7 +258,12 @@ export default {
     },
 
     removeError(field, language) {
+      if (language) {
         this.errors[field][language] = false;
+      }
+      else {
+        this.errors[field] = false;
+      }
     }
   },
 

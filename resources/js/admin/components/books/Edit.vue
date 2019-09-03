@@ -1,16 +1,16 @@
 <template>
   <div>
     <page-header />
-    <team-form type="edit"></team-form>
+    <book-form type="edit"></book-form>
   </div>
 </template>
 <script>
 import PageHeader from '@/layout/PageHeader.vue';
-import TeamForm from '@/components/team/form.vue';
+import BookForm from '@/components/books/form.vue';
 export default {
   components: {
     PageHeader: PageHeader,
-    TeamForm: TeamForm
+    BookForm: BookForm
   }
 }
 </script>

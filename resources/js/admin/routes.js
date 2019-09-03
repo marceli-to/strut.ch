@@ -13,6 +13,11 @@ import TeamIndex from '@/components/team/Index.vue';
 import TeamCreate from '@/components/team/Create.vue';
 import TeamEdit from '@/components/team/Edit.vue';
 
+// Books
+import BookIndex from '@/components/books/Index.vue';
+import BookCreate from '@/components/books/Create.vue';
+import BookEdit from '@/components/books/Edit.vue';
+
 // Masonry
 import GridIndex from '@/components/home/GridIndex.vue';
 
@@ -112,6 +117,26 @@ const routes = [
         name: 'team-edit',
         path: '/admin/team/edit/:id',
         component: TeamEdit,
+        meta: { requiresAuth: true },
+    },
+
+    // Books
+    {
+        name: 'books',
+        path: '/admin/books',
+        component: BookIndex,
+        meta: { requiresAuth: true },
+    },
+    {
+        name: 'book-create',
+        path: '/admin/book/create',
+        component: BookCreate,
+        meta: { requiresAuth: true },
+    },
+    {
+        name: 'book-edit',
+        path: '/admin/book/edit/:id',
+        component: BookEdit,
         meta: { requiresAuth: true },
     },
 ];

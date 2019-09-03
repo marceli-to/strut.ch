@@ -1,40 +1,42 @@
 <?php
-namespace App\Http\Controllers\Backend\Job;
+namespace App\Http\Controllers\Backend\Book;
 
 use App\Services\MediaService;
-use App\Models\Job;
-use App\Http\Resources\JobCollection;
+use App\Models\Book;
+use App\Http\Resources\BookCollection;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class JobController extends Controller
+class BookController extends Controller
 {
     protected $mediaService;
 
-    protected $job;
-
+    protected $book;
+    
     /**
      * Constructor
      * 
      * @param MediaService $mediaService
-     * @param Job $job
+     * @param Book $book
      */
-    public function __construct(MediaService $mediaService, Job $job)
+
+    public function __construct(MediaService $mediaService, Book $book)
     {
         $this->mediaService = $mediaService;
-        $this->job = $job;
+        $this->book = $book;
     }
 
     /**
-     * Get all jobs
+     * Get all books
      *
      * @return \Illuminate\Http\Response
      */
+
     public function get()
     {
-        $jobs = $this->job->orderBy('order', 'ASC')->get();
-        return new JobCollection($jobs);
+        $books = $this->book->orderBy('order', 'ASC')->get();
+        return new BookCollection($books);
     }
 
     /**
@@ -43,27 +45,25 @@ class JobController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    
     public function store(Request $request)
     {   
-        $job = new Job([
-            'title' => [
-                'de' => $request->input('title.de'),
-                'en' => $request->input('title.en')
-            ],
-            'lead' => [
-                'de' => $request->input('lead.de'),
-                'en' => $request->input('lead.en')
+        $book = new Book([
+            'title' =>  $request->input('title'),
+            'description' => [
+                'de' => $request->input('description.de'),
+                'en' => $request->input('description.en'),
             ],
             'info' => [
                 'de' => $request->input('info.de'),
-                'en' => $request->input('info.en')
+                'en' => $request->input('info.en'),
             ],
-            'order' => -1,
-            'media' =>  $request->input('media')           
+            'url' => $request->input('url') ? \AppHelper::addScheme($request->input('url')) : NULL,
+            'media' => $request->input('media'),          
         ]);
 
-        $job->save();
-        return response()->json(['jobId' => $job->id]);
+        $book->save();
+        return response()->json(['bookId' => $book->id]);
     }
 
     /**
@@ -74,8 +74,8 @@ class JobController extends Controller
      */
     public function edit($id)
     {
-        $job = $this->job->findOrFail($id);
-        return response()->json($job);
+        $book = $this->book->findOrFail($id);
+        return response()->json($book);
     }
 
     /**
@@ -87,12 +87,13 @@ class JobController extends Controller
      */
     public function update($id, Request $request)
     {
-        $job = $this->job->findOrFail($id);
-        $job->setTranslation('title', 'de', $request->input('title.de'));
-        $job->setTranslation('lead', 'de', $request->input('lead.de'));
-        $job->setTranslation('info', 'de', $request->input('info.de'));
-        $job->media = $request->input('media') ? $request->input('media') : NULL;
-        $job->save();
+        $book = $this->book->findOrFail($id);
+        $book->title = $request->input('title');
+        $book->setTranslation('description', 'de', $request->input('description.de'));
+        $book->setTranslation('info', 'de', $request->input('info.de'));
+        $book->media = $request->input('media') ? $request->input('media') : NULL;
+        $book->url = $request->input('url') ? \AppHelper::addScheme($request->input('url')) : NULL;
+        $book->save();
         return response()->json('successfully updated');
     }
 
@@ -104,13 +105,13 @@ class JobController extends Controller
      */
     public function clone($id)
     {
-        $job = $this->job->findOrFail($id);
-        $jobCopy = $job->replicate();
-        $jobCopy->setTranslation('title', 'de', $job->getTranslation('title', 'de') . ' (Kopie)');
-        $jobCopy->media = null;
-        $jobCopy->publish = 0;
-        $jobCopy->save();
-        return response()->json($jobCopy);
+        $book = $this->book->findOrFail($id);
+        $bookCopy = $book->replicate();
+        $bookCopy->title = $book->title . ' (Kopie)';
+        $bookCopy->media = null;
+        $bookCopy->publish = 0;
+        $bookCopy->save();
+        return response()->json($bookCopy);
     }
 
     /**
@@ -121,10 +122,10 @@ class JobController extends Controller
      */
     public function status($id)
     {
-        $job = $this->job->findOrFail($id);
-        $job->publish = $job->publish == 0 ? 1 : 0;
-        $job->save();
-        return response()->json($job->publish);
+        $book = $this->book->findOrFail($id);
+        $book->publish = $book->publish == 0 ? 1 : 0;
+        $book->save();
+        return response()->json($book->publish);
     }
 
     /**
@@ -136,12 +137,13 @@ class JobController extends Controller
 
     public function order(Request $request)
     {
-        $jobs = $request->get('jobs');
-        foreach($jobs as $j)
+        $books = $request->get('books');
+
+        foreach($books as $book)
         {
-            $job = $this->job->find($j['id']);
-            $job->order = $j['order'];
-            $job->save(); 
+            $b = $this->book->find($book['id']);
+            $b->order = $book['order'];
+            $b->save(); 
         }
         return response()->json('successfully updated');
     }
@@ -154,14 +156,14 @@ class JobController extends Controller
      */
     public function destroy($id)
     {
-        $job = $this->job->find($id);
+        $book = $this->book->find($id);
 
-        if ($job->media)
+        if ($book->media)
         {
-            $this->mediaService->delete($job->media);
+            $this->mediaService->delete($book->media);
         }
 
-        $job->delete();
+        $book->delete();
         return response()->json('successfully deleted');
     }
 
@@ -173,14 +175,13 @@ class JobController extends Controller
      */
     public function unlink($filename)
     {
-        $job = $this->job->where('media', $filename)->first();
-        if ($job)
+        $book = $this->book->where('media', $filename)->first();
+        if ($book)
         {
-            $job->media = null;
-            $job->save();
+            $book->media = null;
+            $book->save();
         }
         $this->mediaService->delete($filename);
         return response()->json('successfully deleted');
     }
-
 }

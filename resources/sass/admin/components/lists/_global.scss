@@ -8,7 +8,7 @@
 .list-item {
     border-top: 2px solid $color--dark;
     display: grid;
-    grid-template-columns: auto 18px;
+    grid-template-columns: auto 46px;
     @include responsive-prop('padding-top', $space-xs);
     @include responsive-prop('margin-bottom', $space-xs);
 
@@ -44,9 +44,10 @@
 }
 
 .list-item-action {
+    text-align: right;
     display: grid;
-    //grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 18px);
+    grid-template-rows: repeat(2, 1fr);
     grid-gap: 10px;
     text-align: right;
 }

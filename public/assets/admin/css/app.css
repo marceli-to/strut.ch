@@ -567,7 +567,7 @@ p {
  * Alignment using flexbox
  *
  */
-header.site-header > div, .container-auth, nav.site-nav li, nav.site-nav > div, .pagination a, .btn-add,
+header.site-header > div, .container-auth, nav.site-nav > div, .pagination a, .btn-add,
 .v-center {
   display: flex !important;
   align-items: center;
@@ -1440,15 +1440,15 @@ h3 {
   display: block;
 }
 
-.icon-trash, .icon-plus, .icon-logout, .icon-eye,
-.icon-eye-off, .icon-edit, .icon-close, .icon-menu,
+.icon-trash, .icon-plus, .icon-logout, .icon-external-link, .icon-eye,
+.icon-eye-off, .icon-edit, .icon-copy, .icon-close, .icon-menu,
 .icon-dashboard,
 .icon-ib {
   display: inline-block;
 }
 
-.icon-trash, .icon-plus, .icon-logout, .icon-eye,
-.icon-eye-off, .icon-edit, .icon-close, .icon-menu,
+.icon-trash, .icon-plus, .icon-logout, .icon-external-link, .icon-eye,
+.icon-eye-off, .icon-edit, .icon-copy, .icon-close, .icon-menu,
 .icon-dashboard,
 .icon-bg {
   background-repeat: no-repeat;
@@ -1488,8 +1488,8 @@ h3 {
   opacity: 0.6;
 }
 
-.icon-trash, .icon-plus, .icon-logout, .icon-eye,
-.icon-eye-off, .icon-edit, .icon-close, .icon-menu,
+.icon-trash, .icon-plus, .icon-logout, .icon-external-link, .icon-eye,
+.icon-eye-off, .icon-edit, .icon-copy, .icon-close, .icon-menu,
 .icon-dashboard {
   background-size: contain;
   height: 24px;
@@ -1497,6 +1497,7 @@ h3 {
 }
 
 .icon-mini {
+  display: inline-block !important;
   height: 18px !important;
   width: 18px !important;
 }
@@ -1520,14 +1521,39 @@ h3 {
  */
 .icon-close {
   background-image: url("../img/icons/close.svg");
-  right: 20px;
+  left: 15px;
   position: absolute;
   top: auto;
+}
+@media screen and (min-width: 768px) {
+  .icon-close {
+    left: 20px;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .icon-close {
+    left: 25px;
+  }
+}
+@media screen and (min-width: 1280px) {
+  .icon-close {
+    left: 30px;
+  }
 }
 
 .icon-close-overlay {
   background-image: url("../img/icons/close-dark.svg");
   top: -15px;
+}
+
+/**
+ * -----------------------------------------------------------------------------
+ * File: components/icons/copy
+ * -----------------------------------------------------------------------------
+ */
+.icon-copy {
+  background-image: url("../img/icons/copy.svg");
+  display: block;
 }
 
 /**
@@ -1560,6 +1586,19 @@ h3 {
 
 /**
  * -----------------------------------------------------------------------------
+ * File: components/icons/copy
+ * -----------------------------------------------------------------------------
+ */
+.icon-external-link {
+  background-image: url("../img/icons/external-link.svg");
+  display: inline-block;
+  margin-left: 3px;
+  height: 15px !important;
+  width: 15px !important;
+}
+
+/**
+ * -----------------------------------------------------------------------------
  * File: components/icons/logout
  * -----------------------------------------------------------------------------
  */
@@ -1567,16 +1606,31 @@ h3 {
   background-image: url("../img/icons/logout.svg");
   background-size: 18px 18px;
   background-position: center left;
+  bottom: 15px;
   color: #ffffff;
   font-size: 14px;
   line-height: 1.25;
   height: 20px;
-  left: 20px;
+  left: 15px;
   padding-left: 22px;
   padding-top: 2px;
   position: absolute;
-  top: auto;
   width: auto;
+}
+@media screen and (min-width: 768px) {
+  .icon-logout {
+    bottom: 20px;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .icon-logout {
+    bottom: 25px;
+  }
+}
+@media screen and (min-width: 1280px) {
+  .icon-logout {
+    bottom: 30px;
+  }
 }
 @media screen and (min-width: 768px) {
   .icon-logout {
@@ -1594,6 +1648,21 @@ h3 {
   .icon-logout {
     font-size: 15px;
     line-height: 1.25;
+  }
+}
+@media screen and (min-width: 768px) {
+  .icon-logout {
+    left: 20px;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .icon-logout {
+    left: 25px;
+  }
+}
+@media screen and (min-width: 1280px) {
+  .icon-logout {
+    left: 30px;
   }
 }
 
@@ -1627,7 +1696,7 @@ h3 {
 .list-item {
   border-top: 2px solid #222222;
   display: grid;
-  grid-template-columns: auto 18px;
+  grid-template-columns: auto 46px;
   padding-top: 10px;
   margin-bottom: 10px;
 }
@@ -1716,8 +1785,10 @@ h3 {
 }
 
 .list-item-action {
+  text-align: right;
   display: grid;
-  grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 18px);
+  grid-template-rows: repeat(2, 1fr);
   grid-gap: 10px;
   text-align: right;
 }
@@ -2406,6 +2477,107 @@ input[type=radio]:checked + .form-control {
 }
 
 /**
+ * -----------------------------------------------------------------------------
+ * File: form/placeholder
+ * -----------------------------------------------------------------------------
+ */
+input[type=text]::-webkit-input-placeholder {
+  color: #555555;
+  font-size: 14px;
+  line-height: 1.25;
+}
+@media screen and (min-width: 768px) {
+  input[type=text]::-webkit-input-placeholder {
+    font-size: 14px;
+    line-height: 1.25;
+  }
+}
+@media screen and (min-width: 1024px) {
+  input[type=text]::-webkit-input-placeholder {
+    font-size: 15px;
+    line-height: 1.25;
+  }
+}
+@media screen and (min-width: 1280px) {
+  input[type=text]::-webkit-input-placeholder {
+    font-size: 15px;
+    line-height: 1.25;
+  }
+}
+
+input[type=text]::-moz-placeholder {
+  color: #555555;
+  font-size: 14px;
+  line-height: 1.25;
+}
+@media screen and (min-width: 768px) {
+  input[type=text]::-moz-placeholder {
+    font-size: 14px;
+    line-height: 1.25;
+  }
+}
+@media screen and (min-width: 1024px) {
+  input[type=text]::-moz-placeholder {
+    font-size: 15px;
+    line-height: 1.25;
+  }
+}
+@media screen and (min-width: 1280px) {
+  input[type=text]::-moz-placeholder {
+    font-size: 15px;
+    line-height: 1.25;
+  }
+}
+
+input[type=text]:-ms-input-placeholder {
+  color: #555555;
+  font-size: 14px;
+  line-height: 1.25;
+}
+@media screen and (min-width: 768px) {
+  input[type=text]:-ms-input-placeholder {
+    font-size: 14px;
+    line-height: 1.25;
+  }
+}
+@media screen and (min-width: 1024px) {
+  input[type=text]:-ms-input-placeholder {
+    font-size: 15px;
+    line-height: 1.25;
+  }
+}
+@media screen and (min-width: 1280px) {
+  input[type=text]:-ms-input-placeholder {
+    font-size: 15px;
+    line-height: 1.25;
+  }
+}
+
+input[type=text]:-moz-placeholder {
+  color: #555555;
+  font-size: 14px;
+  line-height: 1.25;
+}
+@media screen and (min-width: 768px) {
+  input[type=text]:-moz-placeholder {
+    font-size: 14px;
+    line-height: 1.25;
+  }
+}
+@media screen and (min-width: 1024px) {
+  input[type=text]:-moz-placeholder {
+    font-size: 15px;
+    line-height: 1.25;
+  }
+}
+@media screen and (min-width: 1280px) {
+  input[type=text]:-moz-placeholder {
+    font-size: 15px;
+    line-height: 1.25;
+  }
+}
+
+/**
  * Forms - validation
  * -----------------------------------------------------------------------------
  */
@@ -2428,12 +2600,12 @@ input[type=radio]:checked + .form-control {
 nav.site-nav {
   background-color: #222222;
   height: 100%;
-  left: 0;
+  right: 0;
   position: fixed;
   top: 0;
-  width: 100%;
+  width: 320px;
   z-index: 101;
-  transform: translateY(-100%);
+  transform: translateX(100%);
   transition: transform 0.2s ease-out;
 }
 nav.site-nav * {
@@ -2459,17 +2631,14 @@ nav.site-nav > div {
   }
 }
 nav.site-nav.is-visible {
-  transform: translateY(0);
+  box-shadow: 0 6px 9px rgba(100, 100, 100, 0.3);
+  transform: translateX(0);
 }
 nav.site-nav.is-visible * {
   opacity: 1;
 }
 nav.site-nav ul {
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 100px;
-  text-align: center;
-  width: 400px;
+  width: 100%;
 }
 nav.site-nav li {
   display: block;
@@ -2485,9 +2654,9 @@ nav.site-nav li a {
   font-size: 24px;
   line-height: 1.25;
   padding-bottom: 10px;
+  padding-left: 15px;
   padding-top: 10px;
   max-width: 400px;
-  text-align: center;
   width: 100%;
   transition: color 0.1s ease-out 0.2s ease-in-out;
 }
@@ -2522,6 +2691,21 @@ nav.site-nav li a {
 @media screen and (min-width: 1280px) {
   nav.site-nav li a {
     padding-bottom: 10px;
+  }
+}
+@media screen and (min-width: 768px) {
+  nav.site-nav li a {
+    padding-left: 20px;
+  }
+}
+@media screen and (min-width: 1024px) {
+  nav.site-nav li a {
+    padding-left: 25px;
+  }
+}
+@media screen and (min-width: 1280px) {
+  nav.site-nav li a {
+    padding-left: 30px;
   }
 }
 @media screen and (min-width: 768px) {

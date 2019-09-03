@@ -1,0 +1,14 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: components/icons/copy
+ * -----------------------------------------------------------------------------
+ */
+
+.icon-external-link {
+    @extend %icon-dashboard;
+    background-image: url($url-icons + 'external-link.svg');
+    display: inline-block;
+    margin-left: 3px;
+    height: 15px !important;
+    width: 15px !important;
+}

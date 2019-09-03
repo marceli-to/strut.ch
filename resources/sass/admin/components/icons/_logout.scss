@@ -9,13 +9,15 @@
     background-image: url($url-icons + 'logout.svg');
     background-size: 18px 18px;
     background-position: center left;
+    //bottom: 0;
+    @include responsive-prop('bottom', $space-md);
     color: $color--white;
     @include font-size($fs-xs);
     height: 20px;
-    left: 20px;
+    @include responsive-prop('left', $space-md);
     padding-left: 22px;
     padding-top: 2px;
     position: absolute;
-    top: auto;
+    //top: auto;
     width: auto;
 }

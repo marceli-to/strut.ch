@@ -13,7 +13,7 @@
               @end="updateOrder"
               ghost-class="draggable-ghost"
               tag="div">
-              <div :class="[team.publish == 0 ? 'is-disabled' : '', 'list-item', 'list-item--sortable']" v-for="t in team" :key="t.id">
+              <div :class="[t.publish == 0 ? 'is-disabled' : '', 'list-item', 'list-item--sortable']" v-for="t in team" :key="t.id">
                 <div class="list-item-body">
                   <h3>{{ t.firstname }} {{ t.name }}</h3>
                 </div>
@@ -21,6 +21,7 @@
                   <router-link :to="{name: 'team-edit', params: { id: t.id }}" class="icon-edit icon-mini"></router-link>
                   <a href="javascript:;" class="icon-trash icon-mini" @click.prevent="destroy(t.id)"></a>
                   <a href="javascript:;" :class="[t.publish == 1 ? 'icon-eye' : 'icon-eye-off', 'icon-mini']" @click.prevent="toggleStatus(t.id)"></a>
+                  <a href="javascript:;" class="icon-copy icon-mini" @click.prevent="clone(t.id)"></a>
                 </div>
               </div>
             </draggable>
@@ -33,7 +34,6 @@
     </div>
   </div>
 </template>
-
 <script>
   import PageHeader from '@/layout/PageHeader.vue';
   import draggable from 'vuedraggable';
@@ -63,8 +63,16 @@
         let uri = `/api/team/destroy/${id}`;
         this.axios.delete(uri).then(response => {
           this.team.splice(this.team.indexOf(id), 1);
-          this.$notify({type: 'success', title: '&#128077', text: 'Teammitglied gelöscht'});
+          this.$notify({type: 'success', text: 'Eintrag gelöscht'});
         });
+      },
+      
+      clone(id) {
+        let uri = `/api/team/clone/${id}`;
+        this.axios.get(uri).then(response => {
+          this.team.push(response.data);
+          this.$notify({type: 'success', text: 'Eintrag kopiert'});
+        });        
       },
 
       toggleStatus(id) {
@@ -72,7 +80,7 @@
         this.axios.get(uri).then(response => {
           const index = this.team.findIndex(x => x.id === id);
           this.team[index].publish = response.data;
-          this.$notify({type: 'success', title: '&#128077', text: 'Status angepasst'});
+          this.$notify({type: 'success', text: 'Status angepasst'});
         });
       },
       
@@ -91,7 +99,7 @@
             this.$router.push({name: 'team'});
           });
         }.bind(this, team), 1000);
-        this.$notify({type: 'success', title: '&#128077', text: 'Reihenfolge angepasst'});
+        this.$notify({type: 'success', text: 'Reihenfolge angepasst'});
       }
     }
   }

@@ -8,7 +8,7 @@ class Job extends Model
 {
     use HasTranslations;
 
-    public $translatable = ['title', 'lead', 'info', 'link', 'linkText', 'mediaCaption'];
+    public $translatable = ['title', 'lead', 'info'];
 
     protected $fillable = ['title', 'lead', 'info',  'media', 'order', 'publish'];
 

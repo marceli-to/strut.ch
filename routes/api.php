@@ -41,6 +41,7 @@ Route::middleware('auth:api')->group(function() {
     Route::post('job/create', 'Backend\Job\JobController@store');
     Route::get('job/edit/{id}', 'Backend\Job\JobController@edit');
     Route::post('job/update/{id}', 'Backend\Job\JobController@update');
+    Route::get('job/clone/{id}', 'Backend\Job\JobController@clone');
     Route::get('job/status/{id}', 'Backend\Job\JobController@status');
     Route::delete('job/destroy/{id}', 'Backend\Job\JobController@destroy');
     Route::post('job/order', 'Backend\Job\JobController@order');
@@ -51,10 +52,22 @@ Route::middleware('auth:api')->group(function() {
     Route::post('team/create', 'Backend\Team\TeamController@store');
     Route::get('team/edit/{id}', 'Backend\Team\TeamController@edit');
     Route::post('team/update/{id}', 'Backend\Team\TeamController@update');
+    Route::get('team/clone/{id}', 'Backend\Team\TeamController@clone');
     Route::get('team/status/{id}', 'Backend\Team\TeamController@status');
     Route::delete('team/destroy/{id}', 'Backend\Team\TeamController@destroy');
     Route::post('team/order', 'Backend\Team\TeamController@order');
     Route::delete('team/delete/file/{file}', 'Backend\Team\TeamController@unlink');
+
+    // Book routes
+    Route::get('books/get', 'Backend\Book\BookController@get');
+    Route::post('book/create', 'Backend\Book\BookController@store');
+    Route::get('book/edit/{id}', 'Backend\Book\BookController@edit');
+    Route::post('book/update/{id}', 'Backend\Book\BookController@update');
+    Route::get('book/clone/{id}', 'Backend\Book\BookController@clone');
+    Route::get('book/status/{id}', 'Backend\Book\BookController@status');
+    Route::delete('book/destroy/{id}', 'Backend\Book\BookController@destroy');
+    Route::post('book/order', 'Backend\Book\BookController@order');
+    Route::delete('book/delete/file/{file}', 'Backend\Book\BookController@unlink');
 
     // News routes
     Route::post('news/create', 'Backend\NewsController@store');

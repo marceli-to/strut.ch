@@ -22,6 +22,7 @@
                   <router-link :to="{name: 'job-edit', params: { id: job.id }}" class="icon-edit icon-mini"></router-link>
                   <a href="javascript:;" class="icon-trash icon-mini" @click.prevent="destroy(job.id)"></a>
                   <a href="javascript:;" :class="[job.publish == 1 ? 'icon-eye' : 'icon-eye-off', 'icon-mini']" @click.prevent="toggleStatus(job.id)"></a>
+                  <a href="javascript:;" class="icon-copy icon-mini" @click.prevent="clone(job.id)"></a>
                 </div>
               </div>
             </draggable>
@@ -34,7 +35,6 @@
     </div>
   </div>
 </template>
-
 <script>
   import PageHeader from '@/layout/PageHeader.vue';
   import draggable from 'vuedraggable';
@@ -64,8 +64,16 @@
         let uri = `/api/job/destroy/${id}`;
         this.axios.delete(uri).then(response => {
           this.jobs.splice(this.jobs.indexOf(id), 1);
-          this.$notify({type: 'success', title: '&#128077', text: 'Jobanzeige gelöscht'});
+          this.$notify({type: 'success', text: 'Eintrag gelöscht'});
         });
+      },
+
+      clone(id) {
+        let uri = `/api/job/clone/${id}`;
+        this.axios.get(uri).then(response => {
+          this.jobs.push(response.data);
+          this.$notify({type: 'success', text: 'Eintrag kopiert'});
+        });        
       },
 
       toggleStatus(id) {
@@ -73,7 +81,7 @@
         this.axios.get(uri).then(response => {
           const index = this.jobs.findIndex(x => x.id === id);
           this.jobs[index].publish = response.data;
-          this.$notify({type: 'success', title: '&#128077', text: 'Status angepasst'});
+          this.$notify({type: 'success', text: 'Status angepasst'});
         });
       },
       
@@ -92,7 +100,7 @@
             this.$router.push({name: 'jobs'});
           });
         }.bind(this, jobs), 1000);
-        this.$notify({type: 'success', title: '&#128077', text: 'Reihenfolge angepasst'});
+        this.$notify({type: 'success', text: 'Reihenfolge angepasst'});
       }
     }
   }

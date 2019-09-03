@@ -19,57 +19,45 @@
           </nav>
           <form @submit.prevent="submit">
             <div v-show="tabs.data.active">
-              <div class="grid">
-                <div class="span form-row" :class="errors.firstname ? 'has-error': ''">
-                  <label>Vorname *</label>
-                  <input type="text" @focus="removeError('firstname')" name="firstname" v-model="team.firstname">
-                </div>
-                <div class="span form-row" :class="errors.name ? 'has-error': ''">
-                  <label>Name *</label>
-                  <input type="text" @focus="removeError('name')" name="name" v-model="team.name">
-                </div>
-                <div class="span form-row">
-                  <label>Funktion</label>
-                  <input type="text" name="role" v-model="team.role.de" placeholder="z.B. Architekt ETH">
-                </div>
-                <div class="span form-row">
-                  <label>Position</label>
-                  <input type="text" name="position" v-model="team.position.de" placeholder="z.B. Partner">
-                </div>
-                <div class="span form-row">
-                  <label>Telefon</label>
-                  <input type="text" @focus="removeError('phone')" name="phone" v-model="team.phone" placeholder="Format: +41 52 2xx xx xx">
-                </div>
-                <div class="span form-row" :class="errors.email ? 'has-error': ''">
-                  <label>E-Mail *</label>
-                  <input type="text" @focus="removeError('email')" name="email" v-model="team.email">
-                </div>
+              <div class="form-row" :class="errors.title ? 'has-error': ''">
+                <label>Titel *</label>
+                <input type="text" @focus="removeError('title')" name="title" v-model="book.title">
+              </div>
+              <div class="form-row" :class="errors.description.de ? 'has-error': ''">
+                <label>Beschreibung *</label>
+                <textarea @focus="removeError('description', 'de')" v-model="book.description.de" :class="errors.description.de ? 'has-error': ''" rows="5"></textarea>
               </div>
               <div class="form-row">
-                <label>Lebenslauf</label>
-                <tinymce-editor api-key="vuaywur9klvlt3excnrd9xki1a5lj25v18b2j0d0nu5tbwro" :init="tinyConfig" v-model="team.cv.de"></tinymce-editor>
+                <label>Info</label>
+                <tinymce-editor api-key="vuaywur9klvlt3excnrd9xki1a5lj25v18b2j0d0nu5tbwro" :init="tinyConfig" v-model="book.info.de"></tinymce-editor>
+              </div>
+              <div class="form-row">
+                <label>
+                  Link <a :href="book.url" target="_blank" class="icon-external-link icon-mini" v-if="book.url"></a>
+                </label>
+                <input type="text" name="url" v-model="book.url" placeholder="https://test.ch/">
               </div>
             </div>
             <div v-show="tabs.uploads.active">
-              <div class="form-row" v-if="team.media == null">
+              <div class="form-row" v-if="book.media == null">
                 <label for="document">Datei hochladen <span class="fs-xs">(JPG | PNG, max. 8 MB)</span></label>
                 <vue-dropzone ref="dropzone" id="dropzone" :options="dropzoneOptions" @vdropzone-complete="afterComplete"></vue-dropzone>
               </div>
-              <div class="form-row" v-if="team.media">
+              <div class="form-row" v-if="book.media">
                 <label>Vorhandene Datei</label>
                 <div class="dropzone-existing-images">
                     <figure class="dz-existing-image">
-                      <a :href="getMediaUri(team.media)" target="_blank" class="dz-file-preview">
-                        <img :src="getMediaSource(team.media)" height="300" width="300">
+                      <a :href="getMediaUri(book.media)" target="_blank" class="dz-file-preview">
+                        <img :src="getMediaSource(book.media)" height="300" width="300">
                       </a>
-                      <a href="javascript:;" class="dz-remove" @click.prevent="deleteMedia(team.media)">Delete</a>
+                      <a href="javascript:;" class="dz-remove" @click.prevent="deleteMedia(book.media)">Delete</a>
                     </figure>
                 </div>
               </div>
             </div>
             <div class="form-row form-buttons">
               <button type="submit">Speichern</button>
-              <router-link :to="{name: 'team'}">Zurück</router-link>
+              <router-link :to="{name: 'books'}">Zurück</router-link>
             </div>
           </form>
         </div>
@@ -79,7 +67,7 @@
 <script>
 import PageHeader from '@/layout/PageHeader.vue';
 import vue2Dropzone from 'vue2-dropzone';
-import tinyConfig from '@/config/tinyconfig-lg.js'
+import tinyConfig from '@/config/tinyconfig.js'
 import Editor from '@tinymce/tinymce-vue';
 
 export default {
@@ -98,9 +86,11 @@ export default {
 
       // fields to validate
       errors: {
-        name: false,
-        firstname: false,
-        email: false,
+        title: false,
+        description: {
+          de: false,
+          //en: false,
+        },
       },
 
       // tabs
@@ -110,8 +100,8 @@ export default {
           error: false
         },
         translation: {
-            active: false,
-            error: false
+          active: false,
+          error: false
         },
         uploads: {
           active: false,
@@ -119,23 +109,17 @@ export default {
         }
       },
 
-      team: {
-        firstname: null,
-        name: null,
-        role: {
+      book: {
+        title: null,
+        description: {
           de: null,
           en: null,
         },
-        position: {
+        info: {
           de: null,
           en: null,
         },
-        phone: null,
-        email: null,
-        cv: {
-          de: null,
-          en: null,
-        },
+        link: null,
         media: null  
       },
 
@@ -159,9 +143,9 @@ export default {
   
   created() {
     if (this.$props.type == 'edit') {
-      let uri = `/api/team/edit/${this.$route.params.id}`;
+      let uri = `/api/book/edit/${this.$route.params.id}`;
       this.axios.get(uri).then((response) => {
-        this.team = response.data;
+        this.book = response.data;
       });
     }
   },
@@ -171,24 +155,17 @@ export default {
     // Validation methods
     validate() {
 
-      if (this.team.name && 
-        this.team.firstname &&
-        this.team.email) {
+      if (this.book.title && this.book.description.de) {
         return true;
       }
 
-      if (!this.team.name) {
-        this.errors.name = true;
+      if (!this.book.title) {
+        this.errors.title = true;
         this.tabs.data.error = true;
       }
 
-      if (!this.team.firstname) {
-        this.errors.firstname = true;
-        this.tabs.data.error = true;
-      }
-
-      if (!this.team.email) {
-        this.errors.email = true;
+      if (!this.book.description.de) {
+        this.errors.description.de = true;
         this.tabs.data.error = true;
       }
       return false;
@@ -216,19 +193,19 @@ export default {
       }
     },
 
-    // Add the team
+    // Add the book
     store() {
-      let uri = '/api/team/create';
-      this.axios.post(uri, this.team).then((response) => {
-        this.$router.push({name: 'team'});
+      let uri = '/api/book/create';
+      this.axios.post(uri, this.book).then((response) => {
+        this.$router.push({name: 'books'});
       });
     },
 
-    // Update the team
+    // Update the book
     update() {
-      let uri = `/api/team/update/${this.$route.params.id}`;
-      this.axios.post(uri, this.team).then((response) => {
-        this.$router.push({name: 'team'});
+      let uri = `/api/book/update/${this.$route.params.id}`;
+      this.axios.post(uri, this.book).then((response) => {
+        this.$router.push({name: 'books'});
       });
     },
 
@@ -239,7 +216,7 @@ export default {
       }
       else {
         let file_response = JSON.parse(file.xhr.response);
-        this.team.media = file_response.name;
+        this.book.media = file_response.name;
       }
       this.$refs.dropzone.removeFile(file);
     },
@@ -255,11 +232,9 @@ export default {
 
     // Delete a single file by its name
     deleteMedia(file) {
-      let uri = `/api/team/delete/file/${file}`;
+      let uri = `/api/book/delete/file/${file}`;
       this.axios.delete(uri).then((response) => {
-        // @todo: delete
-        // this.post.media.splice(this.post.media.indexOf(file), 1);
-        this.team.media = null;
+        this.book.media = null;
       });
     },
 
@@ -286,7 +261,7 @@ export default {
 
   computed: {
     title: function () {
-      return this.$props.type == 'edit' ? 'Teammitglied bearbeiten' : 'Teammitglied hinzufügen';
+      return this.$props.type == 'edit' ? 'Buch bearbeiten' : 'Buch hinzufügen';
     }
   }
 }
