@@ -69,6 +69,26 @@ Route::middleware('auth:api')->group(function() {
     Route::post('book/order', 'Backend\Book\BookController@order');
     Route::delete('book/delete/file/{file}', 'Backend\Book\BookController@unlink');
 
+    // Press routes
+    Route::get('press/get', 'Backend\Press\PressController@get');
+    Route::post('press/create', 'Backend\Press\PressController@store');
+    Route::get('press/edit/{id}', 'Backend\Press\PressController@edit');
+    Route::post('press/update/{id}', 'Backend\Press\PressController@update');
+    Route::get('press/clone/{id}', 'Backend\Press\PressController@clone');
+    Route::get('press/status/{id}', 'Backend\Press\PressController@status');
+    Route::delete('press/destroy/{id}', 'Backend\Press\PressController@destroy');
+    Route::delete('press/delete/file/{file}', 'Backend\Press\PressController@unlink');
+
+    // Award routes
+    Route::get('awards/get', 'Backend\Award\AwardController@get');
+    Route::post('award/create', 'Backend\Award\AwardController@store');
+    Route::get('award/edit/{id}', 'Backend\Award\AwardController@edit');
+    Route::post('award/update/{id}', 'Backend\Award\AwardController@update');
+    Route::get('award/clone/{id}', 'Backend\Award\AwardController@clone');
+    Route::get('award/status/{id}', 'Backend\Award\AwardController@status');
+    Route::delete('award/destroy/{id}', 'Backend\Award\AwardController@destroy');
+    Route::delete('award/delete/file/{file}', 'Backend\Award\AwardController@unlink');
+
     // News routes
     Route::post('news/create', 'Backend\NewsController@store');
     Route::post('news/delete/{id}', 'Backend\NewsController@destroy');

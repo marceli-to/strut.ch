@@ -5,6 +5,17 @@
  *
  */
 
+.list-items {
+    h2 {
+        @include font-size($fs-sm);
+        @include responsive-prop('margin-bottom', $space-xs);
+    }
+}
+
+.list-item-group {
+    @include responsive-prop('margin-bottom', $space-sm);
+}
+
 .list-item {
     border-top: 2px solid $color--dark;
     display: grid;
@@ -40,6 +51,9 @@
 
     p {
         margin-bottom: 10px !important;
+        &:last-of-type {
+            margin-bottom: 0 !important;
+        }
     }
 }
 

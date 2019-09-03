@@ -18,14 +18,31 @@
                     <router-link :to="{ name: 'masonry' }">Masonry</router-link>
                 </li>
                 <li>
-                    <router-link :to="{ name: 'jobs' }">Jobs</router-link>
+                    <span>Büro</span>
+                    <ul>
+                        <li>
+                            <router-link :to="{ name: 'jobs' }">Jobs</router-link>
+                        </li>
+                        <li>
+                            <router-link :to="{ name: 'team' }">Team</router-link>
+                        </li>
+                        <li>
+                            <router-link :to="{ name: 'awards' }">Auszeichnungen</router-link>
+                        </li>
+                    </ul>
                 </li>
                 <li>
-                    <router-link :to="{ name: 'team' }">Team</router-link>
+                    <span>Publikationen</span>
+                    <ul>
+                        <li>
+                            <router-link :to="{ name: 'books' }">Bücher</router-link>
+                        </li>
+                        <li>
+                            <router-link :to="{ name: 'press' }">Presse</router-link>
+                        </li>
+                    </ul>
                 </li>
-                <li>
-                    <router-link :to="{ name: 'books' }">Bücher</router-link>
-                </li>
+
             </ul>
             <router-link :to="{ name: 'logout' }" class="icon-logout">Logout</router-link>
         </nav>

@@ -18,6 +18,16 @@ import BookIndex from '@/components/books/Index.vue';
 import BookCreate from '@/components/books/Create.vue';
 import BookEdit from '@/components/books/Edit.vue';
 
+// Press
+import PressIndex from '@/components/press/Index.vue';
+import PressCreate from '@/components/press/Create.vue';
+import PressEdit from '@/components/press/Edit.vue';
+
+// Awards
+import AwardIndex from '@/components/award/Index.vue';
+import AwardCreate from '@/components/award/Create.vue';
+import AwardEdit from '@/components/award/Edit.vue';
+
 // Masonry
 import GridIndex from '@/components/home/GridIndex.vue';
 
@@ -137,6 +147,46 @@ const routes = [
         name: 'book-edit',
         path: '/admin/book/edit/:id',
         component: BookEdit,
+        meta: { requiresAuth: true },
+    },
+
+    // Press
+    {
+        name: 'press',
+        path: '/admin/press',
+        component: PressIndex,
+        meta: { requiresAuth: true },
+    },
+    {
+        name: 'press-create',
+        path: '/admin/press/create',
+        component: PressCreate,
+        meta: { requiresAuth: true },
+    },
+    {
+        name: 'press-edit',
+        path: '/admin/press/edit/:id',
+        component: PressEdit,
+        meta: { requiresAuth: true },
+    },
+
+    // Awards
+    {
+        name: 'awards',
+        path: '/admin/awards',
+        component: AwardIndex,
+        meta: { requiresAuth: true },
+    },
+    {
+        name: 'award-create',
+        path: '/admin/award/create',
+        component: AwardCreate,
+        meta: { requiresAuth: true },
+    },
+    {
+        name: 'award-edit',
+        path: '/admin/awards/edit/:id',
+        component: AwardEdit,
         meta: { requiresAuth: true },
     },
 ];
