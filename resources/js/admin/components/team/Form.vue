@@ -13,7 +13,7 @@
                   <a href="javascript:;" @click="changeTab('translation')" :class="[tabs.translation.active ? 'is-active' : '', tabs.translation.error ? 'has-error' : '']">Übersetzung</a>
               </li> -->
               <li>
-                <a href="javascript:;" @click="changeTab('uploads')" :class="tabs.uploads.active ? 'is-active' : ''">Upload</a>
+                <a href="javascript:;" @click="changeTab('media')" :class="tabs.media.active ? 'is-active' : ''">Medien</a>
               </li>
             </ul>
           </nav>
@@ -50,7 +50,7 @@
                 <tinymce-editor api-key="vuaywur9klvlt3excnrd9xki1a5lj25v18b2j0d0nu5tbwro" :init="tinyConfig" v-model="team.cv.de"></tinymce-editor>
               </div>
             </div>
-            <div v-show="tabs.uploads.active">
+            <div v-show="tabs.media.active">
               <div class="form-row" v-if="team.media == null">
                 <label for="document">Datei hochladen <span class="fs-xs">(JPG | PNG, max. 8 MB)</span></label>
                 <vue-dropzone ref="dropzone" id="dropzone" :options="dropzoneOptions" @vdropzone-complete="afterComplete"></vue-dropzone>
@@ -62,7 +62,7 @@
                       <a :href="getMediaUri(team.media)" target="_blank" class="dz-file-preview">
                         <img :src="getMediaSource(team.media)" height="300" width="300">
                       </a>
-                      <a href="javascript:;" class="dz-remove" @click.prevent="deleteMedia(team.media)">Delete</a>
+                      <a href="javascript:;" class="dz-remove" @click.prevent="deleteMedia(team.media)">Löschen</a>
                     </figure>
                 </div>
               </div>
@@ -113,7 +113,7 @@ export default {
             active: false,
             error: false
         },
-        uploads: {
+        media: {
           active: false,
           error: false
         }

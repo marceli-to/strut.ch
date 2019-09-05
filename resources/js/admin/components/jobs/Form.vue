@@ -13,7 +13,7 @@
                   <a href="javascript:;" @click="changeTab('translation')" :class="[tabs.translation.active ? 'is-active' : '', tabs.translation.error ? 'has-error' : '']">Übersetzung</a>
               </li> -->
               <li>
-                <a href="javascript:;" @click="changeTab('uploads')" :class="tabs.uploads.active ? 'is-active' : ''">Upload</a>
+                <a href="javascript:;" @click="changeTab('media')" :class="tabs.media.active ? 'is-active' : ''">Medien</a>
               </li>
             </ul>
           </nav>
@@ -32,7 +32,7 @@
                   <tinymce-editor api-key="vuaywur9klvlt3excnrd9xki1a5lj25v18b2j0d0nu5tbwro" :init="tinyConfig" v-model="job.info.de"></tinymce-editor>
               </div>
             </div>
-            <div class="span" v-show="tabs.uploads.active">
+            <div class="span" v-show="tabs.media.active">
               <div class="form-row" v-if="job.media == null">
                 <label for="document">Datei hochladen <span class="fs-xs">(PDF, max. 8 MB)</span></label>
                 <vue-dropzone ref="dropzone" id="dropzone" :options="dropzoneOptions" @vdropzone-complete="afterComplete"></vue-dropzone>
@@ -44,7 +44,7 @@
                       <a :href="getMediaUri(job.media)" target="_blank" class="dz-file-preview">
                         <img src="/assets/admin/img/icon-file.png" height="100" width="100">
                       </a>
-                      <a href="javascript:;" class="dz-remove" @click.prevent="deleteMedia(job.media)">Delete</a>
+                      <a href="javascript:;" class="dz-remove" @click.prevent="deleteMedia(job.media)">Löschen</a>
                     </figure>
                 </div>
               </div>
@@ -100,7 +100,7 @@ export default {
             active: false,
             error: false
         },
-        uploads: {
+        media: {
           active: false,
           error: false
         }

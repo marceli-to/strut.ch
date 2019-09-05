@@ -12,6 +12,7 @@
  * -------------------- */
 
 $box-shadow: 0 4px 6px rgba(100, 100, 100, 0.3);
+$box-shadow-xs: 0 1px 1px rgba(100, 100, 100, 0.3);
 $box-shadow-sm: 0 2px 3px rgba(100, 100, 100, 0.3);
 $box-shadow-lg: 0 6px 9px rgba(100, 100, 100, 0.3);
 
@@ -72,4 +73,16 @@ $header-heights: (
   sm:    $header-height-sm,
   md:    $header-height-md,
   lg:    $header-height-lg
+);
+
+$footer-height:     60px;
+$footer-height-sm:  60px;
+$footer-height-md:  90px;
+$footer-height-lg:  90px;
+
+$footer-heights: (
+  null:  $footer-height,
+  sm:    $footer-height-sm,
+  md:    $footer-height-md,
+  lg:    $footer-height-lg
 );

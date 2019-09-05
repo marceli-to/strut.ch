@@ -18,6 +18,17 @@
                     <router-link :to="{ name: 'masonry' }">Masonry</router-link>
                 </li>
                 <li>
+                    <a href="javascript:;" style="padding-bottom: 0">Projekte</a>
+                    <ul>
+                        <li>
+                            <router-link :to="{ name: 'categories' }">Kategorien</router-link>
+                        </li>
+                        <!-- <li>
+                            <router-link :to="{ name: 'category-types' }">Typen</router-link>
+                        </li> -->
+                    </ul>
+                </li>
+                <li>
                     <span>Büro</span>
                     <ul>
                         <li>
@@ -28,6 +39,9 @@
                         </li>
                         <li>
                             <router-link :to="{ name: 'awards' }">Auszeichnungen</router-link>
+                        </li>
+                        <li>
+                            <router-link :to="{ name: 'lectures' }">Vorträge</router-link>
                         </li>
                     </ul>
                 </li>

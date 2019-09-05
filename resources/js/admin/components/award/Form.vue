@@ -13,7 +13,7 @@
                   <a href="javascript:;" @click="changeTab('translation')" :class="[tabs.translation.active ? 'is-active' : '', tabs.translation.error ? 'has-error' : '']">Übersetzung</a>
               </li> -->
               <li>
-                <a href="javascript:;" @click="changeTab('uploads')" :class="tabs.uploads.active ? 'is-active' : ''">Upload</a>
+                <a href="javascript:;" @click="changeTab('media')" :class="tabs.media.active ? 'is-active' : ''">Medien</a>
               </li>
             </ul>
           </nav>
@@ -29,10 +29,14 @@
               </div>
               <div class="form-row" :class="errors.year ? 'has-error': ''">
                 <label>Jahr *</label>
-                <input type="text" @focus="removeError('year')" name="year" v-model="award.year">
+                <div class="select-wrapper">
+                  <select class="is-md" v-model="award.year" name="year" @focus="removeError('year')">
+                    <option v-for="year in years" :key="year" :value="year">{{ year }}</option>
+                  </select>
+                </div>
               </div>
             </div>
-            <div v-show="tabs.uploads.active">
+            <div v-show="tabs.media.active">
               <div class="form-row" v-if="award.media == null">
                 <label for="document">Datei hochladen <span class="fs-xs">(JPG | PNG, max. 8 MB)</span></label>
                 <vue-dropzone ref="dropzone" id="dropzone" :options="dropzoneOptions" @vdropzone-complete="afterComplete"></vue-dropzone>
@@ -44,7 +48,7 @@
                       <a :href="getMediaUri(award.media)" target="_blank" class="dz-file-preview">
                         <img :src="getMediaSource(award.media)" height="300" width="300">
                       </a>
-                      <a href="javascript:;" class="dz-remove" @click.prevent="deleteMedia(award.media)">Delete</a>
+                      <a href="javascript:;" class="dz-remove" @click.prevent="deleteMedia(award.media)">Löschen</a>
                     </figure>
                 </div>
               </div>
@@ -61,7 +65,8 @@
 <script>
 import PageHeader from '@/layout/PageHeader.vue';
 import vue2Dropzone from 'vue2-dropzone';
-import tinyConfig from '@/config/tinyconfig.js'
+import tinyConfig from '@/config/tinyconfig.js';
+import years from '@/config/years.js';
 import Editor from '@tinymce/tinymce-vue';
 
 export default {
@@ -86,7 +91,7 @@ export default {
         },
         description: {
           de: false,
-          en: false,
+          //en: false,
         },
         year: false,
       },
@@ -101,7 +106,7 @@ export default {
           active: false,
           error: false
         },
-        uploads: {
+        media: {
           active: false,
           error: false
         }
@@ -119,6 +124,9 @@ export default {
         year: null,
         media: null  
       },
+
+      // years
+      years: years,
 
       // dropzone options
       dropzoneOptions: {

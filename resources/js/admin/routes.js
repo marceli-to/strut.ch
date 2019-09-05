@@ -28,6 +28,22 @@ import AwardIndex from '@/components/award/Index.vue';
 import AwardCreate from '@/components/award/Create.vue';
 import AwardEdit from '@/components/award/Edit.vue';
 
+// Lectures
+import LectureIndex from '@/components/lecture/Index.vue';
+import LectureCreate from '@/components/lecture/Create.vue';
+import LectureEdit from '@/components/lecture/Edit.vue';
+
+// Categories
+import CategoryIndex from '@/components/category/Index.vue';
+import CategoryCreate from '@/components/category/Create.vue';
+import CategoryEdit from '@/components/category/Edit.vue';
+
+// Category Types
+import CategoryTypeIndex from '@/components/categoryType/Index.vue';
+import CategoryTypeCreate from '@/components/categoryType/Create.vue';
+import CategoryTypeEdit from '@/components/categoryType/Edit.vue';
+
+
 // Masonry
 import GridIndex from '@/components/home/GridIndex.vue';
 
@@ -187,6 +203,66 @@ const routes = [
         name: 'award-edit',
         path: '/admin/awards/edit/:id',
         component: AwardEdit,
+        meta: { requiresAuth: true },
+    },
+
+    // Lectures
+    {
+        name: 'lectures',
+        path: '/admin/lectures',
+        component: LectureIndex,
+        meta: { requiresAuth: true },
+    },
+    {
+        name: 'lecture-create',
+        path: '/admin/lecture/create',
+        component: LectureCreate,
+        meta: { requiresAuth: true },
+    },
+    {
+        name: 'lecture-edit',
+        path: '/admin/lecture/edit/:id',
+        component: LectureEdit,
+        meta: { requiresAuth: true },
+    },
+
+    // Categories
+    {
+        name: 'categories',
+        path: '/admin/categories',
+        component: CategoryIndex,
+        meta: { requiresAuth: true },
+    },
+    {
+        name: 'category-create',
+        path: '/admin/category/create',
+        component: CategoryCreate,
+        meta: { requiresAuth: true },
+    },
+    {
+        name: 'category-edit',
+        path: '/admin/category/edit/:id',
+        component: CategoryEdit,
+        meta: { requiresAuth: true },
+    },
+
+    // Category Types
+    {
+        name: 'category-types',
+        path: '/admin/types',
+        component: CategoryTypeIndex,
+        meta: { requiresAuth: true },
+    },
+    {
+        name: 'category-type-create',
+        path: '/admin/type/create',
+        component: CategoryTypeCreate,
+        meta: { requiresAuth: true },
+    },
+    {
+        name: 'category-type-edit',
+        path: '/admin/type/edit/:id',
+        component: CategoryTypeEdit,
         meta: { requiresAuth: true },
     },
 ];

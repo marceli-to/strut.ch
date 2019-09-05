@@ -28,14 +28,25 @@ class PressController extends Controller
     }
 
     /**
-     * Get all press articles
+     * Get all records
      *
      * @return \Illuminate\Http\Response
      */
 
-    public function get()
+    public function get($year = NULL)
     {
-        $press = $this->press->orderBy('year', 'DESC')->get()->groupBy('year');
+        if ($year !== NULL)
+        {
+            $press = $this->press->where('year', '=', $year)
+                                 ->orderBy('year', 'DESC')
+                                 ->get()
+                                 ->groupBy('year');
+
+        }
+        else
+        {
+            $press = $this->press->orderBy('year', 'DESC')->get()->groupBy('year');
+        }
         return new PressCollection($press);
     }
 

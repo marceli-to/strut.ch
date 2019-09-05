@@ -19,10 +19,10 @@
                   {{ job.lead.de }}
                 </div>
                 <div class="list-item-action">
-                  <router-link :to="{name: 'job-edit', params: { id: job.id }}" class="icon-edit icon-mini"></router-link>
-                  <a href="javascript:;" class="icon-trash icon-mini" @click.prevent="destroy(job.id)"></a>
                   <a href="javascript:;" :class="[job.publish == 1 ? 'icon-eye' : 'icon-eye-off', 'icon-mini']" @click.prevent="toggleStatus(job.id)"></a>
+                  <router-link :to="{name: 'job-edit', params: { id: job.id }}" class="icon-edit icon-mini"></router-link>
                   <a href="javascript:;" class="icon-copy icon-mini" @click.prevent="clone(job.id)"></a>
+                  <a href="javascript:;" class="icon-trash icon-mini" @click.prevent="destroy(job.id)"></a>
                 </div>
               </div>
             </draggable>

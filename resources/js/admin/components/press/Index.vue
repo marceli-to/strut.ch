@@ -7,29 +7,49 @@
         <div>
           <h1>Presse Artikel</h1>
           <router-link :to="{ name: 'press-create' }" class="btn-add"><span>Hinzufügen</span></router-link>
+
           <div class="list-items" v-if="press.length">
             <div class="list-item-group" v-for="articles in press" :key="articles.index">
               <h2>{{articles[0].year}}</h2>
               <div :class="[p.publish == 0 ? 'is-disabled' : '', 'list-item']" v-for="p in articles" :key="p.id">
                 <div class="list-item-body">
-                  <h3>{{ p.title.de }} – {{p.year}}</h3>
+                  <h3>{{ p.title.de }}</h3>
                   <p>{{p.description.de}}</p>
                 </div>
                 <div class="list-item-action">
-                  <router-link :to="{name: 'press-edit', params: { id: p.id }}" class="icon-edit icon-mini"></router-link>
-                  <a href="javascript:;" class="icon-trash icon-mini" @click.prevent="destroy(p.id)"></a>
                   <a href="javascript:;" :class="[p.publish == 1 ? 'icon-eye' : 'icon-eye-off', 'icon-mini']" @click.prevent="toggleStatus(p.id)"></a>
+                  <router-link :to="{name: 'press-edit', params: { id: p.id }}" class="icon-edit icon-mini"></router-link>
                   <a href="javascript:;" class="icon-copy icon-mini" @click.prevent="clone(p.id)"></a>
+                  <a href="javascript:;" class="icon-trash icon-mini" @click.prevent="destroy(p.id)"></a>
                 </div>
               </div>
             </div>
-
           </div>
           <div v-else>
             <p>Es sind keine Presse-Artikel vorhanden...</p>
           </div>
+          <footer class="data-footer">
+            <div>
+              <div class="filter">
+                <div><strong>Filter Jahr</strong></div>
+                <div>
+                  <div class="select-wrapper">
+                    <select v-model="selected" @change="filter($event)">
+                      <option v-for="option in options.years" :key="option.value">
+                      {{ option }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div>
+                  <a href="" @click.prevent="resetFilter()">Zurücksetzen</a>
+                </div>
+              </div>
+            </div>
+          </footer>
         </div>
       </main>
+      <!-- <footer></footer> -->
     </div>
   </div>
 </template>
@@ -43,23 +63,45 @@
     data() {
       return {
         press: [],
+
+        selected: null,
+        options: {
+          years: []
+        },
+
         debounce: false,
       }
     },
 
     created() {
-        let uri = '/api/press/get';
-        this.axios.get(uri).then(response => {
-          this.press = response.data.data;
-        });
+      this.fetch();
     },
 
     methods: {
 
+      fetch($year) {
+        let uri = '/api/press/get';
+        this.axios.get(uri).then(response => {
+          this.press = response.data.data;
+          this.options.years = this.getYears(response.data.data);
+        });        
+      },
+
+      filter() {
+        let uri = '/api/press/get/' + this.selected;
+        this.axios.get(uri).then(response => {
+          this.press = response.data.data;
+        });   
+      },
+
+      resetFilter() {
+        this.selected = null;
+        this.fetch();
+      },
+
       destroy(id) {
         let uri = `/api/press/destroy/${id}`;
         this.axios.delete(uri).then(response => {
-          //this.press.splice(this.press.indexOf(id), 1);
           this.press = response.data.data;
           this.$notify({type: 'success', text: 'Eintrag gelöscht'});
         });
@@ -91,6 +133,32 @@
           this.$notify({type: 'success', text: 'Status angepasst'});
         });
       },
+
+      getYears(data) {
+        let years = [];
+        data.forEach(function(items){
+          items.forEach(function(item){
+            years.push(item.year);
+          })
+        });
+        return [...new Set(years)];
+      }
     }
   }
 </script>
+<style scoped>
+/*
+footer {
+  background-color: #333;
+  bottom: 0;
+  position: fixed;
+  height: 100px;
+  left: 0;
+  width: 100%;
+}
+
+main {
+  padding-bottom: 120px;
+}
+*/
+</style>

@@ -12,14 +12,16 @@
     }
 }
 
+
 .list-item-group {
     @include responsive-prop('margin-bottom', $space-sm);
 }
 
+// List view
 .list-item {
     border-top: 2px solid $color--dark;
     display: grid;
-    grid-template-columns: auto 46px;
+    grid-template-columns: auto 102px;
     @include responsive-prop('padding-top', $space-xs);
     @include responsive-prop('margin-bottom', $space-xs);
 
@@ -30,7 +32,8 @@
     }
 
     &.is-disabled {
-        text-decoration: line-through;
+        opacity: .5;
+       // color: $color--medium-grey;
     }
 
     &.list-item--sortable {
@@ -40,12 +43,12 @@
 
 .list-item-body {
     @include responsive-prop('padding-right', $space-sm);
-
     span {
         display: block;
     }
 
     h3 {
+        @include font-size($fs-sm);
         margin-top: 0;
     }
 
@@ -55,13 +58,109 @@
             margin-bottom: 0 !important;
         }
     }
+
+    .item-date {
+        @include font-size($fs-xxs);
+        color: $color--medium-grey;
+        display: block;
+        margin-top: 5px;
+    }
 }
 
 .list-item-action {
-    text-align: right;
     display: grid;
-    grid-template-columns: repeat(2, 18px);
-    grid-template-rows: repeat(2, 1fr);
+    grid-template-columns: repeat(4, 18px);
     grid-gap: 10px;
     text-align: right;
+}
+
+// Card view
+.list-cards {
+
+    > div {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        @include responsive-prop('grid-gap', $space-md);
+    }
+
+}
+
+.list-card-item {
+    border-top: 2px solid $color--dark;
+    @include responsive-prop('padding-top', $space-xs);
+    
+    &.is-disabled {
+        opacity: .5;
+        //color: $color--medium-grey;
+       // text-decoration: line-through;
+    }
+
+    &.list-item--sortable {
+        cursor: move;
+    }
+
+    span {
+        display: block;
+    }
+
+    h2 {
+        @include font-size($fs-sm);
+        margin-bottom: 5px !important;
+    }
+
+    p {
+        margin-bottom: 10px !important;
+        &:last-of-type {
+            margin-bottom: 0 !important;
+        }
+
+        span {
+            display: block;
+        }
+    }
+}
+
+.list-card-action {
+    border-bottom: 2px solid $color--dark;
+    border-top: 2px solid $color--dark;
+    display: grid;
+    grid-template-columns: repeat(4, 18px);
+    grid-gap: 10px;
+    @include responsive-prop('margin-top', $space-xs);
+    padding: 5px 0;
+}
+
+// Bubbles
+.list-item-bubbles {
+    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    grid-gap: 10px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+
+    .btn-add {
+        left: 5px;
+        right: auto;
+        position: relative;
+        text-align: center;
+        top: auto;
+        width: 100%;
+    }
+}
+
+.list-item-bubble {
+    border: 2px solid $color--dark;
+    border-radius: 2px;
+    // @include responsive-prop('margin-bottom', $space-xs);
+    // @include responsive-prop('margin-right', $space-xs);
+    display: inline-block;
+    padding: 5px 8px 8px 8px;
+}
+
+.list-item-bubble__action {
+    display: grid;
+    grid-template-columns: repeat(4, 18px);
+    grid-gap: 10px;
+    @include responsive-prop('margin-top', $space-xs);
 }

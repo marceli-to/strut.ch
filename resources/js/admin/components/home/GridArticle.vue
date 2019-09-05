@@ -1,6 +1,6 @@
 <template>
     <div>
-        <a href="javascript:;" class="btn-trash" @click.prevent="deleteArticle(element.id, element.articleId)">Delete</a>
+        <a href="javascript:;" class="btn-trash" @click.prevent="deleteArticle(element.id, element.articleId)">Löschen</a>
         <div>{{element.date}}</div>
         <div><strong>{{element.title}}</strong></div>
         <div>{{element.text}}</div>

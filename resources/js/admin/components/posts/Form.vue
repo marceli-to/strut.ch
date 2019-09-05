@@ -40,7 +40,7 @@
                     <figure class="dz-existing-image" v-for="media in post.media" :key="media.id">
                       <img :src="getMediaSource(media.name)" height="300" width="300">
                       <input type="text" v-model="media.caption" class="is-caption" placeholder="Caption">
-                      <a href="javascript:;" class="dz-remove" @click.prevent="deleteMedia(media)">Delete</a>
+                      <a href="javascript:;" class="dz-remove" @click.prevent="deleteMedia(media)">Löschen</a>
                     </figure>
                   </draggable> 
                 </div>

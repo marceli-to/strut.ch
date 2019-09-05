@@ -12,14 +12,14 @@
               <h2>{{articles[0].year}}</h2>
               <div :class="[award.publish == 0 ? 'is-disabled' : '', 'list-item']" v-for="award in articles" :key="award.id">
                 <div class="list-item-body">
-                  <h3>{{ award.title.de }} – {{award.year}}</h3>
+                  <h3>{{ award.title.de }}</h3>
                   <p>{{award.description.de}}</p>
                 </div>
                 <div class="list-item-action">
-                  <router-link :to="{name: 'award-edit', params: { id: award.id }}" class="icon-edit icon-mini"></router-link>
-                  <a href="javascript:;" class="icon-trash icon-mini" @click.prevent="destroy(award.id)"></a>
                   <a href="javascript:;" :class="[award.publish == 1 ? 'icon-eye' : 'icon-eye-off', 'icon-mini']" @click.prevent="toggleStatus(award.id)"></a>
+                  <router-link :to="{name: 'award-edit', params: { id: award.id }}" class="icon-edit icon-mini"></router-link>
                   <a href="javascript:;" class="icon-copy icon-mini" @click.prevent="clone(award.id)"></a>
+                  <a href="javascript:;" class="icon-trash icon-mini" @click.prevent="destroy(award.id)"></a>
                 </div>
               </div>
             </div>

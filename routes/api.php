@@ -70,7 +70,7 @@ Route::middleware('auth:api')->group(function() {
     Route::delete('book/delete/file/{file}', 'Backend\Book\BookController@unlink');
 
     // Press routes
-    Route::get('press/get', 'Backend\Press\PressController@get');
+    Route::get('press/get/{year?}', 'Backend\Press\PressController@get');
     Route::post('press/create', 'Backend\Press\PressController@store');
     Route::get('press/edit/{id}', 'Backend\Press\PressController@edit');
     Route::post('press/update/{id}', 'Backend\Press\PressController@update');
@@ -88,6 +88,34 @@ Route::middleware('auth:api')->group(function() {
     Route::get('award/status/{id}', 'Backend\Award\AwardController@status');
     Route::delete('award/destroy/{id}', 'Backend\Award\AwardController@destroy');
     Route::delete('award/delete/file/{file}', 'Backend\Award\AwardController@unlink');
+
+    // Lecture routes
+    Route::get('lectures/get', 'Backend\Lecture\LectureController@get');
+    Route::post('lecture/create', 'Backend\Lecture\LectureController@store');
+    Route::get('lecture/edit/{id}', 'Backend\Lecture\LectureController@edit');
+    Route::post('lecture/update/{id}', 'Backend\Lecture\LectureController@update');
+    Route::get('lecture/clone/{id}', 'Backend\Lecture\LectureController@clone');
+    Route::get('lecture/status/{id}', 'Backend\Lecture\LectureController@status');
+    Route::delete('lecture/destroy/{id}', 'Backend\Lecture\LectureController@destroy');
+    Route::delete('lecture/delete/file/{file}', 'Backend\Lecture\LectureController@unlink');
+
+    // Category routes
+    Route::get('categories/get', 'Backend\Project\CategoryController@get');
+    Route::post('category/create', 'Backend\Project\CategoryController@store');
+    Route::get('category/edit/{id}', 'Backend\Project\CategoryController@edit');
+    Route::post('category/update/{id}', 'Backend\Project\CategoryController@update');
+    Route::get('category/clone/{id}', 'Backend\Project\CategoryController@clone');
+    Route::get('category/status/{id}', 'Backend\Project\CategoryController@status');
+    Route::delete('category/destroy/{id}', 'Backend\Project\CategoryController@destroy');
+
+    // Category - Type routes
+    Route::get('types/get', 'Backend\Project\CategoryTypeController@get');
+    Route::post('type/create', 'Backend\Project\CategoryTypeController@store');
+    Route::get('type/edit/{id}', 'Backend\Project\CategoryTypeController@edit');
+    Route::post('type/update/{id}', 'Backend\Project\CategoryTypeController@update');
+    Route::get('type/clone/{id}', 'Backend\Project\CategoryTypeController@clone');
+    Route::get('type/status/{id}', 'Backend\Project\CategoryTypeController@status');
+    Route::delete('type/destroy/{id}', 'Backend\Project\CategoryTypeController@destroy');
 
     // News routes
     Route::post('news/create', 'Backend\NewsController@store');
@@ -113,6 +141,7 @@ Route::middleware('auth:api')->group(function() {
     Route::post('media/upload/document','MediaController@uploadDocument');
     Route::get('media/{file}/{size?}', 'MediaController@resize');
 
+
 });
 
 Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
@@ -122,5 +151,8 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
     Route::post('me', 'AuthController@me');
 });
 
-
+Route::fallback(function(){
+    return response()->json([
+        'message' => 'Page Not Found. If error persists, contact info@website.com'], 404);
+});
 

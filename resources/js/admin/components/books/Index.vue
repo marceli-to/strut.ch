@@ -18,10 +18,10 @@
                   <h3>{{ book.title }}</h3>
                 </div>
                 <div class="list-item-action">
-                  <router-link :to="{name: 'book-edit', params: { id: book.id }}" class="icon-edit icon-mini"></router-link>
-                  <a href="javascript:;" class="icon-trash icon-mini" @click.prevent="destroy(book.id)"></a>
                   <a href="javascript:;" :class="[book.publish == 1 ? 'icon-eye' : 'icon-eye-off', 'icon-mini']" @click.prevent="toggleStatus(book.id)"></a>
+                  <router-link :to="{name: 'book-edit', params: { id: book.id }}" class="icon-edit icon-mini"></router-link>
                   <a href="javascript:;" class="icon-copy icon-mini" @click.prevent="clone(book.id)"></a>
+                  <a href="javascript:;" class="icon-trash icon-mini" @click.prevent="destroy(book.id)"></a>
                 </div>
               </div>
             </draggable>

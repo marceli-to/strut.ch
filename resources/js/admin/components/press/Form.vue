@@ -13,7 +13,7 @@
                   <a href="javascript:;" @click="changeTab('translation')" :class="[tabs.translation.active ? 'is-active' : '', tabs.translation.error ? 'has-error' : '']">Übersetzung</a>
               </li> -->
               <li>
-                <a href="javascript:;" @click="changeTab('uploads')" :class="tabs.uploads.active ? 'is-active' : ''">Upload</a>
+                <a href="javascript:;" @click="changeTab('media')" :class="tabs.media.active ? 'is-active' : ''">Medien</a>
               </li>
             </ul>
           </nav>
@@ -29,7 +29,11 @@
               </div>
               <div class="form-row" :class="errors.year ? 'has-error': ''">
                 <label>Jahr *</label>
-                <input type="text" @focus="removeError('year')" name="year" v-model="press.year">
+                <div class="select-wrapper">
+                  <select class="is-md" v-model="press.year" name="year" @focus="removeError('year')">
+                    <option v-for="year in years" :key="year" :value="year">{{ year }}</option>
+                  </select>
+                </div>
               </div>
               <div class="form-row">
                 <label>
@@ -38,7 +42,7 @@
                 <input type="text" name="url" v-model="press.url" placeholder="https://test.ch/">
               </div>
             </div>
-            <div v-show="tabs.uploads.active">
+            <div v-show="tabs.media.active">
               <div class="form-row" v-if="press.media == null">
                 <label for="document">Datei hochladen <span class="fs-xs">(JPG | PNG, max. 8 MB)</span></label>
                 <vue-dropzone ref="dropzone" id="dropzone" :options="dropzoneOptions" @vdropzone-complete="afterComplete"></vue-dropzone>
@@ -50,15 +54,17 @@
                       <a :href="getMediaUri(press.media)" target="_blank" class="dz-file-preview">
                         <img :src="getMediaSource(press.media)" height="300" width="300">
                       </a>
-                      <a href="javascript:;" class="dz-remove" @click.prevent="deleteMedia(press.media)">Delete</a>
+                      <a href="javascript:;" class="dz-remove" @click.prevent="deleteMedia(press.media)">Löschen</a>
                     </figure>
                 </div>
               </div>
             </div>
-            <div class="form-row form-buttons">
-              <button type="submit">Speichern</button>
-              <router-link :to="{name: 'press'}">Zurück</router-link>
-            </div>
+            <footer class="data-footer form-buttons">
+              <div>
+                <button type="submit">Speichern</button>
+                <router-link :to="{name: 'press'}">Zurück</router-link>
+              </div>
+            </footer>
           </form>
         </div>
       </main>
@@ -67,7 +73,8 @@
 <script>
 import PageHeader from '@/layout/PageHeader.vue';
 import vue2Dropzone from 'vue2-dropzone';
-import tinyConfig from '@/config/tinyconfig.js'
+import tinyConfig from '@/config/tinyconfig.js';
+import years from '@/config/years.js'
 import Editor from '@tinymce/tinymce-vue';
 
 export default {
@@ -107,7 +114,7 @@ export default {
           active: false,
           error: false
         },
-        uploads: {
+        media: {
           active: false,
           error: false
         }
@@ -126,6 +133,9 @@ export default {
         link: null,
         media: null  
       },
+
+      // years
+      years: years,
 
       // dropzone options
       dropzoneOptions: {
@@ -146,6 +156,7 @@ export default {
   },
   
   created() {
+    console.log(this.years);
     if (this.$props.type == 'edit') {
       let uri = `/api/press/edit/${this.$route.params.id}`;
       this.axios.get(uri).then((response) => {

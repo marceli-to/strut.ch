@@ -7,21 +7,27 @@
         <div>
           <h1>Team</h1>
           <router-link :to="{ name: 'team-create' }" class="btn-add"><span>Hinzufügen</span></router-link>
-          <div class="list-items" v-if="team.length">
+          <div class="list-cards" v-if="team.length">
             <draggable 
               v-model="team" 
               @end="updateOrder"
               ghost-class="draggable-ghost"
               tag="div">
-              <div :class="[t.publish == 0 ? 'is-disabled' : '', 'list-item', 'list-item--sortable']" v-for="t in team" :key="t.id">
-                <div class="list-item-body">
-                  <h3>{{ t.firstname }} {{ t.name }}</h3>
+              <div :class="[t.publish == 0 ? 'is-disabled' : '', 'list-card-item', 'list-item--sortable']" v-for="t in team" :key="t.id">
+                <div class="list-card-body">
+                  <h2>{{ t.firstname }} {{ t.name }}</h2>
+                  <p>
+                    <span v-if="t.role.de">{{ t.role.de }}</span>
+                    <span v-if="t.position.de">{{ t.position.de }}</span>
+                    <span v-if="t.email">{{ t.email }}</span>
+                    <span v-if="t.phone">{{ t.phone }}</span>
+                  </p>
                 </div>
-                <div class="list-item-action">
-                  <router-link :to="{name: 'team-edit', params: { id: t.id }}" class="icon-edit icon-mini"></router-link>
-                  <a href="javascript:;" class="icon-trash icon-mini" @click.prevent="destroy(t.id)"></a>
+                <div class="list-card-action">
                   <a href="javascript:;" :class="[t.publish == 1 ? 'icon-eye' : 'icon-eye-off', 'icon-mini']" @click.prevent="toggleStatus(t.id)"></a>
+                  <router-link :to="{name: 'team-edit', params: { id: t.id }}" class="icon-edit icon-mini"></router-link>
                   <a href="javascript:;" class="icon-copy icon-mini" @click.prevent="clone(t.id)"></a>
+                  <a href="javascript:;" class="icon-trash icon-mini" @click.prevent="destroy(t.id)"></a>
                 </div>
               </div>
             </draggable>

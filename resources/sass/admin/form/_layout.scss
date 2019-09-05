@@ -1,9 +1,9 @@
 /**
- * Forms - layouts
+ * -----------------------------------------------------------------------------
+ * File: form/layout
  * -----------------------------------------------------------------------------
  */
 
-// Form elements
 .form-row {
 	@include responsive-prop('margin-bottom', $space-md);
 	display: block;
@@ -24,7 +24,7 @@
 }
 
 .form-buttons {
-	@include responsive-prop('padding-top', $space-sm);
+	//@include responsive-prop('padding-top', $space-sm);
 	a {
 		@include responsive-prop('margin-left', $space-sm);
 	}

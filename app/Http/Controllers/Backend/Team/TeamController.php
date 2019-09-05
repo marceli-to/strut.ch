@@ -29,7 +29,7 @@ class TeamController extends Controller
     }
 
     /**
-     * Get all teammembers
+     * Get all records
      *
      * @return \Illuminate\Http\Response
      */

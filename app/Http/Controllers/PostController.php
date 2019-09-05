@@ -25,7 +25,7 @@ class PostController extends Controller
     }
 
     /**
-     * Get all posts
+     * Get all records
      *
      * @return \Illuminate\Http\Response
      */
@@ -39,7 +39,7 @@ class PostController extends Controller
     }
 
     /**
-     * Get all posts which are not used by a grid
+     * Get all records which are not used by a grid
      *
      * @return \Illuminate\Http\Response
      */

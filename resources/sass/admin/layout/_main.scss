@@ -6,6 +6,8 @@
 
 main.content {
     @include responsive-prop('padding-top', $space-md);
+    @include responsive-prop('padding-bottom', $footer-heights);
+
     > div {
         @extend %page-block;
     }

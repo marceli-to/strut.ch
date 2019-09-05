@@ -28,7 +28,7 @@ class BookController extends Controller
     }
 
     /**
-     * Get all books
+     * Get all records
      *
      * @return \Illuminate\Http\Response
      */

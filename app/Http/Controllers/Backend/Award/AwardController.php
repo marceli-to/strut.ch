@@ -28,7 +28,7 @@ class AwardController extends Controller
     }
 
     /**
-     * Get all award articles
+     * Get all records
      *
      * @return \Illuminate\Http\Response
      */
@@ -58,7 +58,6 @@ class AwardController extends Controller
                 'en' => $request->input('description.en'),
             ],
             'year' => $request->input('year'),          
-            'url' => $request->input('url') ? \AppHelper::addScheme($request->input('url')) : NULL,
             'media' => $request->input('media'),          
         ]);
 
@@ -92,7 +91,6 @@ class AwardController extends Controller
         $award->setTranslation('description', 'de', $request->input('description.de'));
         $award->year = $request->input('year') ? $request->input('year') : NULL;
         $award->media = $request->input('media') ? $request->input('media') : NULL;
-        $award->url = $request->input('url') ? \AppHelper::addScheme($request->input('url')) : NULL;
         $award->save();
         return response()->json('successfully updated');
     }
@@ -111,11 +109,8 @@ class AwardController extends Controller
         $awardCopy->media = null;
         $awardCopy->publish = 0;
         $awardCopy->save();
-
         $awards = $this->award->orderBy('year', 'DESC')->get()->groupBy('year');
         return new AwardCollection($awards);
-
-        //return response()->json($awardCopy);
     }
 
     /**
