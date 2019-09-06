@@ -1,10 +1,14 @@
 <?php
-
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Translatable\HasTranslations;
 
 class ProjectImage extends Model
 {
-    //
+    use HasTranslations;
+
+    public $translatable = [];
+
+    protected $fillable = [];
 }

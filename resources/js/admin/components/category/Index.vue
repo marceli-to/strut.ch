@@ -10,25 +10,25 @@
           <div class="list-items" v-if="categories.length">
             <div :class="[category.publish == 0 ? 'is-disabled' : '', 'list-item']" v-for="category in categories" :key="category.id">
               <div class="list-item-body">
-                <h3>{{ category.name.de }}</h3>
-                
-                <div class="list-item-bubbles">
-                  <div class="list-item-bubble" v-for="categoryType in category.types" :key="categoryType.id">
-                    <div>{{categoryType.name_singular.de}}</div>
-                    <div class="list-item-bubble__action">
-                      <a href="javascript:;" :class="[categoryType.publish == 1 ? 'icon-eye' : 'icon-eye-off', 'icon-mini']" @click.prevent="toggleTypeStatus(categoryType.id)"></a>
-                      <router-link :to="{name: 'category-type-edit', params: { id: categoryType.id }}" class="icon-edit icon-mini"></router-link>
-                      <a href="javascript:;" class="icon-copy icon-mini" @click.prevent="cloneType(categoryType.id)"></a>
-                      <a href="javascript:;" class="icon-trash icon-mini" @click.prevent="destroyType(categoryType.id)"></a>
+                <h2>{{ category.name.de }}</h2>
+                <div class="list-item-cards">
+                  <draggable 
+                    v-model="category.types" 
+                    @end="updateTypeOrder(category.id)"
+                    ghost-class="draggable-ghost"
+                    tag="div">
+                    <div class="list-item-card" v-for="categoryType in category.types" :key="categoryType.id">
+                      <div>{{categoryType.name_singular.de}}<br>{{categoryType.name_plural.de}}</div>
+                      <div class="list-item-card__action">
+                        <a href="javascript:;" :class="[categoryType.publish == 1 ? 'icon-eye' : 'icon-eye-off', 'icon-mini']" @click.prevent="toggleTypeStatus(categoryType.id)"></a>
+                        <router-link :to="{name: 'category-type-edit', params: { id: categoryType.id }}" class="icon-edit icon-mini"></router-link>
+                        <a href="javascript:;" class="icon-copy icon-mini" @click.prevent="cloneType(categoryType.id)"></a>
+                        <a href="javascript:;" class="icon-trash icon-mini" @click.prevent="destroyType(categoryType.id)"></a>
+                      </div>
                     </div>
-                  </div>
-                  <div>
-                    <router-link :to="{ name: 'category-type-create' }" class="btn-add">
-                      <span>Typ hinzufügen</span>
-                    </router-link>
-                  </div>
+                  </draggable>
+                  <router-link :to="{ name: 'category-type-create' }" class="btn-add"><span>Typ hinzufügen</span></router-link>
                 </div>
-
               </div>
               <div class="list-item-action">
                 <a href="javascript:;" :class="[category.publish == 1 ? 'icon-eye' : 'icon-eye-off', 'icon-mini']" @click.prevent="toggleStatus(category.id)"></a>
@@ -48,8 +48,11 @@
 </template>
 <script>
   import PageHeader from '@/layout/PageHeader.vue';
+  import draggable from 'vuedraggable';
+
   export default {
     components: {
+      draggable,
       PageHeader: PageHeader,
     },
 
@@ -106,7 +109,7 @@
         });
       },
 
-      // CategoryTypes
+      // Category types
       destroyType(id) {
         let uri = `/api/type/destroy/${id}`;
         this.axios.delete(uri).then(response => {
@@ -141,7 +144,31 @@
           this.categories = tmpCategories;
           this.$notify({type: 'success', text: 'Status angepasst'});
         });
-      },      
+      },
+
+      updateTypeOrder(categoryId) {
+        let types;
+        this.categories.forEach(function(category, index){
+          if (categoryId == category.id) {
+            types = category.types.map(function(type, index) {
+                type.order = index;
+                return type;
+            });
+          }
+        });
+ 
+        if (this.debounce) return;
+
+        this.debounce = setTimeout(function(types) {
+          this.debounce = false 
+          let uri = `/api/type/order`;
+          this.axios.post(uri, {types: types}).then((response) => {
+            this.$router.push({name: 'categories'});
+          });
+        }.bind(this, types), 1000);
+        
+        this.$notify({type: 'success', text: 'Reihenfolge angepasst'});
+      }     
     }
   }
 </script>

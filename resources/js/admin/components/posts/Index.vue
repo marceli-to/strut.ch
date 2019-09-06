@@ -10,7 +10,7 @@
             <draggable 
               v-model="posts" 
               @end="updateOrder"
-              ghost-class="ghost"
+              ghost-class="draggable-ghost"
               tag="div">
               <div class="list-item list-item--sortable" v-for="post in posts" :key="post.id">
                 <div class="list-item-body">

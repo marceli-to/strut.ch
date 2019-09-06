@@ -127,6 +127,26 @@ class CategoryTypeController extends Controller
     }
 
     /**
+     * Update the order of the resources.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+
+    public function order(Request $request)
+    {
+        $types = $request->get('types');
+        foreach($types as $type)
+        {
+            $t = $this->categoryType->find($type['id']);
+            $t->order = $type['order'];
+            $t->save(); 
+        }
+
+        return response()->json('successfully updated');
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id

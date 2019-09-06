@@ -3,7 +3,7 @@ let years = [],
     min = 1990, 
     max = new Date().getFullYear();
 
-for(let i = min; i <= max; i++)
+for(let i = max; i >= min; i--)
 {
     years.push(i);
 }

@@ -43,6 +43,11 @@ import CategoryTypeIndex from '@/components/categoryType/Index.vue';
 import CategoryTypeCreate from '@/components/categoryType/Create.vue';
 import CategoryTypeEdit from '@/components/categoryType/Edit.vue';
 
+// Projects
+import ProjectIndex from '@/components/project/Index.vue';
+import ProjectCreate from '@/components/project/Create.vue';
+import ProjectEdit from '@/components/project/Edit.vue';
+
 
 // Masonry
 import GridIndex from '@/components/home/GridIndex.vue';
@@ -263,6 +268,26 @@ const routes = [
         name: 'category-type-edit',
         path: '/admin/type/edit/:id',
         component: CategoryTypeEdit,
+        meta: { requiresAuth: true },
+    },
+
+    // Projects
+    {
+        name: 'projects',
+        path: '/admin/projects',
+        component: ProjectIndex,
+        meta: { requiresAuth: true },
+    },
+    {
+        name: 'project-create',
+        path: '/admin/project/create',
+        component: ProjectCreate,
+        meta: { requiresAuth: true },
+    },
+    {
+        name: 'project-edit',
+        path: '/admin/project/edit/:id',
+        component: ProjectEdit,
         meta: { requiresAuth: true },
     },
 ];

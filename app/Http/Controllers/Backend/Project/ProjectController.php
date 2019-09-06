@@ -3,6 +3,8 @@ namespace App\Http\Controllers\Backend\Project;
 
 use App\Services\MediaService;
 use App\Models\Project;
+use App\Models\ProjectFile;
+use App\Models\ProjectImage;
 use App\Http\Resources\ProjectCollection;
 
 use App\Http\Controllers\Controller;
@@ -12,7 +14,11 @@ class ProjectController extends Controller
 {
     protected $mediaService;
 
-    protected $award;
+    protected $project;
+
+    protected $projectFile;
+    
+    protected $projectImage;
     
     /**
      * Constructor
@@ -21,10 +27,17 @@ class ProjectController extends Controller
      * @param Project $project
      */
 
-    public function __construct(MediaService $mediaService, Project $project)
+    public function __construct(
+        MediaService $mediaService,
+        Project $project,
+        ProjectFile $projectFile,
+        ProjectImage $projectImage
+    )
     {
         $this->mediaService = $mediaService;
-        $this->project = $project;
+        $this->project      = $project;
+        $this->projectFile  = $projectFile;
+        $this->projectImage = $projectImage;
     }
 
     /**
@@ -35,7 +48,7 @@ class ProjectController extends Controller
 
     public function get()
     {
-        $projects = $this->project->orderBy('year', 'DESC')->get();
+        $projects = $this->project->get();
         return new ProjectCollection($projects);
     }
 
@@ -48,7 +61,7 @@ class ProjectController extends Controller
     
     public function store(Request $request)
     {   
-        $award = new Award([
+        $project = new Project([
             'title' => [
                 'de' => $request->input('title.de'),
                 'en' => $request->input('title.en'),
@@ -62,7 +75,7 @@ class ProjectController extends Controller
         ]);
 
         $project->save();
-        return response()->json(['awardId' => $project->id]);
+        return response()->json(['projectId' => $project->id]);
     }
 
     /**
@@ -142,7 +155,6 @@ class ProjectController extends Controller
             $this->mediaService->delete($project->media);
         }
         $project->delete();
-
         $projects = $this->project->orderBy('year', 'DESC')->get()->groupBy('year');
         return new ProjectCollection($projects);
     }

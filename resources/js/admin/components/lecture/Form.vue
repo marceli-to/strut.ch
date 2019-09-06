@@ -39,7 +39,7 @@
             <div v-show="tabs.media.active">
               <div class="form-row" v-if="lecture.media == null">
                 <label for="document">Datei hochladen <span class="fs-xs">(JPG | PNG, max. 8 MB)</span></label>
-                <vue-dropzone ref="dropzone" id="dropzone" :options="dropzoneOptions" @vdropzone-complete="afterComplete"></vue-dropzone>
+                <vue-dropzone ref="dropzone" id="dropzone" :options="dropzoneImageConfig" @vdropzone-complete="afterComplete"></vue-dropzone>
               </div>
               <div class="form-row" v-if="lecture.media">
                 <label>Vorhandene Datei</label>
@@ -65,6 +65,7 @@
 <script>
 import PageHeader from '@/layout/PageHeader.vue';
 import vue2Dropzone from 'vue2-dropzone';
+import dropzoneImageConfig from '@/config/dropzone-image.js';
 import tinyConfig from '@/config/tinyconfig.js';
 import years from '@/config/years.js';
 import Editor from '@tinymce/tinymce-vue';
@@ -128,18 +129,8 @@ export default {
       // years
       years: years,
       
-      // dropzone options
-      dropzoneOptions: {
-        url: "/api/media/upload",
-        method: 'post',
-        maxFilesize: 8,
-        maxFiles: 1,
-        createImageThumbnails: false,
-        acceptedFiles: '.png, .jpg',
-        headers: {
-          'Authorization': 'Bearer ' + localStorage.getItem('token')
-        }
-      },
+      // dropzone config
+      dropzoneImageConfig: dropzoneImageConfig,
 
       // tinymce config
       tinyConfig: tinyConfig,

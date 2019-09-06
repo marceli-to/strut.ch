@@ -35,7 +35,7 @@
             </div>
             <div class="form-row form-buttons">
               <button type="submit">Speichern</button>
-              <router-link :to="{name: 'category-types'}">Zurück</router-link>
+              <router-link :to="{name: 'categories'}">Zurück</router-link>
             </div>
           </form>
         </div>

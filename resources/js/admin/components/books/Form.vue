@@ -67,6 +67,7 @@
 <script>
 import PageHeader from '@/layout/PageHeader.vue';
 import vue2Dropzone from 'vue2-dropzone';
+import dropzoneImageConfig from '@/config/dropzone-image.js';
 import tinyConfig from '@/config/tinyconfig.js'
 import Editor from '@tinymce/tinymce-vue';
 
@@ -123,18 +124,8 @@ export default {
         media: null  
       },
 
-      // dropzone options
-      dropzoneOptions: {
-        url: "/api/media/upload",
-        method: 'post',
-        maxFilesize: 8,
-        maxFiles: 1,
-        createImageThumbnails: false,
-        acceptedFiles: '.png, .jpg',
-        headers: {
-          'Authorization': 'Bearer ' + localStorage.getItem('token')
-        }
-      },
+      // dropzone config
+      dropzoneImageConfig: dropzoneImageConfig,
 
       // tinymce config
       tinyConfig: tinyConfig,

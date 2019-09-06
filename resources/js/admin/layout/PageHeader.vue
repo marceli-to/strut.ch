@@ -18,14 +18,16 @@
                     <router-link :to="{ name: 'masonry' }">Masonry</router-link>
                 </li>
                 <li>
-                    <a href="javascript:;" style="padding-bottom: 0">Projekte</a>
+                    <router-link :to="{ name: 'projects' }">Projekte</router-link>
                     <ul>
                         <li>
                             <router-link :to="{ name: 'categories' }">Kategorien</router-link>
                         </li>
-                        <!-- <li>
+                        <!--
+                        <li>
                             <router-link :to="{ name: 'category-types' }">Typen</router-link>
-                        </li> -->
+                        </li>
+                        -->
                     </ul>
                 </li>
                 <li>

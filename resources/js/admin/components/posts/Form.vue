@@ -35,7 +35,7 @@
                   <draggable 
                     v-model="post.media" 
                     @end="updateOrder"
-                    ghost-class="ghost"
+                    ghost-class="draggable-ghost"
                     tag="div">
                     <figure class="dz-existing-image" v-for="media in post.media" :key="media.id">
                       <img :src="getMediaSource(media.name)" height="300" width="300">

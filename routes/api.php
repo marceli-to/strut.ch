@@ -114,8 +114,20 @@ Route::middleware('auth:api')->group(function() {
     Route::get('type/edit/{id}', 'Backend\Project\CategoryTypeController@edit');
     Route::post('type/update/{id}', 'Backend\Project\CategoryTypeController@update');
     Route::get('type/clone/{id}', 'Backend\Project\CategoryTypeController@clone');
+    Route::post('type/order', 'Backend\Project\CategoryTypeController@order');
     Route::get('type/status/{id}', 'Backend\Project\CategoryTypeController@status');
     Route::delete('type/destroy/{id}', 'Backend\Project\CategoryTypeController@destroy');
+
+    // Project routes
+    Route::get('projects/get', 'Backend\Project\ProjectController@get');
+    Route::post('project/create', 'Backend\Project\ProjectController@store');
+    Route::get('project/edit/{id}', 'Backend\Project\ProjectController@edit');
+    Route::post('project/update/{id}', 'Backend\Project\ProjectController@update');
+    Route::get('project/clone/{id}', 'Backend\Project\ProjectController@clone');
+    Route::get('project/status/{id}', 'Backend\Project\ProjectController@status');
+    Route::delete('project/destroy/{id}', 'Backend\Project\ProjectController@destroy');
+    Route::post('project/order', 'Backend\Project\ProjectController@order');
+    // Route::delete('project/delete/file/{file}', 'Backend\Project\ProjectController@unlink');
 
     // News routes
     Route::post('news/create', 'Backend\NewsController@store');
@@ -153,6 +165,6 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
 
 Route::fallback(function(){
     return response()->json([
-        'message' => 'Page Not Found. If error persists, contact info@website.com'], 404);
+        'message' => 'Page Not Found. If error persists, contact m@marceli.to'], 404);
 });
 
