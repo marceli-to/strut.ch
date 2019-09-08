@@ -109,7 +109,7 @@ Route::middleware('auth:api')->group(function() {
     Route::delete('category/destroy/{id}', 'Backend\Project\CategoryController@destroy');
 
     // Category - Type routes
-    Route::get('types/get', 'Backend\Project\CategoryTypeController@get');
+    Route::get('types/get/{id?}', 'Backend\Project\CategoryTypeController@get');
     Route::post('type/create', 'Backend\Project\CategoryTypeController@store');
     Route::get('type/edit/{id}', 'Backend\Project\CategoryTypeController@edit');
     Route::post('type/update/{id}', 'Backend\Project\CategoryTypeController@update');
@@ -127,7 +127,14 @@ Route::middleware('auth:api')->group(function() {
     Route::get('project/status/{id}', 'Backend\Project\ProjectController@status');
     Route::delete('project/destroy/{id}', 'Backend\Project\ProjectController@destroy');
     Route::post('project/order', 'Backend\Project\ProjectController@order');
-    // Route::delete('project/delete/file/{file}', 'Backend\Project\ProjectController@unlink');
+
+    // Project image routes
+    Route::delete('project/image/delete/{file}', 'Backend\Project\ProjectImageController@unlink');
+    Route::get('project/image/status/{id}', 'Backend\Project\ProjectImageController@status');
+
+    // Project file routes
+    Route::delete('project/file/delete/{file}', 'Backend\Project\ProjectFileController@unlink');
+    Route::get('project/file/status/{id}', 'Backend\Project\ProjectFileController@status');
 
     // News routes
     Route::post('news/create', 'Backend\NewsController@store');

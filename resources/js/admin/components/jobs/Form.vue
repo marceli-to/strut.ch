@@ -35,24 +35,23 @@
             <div class="span" v-show="tabs.media.active">
               <div class="form-row" v-if="job.media == null">
                 <label for="document">Datei hochladen <span class="fs-xs">(PDF, max. 8 MB)</span></label>
-                <vue-dropzone ref="dropzone" id="dropzone" :options="dropzoneDocumentConfig" @vdropzone-complete="afterComplete"></vue-dropzone>
+                <vue-dropzone ref="dropzone" id="dropzone" :options="dropzoneFileConfig" @vdropzone-complete="afterComplete"></vue-dropzone>
               </div>
               <div class="form-row" v-if="job.media">
                 <label>Vorhandene Datei</label>
-                <div class="dropzone-existing-images">
-                    <figure class="dz-existing-image">
+                <div class="dropzone-existing-assets">
+                    <figure class="dz-existing-asset">
                       <a :href="getMediaUri(job.media)" target="_blank" class="dz-file-preview">
-                        <img src="/assets/admin/img/icon-file.png" height="100" width="100">
+                        <img src="/assets/admin/img/icons/icon-file.svg" height="100" width="100">
                       </a>
                       <a href="javascript:;" class="dz-remove" @click.prevent="deleteMedia(job.media)">Löschen</a>
                     </figure>
                 </div>
               </div>
             </div>
-            <div class="form-row form-buttons">
-              <button type="submit">Speichern</button>
-              <router-link :to="{name: 'jobs'}">Zurück</router-link>
-            </div>
+            <form-buttons 
+              :route="'jobs'">
+            </form-buttons>
           </form>
         </div>
       </main>
@@ -60,8 +59,9 @@
 </template>
 <script>
 import PageHeader from '@/layout/PageHeader.vue';
+import FormButtons from '@/components/buttons/FormButtons.vue';
 import vue2Dropzone from 'vue2-dropzone';
-import dropzoneDocumentConfig from '@/config/dropzone-document.js';
+import dropzoneFileConfig from '@/config/dropzoneconfig-file.js';
 import tinyConfig from '@/config/tinyconfig.js';
 import Editor from '@tinymce/tinymce-vue';
 
@@ -69,7 +69,8 @@ export default {
 
   components: {
     vueDropzone: vue2Dropzone,
-    tinymceEditor: Editor
+    tinymceEditor: Editor,
+    FormButtons: FormButtons,
   },
 
   props: {
@@ -124,7 +125,7 @@ export default {
       },
 
       // dropzone config
-      dropzoneDocumentConfig: dropzoneDocumentConfig,
+      dropzoneFileConfig: dropzoneFileConfig,
 
       // tinymce config
       tinyConfig: tinyConfig,

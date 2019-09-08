@@ -43,8 +43,8 @@
               </div>
               <div class="form-row" v-if="lecture.media">
                 <label>Vorhandene Datei</label>
-                <div class="dropzone-existing-images">
-                    <figure class="dz-existing-image">
+                <div class="dropzone-existing-assets">
+                    <figure class="dz-existing-asset">
                       <a :href="getMediaUri(lecture.media)" target="_blank" class="dz-file-preview">
                         <img :src="getMediaSource(lecture.media)" height="300" width="300">
                       </a>
@@ -53,10 +53,9 @@
                 </div>
               </div>
             </div>
-            <div class="form-row form-buttons">
-              <button type="submit">Speichern</button>
-              <router-link :to="{name: 'lectures'}">Zurück</router-link>
-            </div>
+            <form-buttons 
+              :route="'lectures'">
+            </form-buttons>
           </form>
         </div>
       </main>
@@ -64,8 +63,9 @@
 </template>
 <script>
 import PageHeader from '@/layout/PageHeader.vue';
+import FormButtons from '@/components/buttons/FormButtons.vue';
 import vue2Dropzone from 'vue2-dropzone';
-import dropzoneImageConfig from '@/config/dropzone-image.js';
+import dropzoneImageConfig from '@/config/dropzoneconfig-image.js';
 import tinyConfig from '@/config/tinyconfig.js';
 import years from '@/config/years.js';
 import Editor from '@tinymce/tinymce-vue';
@@ -74,7 +74,8 @@ export default {
 
   components: {
     vueDropzone: vue2Dropzone,
-    tinymceEditor: Editor
+    tinymceEditor: Editor,
+    FormButtons: FormButtons,
   },
 
   props: {

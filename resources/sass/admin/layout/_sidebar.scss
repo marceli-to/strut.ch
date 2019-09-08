@@ -5,5 +5,8 @@
  */
 
 aside.sidebar {
-
+    > div {
+        background-color: $color--light;
+        padding: 15px;
+    }
 }

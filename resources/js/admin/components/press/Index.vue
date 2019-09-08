@@ -49,7 +49,6 @@
           </footer>
         </div>
       </main>
-      <!-- <footer></footer> -->
     </div>
   </div>
 </template>
@@ -63,12 +62,10 @@
     data() {
       return {
         press: [],
-
         selected: null,
         options: {
           years: []
         },
-
         debounce: false,
       }
     },
@@ -146,19 +143,3 @@
     }
   }
 </script>
-<style scoped>
-/*
-footer {
-  background-color: #333;
-  bottom: 0;
-  position: fixed;
-  height: 100px;
-  left: 0;
-  width: 100%;
-}
-
-main {
-  padding-bottom: 120px;
-}
-*/
-</style>

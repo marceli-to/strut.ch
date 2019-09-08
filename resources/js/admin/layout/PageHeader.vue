@@ -11,9 +11,9 @@
                 <a href="javascript:;" @click="toggleMenu()" class="icon-close"></a>
             </div>
             <ul>
-                <li>
+                <!-- <li>
                     <router-link :to="{ name: 'posts' }">Posts</router-link>
-                </li>
+                </li> -->
                 <li>
                     <router-link :to="{ name: 'masonry' }">Masonry</router-link>
                 </li>
@@ -23,11 +23,6 @@
                         <li>
                             <router-link :to="{ name: 'categories' }">Kategorien</router-link>
                         </li>
-                        <!--
-                        <li>
-                            <router-link :to="{ name: 'category-types' }">Typen</router-link>
-                        </li>
-                        -->
                     </ul>
                 </li>
                 <li>

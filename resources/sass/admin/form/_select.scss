@@ -10,12 +10,16 @@
 	position: relative;
     width: auto;
 
+    &.is-wide {
+        width: 100%;
+    }
+
 	&:after {
 		@include background-default();
 		background-image: url($url-icons + 'chevron-down.svg');
 		background-repeat: no-repeat;
 		background-position: center center;
-        background-size: 16px auto;
+        background-size: 18px auto;
         background-color: $color--light-grey;
 		content: '';
 		height: 100%;
@@ -23,7 +27,7 @@
         padding: 0 5px;
 		position: absolute;
 		top: 0;
-		width: 26px;
+		width: 32px;
 		z-index: 0;
 	}
 
@@ -34,7 +38,7 @@
         width: 100%;
 
         &.is-sm {
-            max-width: 60px;
+            padding: 8px 20px 6px 6px;
         }
 
         &.is-md {

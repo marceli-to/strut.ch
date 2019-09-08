@@ -19,7 +19,7 @@
           </nav>
           <form @submit.prevent="submit">
             <div v-show="tabs.data.active">
-              <div class="grid">
+              <div class="grid-team">
                 <div class="span form-row" :class="errors.firstname ? 'has-error': ''">
                   <label>Vorname *</label>
                   <input type="text" @focus="removeError('firstname')" name="firstname" v-model="team.firstname">
@@ -57,8 +57,8 @@
               </div>
               <div class="form-row" v-if="team.media">
                 <label>Vorhandene Datei</label>
-                <div class="dropzone-existing-images">
-                    <figure class="dz-existing-image">
+                <div class="dropzone-existing-assets">
+                    <figure class="dz-existing-asset">
                       <a :href="getMediaUri(team.media)" target="_blank" class="dz-file-preview">
                         <img :src="getMediaSource(team.media)" height="300" width="300">
                       </a>
@@ -67,10 +67,9 @@
                 </div>
               </div>
             </div>
-            <div class="form-row form-buttons">
-              <button type="submit">Speichern</button>
-              <router-link :to="{name: 'team'}">Zurück</router-link>
-            </div>
+            <form-buttons 
+              :route="'team'">
+            </form-buttons>
           </form>
         </div>
       </main>
@@ -78,8 +77,9 @@
 </template>
 <script>
 import PageHeader from '@/layout/PageHeader.vue';
+import FormButtons from '@/components/buttons/FormButtons.vue';
 import vue2Dropzone from 'vue2-dropzone';
-import dropzoneImageConfig from '@/config/dropzone-image.js';
+import dropzoneImageConfig from '@/config/dropzoneconfig-image.js';
 import tinyConfig from '@/config/tinyconfig-lg.js'
 import Editor from '@tinymce/tinymce-vue';
 
@@ -87,7 +87,8 @@ export default {
 
   components: {
     vueDropzone: vue2Dropzone,
-    tinymceEditor: Editor
+    tinymceEditor: Editor,
+    FormButtons: FormButtons,
   },
 
   props: {
@@ -226,6 +227,7 @@ export default {
     // FileUpload Callback
     afterComplete(file) {
       if (file.status == 'error' && file.accepted == false) {
+        console.log(file);
         this.$notify({type: 'error', text: 'Ungültiges Dateiformat.'});
       }
       else {
@@ -241,15 +243,13 @@ export default {
     },
 
     getMediaSource(file) {
-      return `/media/thumbnail/${file}`;
+      return `/media/${file}/sm`;
     },
 
     // Delete a single file by its name
     deleteMedia(file) {
       let uri = `/api/team/delete/file/${file}`;
       this.axios.delete(uri).then((response) => {
-        // @todo: delete
-        // this.post.media.splice(this.post.media.indexOf(file), 1);
         this.team.media = null;
       });
     },

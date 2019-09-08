@@ -8,7 +8,24 @@ class ProjectFile extends Model
 {
     use HasTranslations;
 
-    public $translatable = [];
+    public $translatable = [
+        'caption'
+    ];
 
-    protected $fillable = [];
+    protected $fillable = [
+        'name',
+        'caption',
+        'publish',
+        'order',
+        'project_id'
+    ];
+
+    /**
+     * Relationships
+     */
+
+    public function project()
+    {
+        return $this->belongsTo('App\Models\Project');
+    }
 }

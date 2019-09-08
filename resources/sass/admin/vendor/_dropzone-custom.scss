@@ -60,36 +60,121 @@
     top: 10px;
 }
 
-.dropzone-existing-images {
+
+.dropzone-existing-assets {
     margin-top: 12px;
     background-color: transparent;
     border: 2px solid $color--dark;
     border-radius: 2px;
-    padding: 12px 6px 6px 6px !important;
+    padding: 15px !important;
 
-    .dz-existing-image {
-        background-color: #f9f9f9;
+    &.has-images,
+    &.has-files {
+        > div {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-gap: 15px;
+        }
+
+        .dz-existing-asset {
+            width: 100%;
+        }
+    }
+
+    &.has-files {
+        > div {
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        }        
+    }
+    
+    .dz-existing-asset {
+        background-color: $color--light-grey;
         border-radius: 2px;
         display: inline-block;
-        padding: 6px;
+        padding: 10px;
         position: relative;
         display: inline-block;
         vertical-align: top;
-        margin: 0 6px 12px 6px;
         min-height: 100px;
-        width: 112px;
+        width: 160px;
 
         img {
             display: block;
             height: auto;
             width: 100%;
         }
+
+        &.is-image {
+            img {
+                background-color: $color--white;
+                padding: 10px;
+            }
+        }
+
+        &.is-draggable {
+            &:hover {
+                cursor: move;
+            }
+        }
+
+        .dz-toolbar {
+            background-color: $color--white;
+            border-top: 2px solid $color--light-grey;
+            display: grid;
+            line-height: 1;
+            grid-template-columns: repeat(4, 18px);
+            grid-gap: 10px;
+            padding: 10px;
+        }
+
+        .dz-edit-form {
+            background-color: $color--white;
+            border-radius: 2px;
+            height: calc(100% - 20px);
+            left: 10px;
+            opacity: 0;
+            padding: 15px 10px;
+            pointer-events: none;
+            position: absolute;
+            top: 10px;
+            width: calc(100% - 20px);
+            z-index: -1;
+            transition: opacity .12s ease-out;
+
+            &.is-visible {
+                opacity: 1;
+                pointer-events: all;
+                z-index: 5;
+                transition: opacity .12s ease-out;
+            }
+
+            .dz-edit-form-row {
+                margin-bottom: 15px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+            .dz-icon-hide-form {
+                @include font-size($fs-xs);
+                bottom: 10px;
+                display: inline-block;
+                left: 10px;
+                position: absolute;
+            }
+
+            label {
+                @include font-bold();
+                display: block;
+                margin-bottom: 5px;
+            }
+        }
     }
 
     .dz-file-preview {
-        display: inline-block;
+        display: block;
         text-decoration: none;
-        margin-bottom: 6px;
+        width: 100%;
     }
 }
 

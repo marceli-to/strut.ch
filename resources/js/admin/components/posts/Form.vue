@@ -31,13 +31,13 @@
               </div>
               <div class="form-row" v-if="post.media.length">
                 <label>Vorhandene Bilder</label>
-                <div class="dropzone-existing-images">
+                <div class="dropzone-existing-assets">
                   <draggable 
                     v-model="post.media" 
                     @end="updateOrder"
                     ghost-class="draggable-ghost"
                     tag="div">
-                    <figure class="dz-existing-image" v-for="media in post.media" :key="media.id">
+                    <figure class="dz-existing-asset" v-for="media in post.media" :key="media.id">
                       <img :src="getMediaSource(media.name)" height="300" width="300">
                       <input type="text" v-model="media.caption" class="is-caption" placeholder="Caption">
                       <a href="javascript:;" class="dz-remove" @click.prevent="deleteMedia(media)">Löschen</a>
@@ -46,10 +46,9 @@
                 </div>
               </div>
             </div>
-            <div class="form-row form-buttons">
-              <button type="submit">Speichern</button>
-              <router-link :to="{name: 'posts'}">Zurück</router-link>
-            </div>
+            <form-buttons 
+              :route="'posts'">
+            </form-buttons>
           </form>
         </div>
       </main>
@@ -57,9 +56,9 @@
 </template>
 <script>
 import vue2Dropzone from 'vue2-dropzone';
+import FormButtons from '@/components/buttons/FormButtons.vue';
 import draggable from 'vuedraggable';
 import Editor from '@tinymce/tinymce-vue';
-
 import tinyConfig from '@/config/tinyconfig.js'
 import PageHeader from '@/layout/PageHeader.vue';
 
@@ -68,7 +67,8 @@ export default {
   components: {
     vueDropzone: vue2Dropzone,
     draggable,
-    tinymceEditor: Editor
+    tinymceEditor: Editor,
+    FormButtons: FormButtons
   },
 
   props: {

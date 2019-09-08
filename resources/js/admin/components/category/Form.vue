@@ -21,10 +21,9 @@
                 <input type="text" @focus="removeError('name', 'de')" name="name" v-model="category.name.de">
               </div>
             </div>
-            <div class="form-row form-buttons">
-              <button type="submit">Speichern</button>
-              <router-link :to="{name: 'categories'}">Zurück</router-link>
-            </div>
+            <form-buttons 
+              :route="'categories'">
+            </form-buttons>
           </form>
         </div>
       </main>
@@ -32,8 +31,13 @@
 </template>
 <script>
 import PageHeader from '@/layout/PageHeader.vue';
+import FormButtons from '@/components/buttons/FormButtons.vue';
 
 export default {
+
+  components: {
+    FormButtons: FormButtons
+  },
 
   props: {
     type: String,

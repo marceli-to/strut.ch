@@ -17,7 +17,7 @@
                     @end="updateTypeOrder(category.id)"
                     ghost-class="draggable-ghost"
                     tag="div">
-                    <div class="list-item-card" v-for="categoryType in category.types" :key="categoryType.id">
+                    <div :class="[categoryType.publish == 0 ? 'is-disabled' : '', 'list-item-card']" v-for="categoryType in category.types" :key="categoryType.id">
                       <div>{{categoryType.name_singular.de}}<br>{{categoryType.name_plural.de}}</div>
                       <div class="list-item-card__action">
                         <a href="javascript:;" :class="[categoryType.publish == 1 ? 'icon-eye' : 'icon-eye-off', 'icon-mini']" @click.prevent="toggleTypeStatus(categoryType.id)"></a>

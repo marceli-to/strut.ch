@@ -55,18 +55,23 @@
     },
 
     created() {
-        let uri = '/api/team/get';
-        this.axios.get(uri).then(response => {
-          this.team = response.data.data;
-        });
+      this.fetch();
     },
 
     methods: {
 
+      fetch() {
+        let uri = '/api/team/get';
+        this.axios.get(uri).then(response => {
+          this.team = response.data.data;
+        });
+      },
+
       destroy(id) {
         let uri = `/api/team/destroy/${id}`;
         this.axios.delete(uri).then(response => {
-          this.team.splice(this.team.indexOf(id), 1);
+          // this.team.splice(this.team.indexOf(id), 1);
+          this.fetch();
           this.$notify({type: 'success', text: 'Eintrag gelöscht'});
         });
       },

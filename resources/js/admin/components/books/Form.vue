@@ -41,12 +41,12 @@
             <div v-show="tabs.media.active">
               <div class="form-row" v-if="book.media == null">
                 <label for="document">Datei hochladen <span class="fs-xs">(JPG | PNG, max. 8 MB)</span></label>
-                <vue-dropzone ref="dropzone" id="dropzone" :options="dropzoneOptions" @vdropzone-complete="afterComplete"></vue-dropzone>
+                <vue-dropzone ref="dropzone" id="dropzone" :options="dropzoneImageConfig" @vdropzone-complete="afterComplete"></vue-dropzone>
               </div>
               <div class="form-row" v-if="book.media">
                 <label>Vorhandene Datei</label>
-                <div class="dropzone-existing-images">
-                    <figure class="dz-existing-image">
+                <div class="dropzone-existing-assets">
+                    <figure class="dz-existing-asset">
                       <a :href="getMediaUri(book.media)" target="_blank" class="dz-file-preview">
                         <img :src="getMediaSource(book.media)" height="300" width="300">
                       </a>
@@ -55,10 +55,9 @@
                 </div>
               </div>
             </div>
-            <div class="form-row form-buttons">
-              <button type="submit">Speichern</button>
-              <router-link :to="{name: 'books'}">Zurück</router-link>
-            </div>
+            <form-buttons 
+              :route="'books'">
+            </form-buttons>
           </form>
         </div>
       </main>
@@ -66,8 +65,9 @@
 </template>
 <script>
 import PageHeader from '@/layout/PageHeader.vue';
+import FormButtons from '@/components/buttons/FormButtons.vue';
 import vue2Dropzone from 'vue2-dropzone';
-import dropzoneImageConfig from '@/config/dropzone-image.js';
+import dropzoneImageConfig from '@/config/dropzoneconfig-image.js';
 import tinyConfig from '@/config/tinyconfig.js'
 import Editor from '@tinymce/tinymce-vue';
 
@@ -75,7 +75,8 @@ export default {
 
   components: {
     vueDropzone: vue2Dropzone,
-    tinymceEditor: Editor
+    tinymceEditor: Editor,
+    FormButtons: FormButtons,
   },
 
   props: {

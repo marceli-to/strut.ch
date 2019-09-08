@@ -63,6 +63,11 @@ class MediaService
      * Maximum height for large portrait images
      */    
     protected $max_height_lg = 900;
+
+    /**
+     * Image prefix
+     */
+    protected $prefix = 'strut.ch';
     
     public function __construct()
     {
@@ -85,7 +90,7 @@ class MediaService
     {
         $file = $request->file('file');
         $name = $this->_sanitizeFilename(trim($file->getClientOriginalName()));
-        $name = uniqid() . '_' . $name;
+        $name = uniqid() . '_' . $this->prefix . '_' . $name;
         $file->move($this->path_source, $name);
 
         // Get file extension to store in media model

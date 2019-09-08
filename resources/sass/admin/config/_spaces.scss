@@ -4,6 +4,13 @@
  * -----------------------------------------------------------------------------
  */
 
+$space-xxs: (
+    null:  3px,
+    sm:    3px,
+    md:    5px,
+    lg:    5px,
+);
+
 $space-xs: (
     null:  10px,
     sm:    10px,
@@ -21,8 +28,8 @@ $space-sm: (
 $space-md: (
     null:  15px,
     sm:    20px,
-    md:    25px,
-    lg:    30px,
+    md:    30px,
+    lg:    35px,
 );
 
 $space-lg: (

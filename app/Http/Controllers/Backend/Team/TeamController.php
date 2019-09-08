@@ -166,13 +166,14 @@ class TeamController extends Controller
     public function destroy($id)
     {
         $team = $this->team->find($id);
-
-        if ($team->media)
+        if ($team)
         {
-            $this->mediaService->delete($team->media);
+            if (isset($team->media) && $team->media != NULL)
+            {
+                $this->mediaService->delete($team->media);
+            }
+            $team->delete();
         }
-
-        $team->delete();
         return response()->json('successfully deleted');
     }
 

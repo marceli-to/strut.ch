@@ -34,9 +34,20 @@ class CategoryTypeController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function get()
+    public function get($categoryId = NULL)
     {
-        $categoryTypes = $this->categoryType->with('category')->orderBy('order', 'ASC')->get();
+        if ($categoryId !== NULL)
+        {
+            $categoryTypes = $this->categoryType->where('category_id', '=', $categoryId)
+                                                ->with('category')
+                                                ->orderBy('order', 'ASC')
+                                                ->get();
+        }
+        else
+        {
+            $categoryTypes = $this->categoryType->with('category')->orderBy('order', 'ASC')->get();
+        }        
+
         return new CategoryTypeCollection($categoryTypes);
     }
 

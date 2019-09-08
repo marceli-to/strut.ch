@@ -8,8 +8,16 @@
 	@include responsive-prop('margin-bottom', $space-md);
 	display: block;
 
+	&.form-row--narrow {
+		@include responsive-prop('margin-bottom', $space-sm);
+	}
+
 	&.is-last {
 		margin-bottom: 0
+	}
+
+	&.is-sm {
+		margin-bottom: 10px !important;
 	}
 
 	&.has-error {
@@ -24,9 +32,8 @@
 }
 
 .form-buttons {
-	//@include responsive-prop('padding-top', $space-sm);
 	a {
-		@include responsive-prop('margin-left', $space-sm);
+		@include responsive-prop('margin-left', $space-md);
 	}
 }
 
