@@ -11,10 +11,18 @@ class CategoryType extends Model
 
     public $translatable = ['name_singular', 'name_plural'];
 
-    protected $fillable = ['category_id', 'name_singular', 'name_plural', 'order', 'visible'];
+    protected $fillable = ['category_id', 'name_singular', 'name_plural', 'order'];
 
     public function category()
     {
         return $this->belongsTo('App\Models\Category');
+    }
+
+    /**
+     * Get the projects for the type.
+     */
+    public function projects()
+    {
+        return $this->hasMany('App\Models\Project');
     }
 }

@@ -33,25 +33,38 @@
               </div>
               <div class="form-row">
                 <label>
-                  Link <a :href="book.url" target="_blank" class="icon-external-link icon-mini" v-if="book.url"></a>
+                  Link <a :href="book.url" target="_blank" class="icon-external-link is-sm icon-mini" v-if="book.url"></a>
                 </label>
                 <input type="text" name="url" v-model="book.url" placeholder="https://test.ch/">
               </div>
             </div>
             <div v-show="tabs.media.active">
               <div class="form-row" v-if="book.media == null">
-                <label for="document">Datei hochladen <span class="fs-xs">(JPG | PNG, max. 8 MB)</span></label>
+                <label for="document">Datei hochladen</label>
                 <vue-dropzone ref="dropzone" id="dropzone" :options="dropzoneImageConfig" @vdropzone-complete="afterComplete"></vue-dropzone>
+                <span class="dz-restrictions">jpg, png | max. 8 MB</span>
               </div>
               <div class="form-row" v-if="book.media">
                 <label>Vorhandene Datei</label>
                 <div class="dropzone-existing-assets">
-                    <figure class="dz-existing-asset">
+                  <div>
+                    <figure class="dz-existing-asset is-image"> 
                       <a :href="getMediaUri(book.media)" target="_blank" class="dz-file-preview">
                         <img :src="getMediaSource(book.media)" height="300" width="300">
                       </a>
-                      <a href="javascript:;" class="dz-remove" @click.prevent="deleteMedia(book.media)">Löschen</a>
+                      <div class="dz-toolbar">
+                        <a
+                          :href="getMediaUri(book.media)" target="_blank"
+                          class="icon-external-link icon-mini"
+                        ></a>
+                        <a
+                          href="javascript:;"
+                          class="icon-trash icon-mini"
+                          @click.prevent="deleteMedia(book.media)"
+                        ></a>
+                      </div>
                     </figure>
+                  </div>
                 </div>
               </div>
             </div>
@@ -65,11 +78,12 @@
 </template>
 <script>
 import PageHeader from '@/layout/PageHeader.vue';
-import FormButtons from '@/components/buttons/FormButtons.vue';
+import FormButtons from '@/components/ui/buttons/FormButtons.vue';
 import vue2Dropzone from 'vue2-dropzone';
 import dropzoneImageConfig from '@/config/dropzoneconfig-image.js';
 import tinyConfig from '@/config/tinyconfig.js'
 import Editor from '@tinymce/tinymce-vue';
+import Helpers from '@/mixins/helpers';
 
 export default {
 
@@ -82,6 +96,8 @@ export default {
   props: {
     type: String,
   },
+
+  mixins: [Helpers],
   
   data() {
     return {
@@ -229,26 +245,6 @@ export default {
         this.book.media = null;
       });
     },
-
-    changeTab(tab) {
-      // set all tabs inactive and remove errors if any
-      for (let prop in this.tabs) {
-        this.tabs[prop].active = false;
-        this.tabs[prop].error = false;
-      };
-
-      // set active tab
-      this.tabs[tab].active = true;
-    },
-
-    removeError(field, language) {
-      if (language) {
-        this.errors[field][language] = false;
-      }
-      else {
-        this.errors[field] = false;
-      }
-    }
   },
 
   computed: {

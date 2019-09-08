@@ -28,6 +28,7 @@
               <div class="form-row">
                 <label for="document">Bilder hochladen</label>
                 <vue-dropzone ref="dropzone" id="dropzone" :options="dropzoneOptions" @vdropzone-complete="afterComplete"></vue-dropzone>
+                <span class="dz-restrictions">jpg, png | max. 8 MB</span>
               </div>
               <div class="form-row" v-if="post.media.length">
                 <label>Vorhandene Bilder</label>
@@ -56,7 +57,7 @@
 </template>
 <script>
 import vue2Dropzone from 'vue2-dropzone';
-import FormButtons from '@/components/buttons/FormButtons.vue';
+import FormButtons from '@/components/ui/buttons/FormButtons.vue';
 import draggable from 'vuedraggable';
 import Editor from '@tinymce/tinymce-vue';
 import tinyConfig from '@/config/tinyconfig.js'

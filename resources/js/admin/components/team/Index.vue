@@ -12,7 +12,7 @@
               v-model="team" 
               @end="updateOrder"
               ghost-class="draggable-ghost"
-              tag="div">
+              draggable=".list-item-card">
               <div :class="[t.publish == 0 ? 'is-disabled' : '', 'list-item-card']" v-for="t in team" :key="t.id">
                 <div>
                   <span><strong>{{ t.firstname }} {{ t.name }}</strong></span>

@@ -4,7 +4,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>strut.ch - Administration</title>
-<link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
 <link href="{{ mix('assets/admin/css/app.css') }}" type="text/css" rel="stylesheet" />
 <meta name="csrf-token" value="{{ csrf_token() }}" />
 </head>

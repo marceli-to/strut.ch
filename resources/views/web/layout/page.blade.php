@@ -23,37 +23,37 @@
                 <li>
                     <a href="javascript:;" class="js-btn-sub-menu is-parent">Bauten</a>
                     <ul>
-                        <li>
-                            <a href="javascript:;" class="js-btn-sub-menu">Wohnen</a>
-                            <ul>
-                                <li>
-                                    <a href="javascript:;" class="js-btn-sub-menu">Einfamilienhäuser</a>
-                                    <ul class="has-indent">
-                                        <li><a href="">Einfamilienhaus, Volketswil</a></li>
-                                        <li><a href="">Einfamilienhaus, Winterthur</a></li>
-                                        <li><a href="">Einfamilienhaus, Frauenfeld</a></li>
+                        @foreach ($menu['projects']['categories'] as $category)
+                            <li>
+                                <a href="javascript:;" class="js-btn-sub-menu">
+                                    {{$category['name']}}
+                                </a>
+                                @if ($category['show_types'])
+                                    <ul>
+                                        @foreach ($category['types'] as $type)
+                                            <li>
+                                                <a href="javascript:;" class="js-btn-sub-menu">
+                                                    {{$type['name']}}
+                                                </a>
+                                                <ul class="has-indent">
+                                                    @foreach ($type['projects'] as $p)
+                                                        <li>{{$p['name']}}</li>
+                                                    @endforeach
+                                                </ul>
+                                            </li>
+                                        @endforeach
                                     </ul>
-                                </li>
-                                <li><a href="">Villen</a></li>
-                                <li><a href="">Villenzeilen</a></li>
-                                <li><a href="">Mehrfamilienhäuser</a></li>
-                                <li><a href="">Atelierhäuser</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="javascript:;" class="js-btn-sub-menu">Gewerbe</a>
-                            <ul class="has-indent">
-                                <li><a href="">Gewerberaum, Winterthur</a></li>
-                                <li><a href="">Gewerberaum, Pfungen</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="javascript:;" class="js-btn-sub-menu">Öffentlich</a>
-                            <ul class="has-indent">
-                                <li><a href="">Öffentlich, Winterthur</a></li>
-                                <li><a href="">Öffentlich, Pfungen</a></li>
-                            </ul>
-                        </li>
+                                @else
+                                    @foreach ($category['types'] as $type)
+                                        <ul class="has-indent">
+                                            @foreach ($type['projects'] as $p)
+                                                <li>{{$p['name']}}</li>
+                                            @endforeach
+                                        </ul>
+                                    @endforeach
+                                @endif
+                            </li>
+                        @endforeach   
                     </ul>
                 </li>
                 <li><a href="">Werkliste</a></li>
@@ -74,8 +74,9 @@
                     </ul>
                 </li>
                 <li><a href="">Kontakt</a></li>
-                <li class="is-inline is-language"><a href="">De</a></li>
-                <li class="is-inline is-language"><a href="" class="is-inactive">En</a></li>
+
+                {{-- <li class="is-inline is-language"><a href="">De</a></li>
+                <li class="is-inline is-language"><a href="" class="is-inactive">En</a></li> --}}
             </ul>
         </div>
     </nav>

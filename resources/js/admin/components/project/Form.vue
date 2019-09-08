@@ -197,7 +197,6 @@
             <div class="form-row">
               <label for="document">
                 Bilder hochladen
-                <span class="fs-xs">(JPG, PNG, max. 8 MB)</span>
               </label>
               <vue-dropzone
                 ref="dropzoneImages"
@@ -205,6 +204,7 @@
                 :options="dropzoneImageConfig"
                 @vdropzone-complete="afterImageComplete"
               ></vue-dropzone>
+              <span class="dz-restrictions">jpg, png | max. 8 MB</span>
             </div>
             <div class="form-row" v-if="project.images.length">
               <label>Vorhandene Bilder</label>
@@ -275,7 +275,6 @@
             <div class="form-row">
               <label for="document">
                 Dateien hochladen
-                <span class="fs-xs">(PDF, max. 8 MB)</span>
               </label>
               <vue-dropzone
                 ref="dropzoneFiles"
@@ -283,6 +282,7 @@
                 :options="dropzoneFileConfig"
                 @vdropzone-complete="afterFileComplete"
               ></vue-dropzone>
+              <span class="dz-restrictions">pdf | max. 8 MB</span>
             </div>
             <div class="form-row" v-if="project.downloads.length">
               <label>Vorhandene Dateien</label>
@@ -294,7 +294,7 @@
                     :key="file.id"
                   > 
                     <a :href="getFileUri(file.name)" target="_blank" class="dz-file-preview">
-                      <img src="/assets/admin/img/icons/icon-file.svg" height="100" width="100">
+                      <img src="/assets/admin/img/icons/file.svg" height="100" width="100">
                     </a>
                     <div class="dz-toolbar">
                       <a v-if="file.id"
@@ -347,7 +347,7 @@
 </template>
 <script>
 import PageHeader from "@/layout/PageHeader.vue";
-import FormButtons from '@/components/buttons/FormButtons.vue';
+import FormButtons from '@/components/ui/buttons/FormButtons.vue';
 import draggable from 'vuedraggable';
 import vue2Dropzone from "vue2-dropzone";
 import dropzoneFileConfig from "@/config/dropzoneconfig-file.js";
@@ -355,6 +355,7 @@ import dropzoneImageConfig from "@/config/dropzoneconfig-image.js";
 import tinyConfig from "@/config/tinyconfig.js";
 import Editor from "@tinymce/tinymce-vue";
 import years from "@/config/years.js";
+import Helpers from '@/mixins/helpers';
 
 export default {
   components: {
@@ -367,7 +368,9 @@ export default {
   props: {
     type: String
   },
-
+  
+  mixins: [Helpers],
+    
   data() {
     return {
       // fields with possible errors
@@ -659,35 +662,6 @@ export default {
         const index = this.project.images.findIndex(x => x.id === id);
         this.project.images[index].publish = response.data;
       });
-    },
-
-    showAssetEdit(e) {
-      let editForm = e.target.parentNode.nextElementSibling;
-      editForm.classList.toggle('is-visible');
-    },
-
-    hideAssetEdit(e) {
-      let editForm = e.target.parentNode;
-      editForm.classList.toggle('is-visible');
-    },
-
-    changeTab(tab) {
-      // set all tabs inactive and remove errors if any
-      for (let prop in this.tabs) {
-        this.tabs[prop].active = false;
-        this.tabs[prop].error = false;
-      }
-
-      // set active tab
-      this.tabs[tab].active = true;
-    },
-
-    removeError(field, language) {
-      if (language) {
-        this.errors[field][language] = false;
-      } else {
-        this.errors[field] = false;
-      }
     },
 
     // Events

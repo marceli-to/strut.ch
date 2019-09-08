@@ -31,7 +31,7 @@
 </template>
 <script>
 import PageHeader from '@/layout/PageHeader.vue';
-import FormButtons from '@/components/buttons/FormButtons.vue';
+import FormButtons from '@/components/ui/buttons/FormButtons.vue';
 
 export default {
 

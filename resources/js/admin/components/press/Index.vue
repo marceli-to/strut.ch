@@ -7,7 +7,6 @@
         <div>
           <h1>Presse Artikel</h1>
           <router-link :to="{ name: 'press-create' }" class="btn-add"><span>Hinzufügen</span></router-link>
-
           <div class="list-items" v-if="press.length">
             <div class="list-item-group" v-for="articles in press" :key="articles.index">
               <h2>{{articles[0].year}}</h2>
@@ -36,7 +35,7 @@
                   <div class="select-wrapper">
                     <select v-model="selected" @change="filter($event)">
                       <option v-for="option in options.years" :key="option.value">
-                      {{ option }}
+                        {{ option }}
                       </option>
                     </select>
                   </div>

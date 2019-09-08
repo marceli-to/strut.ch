@@ -166,7 +166,7 @@
 import grid from '@/mixins/grid';
 import GridMedia from '@/components/home/GridMedia.vue';
 import GridArticle from '@/components/home/GridArticle.vue';
-import ButtonsCreate from '@/components/buttons/CreateGridItem.vue';
+import ButtonsCreate from '@/components/ui/buttons/CreateGridItem.vue';
 
 export default {
 

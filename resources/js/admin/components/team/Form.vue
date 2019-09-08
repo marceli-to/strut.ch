@@ -52,18 +52,31 @@
             </div>
             <div v-show="tabs.media.active">
               <div class="form-row" v-if="team.media == null">
-                <label for="document">Datei hochladen <span class="fs-xs">(JPG | PNG, max. 8 MB)</span></label>
+                <label for="document">Datei hochladen</label>
                 <vue-dropzone ref="dropzone" id="dropzone" :options="dropzoneImageConfig" @vdropzone-complete="afterComplete"></vue-dropzone>
+                <span class="dz-restrictions">jpg, png | max. 8 MB</span>
               </div>
               <div class="form-row" v-if="team.media">
                 <label>Vorhandene Datei</label>
                 <div class="dropzone-existing-assets">
-                    <figure class="dz-existing-asset">
+                  <div>
+                    <figure class="dz-existing-asset is-image"> 
                       <a :href="getMediaUri(team.media)" target="_blank" class="dz-file-preview">
                         <img :src="getMediaSource(team.media)" height="300" width="300">
                       </a>
-                      <a href="javascript:;" class="dz-remove" @click.prevent="deleteMedia(team.media)">Löschen</a>
+                      <div class="dz-toolbar">
+                        <a
+                          :href="getMediaUri(team.media)" target="_blank"
+                          class="icon-external-link icon-mini"
+                        ></a>
+                        <a
+                          href="javascript:;"
+                          class="icon-trash icon-mini"
+                          @click.prevent="deleteMedia(team.media)"
+                        ></a>
+                      </div>
                     </figure>
+                  </div>
                 </div>
               </div>
             </div>
@@ -77,11 +90,12 @@
 </template>
 <script>
 import PageHeader from '@/layout/PageHeader.vue';
-import FormButtons from '@/components/buttons/FormButtons.vue';
+import FormButtons from '@/components/ui/buttons/FormButtons.vue';
 import vue2Dropzone from 'vue2-dropzone';
 import dropzoneImageConfig from '@/config/dropzoneconfig-image.js';
 import tinyConfig from '@/config/tinyconfig-lg.js'
 import Editor from '@tinymce/tinymce-vue';
+import Helpers from '@/mixins/helpers';
 
 export default {
 
@@ -94,6 +108,8 @@ export default {
   props: {
     type: String,
   },
+
+  mixins: [Helpers],
   
   data() {
     return {
@@ -253,26 +269,6 @@ export default {
         this.team.media = null;
       });
     },
-
-    changeTab(tab) {
-      // set all tabs inactive and remove errors if any
-      for (let prop in this.tabs) {
-        this.tabs[prop].active = false;
-        this.tabs[prop].error = false;
-      };
-
-      // set active tab
-      this.tabs[tab].active = true;
-    },
-
-    removeError(field, language) {
-      if (language) {
-        this.errors[field][language] = false;
-      }
-      else {
-        this.errors[field] = false;
-      }
-    }
   },
 
   computed: {

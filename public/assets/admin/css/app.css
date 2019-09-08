@@ -1648,9 +1648,11 @@ h3 {
 .icon-external-link {
   background-image: url("../img/icons/external-link.svg");
   display: inline-block;
+}
+.icon-external-link.is-sm {
   margin-left: 3px;
-  height: 15px !important;
-  width: 15px !important;
+  height: 14px !important;
+  width: 14px !important;
 }
 
 /**
@@ -1893,7 +1895,7 @@ h3 {
   border-radius: 2px;
   color: #222222;
   display: inline-block;
-  font-family: "Roboto Mono", monospace;
+  font-family: Monaco, "Courier New", Courier, monospace;
   font-display: auto;
   font-style: normal;
   font-stretch: normal;
@@ -4121,6 +4123,27 @@ aside.sidebar > div {
   padding-left: 20px;
   padding-top: 2px;
   min-height: 16px;
+}
+
+.dz-restrictions {
+  background-color: #222222;
+  border-radius: 2px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  color: #ffffff;
+  display: inline-block;
+  font-family: Monaco, "Courier New", Courier, monospace;
+  font-display: auto;
+  font-style: normal;
+  font-stretch: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 1 !important;
+  padding: 6px 8px 6px 8px;
+  position: relative;
+  line-height: 1;
+  text-transform: uppercase;
+  top: -1px;
 }
 
 /**

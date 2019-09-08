@@ -34,4 +34,17 @@ class AppHelper
         
         return ($force_lowercase) ? (function_exists('mb_strtolower')) ? mb_strtolower($clean, 'UTF-8') : strtolower($clean) : $clean;
     }
+
+    public static function transliterate($string = NULL)
+    {
+        $search = array(
+            'ä', 'ö', 'ü', 'é', 'è', 'â', 'à', 'ç',
+        );
+
+        $replace = array(
+            'ae', 'oe', 'ue', 'e', 'e', 'a', 'a', 'c',
+        );
+        
+        return (string) str_replace($search, $replace, mb_strtolower($string, 'UTF-8'));
+    }
 }

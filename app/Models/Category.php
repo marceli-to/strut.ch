@@ -10,7 +10,7 @@ class Category extends Model
 
     public $translatable = ['name'];
 
-    protected $fillable = ['name', 'publish'];
+    protected $fillable = ['name', 'publish', 'show_types'];
 
 
     /**
@@ -19,5 +19,10 @@ class Category extends Model
     public function types()
     {
         return $this->hasMany('App\Models\CategoryType');
+    }
+
+    public function projects()
+    {
+        return $this->hasMany('App\Models\Project');
     }
 }

@@ -25,7 +25,7 @@
                 <input type="text" @focus="removeError('name_plural', 'de')" name="name_plural" v-model="categoryType.name_plural.de">
               </div>
               <div class="form-row" :class="errors.category_id ? 'has-error': ''">
-                <label>Jahr *</label>
+                <label>Kategorie *</label>
                 <div class="select-wrapper">
                   <select class="is-lg" v-model="categoryType.category_id" name="category_id" @focus="removeError('category_id')">
                     <option v-for="category in categories" :key="category.id" :value="category.id">{{ category.name.de }}</option>
@@ -43,7 +43,7 @@
 </template>
 <script>
 import PageHeader from '@/layout/PageHeader.vue';
-import FormButtons from '@/components/buttons/FormButtons.vue';
+import FormButtons from '@/components/ui/buttons/FormButtons.vue';
 
 export default {
   
