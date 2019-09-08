@@ -26,7 +26,7 @@
 <script>
 import grid from '@/mixins/grid';
 import GridMedia from '@/components/home/GridMedia.vue';
-import ButtonCreate from '@/components/buttons/CreateHighlightGridItem.vue';
+import ButtonCreate from '@/components/ui/buttons/CreateHighlightGridItem.vue';
 
 export default {
     components: {

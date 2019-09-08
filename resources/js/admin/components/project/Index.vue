@@ -5,7 +5,7 @@
     <div class="container">
       <main class="content" role="main">
         <div>
-          <h1>Projekte</h1>
+          <h1>Bauten</h1>
           <router-link :to="{ name: 'project-create' }" class="btn-add"><span>Hinzufügen</span></router-link>
           <div v-if="projects.length">
             <div v-for="categories in grouped" :key="categories.index">

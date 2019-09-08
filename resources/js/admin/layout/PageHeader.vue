@@ -15,10 +15,10 @@
                     <router-link :to="{ name: 'posts' }">Posts</router-link>
                 </li> -->
                 <li>
-                    <router-link :to="{ name: 'masonry' }">Masonry</router-link>
+                    <router-link :to="{ name: 'masonry' }">Home</router-link>
                 </li>
                 <li>
-                    <router-link :to="{ name: 'projects' }">Projekte</router-link>
+                    <router-link :to="{ name: 'projects' }">Bauten</router-link>
                     <ul>
                         <li>
                             <router-link :to="{ name: 'categories' }">Kategorien</router-link>

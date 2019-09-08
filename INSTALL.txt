@@ -9,14 +9,14 @@ DB
 
 nmd_mto_strutch | gpOks9BzOXkNrp+mHIvk18bNWbhGlRhH
 
-nine: YuRME5WmG8CM
+nine: 494c93b3239a8f474bc166c685500735:ae5f2c1af3e432704b70898a0ff8de6b
 
 
 DEPLOYING
 ---------
 
 1. COMPRESS FILES
-tar --exclude="INSTALL.txt" --exclude="*.DS_Store" --exclude="node_modules/" --exclude=".source/"  --exclude=".git*" --exclude=".env" --exclude=".editorconfig" --exclude="public/.htaccess" -cvzf app.tar.gz *
+tar --exclude="INSTALL.txt" --exclude="*.DS_Store" --exclude="storage/" --exclude="node_modules/" --exclude=".source/"  --exclude=".git*" --exclude=".env" --exclude=".editorconfig" --exclude="public/.htaccess" -cvzf app.tar.gz *
 
 2. COPY FILE
 scp app.tar.gz www-data@silverfish02.nine.ch:/home/www-data/marceli.to/strut.ch/

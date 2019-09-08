@@ -23,7 +23,7 @@
                 <li>
                     <a href="javascript:;" class="js-btn-sub-menu is-parent">Bauten</a>
                     <ul>
-                        @foreach ($menu['projects']['categories'] as $category)
+                        @foreach ($menu['projects']['items'] as $category)
                             <li>
                                 <a href="javascript:;" class="js-btn-sub-menu">
                                     {{$category['name']}}
@@ -56,27 +56,60 @@
                         @endforeach   
                     </ul>
                 </li>
-                <li><a href="">Werkliste</a></li>
                 <li>
-                    <a href="javascript:;" class="js-btn-sub-menu is-parent">Publikationen</a>
-                    <ul>
-                        <li><a href="">Presse</a></li>
-                        <li><a href="">Bücher</a></li>
-                    </ul>
+                    <a href="{{ route($menu['works']['route']) }}" 
+                       class="{{ $menu['works']['is-active'] ? 'is-active' : '' }}"
+                       title="{{ $menu['works']['name'] }}">
+                       {{ $menu['works']['name'] }}
+                    </a>
+                </li>                
+                <li>
+                    <a href="javascript:;" class="js-btn-sub-menu is-parent {{ $menu['publications']['is-active'] ? 'is-active' : '' }}">
+                        Publikationen
+                    </a>
+                    @if (!empty($menu['publications']['items']))
+                        <ul>
+                            @foreach($menu['publications']['items'] as $m)
+                                <li>
+                                    <a href="{{ route($m['route']) }}"
+                                       class="{{ $m['is-active'] ? 'is-active' : '' }}"
+                                       title="{{ $m['name'] }}">
+                                       {{ $m['name'] }}
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @endif
                 </li>
                 <li>
-                    <a href="javascript:;" class="js-btn-sub-menu is-parent">Büro</a>
-                    <ul>
-                        <li><a href="/ueber-uns">Über uns</a></li>
-                        <li><a href="">Jobs</a></li>
-                        <li><a href="">Auszeichnungen</a></li>
-                        <li><a href="">Vorträge</a></li>
-                    </ul>
+                    <a href="javascript:;" class="js-btn-sub-menu is-parent {{ $menu['about']['is-active'] ? 'is-active' : '' }}">
+                       Büro
+                    </a>
+                    @if (!empty($menu['about']['items']))
+                        <ul>
+                            @foreach($menu['about']['items'] as $m)
+                                <li>
+                                    <a href="{{ route($m['route']) }}"
+                                       class="{{ $m['is-active'] ? 'is-active' : '' }}"
+                                       title="{{ $m['name'] }}">
+                                       {{ $m['name'] }}
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @endif
                 </li>
-                <li><a href="">Kontakt</a></li>
-
-                {{-- <li class="is-inline is-language"><a href="">De</a></li>
-                <li class="is-inline is-language"><a href="" class="is-inactive">En</a></li> --}}
+                <li>
+                    <a href="{{ route($menu['contact']['route']) }}" 
+                       class="{{ $menu['contact']['is-active'] ? 'is-active' : '' }}"
+                       title="{{ $menu['contact']['name'] }}">
+                       {{ $menu['contact']['name'] }}
+                    </a>
+                </li>
+                {{-- 
+                    <li class="is-inline is-language"><a href="">De</a></li>
+                    <li class="is-inline is-language"><a href="" class="is-inactive">En</a></li>
+                 --}}
             </ul>
         </div>
     </nav>

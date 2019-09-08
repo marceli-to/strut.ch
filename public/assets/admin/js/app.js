@@ -3297,37 +3297,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/admin/components/buttons/CreateHighlightGridItem.vue?vue&type=script&lang=js&":
-/*!************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/admin/components/buttons/CreateHighlightGridItem.vue?vue&type=script&lang=js& ***!
-  \************************************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _mixins_grid__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/mixins/grid */ "./resources/js/admin/mixins/grid.js");
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  props: {
-    gridId: Number,
-    gridPosition: Number
-  },
-  mixins: [_mixins_grid__WEBPACK_IMPORTED_MODULE_0__["default"]],
-  methods: {
-    createMedia: function createMedia(gridId, position) {
-      this.$parent.createMedia(gridId, position);
-    }
-  }
-});
-
-/***/ }),
-
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/admin/components/category/Create.vue?vue&type=script&lang=js&":
 /*!********************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/admin/components/category/Create.vue?vue&type=script&lang=js& ***!
@@ -4352,7 +4321,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mixins_grid__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/mixins/grid */ "./resources/js/admin/mixins/grid.js");
 /* harmony import */ var _components_home_GridMedia_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/components/home/GridMedia.vue */ "./resources/js/admin/components/home/GridMedia.vue");
-/* harmony import */ var _components_buttons_CreateHighlightGridItem_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/buttons/CreateHighlightGridItem.vue */ "./resources/js/admin/components/buttons/CreateHighlightGridItem.vue");
+/* harmony import */ var _components_ui_buttons_CreateHighlightGridItem_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/ui/buttons/CreateHighlightGridItem.vue */ "./resources/js/admin/components/ui/buttons/CreateHighlightGridItem.vue");
 //
 //
 //
@@ -4384,7 +4353,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     GridMedia: _components_home_GridMedia_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    ButtonCreate: _components_buttons_CreateHighlightGridItem_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+    ButtonCreate: _components_ui_buttons_CreateHighlightGridItem_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   props: {
     gridId: Number
@@ -8256,6 +8225,37 @@ __webpack_require__.r(__webpack_exports__);
     },
     createArticle: function createArticle(gridId, position) {
       this.$parent.createArticle(gridId, position);
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/admin/components/ui/buttons/CreateHighlightGridItem.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/admin/components/ui/buttons/CreateHighlightGridItem.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _mixins_grid__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/mixins/grid */ "./resources/js/admin/mixins/grid.js");
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    gridId: Number,
+    gridPosition: Number
+  },
+  mixins: [_mixins_grid__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  methods: {
+    createMedia: function createMedia(gridId, position) {
+      this.$parent.createMedia(gridId, position);
     }
   }
 });
@@ -30423,45 +30423,6 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/admin/components/buttons/CreateHighlightGridItem.vue?vue&type=template&id=2d85fd48&":
-/*!****************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/admin/components/buttons/CreateHighlightGridItem.vue?vue&type=template&id=2d85fd48& ***!
-  \****************************************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", [
-    _c(
-      "a",
-      {
-        staticClass: "btn-add-media-highlight",
-        attrs: { href: "javascript:;" },
-        on: {
-          click: function($event) {
-            $event.preventDefault()
-            return _vm.createMedia(_vm.gridId, 0)
-          }
-        }
-      },
-      [_vm._v("Add highlight")]
-    )
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/admin/components/category/Create.vue?vue&type=template&id=289080dc&":
 /*!************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/admin/components/category/Create.vue?vue&type=template&id=289080dc& ***!
@@ -35016,7 +34977,7 @@ var render = function() {
           _c(
             "div",
             [
-              _c("h1", [_vm._v("Projekte")]),
+              _c("h1", [_vm._v("Bauten")]),
               _vm._v(" "),
               _c(
                 "router-link",
@@ -37376,6 +37337,45 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/admin/components/ui/buttons/CreateHighlightGridItem.vue?vue&type=template&id=907d685a&":
+/*!*******************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/admin/components/ui/buttons/CreateHighlightGridItem.vue?vue&type=template&id=907d685a& ***!
+  \*******************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c(
+      "a",
+      {
+        staticClass: "btn-add-media-highlight",
+        attrs: { href: "javascript:;" },
+        on: {
+          click: function($event) {
+            $event.preventDefault()
+            return _vm.createMedia(_vm.gridId, 0)
+          }
+        }
+      },
+      [_vm._v("Add highlight")]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/admin/components/ui/buttons/FormButtons.vue?vue&type=template&id=1121003f&":
 /*!*******************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/admin/components/ui/buttons/FormButtons.vue?vue&type=template&id=1121003f& ***!
@@ -37504,7 +37504,7 @@ var render = function() {
             "li",
             [
               _c("router-link", { attrs: { to: { name: "masonry" } } }, [
-                _vm._v("Masonry")
+                _vm._v("Home")
               ])
             ],
             1
@@ -37514,7 +37514,7 @@ var render = function() {
             "li",
             [
               _c("router-link", { attrs: { to: { name: "projects" } } }, [
-                _vm._v("Projekte")
+                _vm._v("Bauten")
               ]),
               _vm._v(" "),
               _c("ul", [
@@ -58829,75 +58829,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/admin/components/buttons/CreateHighlightGridItem.vue":
-/*!***************************************************************************!*\
-  !*** ./resources/js/admin/components/buttons/CreateHighlightGridItem.vue ***!
-  \***************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _CreateHighlightGridItem_vue_vue_type_template_id_2d85fd48___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CreateHighlightGridItem.vue?vue&type=template&id=2d85fd48& */ "./resources/js/admin/components/buttons/CreateHighlightGridItem.vue?vue&type=template&id=2d85fd48&");
-/* harmony import */ var _CreateHighlightGridItem_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreateHighlightGridItem.vue?vue&type=script&lang=js& */ "./resources/js/admin/components/buttons/CreateHighlightGridItem.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _CreateHighlightGridItem_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _CreateHighlightGridItem_vue_vue_type_template_id_2d85fd48___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _CreateHighlightGridItem_vue_vue_type_template_id_2d85fd48___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/admin/components/buttons/CreateHighlightGridItem.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/admin/components/buttons/CreateHighlightGridItem.vue?vue&type=script&lang=js&":
-/*!****************************************************************************************************!*\
-  !*** ./resources/js/admin/components/buttons/CreateHighlightGridItem.vue?vue&type=script&lang=js& ***!
-  \****************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateHighlightGridItem_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./CreateHighlightGridItem.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/admin/components/buttons/CreateHighlightGridItem.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateHighlightGridItem_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/admin/components/buttons/CreateHighlightGridItem.vue?vue&type=template&id=2d85fd48&":
-/*!**********************************************************************************************************!*\
-  !*** ./resources/js/admin/components/buttons/CreateHighlightGridItem.vue?vue&type=template&id=2d85fd48& ***!
-  \**********************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateHighlightGridItem_vue_vue_type_template_id_2d85fd48___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./CreateHighlightGridItem.vue?vue&type=template&id=2d85fd48& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/admin/components/buttons/CreateHighlightGridItem.vue?vue&type=template&id=2d85fd48&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateHighlightGridItem_vue_vue_type_template_id_2d85fd48___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateHighlightGridItem_vue_vue_type_template_id_2d85fd48___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
 /***/ "./resources/js/admin/components/category/Create.vue":
 /*!***********************************************************!*\
   !*** ./resources/js/admin/components/category/Create.vue ***!
@@ -61740,6 +61671,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateGridItem_vue_vue_type_template_id_77b9433a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateGridItem_vue_vue_type_template_id_77b9433a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/admin/components/ui/buttons/CreateHighlightGridItem.vue":
+/*!******************************************************************************!*\
+  !*** ./resources/js/admin/components/ui/buttons/CreateHighlightGridItem.vue ***!
+  \******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _CreateHighlightGridItem_vue_vue_type_template_id_907d685a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CreateHighlightGridItem.vue?vue&type=template&id=907d685a& */ "./resources/js/admin/components/ui/buttons/CreateHighlightGridItem.vue?vue&type=template&id=907d685a&");
+/* harmony import */ var _CreateHighlightGridItem_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreateHighlightGridItem.vue?vue&type=script&lang=js& */ "./resources/js/admin/components/ui/buttons/CreateHighlightGridItem.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _CreateHighlightGridItem_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _CreateHighlightGridItem_vue_vue_type_template_id_907d685a___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _CreateHighlightGridItem_vue_vue_type_template_id_907d685a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/admin/components/ui/buttons/CreateHighlightGridItem.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/admin/components/ui/buttons/CreateHighlightGridItem.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************!*\
+  !*** ./resources/js/admin/components/ui/buttons/CreateHighlightGridItem.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateHighlightGridItem_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./CreateHighlightGridItem.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/admin/components/ui/buttons/CreateHighlightGridItem.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateHighlightGridItem_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/admin/components/ui/buttons/CreateHighlightGridItem.vue?vue&type=template&id=907d685a&":
+/*!*************************************************************************************************************!*\
+  !*** ./resources/js/admin/components/ui/buttons/CreateHighlightGridItem.vue?vue&type=template&id=907d685a& ***!
+  \*************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateHighlightGridItem_vue_vue_type_template_id_907d685a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./CreateHighlightGridItem.vue?vue&type=template&id=907d685a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/admin/components/ui/buttons/CreateHighlightGridItem.vue?vue&type=template&id=907d685a&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateHighlightGridItem_vue_vue_type_template_id_907d685a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateHighlightGridItem_vue_vue_type_template_id_907d685a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
