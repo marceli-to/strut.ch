@@ -15,19 +15,22 @@ nine: 494c93b3239a8f474bc166c685500735:ae5f2c1af3e432704b70898a0ff8de6b
 DEPLOYING
 ---------
 
-1. COMPRESS FILES
+1. BUILD PRODUCTION FILES
+npm run production
+
+2. COMPRESS FILES
 tar --exclude="INSTALL.txt" --exclude="*.DS_Store" --exclude="storage/" --exclude="node_modules/" --exclude=".source/"  --exclude=".git*" --exclude=".env" --exclude=".editorconfig" --exclude="public/.htaccess" -cvzf app.tar.gz *
 
-2. COPY FILE
+3. COPY FILE
 scp app.tar.gz www-data@silverfish02.nine.ch:/home/www-data/marceli.to/strut.ch/
 
-3. SSH TO SERVER
+4. SSH TO SERVER
 ssh www-data@silverfish02.nine.ch
 
-4. UNTAR FILE
+5. UNTAR FILE
 tar -zxvf app.tar.gz
 
-5. CLEANUP
+6. CLEANUP
 php composer.phar install --optimize-autoloader --no-dev
 php artisan config:clear
 php artisan cache:clear
