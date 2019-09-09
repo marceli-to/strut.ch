@@ -264,10 +264,12 @@ export default {
 
     // Delete a single file by its name
     deleteMedia(file) {
-      let uri = `/api/team/delete/file/${file}`;
-      this.axios.delete(uri).then((response) => {
-        this.team.media = null;
-      });
+      if(confirm('Bitte löschen bestätigen!')) {
+        let uri = `/api/team/delete/file/${file}`;
+        this.axios.delete(uri).then((response) => {
+          this.team.media = null;
+        });
+      }
     },
   },
 

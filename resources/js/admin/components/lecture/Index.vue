@@ -57,11 +57,13 @@
     methods: {
 
       destroy(id) {
-        let uri = `/api/lecture/destroy/${id}`;
-        this.axios.delete(uri).then(response => {
-          this.lectures = response.data.data;
-          this.$notify({type: 'success', text: 'Eintrag gelöscht'});
-        });
+        if(confirm('Bitte löschen bestätigen!')) {
+          let uri = `/api/lecture/destroy/${id}`;
+          this.axios.delete(uri).then(response => {
+            this.lectures = response.data.data;
+            this.$notify({type: 'success', text: 'Eintrag gelöscht'});
+          });
+        }
       },
       
       clone(id) {

@@ -4,7 +4,7 @@
         <div class="posts">
             <div class="post" v-for="post in posts" :key="post.id">
                 <div class="post-text">
-                    <strong>{{ post.title }}</strong><br>{{ post.body | truncate(20, '...') }}
+                    <strong>{{ post.title }}</strong>
                 </div>
                 <div class="post-media">
                     <figure v-for="media in post.media" :key="media.id">

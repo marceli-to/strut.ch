@@ -67,6 +67,16 @@
     border: 2px solid $color--dark;
     border-radius: 2px;
     padding: 15px !important;
+    
+    > div {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        grid-gap: 15px;
+    }
+
+    .dz-existing-asset {
+        width: 100% !important;
+    }
 
     &.has-images,
     &.has-files {

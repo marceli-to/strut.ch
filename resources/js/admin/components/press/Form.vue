@@ -44,12 +44,12 @@
             </div>
             <div v-show="tabs.media.active">
               <div class="form-row" v-if="press.media == null">
-                <label for="document">Datei hochladen</label>
+                <label for="document">Bild hochladen</label>
                 <vue-dropzone ref="dropzone" id="dropzone" :options="dropzoneImageConfig" @vdropzone-complete="afterComplete"></vue-dropzone>
                 <span class="dz-restrictions">jpg, png | max. 8 MB</span>
               </div>
               <div class="form-row" v-if="press.media">
-                <label>Vorhandene Datei</label>
+                <label>Vorhandenes Bild</label>
                 <div class="dropzone-existing-assets">
                   <div>
                     <figure class="dz-existing-asset is-image"> 
@@ -252,10 +252,12 @@ export default {
 
     // Delete a single file by its name
     deleteMedia(file) {
-      let uri = `/api/press/delete/file/${file}`;
-      this.axios.delete(uri).then((response) => {
-        this.press.media = null;
-      });
+      if(confirm('Bitte löschen bestätigen!')) {
+        let uri = `/api/press/delete/file/${file}`;
+        this.axios.delete(uri).then((response) => {
+          this.press.media = null;
+        });
+      }
     },
   },
 

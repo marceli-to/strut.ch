@@ -1,3 +1,3 @@
-@extends('web.layout.page')
+@extends('web.layout.app')
 @section('content')
 @endsection

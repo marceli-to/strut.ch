@@ -80,13 +80,15 @@ class NavigationService
 
                         foreach($type->projects as $i => $p)
                         {
-                            $menu_projects[$index]['types'][$idx]['projects'][$i]['name'] = $type_name_singular . ', ' . $p->getTranslation('location', 'de');
-                            $menu_projects[$index]['types'][$idx]['projects'][$i]['slug'] = 
+                            $menu_projects[$index]['types'][$idx]['projects'][$i]['name']  = $type_name_singular . ', ' . $p->getTranslation('location', 'de');
+                            $menu_projects[$index]['types'][$idx]['projects'][$i]['route'] = 'bauten';
+                            $menu_projects[$index]['types'][$idx]['projects'][$i]['slug']  = 
+                                $p->id .'/'.
                                 str_slug(
                                     \AppHelper::transliterate($p->getTranslation('name', 'de')) . '-' .
                                     \AppHelper::transliterate($p->getTranslation('location', 'de')) . '-' .
                                     $p->year
-                                , '-') . '/' . $p->id;
+                                , '-');
                         }
                     }
                 }

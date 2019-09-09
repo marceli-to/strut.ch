@@ -78,11 +78,13 @@
 
       // Categories
       destroy(id) {
-        let uri = `/api/category/destroy/${id}`;
-        this.axios.delete(uri).then(response => {
-          this.categories = response.data.data;
-          this.$notify({type: 'success', text: 'Eintrag gelöscht'});
-        });
+        if(confirm('Bitte löschen bestätigen!')) {
+          let uri = `/api/category/destroy/${id}`;
+          this.axios.delete(uri).then(response => {
+            this.categories = response.data.data;
+            this.$notify({type: 'success', text: 'Eintrag gelöscht'});
+          });
+        }
       },
       
       clone(id) {
@@ -111,12 +113,13 @@
 
       // Category types
       destroyType(id) {
-        let uri = `/api/type/destroy/${id}`;
-        this.axios.delete(uri).then(response => {
-          //this.categoryTypes = response.data.data;
-          this.fetch();
-          this.$notify({type: 'success', text: 'Eintrag gelöscht'});
-        });
+        if(confirm('Bitte löschen bestätigen!')) {
+          let uri = `/api/type/destroy/${id}`;
+          this.axios.delete(uri).then(response => {
+            this.fetch();
+            this.$notify({type: 'success', text: 'Eintrag gelöscht'});
+          });
+        }
       },
       
       cloneType(id) {

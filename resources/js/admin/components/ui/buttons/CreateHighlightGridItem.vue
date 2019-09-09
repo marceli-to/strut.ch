@@ -1,6 +1,6 @@
 <template>
     <div>
-        <a href="javascript:;" class="btn-add-media-highlight" @click.prevent="createMedia(gridId,0);">Add highlight</a>
+        <a href="javascript:;" class="btn-add-media-highlight" @click.prevent="createMedia(gridId,0);">Hinzufügen</a>
     </div>
 </template>
 <script>

@@ -217,7 +217,7 @@
                   >
                     <img :src="getImageUri(image.name)" height="300" width="300">
                     <div class="dz-toolbar">
-                      <a v-if="image.id"
+                      <a
                         href="javascript:;"
                         :class="[image.publish == 1 ? 'icon-eye' : 'icon-eye-off', 'icon-mini']"
                         @click.prevent="toggleImage(image.id)"
@@ -631,17 +631,21 @@ export default {
 
     // Delete a single file by its name
     deleteFile(file) {
-      let uri = `/api/project/file/delete/${file}`;
-      this.axios.delete(uri).then(response => {
-        this.project.downloads.splice(this.project.downloads.indexOf(file), 1);
-      });
+      if(confirm('Bitte löschen bestätigen!')) {
+        let uri = `/api/project/file/delete/${file}`;
+        this.axios.delete(uri).then(response => {
+          this.project.downloads.splice(this.project.downloads.indexOf(file), 1);
+        });
+      }
     },
 
     deleteImage(image) {
-      let uri = `/api/project/image/delete/${image}`;
-      this.axios.delete(uri).then(response => {
-        this.project.images.splice(this.project.images.indexOf(image), 1);
-      });
+      if(confirm('Bitte löschen bestätigen!')) {
+        let uri = `/api/project/image/delete/${image}`;
+        this.axios.delete(uri).then(response => {
+          this.project.images.splice(this.project.images.indexOf(image), 1);
+        });
+      }
     },
 
     // Update order
@@ -656,7 +660,7 @@ export default {
       });
     },
 
-    toggleImage(id) {
+    toggleImage(id = null) {
       let uri = `/api/project/image/status/${id}`;
       this.axios.get(uri).then(response => {
         const index = this.project.images.findIndex(x => x.id === id);

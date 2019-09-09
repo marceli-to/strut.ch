@@ -7,18 +7,16 @@
             <main class="content" role="main">
                 <div>
                     <h1>Highlights</h1>
-                    <p>Elements of the highlight section will be displayed randomly.</p>
                     <div class="grid-rows">
                         <div class="grid-row grid-row--highlight">
                             <grid-highlight :gridId="1"></grid-highlight>
                         </div>
                     </div>
-                    <h1>Teasers</h1>
-                    <p>Select a grid and add a project or a news teaser. Projects or teasers will be displayed as defined by its grid layout.</p>
+                    <h1>Bauten</h1>
                     <grid-selector></grid-selector>
                     <div class="grid-rows">
                         <div class="grid-row" v-for="grid in grids" :key="grid.id">
-                            <a href="javascript:;" class="btn-trash" @click.prevent="deleteGrid(grid.id)">Delete grid</a>
+                            <a href="javascript:;" class="btn-trash" @click.prevent="deleteGrid(grid.id)">Zeile löschen</a>
                             <grid-row :layout="grid.layout.key" :gridId="grid.id"></grid-row>
                         </div>
                     </div>

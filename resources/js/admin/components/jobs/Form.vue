@@ -257,10 +257,12 @@ export default {
 
     // Delete a single file by its name
     deleteFile(file) {
-      let uri = `/api/job/delete/file/${file}`;
-      this.axios.delete(uri).then(response => {
-        this.job.media = null;
-      });
+      if(confirm('Bitte löschen bestätigen!')) {
+        let uri = `/api/job/delete/file/${file}`;
+        this.axios.delete(uri).then(response => {
+          this.job.media = null;
+        });
+      }
     },
   },
 

@@ -15,7 +15,7 @@
               <div class="list-item list-item--sortable" v-for="post in posts" :key="post.id">
                 <div class="list-item-body">
                   <h3>{{ post.title }}</h3>
-                  {{ post.body }}
+                  <div v-html="post.body">{{ post.body }}</div>
                 </div>
                 <div class="list-item-action">
                   <router-link :to="{name: 'post-edit', params: { id: post.id }}" class="icon-edit icon-mini"></router-link>

@@ -60,11 +60,13 @@
     methods: {
 
       destroy(id) {
-        let uri = `/api/book/destroy/${id}`;
-        this.axios.delete(uri).then(response => {
-          this.books.splice(this.books.indexOf(id), 1);
-          this.$notify({type: 'success', text: 'Eintrag gelöscht'});
-        });
+        if(confirm('Bitte löschen bestätigen!')) {
+          let uri = `/api/book/destroy/${id}`;
+          this.axios.delete(uri).then(response => {
+            this.books.splice(this.books.indexOf(id), 1);
+            this.$notify({type: 'success', text: 'Eintrag gelöscht'});
+          });
+        }
       },
       
       clone(id) {

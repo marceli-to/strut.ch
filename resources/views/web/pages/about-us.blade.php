@@ -1,4 +1,4 @@
-@extends('web.layout.page')
+@extends('web.layout.app')
 @section('content')
 <div style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; font-size:16px; color: white; background: green; padding: 10px; border: 2px solid green; line-height:1; width: auto; display:inline-block; margin-bottom: 20px;">Layout mit CSS Grid</div>
 <section class="grid-about"></section>

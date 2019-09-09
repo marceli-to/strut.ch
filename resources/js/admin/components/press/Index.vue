@@ -96,11 +96,13 @@
       },
 
       destroy(id) {
-        let uri = `/api/press/destroy/${id}`;
-        this.axios.delete(uri).then(response => {
-          this.press = response.data.data;
-          this.$notify({type: 'success', text: 'Eintrag gelöscht'});
-        });
+        if(confirm('Bitte löschen bestätigen!')) {
+          let uri = `/api/press/destroy/${id}`;
+          this.axios.delete(uri).then(response => {
+            this.press = response.data.data;
+            this.$notify({type: 'success', text: 'Eintrag gelöscht'});
+          });
+        }
       },
       
       clone(id) {

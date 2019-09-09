@@ -61,11 +61,13 @@
     methods: {
 
       destroy(id) {
-        let uri = `/api/job/destroy/${id}`;
-        this.axios.delete(uri).then(response => {
-          this.jobs.splice(this.jobs.indexOf(id), 1);
-          this.$notify({type: 'success', text: 'Eintrag gelöscht'});
-        });
+        if(confirm('Bitte löschen bestätigen!')) {
+          let uri = `/api/job/destroy/${id}`;
+          this.axios.delete(uri).then(response => {
+            this.jobs.splice(this.jobs.indexOf(id), 1);
+            this.$notify({type: 'success', text: 'Eintrag gelöscht'});
+          });
+        }
       },
 
       clone(id) {

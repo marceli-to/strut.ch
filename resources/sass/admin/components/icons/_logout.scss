@@ -11,7 +11,7 @@
     background-position: center left;
     //bottom: 0;
     @include responsive-prop('bottom', $space-md);
-    color: $color--white;
+    color: $color--medium-grey;
     @include font-size($fs-xs);
     height: 20px;
     @include responsive-prop('left', $space-md);

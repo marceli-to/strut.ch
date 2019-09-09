@@ -2,7 +2,7 @@
     <div>
         <header class="site-header">
             <div>
-                <a href="/" class="brand"></a>
+                <a href="/admin/" class="brand"></a>
                 <a href="javascript:;" @click="toggleMenu()" class="icon-menu"></a>
             </div>
         </header>

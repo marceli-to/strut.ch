@@ -11,8 +11,10 @@
  * Page routes
  */
 
+
 // Bauten
 Route::get('bauten', 'Frontend\ProjectsController@projects')->name('page.projects');
+Route::get('bauten/{id}/{slug?}', 'Frontend\ProjectsController@project');
 
 // Werkliste
 Route::get('werkliste', 'Frontend\ContactController@index')->name('page.works');
@@ -31,6 +33,10 @@ Route::get('jobs', 'Frontend\AboutController@jobs')->name('page.jobs');
 Route::get('auszeichnungen', 'Frontend\AboutController@awards')->name('page.awards');
 Route::get('votraege', 'Frontend\AboutController@lectures')->name('page.lectures');
 
+// Home
+Route::get('/', 'Frontend\HomeController@index')->name('page.home');
+
+
 /**
  * Image routes
  */
@@ -43,7 +49,7 @@ Route::get('media/{file}/{size?}', 'MediaController@resize');
  * Development Routes
  */
 
-Route::view('/', 'web.pages.home');
+//Route::view('/', 'web.pages.home');
 //Route::view('/ueber-uns', 'web.pages.about-us');
 
 /**
