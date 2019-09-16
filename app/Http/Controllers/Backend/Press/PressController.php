@@ -4,14 +4,12 @@ namespace App\Http\Controllers\Backend\Press;
 use App\Services\MediaService;
 use App\Models\Press;
 use App\Http\Resources\PressCollection;
-
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class PressController extends Controller
 {
     protected $mediaService;
-
     protected $press;
     
     /**
@@ -21,7 +19,10 @@ class PressController extends Controller
      * @param Press $press
      */
 
-    public function __construct(MediaService $mediaService, Press $press)
+    public function __construct(
+        MediaService $mediaService,
+        Press $press
+    )
     {
         $this->mediaService = $mediaService;
         $this->press = $press;
@@ -68,9 +69,11 @@ class PressController extends Controller
                 'de' => $request->input('description.de'),
                 'en' => $request->input('description.en'),
             ],
-            'year' => $request->input('year'),          
-            'url' => $request->input('url') ? \AppHelper::addScheme($request->input('url')) : NULL,
-            'media' => $request->input('media'),          
+            'year'        => $request->input('year'),          
+            'url'         => $request->input('url') ? \AppHelper::addScheme($request->input('url')) : NULL,
+            'media'       => $request->input('media'),  
+            'file'        => $request->input('file'),          
+            'project_id'  => $request->input('project_id'),          
         ]);
 
         $press->save();
@@ -103,7 +106,9 @@ class PressController extends Controller
         $press->setTranslation('description', 'de', $request->input('description.de'));
         $press->year = $request->input('year') ? $request->input('year') : NULL;
         $press->media = $request->input('media') ? $request->input('media') : NULL;
+        $press->file = $request->input('file') ? $request->input('file') : NULL;
         $press->url = $request->input('url') ? \AppHelper::addScheme($request->input('url')) : NULL;
+        $press->project_id = $request->input('project_id') ? $request->input('project_id') : NULL;
         $press->save();
         return response()->json('successfully updated');
     }
@@ -120,9 +125,10 @@ class PressController extends Controller
         $pressCopy = $press->replicate();
         $pressCopy->setTranslation('title', 'de', $press->getTranslation('title', 'de') . ' (Kopie)');
         $pressCopy->media = null;
+        $pressCopy->file = null;
+        $pressCopy->project_id = null;
         $pressCopy->publish = 0;
         $pressCopy->save();
-
         $press = $this->press->orderBy('year', 'DESC')->get()->groupBy('year');
         return new PressCollection($press);
     }
@@ -150,13 +156,15 @@ class PressController extends Controller
     public function destroy($id)
     {
         $press = $this->press->find($id);
-
         if ($press->media)
         {
             $this->mediaService->delete($press->media);
         }
+        if ($press->file)
+        {
+            $this->mediaService->delete($press->file);
+        }
         $press->delete();
-        
         $press = $this->press->orderBy('year', 'DESC')->get()->groupBy('year');
         return new PressCollection($press);
     }
@@ -169,12 +177,23 @@ class PressController extends Controller
      */
     public function unlink($filename)
     {
-        $press = $this->press->where('media', $filename)->first();
-        if ($press)
+        // Delete image
+        $press_media = $this->press->where('media', $filename)->first();
+        if ($press_media)
         {
-            $press->media = null;
-            $press->save();
+            $press_media->media = null;
+            $press_media->save();
         }
+
+        // Delete file
+        $press_file = $this->press->where('file', $filename)->first();
+        if ($press_file)
+        {
+            $press_file->file = null;
+            $press_file->save();
+        }
+
+        // Delete the image/file from the disk
         $this->mediaService->delete($filename);
         return response()->json('successfully deleted');
     }

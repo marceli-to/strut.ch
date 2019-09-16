@@ -120,6 +120,7 @@ Route::middleware('auth:api')->group(function() {
 
     // Project routes
     Route::get('projects/get', 'Backend\Project\ProjectController@get');
+    Route::get('projects/fetch/{publish?}/{order?}', 'Backend\Project\ProjectController@fetch');
     Route::post('project/create', 'Backend\Project\ProjectController@store');
     Route::get('project/edit/{id}', 'Backend\Project\ProjectController@edit');
     Route::post('project/update/{id}', 'Backend\Project\ProjectController@update');
@@ -129,12 +130,27 @@ Route::middleware('auth:api')->group(function() {
     Route::post('project/order', 'Backend\Project\ProjectController@order');
 
     // Project image routes
+    Route::get('project/image/get/{projectId}', 'Backend\Project\ProjectImageController@get');
     Route::delete('project/image/delete/{file}', 'Backend\Project\ProjectImageController@unlink');
     Route::get('project/image/status/{id}', 'Backend\Project\ProjectImageController@status');
 
     // Project file routes
     Route::delete('project/file/delete/{file}', 'Backend\Project\ProjectFileController@unlink');
     Route::get('project/file/status/{id}', 'Backend\Project\ProjectFileController@status');
+
+    // Project grid routes
+    Route::get('project/grids/{id}', 'Backend\Project\ProjectGridController@get');
+    Route::get('project/grid/store/{projectId}/{layoutId}', 'Backend\Project\ProjectGridController@store');
+    Route::delete('project/grid/delete/{id}', 'Backend\Project\ProjectGridController@destroy');
+    
+    // Project grid layout routes
+    Route::get('project/grid/layouts', 'Backend\Project\ProjectGridLayoutController@get');
+    
+    // Project grid image routes
+    Route::get('project/grid/images/{gridId}', 'Backend\Project\ProjectGridElementController@get');
+    Route::post('project/grid/image/store', 'Backend\Project\ProjectGridElementController@store');
+    Route::delete('project/grid/image/delete/{id}', 'Backend\Project\ProjectGridElementController@destroy');
+
 
     // News routes
     Route::post('news/create', 'Backend\NewsController@store');

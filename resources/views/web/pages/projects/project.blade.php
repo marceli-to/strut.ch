@@ -17,7 +17,20 @@
       height: auto;
       width: 100%;
     }
+    .label-preview {
+      background-color: rebeccapurple;
+      color: #fff;
+      display: inline-block;
+      right: 5px;
+      top: 5px;
+      padding: 10px 15px;
+      line-height: 1;
+      position: fixed;
+      width: auto;
+      z-index: 1000;
+    }
   </style>
+  <span class="label-preview">Vorschau</span>
   <h2 style="border-bottom: 1px solid #000">
     {{$project->categoryType->name_singular}}
   </h2>

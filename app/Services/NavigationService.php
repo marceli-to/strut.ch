@@ -4,9 +4,6 @@ namespace App\Services;
 use App\Models\Project;
 use App\Models\Category;
 use App\Models\CategoryType;
-
-use Illuminate\Support\Facades\Cache;
-
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
@@ -80,7 +77,7 @@ class NavigationService
 
                         foreach($type->projects as $i => $p)
                         {
-                            $menu_projects[$index]['types'][$idx]['projects'][$i]['name']  = $type_name_singular . ', ' . $p->getTranslation('location', 'de');
+                            $menu_projects[$index]['types'][$idx]['projects'][$i]['name']  = $p->getTranslation('name', 'de') . ', ' . $p->getTranslation('location', 'de');
                             $menu_projects[$index]['types'][$idx]['projects'][$i]['route'] = 'bauten';
                             $menu_projects[$index]['types'][$idx]['projects'][$i]['slug']  = 
                                 $p->id .'/'.

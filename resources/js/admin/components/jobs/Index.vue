@@ -52,13 +52,17 @@
     },
 
     created() {
+      this.fetch();
+    },
+
+    methods: {
+
+      fetch() {
         let uri = '/api/jobs/get';
         this.axios.get(uri).then(response => {
           this.jobs = response.data.data;
         });
-    },
-
-    methods: {
+      },
 
       destroy(id) {
         if(confirm('Bitte löschen bestätigen!')) {

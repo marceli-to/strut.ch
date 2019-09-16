@@ -41,12 +41,12 @@ export default {
         },
 
         storeArticle(data) {
-        
+
             // store the news entry
             let uri = '/api/news/create';
             this.isLoading = true;
             this.axios.post(uri, data).then((response) => {
-                
+
                 // store the grid element
                 let data = {
                     'grid_id': this.tmpGridId,
@@ -57,7 +57,11 @@ export default {
                 let uri = '/api/gridelement/store';
                 this.axios.post(uri, data).then((response) => {
                     this.toggleOverlay();
-                    this.$notify({type: 'success', title: 'Success!', text: 'A new element was added successfully!'});
+                    this.$notify({
+                        type: 'success',
+                        title: 'Success!',
+                        text: 'A new element was added successfully!'
+                    });
                     this.fetchElements();
                 });
             });
@@ -68,7 +72,11 @@ export default {
             this.isLoading = true;
             this.axios.delete(uri).then(response => {
                 this.axios.post(`/api/news/delete/${articleId}`).then((response) => {
-                    this.$notify({type: 'success', title: 'Success!', text: 'The grid element was deleted successfully!'});
+                    this.$notify({
+                        type: 'success',
+                        title: 'Success!',
+                        text: 'The grid element was deleted successfully!'
+                    });
                     this.fetchElements();
                 });
             });
@@ -97,9 +105,15 @@ export default {
             let uri = '/api/gridelement/store';
             this.isLoading = true;
             this.axios.post(uri, data).then((response) => {
-                this.axios.post(`/api/post/update/${postId}`, {'isGridElement': true}).then((response) => {
+                this.axios.post(`/api/post/update/${postId}`, {
+                    'isGridElement': true
+                }).then((response) => {
                     this.toggleOverlay();
-                    this.$notify({type: 'success', title: 'Success!', text: 'A new element was added successfully!'});
+                    this.$notify({
+                        type: 'success',
+                        title: 'Success!',
+                        text: 'A new element was added successfully!'
+                    });
                     this.fetchElements();
                 });
             });
@@ -109,8 +123,14 @@ export default {
             let uri = `/api/gridelement/delete/${gridElementId}`;
             this.isLoading = true;
             this.axios.delete(uri).then(response => {
-                this.axios.post(`/api/post/update/${postId}`, {'isGridElement': false}).then((response) => {
-                    this.$notify({type: 'success', title: 'Success!', text: 'The grid element was deleted successfully!'});
+                this.axios.post(`/api/post/update/${postId}`, {
+                    'isGridElement': false
+                }).then((response) => {
+                    this.$notify({
+                        type: 'success',
+                        title: 'Success!',
+                        text: 'The grid element was deleted successfully!'
+                    });
                     this.fetchElements();
                 });
             });
@@ -129,7 +149,7 @@ export default {
 
             // toggle the overlay itself
             this.hasOverlay = this.hasOverlay ? false : true;
-            
+
             // reset news/posts
             if (!this.hasOverlay) {
                 this.showForm = false;

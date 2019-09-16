@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Services\NavigationService;
 use App\Services\MediaService;
+
 use App\Models\Press;
 use App\Models\Book;
 
@@ -40,7 +41,7 @@ class PublicationsController extends Controller
     }
 
     public function press()
-    {
+    {        
         $press = $this->press->orderBy('year', 'DESC')->get();
         return view($this->view_path . '.press', ['menu' => $this->menu, 'press' => $press]);
     }

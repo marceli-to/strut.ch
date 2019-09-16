@@ -13,6 +13,10 @@ class AppHelper
         {
             return $url;
         }
+
+        if (strpos($url, '@') !== false) {
+            return $url;
+        }
         return parse_url($url, PHP_URL_SCHEME) === null ? $scheme . $url : $url;
     }
     

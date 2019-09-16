@@ -249,7 +249,7 @@
                         </a>
                       </div>
                       <div class="dz-edit-form-row">
-                        <label>Title / Alt:</label>
+                        <label>Alt-Tag:</label>
                         <input
                           type="text"
                           v-model="image.caption.de"
@@ -324,7 +324,7 @@
                         {{file.name}}
                       </div>
                       <div class="dz-edit-form-row">
-                        <label>Title / Alt:</label>
+                        <label>Alt-Tag:</label>
                         <input
                           type="text"
                           v-model="file.caption.de"
@@ -547,11 +547,6 @@ export default {
       return false;
     },
 
-    validationError() {
-      this.$notify({ type: "error", text: "Bitte markierte Felder prüfen!" });
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    },
-
     // Submit method
     submit() {
       if (!this.validate()) {
@@ -629,7 +624,7 @@ export default {
       return `/media/${file}/sm`;
     },
 
-    // Delete a single file by its name
+    // Delete a single file by name
     deleteFile(file) {
       if(confirm('Bitte löschen bestätigen!')) {
         let uri = `/api/project/file/delete/${file}`;

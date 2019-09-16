@@ -63,9 +63,7 @@ class GridController extends Controller
             'position'       => 999,
         ]);
         $row->save();
-
         return new GridCollection($this->grid->with('layout')->orderBy('position', 'ASC')->get());
-
     }
 
     /**

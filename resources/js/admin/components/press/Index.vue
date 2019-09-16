@@ -5,7 +5,7 @@
     <div class="container">
       <main class="content" role="main">
         <div>
-          <h1>Presse Artikel</h1>
+          <h1>Presse</h1>
           <router-link :to="{ name: 'press-create' }" class="btn-add"><span>Hinzufügen</span></router-link>
           <div class="list-items" v-if="press.length">
             <div class="list-item-group" v-for="articles in press" :key="articles.index">

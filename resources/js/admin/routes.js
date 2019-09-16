@@ -48,6 +48,9 @@ import ProjectIndex from '@/components/project/Index.vue';
 import ProjectCreate from '@/components/project/Create.vue';
 import ProjectEdit from '@/components/project/Edit.vue';
 
+// Project Grids
+import ProjectGridIndex from '@/components/project/grid/Index.vue';
+
 
 // Masonry
 import GridIndex from '@/components/home/GridIndex.vue';
@@ -288,6 +291,12 @@ const routes = [
         name: 'project-edit',
         path: '/admin/project/edit/:id',
         component: ProjectEdit,
+        meta: { requiresAuth: true },
+    },
+    {
+        name: 'project-grids',
+        path: '/admin/project/grid/:id',
+        component: ProjectGridIndex,
         meta: { requiresAuth: true },
     },
 ];

@@ -56,6 +56,21 @@ class ProjectController extends Controller
     }
 
     /**
+     * Get all records with constraints
+     *
+     * @return \Illuminate\Http\Response
+     */
+
+    public function fetch($publish = 0, $order = 'ASC')
+    {
+        $projects = $this->project->where('publish', '=', $publish)
+                                  ->orderBy('name->de', $order)
+                                  ->orderBy('year', 'DESC')
+                                  ->get();
+        return new ProjectCollection($projects);
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request

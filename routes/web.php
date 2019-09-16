@@ -14,7 +14,8 @@
 
 // Bauten
 Route::get('bauten', 'Frontend\ProjectsController@projects')->name('page.projects');
-Route::get('bauten/{id}/{slug?}', 'Frontend\ProjectsController@project');
+Route::get('bauten/vorschau/{project}', 'Frontend\ProjectsController@preview')->name('page.project-preview');
+Route::get('bauten/{id}/{slug?}', 'Frontend\ProjectsController@project')->name('page.project-detail');
 
 // Werkliste
 Route::get('werkliste', 'Frontend\ContactController@index')->name('page.works');

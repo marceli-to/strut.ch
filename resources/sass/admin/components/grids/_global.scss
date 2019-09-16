@@ -159,3 +159,28 @@
     }
 }
 
+.grid-thumbnails {
+    h3 {
+        @include responsive-prop('margin-bottom', $space-sm);
+    }
+
+    > div {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        grid-gap: 20px;
+    }
+}
+
+.grid-thumbnail {
+    display: block;
+    background-color: #eeeeee;
+    border-radius: 2px;
+    padding: 10px;
+
+    img {
+        display: block;
+        height: auto;
+        width: 100%;
+    }
+}
+

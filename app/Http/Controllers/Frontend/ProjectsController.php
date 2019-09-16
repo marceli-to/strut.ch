@@ -41,11 +41,21 @@ class ProjectsController extends Controller
         $this->projectImage = $projectImage;
     }
 
+    /**
+     * List all projects
+     * 
+     */
     public function projects()
     {
         return view($this->view_path . '.index', ['menu' => $this->menu]);
     }
 
+    /**
+     * Show a resource
+     * 
+     * @param int $id
+     * @param int $slug
+     */
     public function project($id = NULL, $slug = NULL)
     {
         $project = $this->project->with('category')
@@ -54,5 +64,21 @@ class ProjectsController extends Controller
                                  ->with('downloads')
                                  ->findOrFail($id);
         return view($this->view_path . '.project', ['menu' => $this->menu, 'project' => $project]);
+    }
+
+    /**
+     * Show a preview
+     * 
+     * @param Project $project
+     */
+    public function preview(Project $project)
+    {
+        return view(
+            $this->view_path . '.project',
+            [
+                'menu' => $this->menu, 
+                'project' => $project,
+                'is_preview' => TRUE
+            ]);
     }
 }

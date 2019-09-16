@@ -22,17 +22,18 @@
                   ghost-class="draggable-ghost-list"
                   tag="div"> -->
                   <div v-for="project in categories" :key="project.id">
-                    <div :class="[project.publish == 0 ? 'is-disabled' : '', 'list-item', 'list-item--project']"><!--  list-item--sortable -->
+                    <div :class="[project.publish == 0 ? 'is-disabled' : '', 'list-item', 'list-item--project']" data-icons="5"><!--  list-item--sortable -->
                       <div class="list-item-body">
                         <h3>{{ project.name.de }}, {{ project.location.de }}</h3>
                         <span>{{ project.year }}, {{ project.status }}</span>
                         <span v-if="project.competition">Wettbewerb ({{project.competition}})</span>
                       </div>
-                      <div class="list-item-action">
-                        <a href="javascript:;" :class="[project.publish == 1 ? 'icon-eye' : 'icon-eye-off', 'icon-mini']" @click.prevent="toggleStatus(project.id)"></a>
-                        <router-link :to="{name: 'project-edit', params: { id: project.id }}" class="icon-edit icon-mini"></router-link>
-                        <a href="javascript:;" class="icon-copy icon-mini" @click.prevent="clone(project.id)"></a>
-                        <a href="javascript:;" class="icon-trash icon-mini" @click.prevent="destroy(project.id)"></a>
+                      <div class="list-item-action" data-icons="5">
+                        <a href="javascript:;" :class="[project.publish == 1 ? 'icon-eye' : 'icon-eye-off', 'icon-mini']" @click.prevent="toggleStatus(project.id)" title="Publizieren"></a>
+                        <a :href="'/bauten/vorschau/' + project.id" target="_blank" class="icon-external-link icon-mini" title="Vorschau"></a>
+                        <router-link :to="{name: 'project-edit', params: { id: project.id }}" class="icon-edit icon-mini" title="Bearbeiten"></router-link>
+                        <a href="javascript:;" class="icon-copy icon-mini" @click.prevent="clone(project.id)" title="Duplizieren"></a>
+                        <a href="javascript:;" class="icon-trash icon-mini" @click.prevent="destroy(project.id)" title="Löschen"></a>
                       </div>
                     </div>
                   </div>

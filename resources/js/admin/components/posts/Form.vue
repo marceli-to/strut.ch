@@ -192,7 +192,7 @@ export default {
       }
     },
 
-    // FileUpload Callback - Add file to post model
+    // Image Upload Callback - Add file to post model
     afterComplete(file) {
         let file_response = JSON.parse(file.xhr.response);
             file_response.id = null;
@@ -206,7 +206,7 @@ export default {
       return `/media/thumbnail/${file}`;
     },
 
-    // Delete a single file by its name
+    // Delete a single file by name
     deleteMedia(file) {
       let uri = `/api/postmedia/delete/${file.name}`;
       this.axios.delete(uri).then((response) => {

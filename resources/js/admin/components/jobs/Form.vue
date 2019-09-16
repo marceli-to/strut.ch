@@ -55,41 +55,17 @@
             </div>
           </div>
           <div class="span" v-show="tabs.media.active">
-            <div class="form-row" v-if="job.media == null">
-              <label for="document">
-                Datei hochladen
-              </label>
-              <vue-dropzone
-                ref="dropzone"
-                id="dropzone"
-                :options="dropzoneFileConfig"
-                @vdropzone-complete="afterComplete"
-              ></vue-dropzone>
-              <span class="dz-restrictions">pdf | max. 8 MB</span>
-            </div>
-            <div class="form-row" v-if="job.media">
-              <label>Vorhandene Datei</label>
-              <div class="dropzone-existing-assets">
-                <div>
-                  <figure class="dz-existing-asset"> 
-                    <a :href="getFileUri(job.media)" target="_blank" class="dz-file-preview">
-                      <img src="/assets/admin/img/icons/file.svg" height="100" width="100">
-                    </a>
-                    <div class="dz-toolbar">
-                      <a
-                        :href="getFileUri(job.media)" target="_blank"
-                        class="icon-external-link icon-mini"
-                      ></a>
-                      <a
-                        href="javascript:;"
-                        class="icon-trash icon-mini"
-                        @click.prevent="deleteFile(job.media)"
-                      ></a>
-                    </div>
-                  </figure>
-                </div>
-              </div>
-            </div>
+            <file-upload
+              :labelNew="'Datei hochladen'"
+              :labelExisting="'Vorhandene Datei'"
+              :labelRestrictions="'pdf | max. 8 MB'"
+              :maxFiles="1"
+              :maxFilesize="8"
+              :asset="job.media"
+              :assetType="'file'"
+              :acceptedFiles="'.pdf'"
+              :uploadUrl="'/api/media/upload/document'"
+            ></file-upload>
           </div>
           <form-buttons :route="'jobs'"></form-buttons>
         </form>
@@ -100,15 +76,14 @@
 <script>
 import PageHeader from "@/layout/PageHeader.vue";
 import FormButtons from "@/components/ui/buttons/FormButtons.vue";
-import vue2Dropzone from "vue2-dropzone";
-import dropzoneFileConfig from "@/config/dropzoneconfig-file.js";
+import FileUpload from "@/components/ui/FileUpload.vue";
 import tinyConfig from "@/config/tinyconfig.js";
 import Editor from "@tinymce/tinymce-vue";
 import Helpers from '@/mixins/helpers';
 
 export default {
   components: {
-    vueDropzone: vue2Dropzone,
+    FileUpload: FileUpload,
     tinymceEditor: Editor,
     FormButtons: FormButtons
   },
@@ -165,9 +140,6 @@ export default {
         media: null
       },
 
-      // dropzone config
-      dropzoneFileConfig: dropzoneFileConfig,
-
       // tinymce config
       tinyConfig: tinyConfig
     };
@@ -203,11 +175,6 @@ export default {
       return false;
     },
 
-    validationError() {
-      this.$notify({ type: "error", text: "Bitte markierte Felder prüfen!" });
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    },
-
     // Submit method
     submit() {
       if (!this.validate()) {
@@ -239,25 +206,19 @@ export default {
       });
     },
 
-    // FileUpload Callback
-    afterComplete(file) {
+    // Image Upload Callback
+    afterFileUpload(file) {
       if (file.status == "error" && file.accepted == false) {
         this.$notify({ type: "error", text: "Ungültiges Dateiformat." });
       } else {
         let file_response = JSON.parse(file.xhr.response);
         this.job.media = file_response.name;
       }
-      this.$refs.dropzone.removeFile(file);
     },
 
-    // Build media source string
-    getFileUri(file) {
-      return `/storage/media/downloads/${file}`;
-    },
-
-    // Delete a single file by its name
-    deleteFile(file) {
-      if(confirm('Bitte löschen bestätigen!')) {
+    // Delete a single file by name
+    deleteFileUpload(file) {
+      if (confirm("Bitte löschen bestätigen!")) {
         let uri = `/api/job/delete/file/${file}`;
         this.axios.delete(uri).then(response => {
           this.job.media = null;

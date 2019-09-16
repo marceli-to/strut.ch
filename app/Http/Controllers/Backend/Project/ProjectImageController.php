@@ -36,6 +36,24 @@ class ProjectImageController extends Controller
     }
 
     /**
+     * Get all published records
+     *
+     * @param int $projectId
+     * @return \Illuminate\Http\Response
+     */
+
+    public function get($projectId = NULL)
+    {
+        $projectImages = $this->projectImage
+                              ->where('project_id', '=', $projectId)
+                              ->where('publish', '=', 1)
+                              ->notInGrid()
+                              ->get();
+
+        return new ProjectImageCollection($projectImages);
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  str $filename

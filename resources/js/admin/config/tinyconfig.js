@@ -6,7 +6,7 @@ export default {
     external_plugins: {
         link: '/assets/admin/js/tinymce/plugins/link/plugin.min.js',
     },
-    toolbar: 'bold | link | code | removeformat undo redo',
+    toolbar: 'undo redo | bold | link | superscript | code | removeformat',
     paste_as_text: true,
     height : "240px"
 }

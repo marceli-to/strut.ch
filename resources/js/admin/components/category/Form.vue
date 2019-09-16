@@ -32,6 +32,7 @@
 <script>
 import PageHeader from '@/layout/PageHeader.vue';
 import FormButtons from '@/components/ui/buttons/FormButtons.vue';
+import Helpers from "@/mixins/helpers";
 
 export default {
 
@@ -42,7 +43,9 @@ export default {
   props: {
     type: String,
   },
-  
+
+  mixins: [Helpers],
+
   data() {
     return {
 
@@ -97,12 +100,8 @@ export default {
         this.errors.name.de = true;
         this.tabs.data.error = true;
       }
+      
       return false;
-    },
-
-    validationError() {
-      this.$notify({type: 'error', text: 'Bitte markierte Felder prüfen!'});
-      window.scrollTo({top: 0, behavior: 'smooth'});
     },
 
     // Submit method
@@ -137,26 +136,6 @@ export default {
         this.$router.push({name: 'categories'});
       });
     },
-
-    changeTab(tab) {
-      // set all tabs inactive and remove errors if any
-      for (let prop in this.tabs) {
-        this.tabs[prop].active = false;
-        this.tabs[prop].error = false;
-      };
-
-      // set active tab
-      this.tabs[tab].active = true;
-    },
-
-    removeError(field, language) {
-      if (language) {
-        this.errors[field][language] = false;
-      }
-      else {
-        this.errors[field] = false;
-      }
-    }
   },
 
   computed: {
