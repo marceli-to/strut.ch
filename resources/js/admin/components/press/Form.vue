@@ -52,24 +52,26 @@
                 rows="5"
               ></textarea>
             </div>
-            <div class="form-row" :class="errors.year ? 'has-error': ''">
-              <label>Jahr *</label>
-              <div class="select-wrapper">
-                <select class="is-md" v-model="press.year" name="year" @focus="removeError('year')">
-                  <option v-for="year in years" :key="year" :value="year">{{ year }}</option>
-                </select>
+            <div class="grid-press">
+              <div class="span form-row" :class="errors.year ? 'has-error': ''">
+                <label>Jahr *</label>
+                <div class="select-wrapper is-wide">
+                  <select v-model="press.year" name="year" @focus="removeError('year')">
+                    <option v-for="year in years" :key="year" :value="year">{{ year }}</option>
+                  </select>
+                </div>
               </div>
-            </div>
-            <div class="form-row" :class="errors.year ? 'has-error': ''">
-              <label>Projekt</label>
-              <div class="select-wrapper is-md">
-                <select v-model="press.project_id" name="project_id">
-                  <option
-                    v-for="project in projects"
-                    :key="project.id"
-                    :value="project.id"
-                  >{{ project.name }}</option>
-                </select>
+              <div class="span form-row" :class="errors.year ? 'has-error': ''">
+                <label>Projekt</label>
+                <div class="select-wrapper is-wide">
+                  <select v-model="press.project_id" name="project_id">
+                    <option
+                      v-for="project in projects"
+                      :key="project.id"
+                      :value="project.id"
+                    >{{ project.name }}</option>
+                  </select>
+                </div>
               </div>
             </div>
             <div class="form-row">

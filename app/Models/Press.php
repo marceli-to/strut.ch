@@ -12,6 +12,11 @@ class Press extends Model
 
     public $translatable = ['title', 'description'];
 
-    protected $fillable = ['title', 'description', 'year', 'url', 'media', 'publish'];
+    protected $fillable = ['title', 'description', 'year', 'url', 'media', 'publish', 'file', 'project_id'];
+
+    public function project()
+    {
+        return $this->hasOne('App\Models\Project', 'id', 'project_id');
+    }
 
 }

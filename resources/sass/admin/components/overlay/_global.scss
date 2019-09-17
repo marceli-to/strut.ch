@@ -12,7 +12,7 @@ html.has-overlay {
 .overlay {
     background-color: rgba(255, 255, 255, 1);
     color: $color--dark;
-    display: block;
+    display: none;
     height: 100%;
     left: 0;
     opacity: 0;
@@ -27,6 +27,7 @@ html.has-overlay {
     transition: opacity .24s ease-out;
 
     &.is-visible {
+        display: block;
         opacity: 1;
         pointer-events: all;
         z-index: 101;

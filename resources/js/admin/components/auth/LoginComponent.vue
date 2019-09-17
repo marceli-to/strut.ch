@@ -16,7 +16,7 @@
                 <div class="form-row is-last">
                     <div class="form-buttons">
                         <input type="submit" class="btn" value="Login">
-                        <a href="">Passwort vergessen?</a>
+                        <!-- <a href="">Passwort vergessen?</a> -->
                     </div>
                 </div>
             </form>

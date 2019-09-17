@@ -4,30 +4,29 @@
       <a
         href="javascript:;"
         class="btn-trash"
-        @click.prevent="deleteImage(element.id)"
+        @click.prevent="deleteMedia(element.id, element.postId)"
       >Löschen</a>
       <img :src="getPreviewImage(element.image)" height="50" width="50">
-      <figcaption v-if="element.caption">
-        <strong>{{element.caption}}</strong>
+      <figcaption>
+        <strong>{{element.title}}</strong>
       </figcaption>
     </figure>
   </div>
 </template>
 <script>
+import grid from "@/mixins/grid";
+
 export default {
   props: {
     element: Object
   },
 
-  methods: {
-    
-    deleteImage(id) {
-      this.$parent.deleteImage(id);
-    },
+  mixins: [grid],
 
-    getPreviewImage(image) {
-      return `/media/${image}/sm`;
-    },
+  methods: {
+    deleteMedia(elementId, postId) {
+      this.$parent.deleteMedia(elementId, postId);
+    }
   }
 };
 </script>

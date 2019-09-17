@@ -1,26 +1,27 @@
 <?php
-
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Grid extends Model
+class HomeGrid extends Model
 {
-    protected $fillable = ['grid_layout_id', 'position'];
+    protected $fillable = ['layout_id', 'order', 'publish'];
 
     /**
      * Get the layout associated with the row.
      */
+
     public function layout()
     {
-        return $this->hasOne('App\GridLayout', 'id', 'grid_layout_id');
+        return $this->hasOne('App\Models\HomeGridLayout', 'id', 'layout_id');
     }
 
     /**
      * Get the elements for the row.
      */
+
     public function elements()
     {
-        return $this->hasMany('App\GridElement');
+        return $this->hasMany('App\Models\HomeGridElement');
     }
 }

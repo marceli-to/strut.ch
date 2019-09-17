@@ -40,13 +40,17 @@ class PressController extends Controller
         {
             $press = $this->press->where('year', '=', $year)
                                  ->orderBy('year', 'DESC')
+                                 ->with('project')
                                  ->get()
                                  ->groupBy('year');
 
         }
         else
         {
-            $press = $this->press->orderBy('year', 'DESC')->get()->groupBy('year');
+            $press = $this->press->orderBy('year', 'DESC')
+                                 ->with('project')
+                                 ->get()
+                                 ->groupBy('year');
         }
         return new PressCollection($press);
     }

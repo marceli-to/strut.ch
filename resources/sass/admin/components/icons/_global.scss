@@ -113,6 +113,10 @@
     background-size: contain;
     height: 24px;
     width: 24px;
+
+    &.is-disabled {
+        pointer-events: none;
+    }
 }
 
 .icon-mini {

@@ -88,6 +88,25 @@ class ProjectGridController extends Controller
     }
 
     /**
+     * Update the order of the resources.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+
+    public function order(Request $request)
+    {
+        $grids = $request->get('grids');
+        foreach($grids as $grid)
+        {
+            $g = $this->projectGrid->find($grid['id']);
+            $g->order = $grid['order'];
+            $g->save(); 
+        }
+        return response()->json('successfully updated');
+    }
+
+    /**
      * Fetch database records by project
      *
      * @param int $project_id

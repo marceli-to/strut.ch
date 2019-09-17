@@ -13,6 +13,10 @@
     &.grid-row--highlight {
         @include responsive-prop('margin-bottom', $space-lg); 
     }
+
+    &.grid-row--draggable {
+        cursor: move;
+    }
 }
 
 .grid-layout-selector {
@@ -74,6 +78,7 @@
         }
 
         figure {
+            height: 100%;;
             padding: 0;
             position: relative;
 
@@ -85,16 +90,23 @@
             }
 
             figcaption {
-                background-color: $color--light;
+                background-color: rgba($color: $color--dark, $alpha: .9);
+                bottom: 0;
+                color: $color--white;
                 display: block;
+                left: 0;
                 padding: 10px;
+                position: absolute;
                 text-align: left;
+                width: 100%;
+                z-index: 1;
             }
         }
 
         img {
             display: block;
             height: auto;
+            object-fit: cover;
             width: 100%;
         }
     }
@@ -116,20 +128,27 @@
         grid-gap: 20px;
     }
     
-    .grid-2fr1fr {
+    .grid-2fr-1fr {
         display: grid;
         grid-template-columns: 2fr 1fr;
         grid-gap: 20px;
     }
     
-    .grid-2fr1fr-stacked {
+    .grid-2fr-1fr_stacked {
         display: grid;
         grid-template-columns: 2fr 1fr;
         grid-gap: 20px;
     }
     
-    .grid-2fr1fr-stacked .span {
+    .grid-2fr-1fr_stacked .span {
         min-height: 200px;
+    }
+
+    .grid-1fr_stacked-1fr,
+    .grid-1fr-1fr_stacked {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 20px;        
     }
     
     .grid-stacked {
@@ -137,6 +156,7 @@
         grid-gap: 10px;
         grid-template-columns: 1fr;
         padding: 10px;
+        
     }
     
     .grid-stacked .span {

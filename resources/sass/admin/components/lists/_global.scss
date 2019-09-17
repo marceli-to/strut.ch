@@ -26,8 +26,8 @@
     @include responsive-prop('padding-top', $space-xs);
     @include responsive-prop('margin-bottom', $space-xs);
 
-    &[data-icons="5"] {
-        grid-template-columns: auto 130px;
+    &[data-icons="6"] {
+        grid-template-columns: auto 158px;
     }
 
     &.is-disabled {
@@ -88,8 +88,8 @@
     grid-gap: 10px;
     text-align: right;
 
-    &[data-icons="5"] {
-        grid-template-columns: repeat(5, 18px);
+    &[data-icons="6"] {
+        grid-template-columns: repeat(6, 18px);
     }
 }
 

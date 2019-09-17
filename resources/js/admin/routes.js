@@ -53,7 +53,7 @@ import ProjectGridIndex from '@/components/project/grid/Index.vue';
 
 
 // Masonry
-import GridIndex from '@/components/home/GridIndex.vue';
+import HomeGridIndex from '@/components/home/Index.vue';
 
 // Page
 import PageComponent from '@/layout/Page.vue';
@@ -108,9 +108,9 @@ const routes = [
         meta: { requiresAuth: true },
     },
     {
-        name: 'masonry',
-        path: '/admin/masonry',
-        component: GridIndex,
+        name: 'home',
+        path: '/admin/home',
+        component: HomeGridIndex,
         meta: { requiresAuth: true },
     },
 

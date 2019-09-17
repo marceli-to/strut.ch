@@ -3,7 +3,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ProjectGridLayout extends Model
+class HomeGridLayout extends Model
 {
     protected $fillable = ['key'];
 
@@ -13,6 +13,6 @@ class ProjectGridLayout extends Model
 
     public function grid()
     {
-        return $this->belongsTo('App\Models\ProjectGrid');
+        return $this->belongsTo('App\Models\HomeGrid');
     }
 }

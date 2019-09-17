@@ -211,7 +211,7 @@
               <div class="dropzone-existing-assets has-images">
                 <div>
                   <figure
-                    class="dz-existing-asset is-image"
+                    :class="[image.publish == 0 ? 'is-disabled' : '', 'dz-existing-asset is-image']"
                     v-for="(image,index) in project.images"
                     :key="image.id"
                   >
@@ -220,7 +220,7 @@
                       <a
                         href="javascript:;"
                         :class="[image.publish == 1 ? 'icon-eye' : 'icon-eye-off', 'icon-mini']"
-                        @click.prevent="toggleImage(image.id)"
+                        @click.prevent="toggleImage(image)"
                       ></a>
                       <a
                         href="javascript:;"
@@ -297,10 +297,10 @@
                       <img src="/assets/admin/img/icons/file.svg" height="100" width="100">
                     </a>
                     <div class="dz-toolbar">
-                      <a v-if="file.id"
+                      <a 
                         href="javascript:;"
                         :class="[file.publish == 1 ? 'icon-eye' : 'icon-eye-off', 'icon-mini']"
-                        @click.prevent="toggleFile(file.id)"
+                        @click.prevent="toggleFile(file)"
                       ></a>
                       <a
                         href="javascript:;"
@@ -587,7 +587,7 @@ export default {
         file_response.id = null;
         file_response.caption = {de: null, en: null};
         file_response.order = -1;
-        file_response.publish = 1;
+        file_response.publish = 0;
         this.project.downloads.push(file_response);
       }
       this.$refs.dropzoneFiles.removeFile(file);
@@ -602,7 +602,7 @@ export default {
         file_response.id = null;
         file_response.caption = {de: null, en: null};
         file_response.order = -1;
-        file_response.publish = 1;
+        file_response.publish = 0;
         file_response.is_preview_type = null;
         file_response.is_preview_status = null;
         file_response.is_preview_year = null;
@@ -647,20 +647,33 @@ export default {
     updateImageOrder() { },
     updateFileOrder() { },
 
-    toggleFile(id) {
-      let uri = `/api/project/file/status/${id}`;
-      this.axios.get(uri).then(response => {
-        const index = this.project.downloads.findIndex(x => x.id === id);
-        this.project.downloads[index].publish = response.data;
-      });
+    toggleFile(file) {
+
+      if (file.id === null) {
+          const index = this.project.downloads.findIndex(x => x.name === file.name);
+          this.project.downloads[index].publish = file.publish == 1 ? 0 : 1;
+      }
+      else {
+        let uri = `/api/project/file/status/${file.id}`;
+        this.axios.get(uri).then(response => {
+          const index = this.project.downloads.findIndex(x => x.id === file.id);
+          this.project.downloads[index].publish = response.data;
+        });
+      }
     },
 
-    toggleImage(id = null) {
-      let uri = `/api/project/image/status/${id}`;
-      this.axios.get(uri).then(response => {
-        const index = this.project.images.findIndex(x => x.id === id);
-        this.project.images[index].publish = response.data;
-      });
+    toggleImage(image) {
+      if (image.id === null) {
+          const index = this.project.images.findIndex(x => x.name === image.name);
+          this.project.images[index].publish = image.publish == 1 ? 0 : 1;
+      }
+      else {
+        let uri = `/api/project/image/status/${image.id}`;
+        this.axios.get(uri).then(response => {
+          const index = this.project.images.findIndex(x => x.id === image.id);
+          this.project.images[index].publish = response.data;
+        });
+      }
     },
 
     // Events

@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class GridCollection extends ResourceCollection
+class HomeGridCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.

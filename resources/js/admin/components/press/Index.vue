@@ -12,8 +12,11 @@
               <h2>{{articles[0].year}}</h2>
               <div :class="[p.publish == 0 ? 'is-disabled' : '', 'list-item']" v-for="p in articles" :key="p.id">
                 <div class="list-item-body">
-                  <h3>{{ p.title.de }}</h3>
+                  <h3>{{ p.title.de }} </h3>
                   <p>{{p.description.de}}</p>
+                  <span v-if="p.project">
+                    Projekt: {{p.project.name.de}}, {{p.project.location.de}} ({{p.project.year}})
+                  </span>
                 </div>
                 <div class="list-item-action">
                   <a href="javascript:;" :class="[p.publish == 1 ? 'icon-eye' : 'icon-eye-off', 'icon-mini']" @click.prevent="toggleStatus(p.id)"></a>

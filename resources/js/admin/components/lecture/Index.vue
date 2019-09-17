@@ -26,7 +26,7 @@
 
           </div>
           <div v-else>
-            <p>Es sind keine Auszeichnungen vorhanden...</p>
+            <p>Es sind keine Vorträge vorhanden...</p>
           </div>
         </div>
       </main>

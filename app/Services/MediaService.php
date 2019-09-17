@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Intervention\Image\ImageManager;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Cache;
 
 class MediaService
 {
@@ -134,13 +135,16 @@ class MediaService
         {
             $image = \Image::make($this->path_source . $image)->fit($this->size_thumbs);
             $image->save($this->path_thumbs . $image->basename);
+            return \Response::make($image, 200, ['Content-Type' => 'image/jpeg']);
         }
         else
         {
-            $image = \Image::make($this->path_thumbs . $image);
+            $filename = $image;
+            $img = \Image::cache(function($image) use ($filename) {
+                return $image->make($this->path_thumbs . $filename);
+            }, 300, false);
+            return \Response::make($img, 200, ['Content-Type' => 'image/jpeg']);
         }
-
-        return $image->response();
     }
 
     /**
@@ -182,13 +186,17 @@ class MediaService
                     }
 
                     $image->save($this->path_small . $image->basename);
+                    return \Response::make($image, 200, ['Content-Type' => 'image/jpeg']);
                 }
                 else
                 {   
-                    $image = \Image::make(file_get_contents($this->path_small . $image));
+                    $filename = $image;
+                    $img = \Image::cache(function($image) use ($filename) {
+                        return $image->make($this->path_small . $filename);
+                    }, 300, false);
+                    
+                    return \Response::make($img, 200, ['Content-Type' => 'image/jpeg']);
                 }
-
-                return $image->response();
             }
 
             // Generate large images
@@ -216,13 +224,19 @@ class MediaService
                             $constraint->aspectRatio();
                         });
                     }
+
+                    $image->save($this->path_large . $image->basename);
+                    return \Response::make($image, 200, ['Content-Type' => 'image/jpeg']);
                 }
                 else
                 {   
-                    $image = \Image::make(file_get_contents($this->path_large . $image));
+                    $filename = $image;
+                    $img = \Image::cache(function($image) use ($filename) {
+                        return $image->make($this->path_large . $filename);
+                    }, 300, false);
+                    
+                    return \Response::make($img, 200, ['Content-Type' => 'image/jpeg']);
                 }
-
-                return $image->response();
             }
         }
     }

@@ -2,22 +2,10 @@
   <div>
     <loading :active.sync="isLoading" :is-full-page="fullPage" :height="30" :width="30"></loading>
     <div class="grids">
-      <div v-if="layout == '1fr'">
-        <div class="grid-1fr">
-          <div class="span">
-            <div v-if="elements[0] && elements[0].position == '0'">
-              <grid-media :element="elements[0]"></grid-media>
-            </div>
-            <div v-else>
-              <button-add :gridId="gridId" :gridPosition="0"></button-add>
-            </div>
-          </div>
-        </div>
-      </div>
       <div v-if="layout == '2fr'">
         <div class="grid-2fr">
           <div class="span">
-            <div v-if="elements[0] && elements[0].position == '0'">
+            <div v-if="elements[0] && elements[0].position == '0'" style="background-color:red">
               <grid-media :element="elements[0]"></grid-media>
             </div>
             <div v-else>
@@ -34,27 +22,29 @@
           </div>
         </div>
       </div>
-      <div v-if="layout == '3fr'">
-        <div class="grid-3fr">
-          <div class="span">
-            <div v-if="elements[0] && elements[0].position == '0'">
-                <grid-media :element="elements[0]"></grid-media>
+      <div v-if="layout == '1fr_stacked-1fr'">
+        <div class="grid-1fr_stacked-1fr">
+          <div class="span grid-stacked">
+            <div class="span">
+              <div v-if="elements[0] && elements[0].position == '0'">
+                  <grid-media :element="elements[0]"></grid-media>
+              </div>
+              <div v-else>
+                <button-add :gridId="gridId" :gridPosition="0"></button-add>
+              </div>
             </div>
-            <div v-else>
-              <button-add :gridId="gridId" :gridPosition="0"></button-add>
-            </div>
-          </div>
-          <div class="span">
-            <div v-if="elements[1] && elements[1].position == '1'">
-                <grid-media :element="elements[1]"></grid-media>
-            </div>
-            <div v-else>
-              <button-add :gridId="gridId" :gridPosition="1"></button-add>
+            <div class="span">
+              <div v-if="elements[1] && elements[1].position == '1'">
+                  <grid-media :element="elements[1]"></grid-media>
+              </div>
+              <div v-else>
+                <button-add :gridId="gridId" :gridPosition="1"></button-add>
+              </div>
             </div>
           </div>
           <div class="span">
             <div v-if="elements[2] && elements[2].position == '2'">
-                <grid-media :element="elements[2]"></grid-media>
+              <grid-media :element="elements[2]"></grid-media>
             </div>
             <div v-else>
               <button-add :gridId="gridId" :gridPosition="2"></button-add>
@@ -62,7 +52,38 @@
           </div>
         </div>
       </div>
+      <div v-if="layout == '1fr-1fr_stacked'">
+        <div class="grid-1fr-1fr_stacked">
+          <div class="span">
+            <div v-if="elements[0] && elements[0].position == '0'">
+              <grid-media :element="elements[0]"></grid-media>
+            </div>
+            <div v-else>
+              <button-add :gridId="gridId" :gridPosition="0"></button-add>
+            </div>
+          </div>
+          <div class="span grid-stacked">
+            <div class="span">
+              <div v-if="elements[1] && elements[1].position == '1'">
+                  <grid-media :element="elements[1]"></grid-media>
+              </div>
+              <div v-else>
+                <button-add :gridId="gridId" :gridPosition="1"></button-add>
+              </div>
+            </div>
+            <div class="span">
+              <div v-if="elements[2] && elements[2].position == '2'">
+                  <grid-media :element="elements[2]"></grid-media>
+              </div>
+              <div v-else>
+                <button-add :gridId="gridId" :gridPosition="2"></button-add>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+
     <div :class="[hasOverlay ? 'is-visible': '', 'overlay']">
       <div class="grid-thumbnails">
         <a href="javascript:;" @click.prevent="toggleOverlay()" class="icon-close icon-close-overlay"></a>
@@ -79,7 +100,6 @@
   </div>
 </template>
 <script>
-// import grid from "@/mixins/grid";
 import Loading from 'vue-loading-overlay';
 import GridMedia from "@/components/project/grid/Media.vue";
 import ButtonAdd from "@/components/project/grid/ButtonAdd.vue";

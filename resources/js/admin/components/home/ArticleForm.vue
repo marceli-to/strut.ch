@@ -11,7 +11,7 @@
           >Daten</a>
         </li>
         <!-- <li>
-                    <a href="javascript:;" @click="changeTab('translation')" :class="[tabs.translation.active ? 'is-active' : '', tabs.translation.error ? 'has-error' : '']">Translation</a>
+          <a href="javascript:;" @click="changeTab('translation')" :class="[tabs.translation.active ? 'is-active' : '', tabs.translation.error ? 'has-error' : '']">Translation</a>
         </li>-->
         <li>
           <a
@@ -42,20 +42,22 @@
           ></textarea>
         </div>
       </div>
-      <!-- <div class="span" v-show="tabs.translation.active">
-                <div class="form-row" :class="errors.date.en ? 'has-error': ''">
-                    <label>Date</label>
-                    <input type="text" @focus="removeError('date', 'en')" v-model="news.date.en">
-                </div>
-                <div class="form-row" :class="errors.title.en ? 'has-error': ''">
-                    <label>Title *</label>
-                    <input type="text" @focus="removeError('title', 'en')" v-model="news.title.en">
-                </div>
-                <div class="form-row" :class="errors.text.en ? 'has-error': ''">
-                    <label>Text</label>
-                    <textarea @focus="removeError('text', 'en')"  v-model="news.text.en" :class="errors.text.en ? 'has-error': ''" rows="5"></textarea>
-                </div>
-      </div>-->
+      <!--
+      <div class="span" v-show="tabs.translation.active">
+        <div class="form-row" :class="errors.date.en ? 'has-error': ''">
+            <label>Date</label>
+            <input type="text" @focus="removeError('date', 'en')" v-model="news.date.en">
+        </div>
+        <div class="form-row" :class="errors.title.en ? 'has-error': ''">
+            <label>Title *</label>
+            <input type="text" @focus="removeError('title', 'en')" v-model="news.title.en">
+        </div>
+        <div class="form-row" :class="errors.text.en ? 'has-error': ''">
+            <label>Text</label>
+            <textarea @focus="removeError('text', 'en')"  v-model="news.text.en" :class="errors.text.en ? 'has-error': ''" rows="5"></textarea>
+        </div>
+      </div>
+      -->
       <div class="form-row form-buttons">
         <button type="submit">Speichern</button>
       </div>
@@ -123,7 +125,6 @@ export default {
   methods: {
     storeArticle() {
       this.$parent.storeArticle(this.news);
-      // this.resetData();
     },
 
     resetData() {

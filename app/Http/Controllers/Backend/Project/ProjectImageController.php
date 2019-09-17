@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend\Project;
 use App\Services\MediaService;
 use App\Models\Project;
 use App\Models\ProjectImage;
+use App\Models\ProjectGridElement;
 use App\Http\Resources\ProjectImageCollection;
 
 use App\Http\Controllers\Controller;
@@ -17,6 +18,8 @@ class ProjectImageController extends Controller
     
     protected $projectImage;
 
+    protected $projectGridElement;
+
     /**
      * Constructor
      * 
@@ -27,12 +30,14 @@ class ProjectImageController extends Controller
     public function __construct(
         MediaService $mediaService,
         Project $project,
-        ProjectImage $projectImage
+        ProjectImage $projectImage,
+        ProjectGridElement $projectGridElement
     )
     {
-        $this->mediaService = $mediaService;
-        $this->project      = $project;
-        $this->projectImage = $projectImage;
+        $this->mediaService         = $mediaService;
+        $this->project              = $project;
+        $this->projectImage         = $projectImage;
+        $this->projectGridElement   = $projectGridElement;
     }
 
     /**
@@ -64,6 +69,14 @@ class ProjectImageController extends Controller
         $image = $this->projectImage->where('name', $filename)->first();
         if ($image)
         {
+            // Delete grid element
+            $gridElement = $this->projectGridElement->where('project_image_id', $image->id)->first();
+            if ($gridElement)
+            {
+                $gridElement->delete();
+            }
+            
+            // Delete image
             $image->delete();
         }
         $this->mediaService->delete($filename);

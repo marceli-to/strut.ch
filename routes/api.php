@@ -18,23 +18,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::middleware('auth:api')->group(function() {
-    
-    // Route::get('dashboard', function() {
-    //     return response()->json(['data' => 'Test Data']);
-    // });
-
-    // Post routes
-    Route::get('posts/get', 'PostController@get');
-    Route::get('posts/grid', 'PostController@grid');
-    Route::post('post/create', 'PostController@store');
-    Route::get('post/edit/{id}', 'PostController@edit');
-    Route::post('post/update/{id}', 'PostController@update');
-    Route::get('post/status/{id}', 'PostController@status');
-    Route::delete('post/delete/{id}', 'PostController@delete');
-    Route::post('post/order', 'PostController@order');
-
-    // PostMedia routes
-    Route::delete('postmedia/delete/{file}', 'PostMediaController@delete');
 
     // Job routes
     Route::get('jobs/get', 'Backend\Job\JobController@get');
@@ -108,7 +91,7 @@ Route::middleware('auth:api')->group(function() {
     Route::get('category/status/{id}', 'Backend\Project\CategoryController@status');
     Route::delete('category/destroy/{id}', 'Backend\Project\CategoryController@destroy');
 
-    // Category - Type routes
+    // Category type routes
     Route::get('types/get/{id?}', 'Backend\Project\CategoryTypeController@get');
     Route::post('type/create', 'Backend\Project\CategoryTypeController@store');
     Route::get('type/edit/{id}', 'Backend\Project\CategoryTypeController@edit');
@@ -119,8 +102,9 @@ Route::middleware('auth:api')->group(function() {
     Route::delete('type/destroy/{id}', 'Backend\Project\CategoryTypeController@destroy');
 
     // Project routes
-    Route::get('projects/get', 'Backend\Project\ProjectController@get');
+    Route::get('projects/get', 'Backend\Project\ProjectController@all');
     Route::get('projects/fetch/{publish?}/{order?}', 'Backend\Project\ProjectController@fetch');
+    Route::get('project/get/{id}', 'Backend\Project\ProjectController@get');
     Route::post('project/create', 'Backend\Project\ProjectController@store');
     Route::get('project/edit/{id}', 'Backend\Project\ProjectController@edit');
     Route::post('project/update/{id}', 'Backend\Project\ProjectController@update');
@@ -140,6 +124,7 @@ Route::middleware('auth:api')->group(function() {
 
     // Project grid routes
     Route::get('project/grids/{id}', 'Backend\Project\ProjectGridController@get');
+    Route::post('project/grids/order', 'Backend\Project\ProjectGridController@order');
     Route::get('project/grid/store/{projectId}/{layoutId}', 'Backend\Project\ProjectGridController@store');
     Route::delete('project/grid/delete/{id}', 'Backend\Project\ProjectGridController@destroy');
     
@@ -151,32 +136,27 @@ Route::middleware('auth:api')->group(function() {
     Route::post('project/grid/image/store', 'Backend\Project\ProjectGridElementController@store');
     Route::delete('project/grid/image/delete/{id}', 'Backend\Project\ProjectGridElementController@destroy');
 
+    // Home grid routes
+    Route::get('home/grids', 'Backend\Home\HomeGridController@get');
+    Route::get('home/grid/store/{layoutId}', 'Backend\Home\HomeGridController@store');
+    Route::delete('home/grid/delete/{id}', 'Backend\Home\HomeGridController@destroy');
+
+    // Home grid layout routes
+    Route::get('home/grid/layout/fetch', 'Backend\Home\HomeGridLayoutController@fetch');
+
+    // Home grid element routes
+    Route::post('home/grid/element/store', 'Backend\Home\HomeGridElementController@store');
+    Route::delete('home/grid/element/delete/{id}', 'Backend\Home\HomeGridElementController@destroy');
+    Route::get('home/grid/element/get/{id}', 'Backend\Home\HomeGridElementController@get');
 
     // News routes
-    Route::post('news/create', 'Backend\NewsController@store');
-    Route::post('news/delete/{id}', 'Backend\NewsController@destroy');
-
-    // Grid routes
-    Route::get('grid', 'Backend\Grid\GridController@index');
-    Route::get('grid/store/{layoutId}', 'Backend\Grid\GridController@store');
-    Route::delete('grid/delete/{id}', 'Backend\Grid\GridController@destroy');
-
-    // Get all grid layouts
-    Route::get('gridlayout/fetch', 'Backend\Grid\GridLayoutController@fetch');
-
-    // Insert a new grid element
-    Route::post('gridelement/store', 'Backend\Grid\GridElementController@store');
-
-    // Delete a grid element
-    Route::delete('gridelement/delete/{id}', 'Backend\Grid\GridElementController@destroy');
-    Route::get('gridelement/get/{id}', 'Backend\Grid\GridElementController@get');
+    Route::post('news/create', 'Backend\News\NewsController@store');
+    Route::post('news/delete/{id}', 'Backend\News\NewsController@destroy');
 
     // Media routes
     Route::post('media/upload','MediaController@upload');
     Route::post('media/upload/document','MediaController@uploadDocument');
     Route::get('media/{file}/{size?}', 'MediaController@resize');
-
-
 });
 
 Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {

@@ -121,6 +121,12 @@
             }
         }
 
+        &.is-disabled {
+            img {
+                opacity: 0.4;
+            }
+        }
+
         &.is-draggable {
             &:hover {
                 cursor: move;

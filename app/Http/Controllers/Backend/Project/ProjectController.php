@@ -41,15 +41,29 @@ class ProjectController extends Controller
     }
 
     /**
+     * Get one record
+     *
+     * @param id $projectId
+     * @return \Illuminate\Http\Response
+     */
+
+    public function get($projectId)
+    {
+        $project = $this->project->find($projectId);
+        return response()->json($project);
+    }
+
+    /**
      * Get all records
      *
      * @return \Illuminate\Http\Response
      */
 
-    public function get()
+    public function all()
     {
         $projects = $this->project->orderBy('year', 'DESC')
                                   ->orderBy('order', 'ASC')
+                                  ->with('images')
                                   ->with('category', 'categoryType')
                                   ->get();
         return new ProjectCollection($projects);
@@ -66,6 +80,7 @@ class ProjectController extends Controller
         $projects = $this->project->where('publish', '=', $publish)
                                   ->orderBy('name->de', $order)
                                   ->orderBy('year', 'DESC')
+                                  ->with('images')
                                   ->get();
         return new ProjectCollection($projects);
     }
@@ -103,7 +118,7 @@ class ProjectController extends Controller
                     'project_id'        => $project->id,
                     'name'              => $i['name'],
                     'caption'           => ['de' => $i['caption']['de']],
-                    'publish'           => 1,
+                    'publish'           => $i['publish'] ? $i['publish'] : 0,
                     'is_preview_type'   => $i['is_preview_type'] ? $i['is_preview_type'] : 0,
                     'is_preview_status' => $i['is_preview_status'] ? $i['is_preview_status'] : 0,
                     'is_preview_year'   => $i['is_preview_year'] ? $i['is_preview_year'] : 0
@@ -120,7 +135,7 @@ class ProjectController extends Controller
                     'project_id'        => $project->id,
                     'name'              => $f['name'],
                     'caption'           => ['de' => $f['caption']['de']],
-                    'publish'           => 1,
+                    'publish'           => $f['publish'] ? $f['publish'] : 0,
                 ]);
                 $file->save();
             }
@@ -175,6 +190,7 @@ class ProjectController extends Controller
                         'project_id'        => $project->id,
                         'name'              => $i['name'],
                         'caption'           => ['de' => $i['caption']['de']],
+                        'publish'           => $i['publish'] ? $i['publish'] : 0,
                         'is_preview_type'   => $i['is_preview_type'] ? $i['is_preview_type'] : 0,
                         'is_preview_status' => $i['is_preview_status'] ? $i['is_preview_status'] : 0,
                         'is_preview_year'   => $i['is_preview_year'] ? $i['is_preview_year'] : 0
@@ -193,6 +209,7 @@ class ProjectController extends Controller
                         'project_id'        => $project->id,
                         'name'              => $f['name'],
                         'caption'           => ['de' => $f['caption']['de']],
+                        'publish'           => $f['publish'] ? $f['publish'] : 0,
                     ]
                 );
             }
