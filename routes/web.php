@@ -43,6 +43,7 @@ Route::get('/', 'Frontend\HomeController@index')->name('page.home');
  */
 
 Route::get('media/thumbnail/{file}', 'MediaController@thumbnail');
+Route::get('media/preview/{file}', 'MediaController@preview');
 Route::get('media/{file}/{size?}', 'MediaController@resize');
 
 

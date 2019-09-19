@@ -46,12 +46,22 @@ class MediaService
     protected $size_sm = 600;
 
     /**
-     * Maximum width for large landscape images
+     * Maximum width for extra small landscape images
+     */    
+    protected $max_width_xs = 80;    
+
+    /**
+     * Maximum height for extra small portrait images
+     */    
+    protected $max_height_xs = 45;
+
+    /**
+     * Maximum width for small landscape images
      */    
     protected $max_width_sm = 900;    
 
     /**
-     * Maximum height for large portrait images
+     * Maximum height for small portrait images
      */    
     protected $max_height_sm = 500;
 
@@ -74,6 +84,7 @@ class MediaService
     {
         $this->path_source    = storage_path('app/public/media/');
         $this->path_large     = storage_path('app/public/media/large/');
+        $this->path_xsmall    = storage_path('app/public/media/xsmall/');
         $this->path_small     = storage_path('app/public/media/small/');
         $this->path_thumbs    = storage_path('app/public/media/thumbs/');
         $this->path_downloads = storage_path('app/public/media/downloads');
@@ -159,6 +170,33 @@ class MediaService
     {
         if ($image != NULL)
         {
+            // Generate small images
+            if ($size == 'xs')
+            {
+                if (!File::exists($this->path_xsmall . $image))
+                {
+                    // Create image instance
+                    $image = \Image::make($this->path_source . $image);
+                    
+                    // Resize image
+                    $image->resize(null, $this->max_height_xs, function ($constraint) {
+                        $constraint->aspectRatio();
+                    });
+
+                    $image->save($this->path_xsmall . $image->basename);
+                    return \Response::make($image, 200, ['Content-Type' => 'image/jpeg']);
+                }
+                else
+                {   
+                    $filename = $image;
+                    $img = \Image::cache(function($image) use ($filename) {
+                        return $image->make($this->path_xsmall . $filename);
+                    }, 300, false);
+                    
+                    return \Response::make($img, 200, ['Content-Type' => 'image/jpeg']);
+                }
+            }
+
             // Generate small images
             if ($size == 'sm')
             {
@@ -298,6 +336,11 @@ class MediaService
         if (!File::isDirectory($this->path_thumbs))
         {
             File::makeDirectory($this->path_thumbs, 0775, true, true);
+        }
+        
+        if (!File::isDirectory($this->path_xsmall))
+        {
+            File::makeDirectory($this->path_xsmall, 0775, true, true);
         }
 
         if (!File::isDirectory($this->path_small))

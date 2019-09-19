@@ -21,13 +21,26 @@
     }
 
     .post-media {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, 50px);
-        grid-gap: 10px;
+        // align-items: center;
+        // display: grid;
+        // justify-items: center;
+        // grid-template-columns: repeat(auto-fit, );
+        // grid-gap: 10px;
 
         figure {
+            display: inline-block;
+            line-height: 1 !important;
+            margin-bottom: 2px;
+            margin-right: 8px;
+
+            a {
+                display: block;
+            }
 
             img {
+                display: block;
+                height: 100%;
+                width: auto;
                 opacity: .6;
                 -webkit-transition: opacity .1s ease-out;
                 transition: opacity .1s ease-out;

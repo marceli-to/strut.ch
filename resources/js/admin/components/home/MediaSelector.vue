@@ -9,7 +9,7 @@
         <div class="post-media">
           <figure v-for="image in project.images" :key="image.id">
             <a href @click.prevent="storeMedia(image.id, project.id)">
-              <img :src="getThumbnailImage(image.name)" height="50" width="50">
+              <img :src="getImageSource(image.name)" height="50" width="50">
             </a>
           </figure>
         </div>
@@ -29,8 +29,8 @@ export default {
       this.$parent.storeMedia(projectImageId, postId);
     },
 
-    getThumbnailImage(file) {
-      return `/media/thumbnail/${file}`;
+    getImageSource(file) {
+      return `/media/${file}/xs`;
     }
   }
 };

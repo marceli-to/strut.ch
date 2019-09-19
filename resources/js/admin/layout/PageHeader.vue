@@ -11,9 +11,9 @@
         <a href="javascript:;" @click="toggleMenu()" class="icon-close"></a>
       </div>
       <ul>
-        <!-- <li>
+        <li>
           <router-link :to="{ name: 'home' }">Home</router-link>
-        </li> -->
+        </li>
         <li>
           <router-link :to="{ name: 'projects' }">Bauten</router-link>
           <ul>
