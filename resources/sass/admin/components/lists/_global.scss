@@ -15,7 +15,6 @@
 
 .list-item-group {
     border-bottom: 2px solid $color--dark;
-
     @include responsive-prop('margin-bottom', $space-md);
 }
 

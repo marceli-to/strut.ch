@@ -138,6 +138,7 @@ Route::middleware('auth:api')->group(function() {
 
     // Home grid routes
     Route::get('home/grids', 'Backend\Home\HomeGridController@get');
+    Route::get('home/grids/deploy', 'Backend\Home\HomeGridController@deploy');
     Route::get('home/grid/store/{layoutId}', 'Backend\Home\HomeGridController@store');
     Route::delete('home/grid/delete/{id}', 'Backend\Home\HomeGridController@destroy');
 
@@ -150,8 +151,15 @@ Route::middleware('auth:api')->group(function() {
     Route::get('home/grid/element/get/{id}', 'Backend\Home\HomeGridElementController@get');
 
     // News routes
+    Route::get('news/get', 'Backend\News\NewsController@get');
     Route::post('news/create', 'Backend\News\NewsController@store');
-    Route::post('news/delete/{id}', 'Backend\News\NewsController@destroy');
+    Route::get('news/edit/{id}', 'Backend\News\NewsController@edit');
+    Route::post('news/update/{id}', 'Backend\News\NewsController@update');
+    Route::get('news/clone/{id}', 'Backend\News\NewsController@clone');
+    Route::get('news/status/{id}', 'Backend\News\NewsController@status');
+    Route::delete('news/destroy/{id}', 'Backend\News\NewsController@destroy');
+    Route::delete('news/delete/file/{file}', 'Backend\News\NewsController@unlink');
+
 
     // Media routes
     Route::post('media/upload','MediaController@upload');

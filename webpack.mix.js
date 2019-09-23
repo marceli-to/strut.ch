@@ -22,8 +22,8 @@ mix.webpackConfig({
  */
 
 // Admin
-mix.js('resources/js/admin/app.js', 'public/assets/admin/js');
-mix.sass('resources/sass/admin/app.scss', 'public/assets/admin/css').options({processCssUrls: false});
+mix.js('resources/js/admin/app.js', 'public/assets/admin/js').version();
+mix.sass('resources/sass/admin/app.scss', 'public/assets/admin/css').options({processCssUrls: false}).version();
 
 // Web
 mix.js('resources/js/web/app.js', 'public/assets/js');

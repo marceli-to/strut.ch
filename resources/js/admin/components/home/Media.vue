@@ -4,11 +4,11 @@
       <a
         href="javascript:;"
         class="btn-trash"
-        @click.prevent="deleteMedia(element.id, element.postId)"
+        @click.prevent="deleteMedia(element.id)"
       >Löschen</a>
       <img :src="getPreviewImage(element.image)" height="50" width="50">
       <figcaption>
-        <strong>{{element.title}}</strong>
+        <strong>{{element.caption}}</strong>
       </figcaption>
     </figure>
   </div>
@@ -24,8 +24,8 @@ export default {
   mixins: [grid],
 
   methods: {
-    deleteMedia(elementId, postId) {
-      this.$parent.deleteMedia(elementId, postId);
+    deleteMedia(elementId) {
+      this.$parent.deleteMedia(elementId);
     }
   }
 };

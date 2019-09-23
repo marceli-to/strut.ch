@@ -55,15 +55,18 @@ export default {
       this.axios.get(uri).then(response => {
         let els = [];
         response.data.data.forEach(e => {
-          let el = {
-            id: e.id,
-            position: e.position,
-            isMedia: true,
-            projectId: e.projectimage.project.id,
-            image: e.projectimage.name,
-            title: e.projectimage.project.name.de
-          };
-          els.push(el);
+          let img = e.projectimage;
+          if (img) {
+            let el = {
+              id: e.id,
+              position: e.position,
+              isMedia: true,
+              projectId: img.project.id || null,
+              image: img.name || null,
+              caption: `${img.project.name.de}, ${img.project.location.de} (${img.project.year})`,
+            };
+            els.push(el);
+          }
         });
 
         this.elements = els;

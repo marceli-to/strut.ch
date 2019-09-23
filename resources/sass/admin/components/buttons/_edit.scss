@@ -1,0 +1,13 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: components/buttons/edit
+ * -----------------------------------------------------------------------------
+ */
+
+.btn-edit {
+  @extend %btn-ib;
+  @extend %btn-icon;
+  background-image: url($url-icons + 'edit-light.svg');
+  background-color: $color--warning;
+  color: $color--white;
+}

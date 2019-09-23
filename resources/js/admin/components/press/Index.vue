@@ -30,7 +30,7 @@
           <div v-else>
             <p>Es sind keine Presse-Artikel vorhanden...</p>
           </div>
-          <footer class="data-footer">
+          <footer class="form-footer">
             <div>
               <div class="filter">
                 <div><strong>Filter Jahr</strong></div>

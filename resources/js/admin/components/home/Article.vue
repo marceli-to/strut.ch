@@ -1,15 +1,20 @@
 <template>
   <div>
-    <a
-      href="javascript:;"
-      class="btn-trash"
-      @click.prevent="deleteArticle(element.id, element.articleId)"
-    >Löschen</a>
-    <div>{{element.date}}</div>
-    <div>
-      <strong>{{element.title}}</strong>
-    </div>
-    <div>{{element.text}}</div>
+    <article>
+        <a
+          href="javascript:;"
+          class="btn-trash"
+          @click.prevent="deleteArticle(element.id, element.articleId)"
+        >Löschen</a>
+      <div>{{element.date}}</div>
+      <div><strong>{{element.title}}</strong></div>
+      <div>
+        {{ element.text | truncate(25, '...') }}
+      </div>
+      <figure v-if="element.media">
+          <img :src="getImageSource(element.media)" height="50" width="50">
+      </figure>
+    </article>
   </div>
 </template>
 <script>
@@ -23,8 +28,11 @@ export default {
   mixins: [grid],
 
   methods: {
-    deleteArticle(elementId, articleId) {
-      this.$parent.deleteArticle(elementId, articleId);
+    deleteArticle(elementId) {
+      this.$parent.deleteArticle(elementId);
+    },
+    getImageSource(file) {
+      return `/media/${file}/sm`;
     }
   }
 };

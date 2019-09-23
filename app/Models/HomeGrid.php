@@ -22,6 +22,6 @@ class HomeGrid extends Model
 
     public function elements()
     {
-        return $this->hasMany('App\Models\HomeGridElement');
+        return $this->hasMany('App\Models\HomeGridElement', 'grid_id', 'id');
     }
 }

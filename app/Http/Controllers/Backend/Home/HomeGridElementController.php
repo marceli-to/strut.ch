@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Backend\Home;
 
+use App\Services\GridService;
 use App\Models\HomeGridElement;
 use App\Http\Resources\HomeGridCollection;
 
@@ -10,10 +11,12 @@ use Illuminate\Http\Request;
 class HomeGridElementController extends Controller
 {
     protected $homeGridElement;
+    protected $gridService;
 
-    public function __construct(HomeGridElement $homeGridElement)
+    public function __construct(HomeGridElement $homeGridElement, GridService $gridService)
     {
         $this->homeGridElement = $homeGridElement;
+        $this->gridService = $gridService;
     }
 
     /**
@@ -29,6 +32,7 @@ class HomeGridElementController extends Controller
                 $this->homeGridElement->with('projectimage.project')
                                       ->with('news')
                                       ->where('grid_id', '=', $gridId)
+                                      ->where('action', '=', 'keep')
                                       ->get()
                 );
     }
@@ -45,7 +49,8 @@ class HomeGridElementController extends Controller
             'grid_id'           => $request->get('grid_id'),
             'project_image_id'  => $request->get('project_image_id'),
             'news_id'           => $request->get('news_id'),
-            'position'          => $request->get('position')
+            'position'          => $request->get('position'),
+            'environment'       => 'development',
         ]);
 
         $gridElement->save();
@@ -60,7 +65,17 @@ class HomeGridElementController extends Controller
      */
     public function destroy($id)
     {
-        $this->homeGridElement->find($id)->delete();
+        $gridElement = $this->homeGridElement->find($id);
+        if ($gridElement->environment == 'production')
+        {
+            $gridElement->action = 'delete';
+            $gridElement->save();
+        }
+        else
+        {
+            $gridElement->delete();
+        }
+        
         return response()->json('successfully deleted');
     }
 }

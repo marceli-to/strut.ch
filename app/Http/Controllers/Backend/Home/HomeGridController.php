@@ -38,11 +38,39 @@ class HomeGridController extends Controller
     {
         return 
             new HomeGridCollection(
-                    $this->homeGrid->with('layout')
+                $this->homeGrid->with('layout')
+                               ->with('elements')
                                ->orderBy('order', 'ASC')
                                ->get()
-
             );
+    }
+
+    /**
+     * Deploy changes to production
+     *
+     * @return \Illuminate\Http\Response
+     */
+
+    public function deploy()
+    {
+        $elements = $this->homeGridElement->toDelete()->orWhere->isDevelopment()->get();
+        if (!empty($elements))
+        {
+            foreach($elements as $element)
+            {
+                if ($element->action == 'delete')
+                {
+                    $element->delete();
+                }
+                if ($element->environment == 'development')
+                {
+                    $element->environment = 'production';
+                    $element->save();
+                }
+            }
+        }
+
+        return response()->json('success');
     }
 
     /**

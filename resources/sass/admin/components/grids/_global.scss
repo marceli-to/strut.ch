@@ -20,25 +20,25 @@
 }
 
 .grid-layout-selector {
-
     position: relative;
 
     ul {
         background-color: $color--white;
-        //box-shadow: $box-shadow-sm;
         border-top: 2px solid $color--dark;
         display: none;
-        //left: 0;
         margin: 0;
-        padding: 0;
-        //position: absolute;
-        //top: 40px;
+        padding: 0 0 5px 0;
 
         &.is-visible {
             display: block;
             display: grid;
-            grid-template-columns: repeat(5, 102px);
+            grid-template-columns: repeat(6, 122px);
             grid-gap: 10px;
+            grid-row-gap: 0;
+
+            @include bp-lg() {
+                grid-template-columns: repeat(8, 122px);
+            }
         }
 
         li {
@@ -47,8 +47,8 @@
     
         a {
             display: block;
-            padding: 15px 15px 15px 10px;
-            width: 102px;
+            padding: 10px;
+            width: 122px;
 
             img {
                 display: block;
@@ -109,54 +109,93 @@
             object-fit: cover;
             width: 100%;
         }
+
+        article {
+            padding-bottom: 25px;
+            padding-top: 55px;
+            position: relative;
+
+            .btn-trash {
+                right: 10px;
+                position: absolute;
+                top: 5px;
+            }
+
+            div {
+                margin-bottom: 5px;
+            }
+
+            figure {
+                display: block;
+                height: auto;
+                margin-left: auto;
+                margin-right: auto;
+                width: 50%;
+
+                img {
+                    display: block;
+                    height: auto;
+                    width: 100%;
+                }
+            }
+        }
+    }
+
+    [class*=' grid-'],
+    [class^='grid-'] {
+        display: grid;
+        grid-gap: 20px;
     }
     
     .grid-1fr {
-        display: grid;
         grid-template-columns: 1fr;
+        grid-gap: 0;
     }
     
     .grid-2fr {
-        display: grid;
         grid-template-columns: repeat(2, 1fr);
-        grid-gap: 20px;
     }
     
     .grid-3fr {
-        display: grid;
         grid-template-columns: repeat(3, 1fr);
-        grid-gap: 20px;
     }
     
     .grid-2fr-1fr {
-        display: grid;
         grid-template-columns: 2fr 1fr;
-        grid-gap: 20px;
     }
+
+    .grid-1fr-2fr {
+        grid-template-columns: 1fr 2fr;
+    }    
     
     .grid-2fr-1fr_stacked {
-        display: grid;
         grid-template-columns: 2fr 1fr;
-        grid-gap: 20px;
     }
-    
+
+    .grid-1fr_stacked-2fr .span
     .grid-2fr-1fr_stacked .span {
         min-height: 200px;
     }
 
+    .grid-1fr_stacked-2fr {
+        grid-template-columns: 1fr 2fr;
+    }
+
     .grid-1fr_stacked-1fr,
     .grid-1fr-1fr_stacked {
-        display: grid;
         grid-template-columns: 1fr 1fr;
-        grid-gap: 20px;        
     }
     
+    .grid-1fr-1fr-1fr_stacked,
+    .grid-1fr-1fr_stacked-1fr,
+    .grid-1fr_stacked-1fr-1fr, {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
     .grid-stacked {
-        display: grid;
         grid-gap: 10px;
         grid-template-columns: 1fr;
         padding: 10px;
-        
     }
     
     .grid-stacked .span {
@@ -167,7 +206,7 @@
     .grid-1fr-highlight {
         display: grid;
         grid-gap: 10px;
-        grid-template-columns: repeat(auto-fit, minmax(180px, .5fr));
+        grid-template-columns: repeat(auto-fit, minmax(300px, .5fr));
         padding: 10px;
 
         .span {
@@ -178,29 +217,3 @@
         }
     }
 }
-
-.grid-thumbnails {
-    h3 {
-        @include responsive-prop('margin-bottom', $space-sm);
-    }
-
-    > div {
-        display: grid;
-        grid-template-columns: repeat(6, 1fr);
-        grid-gap: 20px;
-    }
-}
-
-.grid-thumbnail {
-    display: block;
-    background-color: #eeeeee;
-    border-radius: 2px;
-    padding: 10px;
-
-    img {
-        display: block;
-        height: auto;
-        width: 100%;
-    }
-}
-

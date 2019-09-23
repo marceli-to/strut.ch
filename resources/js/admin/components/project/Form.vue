@@ -636,9 +636,13 @@ export default {
 
     deleteImage(image) {
       if(confirm('Bitte löschen bestätigen!')) {
-        let uri = `/api/project/image/delete/${image}`;
-        this.axios.delete(uri).then(response => {
-          this.project.images.splice(this.project.images.indexOf(image), 1);
+        let uri = `/api/project/image/delete/${image}`, self = this;
+        this.axios.delete(uri)
+        .then(response => {
+          self.project.images.splice(this.project.images.indexOf(image), 1);
+        })
+        .catch(function(error) {
+          self.$notify({type: 'error', text: error.response.data});
         });
       }
     },

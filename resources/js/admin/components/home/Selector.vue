@@ -4,7 +4,7 @@
       <a href class="btn-toggle-layout" @click.prevent="toggleSelect()">Layout wählen</a>
       <ul :class="showSelect ? 'is-visible': ''" ref="dropdown">
         <li v-for="layout in layouts" :key="layout.id">
-          <a href @click.prevent="addGrid(layout.id)">
+          <a href @click.prevent="addRow(layout.id)">
             <img :src="getMediaSource(layout.key)" height="30" width="100">
           </a>
         </li>
@@ -36,9 +36,9 @@ export default {
       this.showSelect = this.showSelect ? false : true;
     },
 
-    addGrid(gridId) {
+    addRow(id) {
       this.showSelect = false;
-      this.$parent.addGrid(gridId);
+      this.$parent.addRow(id);
     }
   }
 };

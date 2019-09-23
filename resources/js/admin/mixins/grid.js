@@ -1,13 +1,14 @@
+import store from "@/store";
 import Loading from 'vue-loading-overlay';
 import GridMediaSelector from '@/components/home/MediaSelector.vue';
-import GridArticleForm from '@/components/home/ArticleForm.vue';
+import GridArticleSelector from '@/components/home/ArticleSelector.vue';
 
 export default {
 
   components: {
     loading: Loading,
     GridMediaSelector: GridMediaSelector,
-    GridArticleForm: GridArticleForm
+    GridArticleSelector: GridArticleSelector,
   },
 
   data() {
@@ -15,6 +16,7 @@ export default {
       // grid data
       elements: [],
       projects: [],
+      news: [],
 
       // loading
       isLoading: false,
@@ -23,54 +25,28 @@ export default {
       // overlay
       hasOverlay: false,
       showMedia: false,
-      showForm: false,
+      showNews: false,
 
       // temp. data
       tmpGridId: 0,
-      tmpPosition: 0
+      tmpPosition: 0,
+
+      selector: '',
     }
   },
 
     methods: {
 
       createArticle(gridId, position) {
-        this.toggleOverlay();
-        this.showForm = true;
-        this.tmpGridId = gridId;
-        this.tmpPosition = position;
-      },
-
-      storeArticle(data) {
-
-        // store the news entry
-        let uri = '/api/news/create';
         this.isLoading = true;
-        this.axios.post(uri, data).then((response) => {
-
-          // store the grid element
-          let data = {
-            'grid_id': this.tmpGridId,
-            'position': this.tmpPosition,
-            'news_id': response.data.newsId
-          };
-
-          let uri = '/api/home/grid/element/store';
-          this.axios.post(uri, data).then((response) => {
-              this.toggleOverlay();
-              this.$notify({type: 'success', text: 'A new element was added successfully!' });
-              this.fetchElements();
-          });
-        });
-      },
-
-      deleteArticle(gridElementId, articleId) {
-        let uri = `/api/home/grid/element/delete/${gridElementId}`;
-        this.isLoading = true;
-        this.axios.delete(uri).then(response => {
-          this.axios.post(`/api/news/delete/${articleId}`).then((response) => {
-            this.$notify({type: 'success', text: 'The grid element was deleted successfully!'});
-            this.fetchElements();
-          });
+        this.axios.get('/api/news/get').then(response => {
+          this.news = response.data.data;
+          this.toggleOverlay();
+          this.isLoading = false;
+          this.showNews = true;
+          this.selector = 'GridArticleSelector';
+          this.tmpGridId = gridId;
+          this.tmpPosition = position;
         });
       },
 
@@ -81,42 +57,62 @@ export default {
           this.toggleOverlay();
           this.isLoading = false;
           this.showMedia = true;
+          this.selector = 'GridMediaSelector';
           this.tmpGridId = gridId;
           this.tmpPosition = position;
         });
       },
 
-      storeMedia(projectImageId, postId) {
-
+      storeArticle(newsId) {
+        let uri = '/api/home/grid/element/store';
         let data = {
           'grid_id': this.tmpGridId,
           'position': this.tmpPosition,
-          'project_image_id': projectImageId
+          'news_id': newsId
         };
-
-        let uri = '/api/home/grid/element/store';
         this.isLoading = true;
         this.axios.post(uri, data).then((response) => {
-          this.axios.post(`/api/post/update/${postId}`, {
-            'isGridElement': true
-          }).then((response) => {
             this.toggleOverlay();
-            this.$notify({type: 'success', text: 'A new element was added successfully!'});
+            this.$notify({type: 'success', text: 'Element hinzugefügt!' });
             this.fetchElements();
-          });
+            store.commit('gridChanged');
         });
       },
 
-      deleteMedia(gridElementId, postId) {
+      storeMedia(imageId) {
+        let uri = '/api/home/grid/element/store';
+        let data = {
+          'grid_id': this.tmpGridId,
+          'position': this.tmpPosition,
+          'project_image_id': imageId
+        };
+
+        this.isLoading = true;
+        this.axios.post(uri, data).then((response) => {
+          this.toggleOverlay();
+          this.$notify({type: 'success', text: 'Bild hinzugefügt!'});
+          this.fetchElements();
+          store.commit('gridChanged');
+        });
+      },
+
+      deleteArticle(gridElementId) {
         let uri = `/api/home/grid/element/delete/${gridElementId}`;
         this.isLoading = true;
         this.axios.delete(uri).then(response => {
-          this.axios.post(`/api/post/update/${postId}`, {
-            'isGridElement': false
-          }).then((response) => {
-            this.$notify({type: 'success', text: 'The grid element was deleted successfully!'});
-            this.fetchElements();
-          });
+          this.$notify({type: 'success', text: 'Element gelöscht!'});
+          this.fetchElements();
+          store.commit('gridChanged');
+        });
+      },
+
+      deleteMedia(gridElementId) {
+        let uri = `/api/home/grid/element/delete/${gridElementId}`, self = this;
+        this.isLoading = true;
+        this.axios.delete(uri).then(response => {
+          this.$notify({type: 'success', text: 'Bild gelöscht!'});
+          this.fetchElements();
+          store.commit('gridChanged');
         });
       },
 
@@ -136,7 +132,7 @@ export default {
 
         // reset news/projects
         if (!this.hasOverlay) {
-            this.showForm = false;
+            this.showNews = false;
             this.showMedia = false;
         }
       },

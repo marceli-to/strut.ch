@@ -8,21 +8,37 @@ footer.site-footer {
 
 }
 
-footer.data-footer {
-    background-color: $color--light;
+footer.form-footer {
+    background-color: $color--white;
+    box-shadow: $box-shadow-lg;
     bottom: 0;
     left: 0;
     @include responsive-prop('height', $footer-heights);
     position: fixed;
+    transform: translateY(0);
     width: 100%;
     z-index: 90;
+    transition: transform .16s ease-out;
+
+    &.is-hidden {
+        transform: translateY(100%);
+        transition: transform .16s ease-out;
+    }
+
+    // &.is-warning {
+    //     background-color: $color--info;
+    // }
 
     > div {
         @extend %page-block;
         @extend %v-center;
         @include responsive-prop('height', $footer-heights);
     }
-
+    
+    a {
+		@include responsive-prop('margin-left', $space-md);
+    }
+    
     .filter {
         align-items: center;
         display: grid;

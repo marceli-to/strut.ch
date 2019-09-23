@@ -23,6 +23,11 @@ class MediaService
     /**
      * Path for small images
      */
+    protected $path_xsmall;
+
+    /**
+     * Path for small images
+     */
     protected $path_small;
 
     /**
@@ -48,12 +53,12 @@ class MediaService
     /**
      * Maximum width for extra small landscape images
      */    
-    protected $max_width_xs = 80;    
+    protected $max_width_xs = 160;    
 
     /**
      * Maximum height for extra small portrait images
      */    
-    protected $max_height_xs = 45;
+    protected $max_height_xs = 90;
 
     /**
      * Maximum width for small landscape images

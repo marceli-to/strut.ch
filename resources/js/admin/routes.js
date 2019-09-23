@@ -1,7 +1,7 @@
-// Posts
-import PostIndex from '@/components/posts/Index.vue';
-import PostCreate from '@/components/posts/Create.vue';
-import PostEdit from '@/components/posts/Edit.vue';
+// News
+import NewsIndex from '@/components/news/Index.vue';
+import NewsCreate from '@/components/news/Create.vue';
+import NewsEdit from '@/components/news/Edit.vue';
 
 // Jobs
 import JobIndex from '@/components/jobs/Index.vue';
@@ -89,22 +89,24 @@ const routes = [
         name: 'logout',
         component: LogoutComponent
     },
+
+    // News
     {
-        name: 'posts',
-        path: '/admin/posts',
-        component: PostIndex,
+        name: 'news',
+        path: '/admin/news',
+        component: NewsIndex,
         meta: { requiresAuth: true },
     },
     {
-        name: 'post-create',
-        path: '/admin/post/create',
-        component: PostCreate,
+        name: 'news-create',
+        path: '/admin/news/create',
+        component: NewsCreate,
         meta: { requiresAuth: true },
     },
     {
-        name: 'post-edit',
-        path: '/admin/post/edit/:id',
-        component: PostEdit,
+        name: 'news-edit',
+        path: '/admin/news/edit/:id',
+        component: NewsEdit,
         meta: { requiresAuth: true },
     },
     {

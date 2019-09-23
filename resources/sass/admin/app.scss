@@ -4,7 +4,6 @@
  * -----------------------------------------------------------------------------
  */
 
-
 // Settings
 @import 'config/colors';
 @import 'config/buttons';
@@ -14,14 +13,12 @@
 @import 'config/spaces';
 @import 'config/typo';
 
-
 // Helpers 
 @import 'helpers/normalize';
 @import 'helpers/flexbox';
 @import 'helpers/functions';
 @import 'helpers/mixins';
 @import 'helpers/utilities';
-
 
 // Typo
 @import 'typo/webfonts';
@@ -39,6 +36,7 @@
 @import 'components/buttons/add-media';
 @import 'components/buttons/add-media-highlight';
 @import 'components/buttons/add-article';
+@import 'components/buttons/edit';
 @import 'components/buttons/toggle-layout';
 @import 'components/buttons/trash';
 @import 'components/cards/global';
@@ -80,7 +78,6 @@
 @import 'navigation/site';
 @import 'navigation/tabs';
 
-
 // Layout
 @import 'layout/base';
 @import 'layout/container';
@@ -90,14 +87,15 @@
 @import 'layout/header';
 @import 'layout/sidebar';
 
-
 // Theme
 @import 'theme/brand';
-
 
 // UI
 @import 'ui';
 
+// Modules
+@import 'modules/article-selector';
+@import 'modules/project-selector';
 
 // Vendor - Dropzone
 @import 'vendor/dropzone';

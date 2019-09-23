@@ -19,11 +19,22 @@
               <a
                 href="javascript:;"
                 class="btn-trash"
-                @click.prevent="deleteGrid(grid.id)"
+                @click.prevent="deleteRow(grid.id, $event)"
               >Zeile löschen</a>
               <grid-row :layout="grid.layout.key" :gridId="grid.id"></grid-row>
             </div>
           </div>
+
+          <footer :class="[hasChanges ? '' : 'is-hidden', 'form-footer is-warning']">
+            <div>
+              <span style="max-width: 50%">Das Layout hat nicht publizierte Anpassungen. Damit diese auf der Webseite sichtbar werden, muss das aktuelle Layout publiziert werden.</span>
+              <button
+                type="submit"
+                class="btn-secondary"
+                @click.prevent="publish()"
+              >Änderungen publizieren</button>
+            </div>
+          </footer>
         </div>
       </main>
     </div>
@@ -31,6 +42,7 @@
 </template>
 
 <script>
+import store from "@/store";
 import PageHeader from "@/layout/PageHeader.vue";
 import GridRow from "@/components/home/Row.vue";
 import GridHighlight from "@/components/home/Highlight.vue";
@@ -46,7 +58,7 @@ export default {
 
   data() {
     return {
-      grids: []
+      grids: [],
     };
   },
 
@@ -56,29 +68,65 @@ export default {
 
   methods: {
     fetch() {
-      this.axios.get('/api/home/grids').then(response => {
+      let self = this;
+      this.axios.get("/api/home/grids").then(response => {
         this.grids = response.data.data;
+        response.data.data.forEach(function(row) {
+          row.elements.forEach(function(el) {
+            if (
+              (el.environment == "production" && el.action == "delete") ||
+              el.environment == "development"
+            ) {
+              store.commit('gridChanged');
+            }
+          });
+        });
       });
     },
 
-    addGrid(gridId) {
-      let uri = `/api/home/grid/store/${gridId}`;
+    publish() {
+      if (
+        confirm(
+          "Mit dieser Aktion wird die bestehende Homepage angepasst. Bitte publizieren bestätigen."
+        )
+      ) {
+        this.axios.get("/api/home/grids/deploy").then(response => {
+          this.$notify({ type: "success", text: "Homepage wurde publiziert!" });
+          store.commit('gridDeployed');
+        });
+      }
+    },
+
+    addRow(id) {
+      let uri = `/api/home/grid/store/${id}`;
       this.axios.get(uri).then(response => {
         this.grids = response.data.data;
-        this.$notify({type: "success", text: "Zeile hinzugefügt!"});
+        this.$notify({ type: "success", text: "Zeile hinzugefügt!" });
         this.fetch();
       });
     },
 
-    deleteGrid(id) {
+    deleteRow(id, event) {
       let uri = `/api/home/grid/delete/${id}`;
       this.axios.delete(uri).then(response => {
-        const index = this.grids.findIndex(x => x.id === id);
-        this.grids.splice(index, 1);
-        this.$notify({type: "success", text: "Zeile gelöscht!"});
+        let row = event.target.parentNode,
+          self = this;
+        row.classList.add("fade-out");
+        setTimeout(function() {
+          const index = self.grids.findIndex(x => x.id === id);
+          self.grids.splice(index, 1);
+          self.$notify({ type: "success", text: "Zeile gelöscht!" });
+        }, 200);
       });
     }
+  },
+
+  computed: {
+    hasChanges: function() {
+      return store.state.hasChanges
+    }
   }
+
 };
 </script>
 

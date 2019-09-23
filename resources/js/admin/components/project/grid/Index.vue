@@ -23,7 +23,7 @@
               </div>
             </draggable>
           </div>
-          <footer class="data-footer form-buttons">
+          <footer class="form-footer">
             <div>
                 <router-link :to="{name: 'projects'}" class="btn-secondary" style="margin-left:0">Zurück</router-link>
             </div>
@@ -102,7 +102,6 @@ export default {
 
     destroy(gridId, event) {
       let uri = `/api/project/grid/delete/${gridId}`;
-
       this.axios.delete(uri).then(response => {
         let row = event.target.parentNode, self = this;
         row.classList.add('fade-out');

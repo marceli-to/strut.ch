@@ -1,17 +1,17 @@
 <template>
   <div>
-    <h3>Projektbild auswählen</h3>
-    <div class="posts">
-      <div class="post" v-for="project in projects" :key="project.id">
-        <div class="post-text">
-          <strong>{{ project.name.de }}</strong>
-        </div>
-        <div class="post-media">
-          <figure v-for="image in project.images" :key="image.id">
-            <a href @click.prevent="storeMedia(image.id, project.id)">
-              <img :src="getImageSource(image.name)" height="50" width="50">
-            </a>
-          </figure>
+    <h1>Projektbild auswählen</h1>
+    <div class="project-selector">
+      <div v-for="project in filtered" :key="project.id">
+        <div class="project-selector__item is-multi" v-if="project.images.length > 0">
+          <h2>{{ project.name.de }}, {{ project.location.de }} ({{project.year}})</h2>
+          <div class="project-selector__media">
+            <figure v-for="image in project.images" :key="image.id">
+              <a href @click.prevent="storeMedia(image.id)">
+                <img :src="getImageSource(image.name)" height="50" width="50">
+              </a>
+            </figure>
+          </div>
         </div>
       </div>
     </div>
@@ -20,17 +20,37 @@
 <script>
 export default {
   
+  data() {
+    return {
+      search: '',
+    };
+  },
+
   props: {
     projects: Array
   },
 
   methods: {
-    storeMedia(projectImageId, postId) {
-      this.$parent.storeMedia(projectImageId, postId);
+    storeMedia(imageId) {
+      this.$parent.storeMedia(imageId);
     },
 
     getImageSource(file) {
       return `/media/${file}/xs`;
+    }
+  },
+  
+  computed: {
+    filtered() {
+      let projects = this.$props.projects;
+      if (projects) {
+        return projects.filter(project => {
+          let images = project.images;
+          if (images.length > 0) {
+            return project;
+          }
+        })
+      }
     }
   }
 };

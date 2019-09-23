@@ -85,15 +85,21 @@
     </div>
 
     <div :class="[hasOverlay ? 'is-visible': '', 'overlay']">
-      <div class="grid-thumbnails">
+      <div>
         <a href="javascript:;" @click.prevent="toggleOverlay()" class="icon-close icon-close-overlay"></a>
-        <h3>Projektbild auswählen:</h3>
         <div>
-          <figure class="grid-thumbnail" v-for="image in images" :key="image.id">
-              <a href="" @click.prevent="storeImage(image.id)">
-                <img :src="getAssetSource(image.name)" height="300" width="300">
-              </a>
-          </figure>
+          <h1>Projektbild auswählen</h1>
+          <div class="project-selector">
+            <div class="project-selector__item">
+              <div class="project-selector__media">
+                <figure v-for="image in images" :key="image.id">
+                  <a href @click.prevent="storeImage(image.id)">
+                    <img :src="getAssetSource(image.name)" height="50" width="50">
+                  </a>
+                </figure>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -210,7 +216,7 @@ export default {
     },
 
     getAssetSource(asset) {
-      return `/media/thumbnail/${asset}`;
+      return `/media/${asset}/xs`;
     },
 
     toggleOverlay() {

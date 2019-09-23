@@ -9,8 +9,21 @@ class News extends Model
 {
     use HasTranslations;
 
-    public $translatable = ['date', 'title', 'text', 'link', 'linkText', 'mediaCaption'];
+    public $translatable = [
+        'date',
+        'title',
+        'text',
+        'link',
+        'linkText'
+    ];
 
-    protected $fillable = ['date', 'title', 'text', 'link', 'linkText', 'media', 'mediaCaption'];
+    protected $fillable = [
+        'date',
+        'title',
+        'text',
+        'link',
+        'linkText',
+        'media'
+    ];
 
 }

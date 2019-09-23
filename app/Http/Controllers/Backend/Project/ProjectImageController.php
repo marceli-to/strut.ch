@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Backend\Project;
 
 use App\Services\MediaService;
+use App\Services\GridService;
 use App\Models\Project;
 use App\Models\ProjectImage;
 use App\Models\ProjectGridElement;
@@ -14,6 +15,8 @@ class ProjectImageController extends Controller
 {
     protected $mediaService;
 
+    protected $gridService;
+    
     protected $project;
     
     protected $projectImage;
@@ -29,12 +32,14 @@ class ProjectImageController extends Controller
 
     public function __construct(
         MediaService $mediaService,
+        GridService $gridService,
         Project $project,
         ProjectImage $projectImage,
         ProjectGridElement $projectGridElement
     )
     {
         $this->mediaService         = $mediaService;
+        $this->gridService          = $gridService;
         $this->project              = $project;
         $this->projectImage         = $projectImage;
         $this->projectGridElement   = $projectGridElement;
@@ -69,12 +74,20 @@ class ProjectImageController extends Controller
         $image = $this->projectImage->where('name', $filename)->first();
         if ($image)
         {
-            // Delete grid element
-            $gridElement = $this->projectGridElement->where('project_image_id', $image->id)->first();
-            if ($gridElement)
+            if ($this->gridService->isGridImage($image->id))
             {
-                $gridElement->delete();
+                return response()->json(
+                    'Dieses Bild kann nicht gelöscht werden. (Grund: wird als Grid-Element verwendet)',
+                    422
+                );
             }
+            
+            // // Delete grid element
+            // $gridElement = $this->projectGridElement->where('project_image_id', $image->id)->first();
+            // if ($gridElement)
+            // {
+            //     $gridElement->delete();
+            // }
             
             // Delete image
             $image->delete();
