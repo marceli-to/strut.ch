@@ -2441,6 +2441,27 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _layout_PageHeader_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/layout/PageHeader.vue */ "./resources/js/admin/layout/PageHeader.vue");
+/* harmony import */ var _mixins_progress__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/mixins/progress */ "./resources/js/admin/mixins/progress.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2477,10 +2498,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     PageHeader: _layout_PageHeader_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
+  mixins: [_mixins_progress__WEBPACK_IMPORTED_MODULE_1__["default"]],
   data: function data() {
     return {
       awards: [],
@@ -2490,44 +2513,51 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
 
-    var uri = '/api/awards/get';
+    var uri = "/api/awards/get";
     this.axios.get(uri).then(function (response) {
       _this.awards = response.data.data;
     });
   },
   methods: {
-    destroy: function destroy(id) {
+    destroy: function destroy(id, event) {
       var _this2 = this;
 
-      if (confirm('Bitte löschen bestätigen!')) {
+      if (confirm("Bitte löschen bestätigen!")) {
         var uri = "/api/award/destroy/".concat(id);
+        var el = this.progress(event.target);
         this.axios["delete"](uri).then(function (response) {
           _this2.awards = response.data.data;
 
           _this2.$notify({
-            type: 'success',
-            text: 'Eintrag gelöscht'
+            type: "success",
+            text: "Eintrag gelöscht"
           });
+
+          _this2.progress(el);
         });
       }
     },
-    clone: function clone(id) {
+    clone: function clone(id, event) {
       var _this3 = this;
 
       var uri = "/api/award/clone/".concat(id);
+      var el = this.progress(event.target);
       this.axios.get(uri).then(function (response) {
         _this3.awards = response.data.data;
 
         _this3.$notify({
-          type: 'success',
-          text: 'Eintrag kopiert'
+          type: "success",
+          text: "Eintrag kopiert"
         });
+
+        _this3.progress(el);
       });
     },
-    toggleStatus: function toggleStatus(id) {
+    toggleStatus: function toggleStatus(id, event) {
       var _this4 = this;
 
       var uri = "/api/award/status/".concat(id);
+      var el = this.progress(event.target);
       this.axios.get(uri).then(function (response) {
         // Awards are grouped by years
         // we need to loop twice
@@ -2542,9 +2572,11 @@ __webpack_require__.r(__webpack_exports__);
         _this4.awards = tmpAwards;
 
         _this4.$notify({
-          type: 'success',
-          text: 'Status angepasst'
+          type: "success",
+          text: "Status angepasst"
         });
+
+        _this4.progress(el);
       });
     }
   }
@@ -2568,6 +2600,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _config_years_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/config/years.js */ "./resources/js/admin/config/years.js");
 /* harmony import */ var _tinymce_tinymce_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @tinymce/tinymce-vue */ "./node_modules/@tinymce/tinymce-vue/lib/es2015/main/ts/index.js");
 /* harmony import */ var _mixins_helpers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/mixins/helpers */ "./resources/js/admin/mixins/helpers.js");
+/* harmony import */ var _mixins_progress__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/mixins/progress */ "./resources/js/admin/mixins/progress.js");
 //
 //
 //
@@ -2643,6 +2676,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
@@ -2659,7 +2693,7 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     type: String
   },
-  mixins: [_mixins_helpers__WEBPACK_IMPORTED_MODULE_6__["default"]],
+  mixins: [_mixins_helpers__WEBPACK_IMPORTED_MODULE_6__["default"], _mixins_progress__WEBPACK_IMPORTED_MODULE_7__["default"]],
   data: function data() {
     return {
       // fields to validate
@@ -2786,13 +2820,16 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     // Delete a single file by name
-    deleteImageUpload: function deleteImageUpload(file) {
+    deleteImageUpload: function deleteImageUpload(file, event) {
       var _this4 = this;
 
       if (confirm("Bitte löschen bestätigen!")) {
         var uri = "/api/award/delete/file/".concat(file);
+        var el = this.progress(event.target);
         this.axios["delete"](uri).then(function (response) {
           _this4.award.media = null;
+
+          _this4.progress(el);
         });
       }
     }
@@ -2874,6 +2911,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _layout_PageHeader_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/layout/PageHeader.vue */ "./resources/js/admin/layout/PageHeader.vue");
 /* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuedraggable */ "./node_modules/vuedraggable/dist/vuedraggable.common.js");
 /* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuedraggable__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _mixins_progress__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/mixins/progress */ "./resources/js/admin/mixins/progress.js");
 //
 //
 //
@@ -2910,6 +2948,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2923,47 +2979,55 @@ __webpack_require__.r(__webpack_exports__);
       debounce: false
     };
   },
+  mixins: [_mixins_progress__WEBPACK_IMPORTED_MODULE_2__["default"]],
   created: function created() {
     var _this = this;
 
-    var uri = '/api/books/get';
+    var uri = "/api/books/get";
     this.axios.get(uri).then(function (response) {
       _this.books = response.data.data;
     });
   },
   methods: {
-    destroy: function destroy(id) {
+    destroy: function destroy(id, event) {
       var _this2 = this;
 
-      if (confirm('Bitte löschen bestätigen!')) {
+      if (confirm("Bitte löschen bestätigen!")) {
         var uri = "/api/book/destroy/".concat(id);
+        var el = this.progress(event.target);
         this.axios["delete"](uri).then(function (response) {
           _this2.books.splice(_this2.books.indexOf(id), 1);
 
           _this2.$notify({
-            type: 'success',
-            text: 'Eintrag gelöscht'
+            type: "success",
+            text: "Eintrag gelöscht"
           });
+
+          _this2.progress(el);
         });
       }
     },
-    clone: function clone(id) {
+    clone: function clone(id, event) {
       var _this3 = this;
 
       var uri = "/api/book/clone/".concat(id);
+      var el = this.progress(event.target);
       this.axios.get(uri).then(function (response) {
         _this3.books.push(response.data);
 
         _this3.$notify({
-          type: 'success',
-          text: 'Eintrag kopiert'
+          type: "success",
+          text: "Eintrag kopiert"
         });
+
+        _this3.progress(el);
       });
     },
-    toggleStatus: function toggleStatus(id) {
+    toggleStatus: function toggleStatus(id, event) {
       var _this4 = this;
 
       var uri = "/api/book/status/".concat(id);
+      var el = this.progress(event.target);
       this.axios.get(uri).then(function (response) {
         var index = _this4.books.findIndex(function (x) {
           return x.id === id;
@@ -2972,9 +3036,11 @@ __webpack_require__.r(__webpack_exports__);
         _this4.books[index].publish = response.data;
 
         _this4.$notify({
-          type: 'success',
-          text: 'Status angepasst'
+          type: "success",
+          text: "Status angepasst"
         });
+
+        _this4.progress(el);
       });
     },
     updateOrder: function updateOrder() {
@@ -2992,13 +3058,13 @@ __webpack_require__.r(__webpack_exports__);
           books: books
         }).then(function (response) {
           _this5.$router.push({
-            name: 'books'
+            name: "books"
           });
         });
       }.bind(this, books), 1000);
       this.$notify({
-        type: 'success',
-        text: 'Reihenfolge angepasst'
+        type: "success",
+        text: "Reihenfolge angepasst"
       });
     }
   }
@@ -3021,6 +3087,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _config_tinyconfig_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/config/tinyconfig.js */ "./resources/js/admin/config/tinyconfig.js");
 /* harmony import */ var _tinymce_tinymce_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @tinymce/tinymce-vue */ "./node_modules/@tinymce/tinymce-vue/lib/es2015/main/ts/index.js");
 /* harmony import */ var _mixins_helpers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/mixins/helpers */ "./resources/js/admin/mixins/helpers.js");
+/* harmony import */ var _mixins_progress__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/mixins/progress */ "./resources/js/admin/mixins/progress.js");
 //
 //
 //
@@ -3109,6 +3176,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
@@ -3124,7 +3192,7 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     type: String
   },
-  mixins: [_mixins_helpers__WEBPACK_IMPORTED_MODULE_5__["default"]],
+  mixins: [_mixins_helpers__WEBPACK_IMPORTED_MODULE_5__["default"], _mixins_progress__WEBPACK_IMPORTED_MODULE_6__["default"]],
   data: function data() {
     return {
       // fields to validate
@@ -3251,13 +3319,16 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     // Delete a single file by name
-    deleteImageUpload: function deleteImageUpload(file) {
+    deleteImageUpload: function deleteImageUpload(file, event) {
       var _this4 = this;
 
       if (confirm("Bitte löschen bestätigen!")) {
         var uri = "/api/book/delete/file/".concat(file);
+        var el = this.progress(event.target);
         this.axios["delete"](uri).then(function (response) {
           _this4.book.media = null;
+
+          _this4.progress(el);
         });
       }
     },
@@ -3362,6 +3433,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _layout_PageHeader_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/layout/PageHeader.vue */ "./resources/js/admin/layout/PageHeader.vue");
 /* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuedraggable */ "./node_modules/vuedraggable/dist/vuedraggable.common.js");
 /* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuedraggable__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _mixins_progress__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/mixins/progress */ "./resources/js/admin/mixins/progress.js");
 //
 //
 //
@@ -3410,6 +3482,54 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3417,6 +3537,7 @@ __webpack_require__.r(__webpack_exports__);
     draggable: vuedraggable__WEBPACK_IMPORTED_MODULE_1___default.a,
     PageHeader: _layout_PageHeader_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
+  mixins: [_mixins_progress__WEBPACK_IMPORTED_MODULE_2__["default"]],
   data: function data() {
     return {
       categories: [],
@@ -3430,44 +3551,51 @@ __webpack_require__.r(__webpack_exports__);
     fetch: function fetch() {
       var _this = this;
 
-      var uri = '/api/categories/get';
+      var uri = "/api/categories/get";
       this.axios.get(uri).then(function (response) {
         _this.categories = response.data.data;
       });
     },
     // Categories
-    destroy: function destroy(id) {
+    destroy: function destroy(id, event) {
       var _this2 = this;
 
-      if (confirm('Bitte löschen bestätigen!')) {
+      if (confirm("Bitte löschen bestätigen!")) {
         var uri = "/api/category/destroy/".concat(id);
+        var el = this.progress(event.target);
         this.axios["delete"](uri).then(function (response) {
           _this2.categories = response.data.data;
 
           _this2.$notify({
-            type: 'success',
-            text: 'Eintrag gelöscht'
+            type: "success",
+            text: "Eintrag gelöscht"
           });
+
+          _this2.progress(el);
         });
       }
     },
-    clone: function clone(id) {
+    clone: function clone(id, event) {
       var _this3 = this;
 
       var uri = "/api/category/clone/".concat(id);
+      var el = this.progress(event.target);
       this.axios.get(uri).then(function (response) {
         _this3.categories = response.data.data;
 
         _this3.$notify({
-          type: 'success',
-          text: 'Eintrag kopiert'
+          type: "success",
+          text: "Eintrag kopiert"
         });
+
+        _this3.progress(el);
       });
     },
-    toggleStatus: function toggleStatus(id) {
+    toggleStatus: function toggleStatus(id, event) {
       var _this4 = this;
 
       var uri = "/api/category/status/".concat(id);
+      var el = this.progress(event.target);
       this.axios.get(uri).then(function (response) {
         // children inherit the status (if its 0)
         // load all records again
@@ -3482,45 +3610,54 @@ __webpack_require__.r(__webpack_exports__);
         }
 
         _this4.$notify({
-          type: 'success',
-          text: 'Status angepasst'
+          type: "success",
+          text: "Status angepasst"
         });
+
+        _this4.progress(el);
       });
     },
     // Category types
-    destroyType: function destroyType(id) {
+    destroyType: function destroyType(id, event) {
       var _this5 = this;
 
-      if (confirm('Bitte löschen bestätigen!')) {
+      if (confirm("Bitte löschen bestätigen!")) {
         var uri = "/api/type/destroy/".concat(id);
+        var el = this.progress(event.target);
         this.axios["delete"](uri).then(function (response) {
           _this5.fetch();
 
           _this5.$notify({
-            type: 'success',
-            text: 'Eintrag gelöscht'
+            type: "success",
+            text: "Eintrag gelöscht"
           });
+
+          _this5.progress(el);
         });
       }
     },
-    cloneType: function cloneType(id) {
+    cloneType: function cloneType(id, event) {
       var _this6 = this;
 
       var uri = "/api/type/clone/".concat(id);
+      var el = this.progress(event.target);
       this.axios.get(uri).then(function (response) {
         //this.categoryTypes = response.data.data;
         _this6.fetch();
 
         _this6.$notify({
-          type: 'success',
-          text: 'Eintrag kopiert'
+          type: "success",
+          text: "Eintrag kopiert"
         });
+
+        _this6.progress(el);
       });
     },
-    toggleTypeStatus: function toggleTypeStatus(id) {
+    toggleTypeStatus: function toggleTypeStatus(id, event) {
       var _this7 = this;
 
       var uri = "/api/type/status/".concat(id);
+      var el = this.progress(event.target);
       this.axios.get(uri).then(function (response) {
         // Types are within categories
         // we need to loop twice
@@ -3535,9 +3672,11 @@ __webpack_require__.r(__webpack_exports__);
         _this7.categories = tmpCategories;
 
         _this7.$notify({
-          type: 'success',
-          text: 'Status angepasst'
+          type: "success",
+          text: "Status angepasst"
         });
+
+        _this7.progress(el);
       });
     },
     updateTypeOrder: function updateTypeOrder(categoryId) {
@@ -3560,13 +3699,13 @@ __webpack_require__.r(__webpack_exports__);
           types: types
         }).then(function (response) {
           _this8.$router.push({
-            name: 'categories'
+            name: "categories"
           });
         });
       }.bind(this, types), 1000);
       this.$notify({
-        type: 'success',
-        text: 'Reihenfolge angepasst'
+        type: "success",
+        text: "Reihenfolge angepasst"
       });
     }
   }
@@ -3793,6 +3932,28 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _layout_PageHeader_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/layout/PageHeader.vue */ "./resources/js/admin/layout/PageHeader.vue");
+/* harmony import */ var _mixins_progress__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/mixins/progress */ "./resources/js/admin/mixins/progress.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3824,10 +3985,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     PageHeader: _layout_PageHeader_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
+  mixins: [_mixins_progress__WEBPACK_IMPORTED_MODULE_1__["default"]],
   data: function data() {
     return {
       categoryTypes: [],
@@ -3837,14 +4000,14 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
 
-    var uri = '/api/types/get';
+    var uri = "/api/types/get";
     this.axios.get(uri).then(function (response) {
       _this.categoryTypes = response.data.data;
       console.log(_this.categoryTypes);
     });
   },
   methods: {
-    destroy: function destroy(id) {
+    destroy: function destroy(id, event) {
       var _this2 = this;
 
       var uri = "/api/type/destroy/".concat(id);
@@ -3852,12 +4015,12 @@ __webpack_require__.r(__webpack_exports__);
         _this2.categoryTypes = response.data.data;
 
         _this2.$notify({
-          type: 'success',
-          text: 'Eintrag gelöscht'
+          type: "success",
+          text: "Eintrag gelöscht"
         });
       });
     },
-    clone: function clone(id) {
+    clone: function clone(id, event) {
       var _this3 = this;
 
       var uri = "/api/type/clone/".concat(id);
@@ -3865,12 +4028,12 @@ __webpack_require__.r(__webpack_exports__);
         _this3.categoryTypes = response.data.data;
 
         _this3.$notify({
-          type: 'success',
-          text: 'Eintrag kopiert'
+          type: "success",
+          text: "Eintrag kopiert"
         });
       });
     },
-    toggleStatus: function toggleStatus(id) {
+    toggleStatus: function toggleStatus(id, event) {
       var _this4 = this;
 
       var uri = "/api/type/status/".concat(id);
@@ -3882,8 +4045,8 @@ __webpack_require__.r(__webpack_exports__);
         _this4.categoryTypes[index].publish = response.data;
 
         _this4.$notify({
-          type: 'success',
-          text: 'Status angepasst'
+          type: "success",
+          text: "Status angepasst"
         });
       });
     }
@@ -4248,7 +4411,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 
@@ -4353,6 +4515,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -4367,7 +4531,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      grids: []
+      grids: [],
+      isLoading: false
     };
   },
   created: function created() {
@@ -4387,12 +4552,14 @@ __webpack_require__.r(__webpack_exports__);
             }
           });
         });
+        _this.isLoading = false;
       });
     },
     publish: function publish() {
       var _this2 = this;
 
       if (confirm("Mit dieser Aktion wird die bestehende Homepage angepasst. Bitte publizieren bestätigen.")) {
+        this.isLoading = true;
         this.axios.get("/api/home/grids/deploy").then(function (response) {
           _this2.$notify({
             type: "success",
@@ -4400,6 +4567,7 @@ __webpack_require__.r(__webpack_exports__);
           });
 
           _store__WEBPACK_IMPORTED_MODULE_0__["default"].commit('gridDeployed');
+          _this2.isLoading = false;
         });
       }
     },
@@ -4407,6 +4575,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
 
       var uri = "/api/home/grid/store/".concat(id);
+      this.isLoading = true;
       this.axios.get(uri).then(function (response) {
         _this3.grids = response.data.data;
 
@@ -4422,6 +4591,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this4 = this;
 
       var uri = "/api/home/grid/delete/".concat(id);
+      this.isLoading = true;
       this.axios["delete"](uri).then(function (response) {
         var row = event.target.parentNode,
             self = _this4;
@@ -4435,6 +4605,7 @@ __webpack_require__.r(__webpack_exports__);
             type: "success",
             text: "Zeile gelöscht!"
           });
+          self.isLoading = false;
         }, 200);
       });
     }
@@ -4565,6 +4736,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_home_Media_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/components/home/Media.vue */ "./resources/js/admin/components/home/Media.vue");
 /* harmony import */ var _components_home_Article_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/home/Article.vue */ "./resources/js/admin/components/home/Article.vue");
 /* harmony import */ var _components_ui_buttons_CreateGridItem_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/components/ui/buttons/CreateGridItem.vue */ "./resources/js/admin/components/ui/buttons/CreateGridItem.vue");
+//
+//
 //
 //
 //
@@ -5156,6 +5329,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _layout_PageHeader_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/layout/PageHeader.vue */ "./resources/js/admin/layout/PageHeader.vue");
 /* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuedraggable */ "./node_modules/vuedraggable/dist/vuedraggable.common.js");
 /* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuedraggable__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _mixins_progress__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/mixins/progress */ "./resources/js/admin/mixins/progress.js");
 //
 //
 //
@@ -5193,6 +5367,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -5200,6 +5388,7 @@ __webpack_require__.r(__webpack_exports__);
     draggable: vuedraggable__WEBPACK_IMPORTED_MODULE_1___default.a,
     PageHeader: _layout_PageHeader_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
+  mixins: [_mixins_progress__WEBPACK_IMPORTED_MODULE_2__["default"]],
   data: function data() {
     return {
       jobs: [],
@@ -5213,43 +5402,50 @@ __webpack_require__.r(__webpack_exports__);
     fetch: function fetch() {
       var _this = this;
 
-      var uri = '/api/jobs/get';
+      var uri = "/api/jobs/get";
       this.axios.get(uri).then(function (response) {
         _this.jobs = response.data.data;
       });
     },
-    destroy: function destroy(id) {
+    destroy: function destroy(id, event) {
       var _this2 = this;
 
-      if (confirm('Bitte löschen bestätigen!')) {
+      if (confirm("Bitte löschen bestätigen!")) {
         var uri = "/api/job/destroy/".concat(id);
+        var el = this.progress(event.target);
         this.axios["delete"](uri).then(function (response) {
           _this2.jobs.splice(_this2.jobs.indexOf(id), 1);
 
           _this2.$notify({
-            type: 'success',
-            text: 'Eintrag gelöscht'
+            type: "success",
+            text: "Eintrag gelöscht"
           });
+
+          _this2.progress(el);
         });
       }
     },
-    clone: function clone(id) {
+    clone: function clone(id, event) {
       var _this3 = this;
 
       var uri = "/api/job/clone/".concat(id);
+      var el = this.progress(event.target);
       this.axios.get(uri).then(function (response) {
         _this3.jobs.push(response.data);
 
         _this3.$notify({
-          type: 'success',
-          text: 'Eintrag kopiert'
+          type: "success",
+          text: "Eintrag kopiert"
         });
+
+        _this3.progress(el);
       });
     },
-    toggleStatus: function toggleStatus(id) {
+    toggleStatus: function toggleStatus(id, event) {
       var _this4 = this;
 
       var uri = "/api/job/status/".concat(id);
+      var el = this.progress(event.target);
       this.axios.get(uri).then(function (response) {
         var index = _this4.jobs.findIndex(function (x) {
           return x.id === id;
@@ -5258,9 +5454,11 @@ __webpack_require__.r(__webpack_exports__);
         _this4.jobs[index].publish = response.data;
 
         _this4.$notify({
-          type: 'success',
-          text: 'Status angepasst'
+          type: "success",
+          text: "Status angepasst"
         });
+
+        _this4.progress(el);
       });
     },
     updateOrder: function updateOrder() {
@@ -5278,13 +5476,13 @@ __webpack_require__.r(__webpack_exports__);
           jobs: jobs
         }).then(function (response) {
           _this5.$router.push({
-            name: 'jobs'
+            name: "jobs"
           });
         });
       }.bind(this, jobs), 1000);
       this.$notify({
-        type: 'success',
-        text: 'Reihenfolge angepasst'
+        type: "success",
+        text: "Reihenfolge angepasst"
       });
     }
   }
@@ -5307,6 +5505,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _config_tinyconfig_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/config/tinyconfig.js */ "./resources/js/admin/config/tinyconfig.js");
 /* harmony import */ var _tinymce_tinymce_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @tinymce/tinymce-vue */ "./node_modules/@tinymce/tinymce-vue/lib/es2015/main/ts/index.js");
 /* harmony import */ var _mixins_helpers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/mixins/helpers */ "./resources/js/admin/mixins/helpers.js");
+/* harmony import */ var _mixins_progress__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/mixins/progress */ "./resources/js/admin/mixins/progress.js");
 //
 //
 //
@@ -5382,6 +5581,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
@@ -5397,7 +5597,7 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     type: String
   },
-  mixins: [_mixins_helpers__WEBPACK_IMPORTED_MODULE_5__["default"]],
+  mixins: [_mixins_helpers__WEBPACK_IMPORTED_MODULE_5__["default"], _mixins_progress__WEBPACK_IMPORTED_MODULE_6__["default"]],
   data: function data() {
     return {
       // fields to validate
@@ -5525,13 +5725,16 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     // Delete a single file by name
-    deleteFileUpload: function deleteFileUpload(file) {
+    deleteFileUpload: function deleteFileUpload(file, event) {
       var _this4 = this;
 
       if (confirm("Bitte löschen bestätigen!")) {
         var uri = "/api/job/delete/file/".concat(file);
+        var el = this.progress(event.target);
         this.axios["delete"](uri).then(function (response) {
           _this4.job.media = null;
+
+          _this4.progress(el);
         });
       }
     }
@@ -5611,6 +5814,27 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _layout_PageHeader_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/layout/PageHeader.vue */ "./resources/js/admin/layout/PageHeader.vue");
+/* harmony import */ var _mixins_progress__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/mixins/progress */ "./resources/js/admin/mixins/progress.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -5647,10 +5871,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     PageHeader: _layout_PageHeader_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
+  mixins: [_mixins_progress__WEBPACK_IMPORTED_MODULE_1__["default"]],
   data: function data() {
     return {
       lectures: [],
@@ -5660,44 +5886,51 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
 
-    var uri = '/api/lectures/get';
+    var uri = "/api/lectures/get";
     this.axios.get(uri).then(function (response) {
       _this.lectures = response.data.data;
     });
   },
   methods: {
-    destroy: function destroy(id) {
+    destroy: function destroy(id, event) {
       var _this2 = this;
 
-      if (confirm('Bitte löschen bestätigen!')) {
+      if (confirm("Bitte löschen bestätigen!")) {
         var uri = "/api/lecture/destroy/".concat(id);
+        var el = this.progress(event.target);
         this.axios["delete"](uri).then(function (response) {
           _this2.lectures = response.data.data;
 
           _this2.$notify({
-            type: 'success',
-            text: 'Eintrag gelöscht'
+            type: "success",
+            text: "Eintrag gelöscht"
           });
+
+          _this2.progress(el);
         });
       }
     },
-    clone: function clone(id) {
+    clone: function clone(id, event) {
       var _this3 = this;
 
       var uri = "/api/lecture/clone/".concat(id);
+      var el = this.progress(event.target);
       this.axios.get(uri).then(function (response) {
         _this3.lectures = response.data.data;
 
         _this3.$notify({
-          type: 'success',
-          text: 'Eintrag kopiert'
+          type: "success",
+          text: "Eintrag kopiert"
         });
+
+        _this3.progress(el);
       });
     },
-    toggleStatus: function toggleStatus(id) {
+    toggleStatus: function toggleStatus(id, event) {
       var _this4 = this;
 
       var uri = "/api/lecture/status/".concat(id);
+      var el = this.progress(event.target);
       this.axios.get(uri).then(function (response) {
         // lectures are grouped by years
         // we need to loop twice
@@ -5712,9 +5945,11 @@ __webpack_require__.r(__webpack_exports__);
         _this4.lectures = tmplectures;
 
         _this4.$notify({
-          type: 'success',
-          text: 'Status angepasst'
+          type: "success",
+          text: "Status angepasst"
         });
+
+        _this4.progress(el);
       });
     }
   }
@@ -5738,6 +5973,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _config_years_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/config/years.js */ "./resources/js/admin/config/years.js");
 /* harmony import */ var _tinymce_tinymce_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @tinymce/tinymce-vue */ "./node_modules/@tinymce/tinymce-vue/lib/es2015/main/ts/index.js");
 /* harmony import */ var _mixins_helpers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/mixins/helpers */ "./resources/js/admin/mixins/helpers.js");
+/* harmony import */ var _mixins_progress__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/mixins/progress */ "./resources/js/admin/mixins/progress.js");
 //
 //
 //
@@ -5818,6 +6054,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
@@ -5834,7 +6071,7 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     type: String
   },
-  mixins: [_mixins_helpers__WEBPACK_IMPORTED_MODULE_6__["default"]],
+  mixins: [_mixins_helpers__WEBPACK_IMPORTED_MODULE_6__["default"], _mixins_progress__WEBPACK_IMPORTED_MODULE_7__["default"]],
   data: function data() {
     return {
       // fields to validate
@@ -5961,13 +6198,16 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     // Delete a single file by name
-    deleteImageUpload: function deleteImageUpload(file) {
+    deleteImageUpload: function deleteImageUpload(file, event) {
       var _this4 = this;
 
       if (confirm("Bitte löschen bestätigen!")) {
         var uri = "/api/lecture/delete/file/".concat(file);
+        var el = this.progress(event.target);
         this.axios["delete"](uri).then(function (response) {
           _this4.lecture.media = null;
+
+          _this4.progress(el);
         });
       }
     }
@@ -6047,6 +6287,20 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _layout_PageHeader_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/layout/PageHeader.vue */ "./resources/js/admin/layout/PageHeader.vue");
+/* harmony import */ var _mixins_progress__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/mixins/progress */ "./resources/js/admin/mixins/progress.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -6078,10 +6332,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     PageHeader: _layout_PageHeader_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
+  mixins: [_mixins_progress__WEBPACK_IMPORTED_MODULE_1__["default"]],
   data: function data() {
     return {
       news: []
@@ -6090,50 +6346,58 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
 
-    var uri = '/api/news/get';
+    var uri = "/api/news/get";
     this.axios.get(uri).then(function (response) {
       _this.news = response.data.data;
     });
   },
   methods: {
-    destroy: function destroy(id) {
+    destroy: function destroy(id, event) {
       var _this2 = this;
 
-      if (confirm('Bitte löschen bestätigen!')) {
+      if (confirm("Bitte löschen bestätigen!")) {
         var uri = "/api/news/destroy/".concat(id),
             self = this;
+        var el = this.progress(event.target);
         this.axios["delete"](uri).then(function (response) {
           _this2.news.splice(_this2.news.indexOf(id), 1);
 
           self.$notify({
-            type: 'success',
-            text: 'Eintrag gelöscht'
+            type: "success",
+            text: "Eintrag gelöscht"
           });
+
+          _this2.progress(el);
         })["catch"](function (error) {
           self.$notify({
-            type: 'error',
+            type: "error",
             text: error.response.data
           });
+          this.progress(el);
         });
       }
     },
-    clone: function clone(id) {
+    clone: function clone(id, event) {
       var _this3 = this;
 
       var uri = "/api/news/clone/".concat(id);
+      var el = this.progress(event.target);
       this.axios.get(uri).then(function (response) {
         _this3.news.push(response.data);
 
         _this3.$notify({
-          type: 'success',
-          text: 'Eintrag kopiert'
+          type: "success",
+          text: "Eintrag kopiert"
         });
+
+        _this3.progress(el);
       });
     },
-    toggleStatus: function toggleStatus(id) {
+    toggleStatus: function toggleStatus(id, event) {
       var _this4 = this;
 
       var uri = "/api/news/status/".concat(id);
+      var el = this.progress(event.target);
       this.axios.get(uri).then(function (response) {
         var index = _this4.news.findIndex(function (x) {
           return x.id === id;
@@ -6142,9 +6406,11 @@ __webpack_require__.r(__webpack_exports__);
         _this4.news[index].publish = response.data;
 
         _this4.$notify({
-          type: 'success',
-          text: 'Status angepasst'
+          type: "success",
+          text: "Status angepasst"
         });
+
+        _this4.progress(el);
       });
     }
   }
@@ -6165,6 +6431,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_ui_buttons_FormButtons_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/components/ui/buttons/FormButtons.vue */ "./resources/js/admin/components/ui/buttons/FormButtons.vue");
 /* harmony import */ var _components_ui_ImageUpload_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/ui/ImageUpload.vue */ "./resources/js/admin/components/ui/ImageUpload.vue");
 /* harmony import */ var _mixins_helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/mixins/helpers */ "./resources/js/admin/mixins/helpers.js");
+/* harmony import */ var _mixins_progress__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/mixins/progress */ "./resources/js/admin/mixins/progress.js");
 //
 //
 //
@@ -6248,6 +6515,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
@@ -6260,7 +6528,7 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     type: String
   },
-  mixins: [_mixins_helpers__WEBPACK_IMPORTED_MODULE_3__["default"]],
+  mixins: [_mixins_helpers__WEBPACK_IMPORTED_MODULE_3__["default"], _mixins_progress__WEBPACK_IMPORTED_MODULE_4__["default"]],
   data: function data() {
     return {
       // fields to validate
@@ -6384,13 +6652,16 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     // Delete a single file by name
-    deleteImageUpload: function deleteImageUpload(file) {
+    deleteImageUpload: function deleteImageUpload(file, event) {
       var _this4 = this;
 
       if (confirm("Bitte löschen bestätigen!")) {
         var uri = "/api/news/delete/file/".concat(file);
+        var el = this.progress(event.target);
         this.axios["delete"](uri).then(function (response) {
           _this4.news.media = null;
+
+          _this4.progress(el);
         });
       }
     },
@@ -6493,6 +6764,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _layout_PageHeader_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/layout/PageHeader.vue */ "./resources/js/admin/layout/PageHeader.vue");
+/* harmony import */ var _mixins_progress__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/mixins/progress */ "./resources/js/admin/mixins/progress.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -6557,11 +6829,30 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     PageHeader: _layout_PageHeader_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
+  mixins: [_mixins_progress__WEBPACK_IMPORTED_MODULE_1__["default"]],
   data: function data() {
     return {
       press: [],
@@ -6579,7 +6870,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     fetch: function fetch($year) {
       var _this = this;
 
-      var uri = '/api/press/get';
+      var uri = "/api/press/get";
       this.axios.get(uri).then(function (response) {
         _this.press = response.data.data;
         _this.options.years = _this.getYears(response.data.data);
@@ -6588,7 +6879,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     filter: function filter() {
       var _this2 = this;
 
-      var uri = '/api/press/get/' + this.selected;
+      var uri = "/api/press/get/" + this.selected;
       this.axios.get(uri).then(function (response) {
         _this2.press = response.data.data;
       });
@@ -6597,39 +6888,46 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       this.selected = null;
       this.fetch();
     },
-    destroy: function destroy(id) {
+    destroy: function destroy(id, event) {
       var _this3 = this;
 
-      if (confirm('Bitte löschen bestätigen!')) {
+      if (confirm("Bitte löschen bestätigen!")) {
         var uri = "/api/press/destroy/".concat(id);
+        var el = this.progress(event.target);
         this.axios["delete"](uri).then(function (response) {
           _this3.press = response.data.data;
 
           _this3.$notify({
-            type: 'success',
-            text: 'Eintrag gelöscht'
+            type: "success",
+            text: "Eintrag gelöscht"
           });
+
+          _this3.progress(el);
         });
       }
     },
-    clone: function clone(id) {
+    clone: function clone(id, event) {
       var _this4 = this;
 
       var uri = "/api/press/clone/".concat(id);
+      var el = this.progress(event.target);
       this.axios.get(uri).then(function (response) {
         //this.press.push(response.data);
         _this4.press = response.data.data;
 
         _this4.$notify({
-          type: 'success',
-          text: 'Eintrag kopiert'
+          type: "success",
+          text: "Eintrag kopiert"
         });
+
+        _this4.progress(el);
       });
     },
-    toggleStatus: function toggleStatus(id) {
+    toggleStatus: function toggleStatus(id, event) {
       var _this5 = this;
 
       var uri = "/api/press/status/".concat(id);
+      var el = this.progress(event.target);
       this.axios.get(uri).then(function (response) {
         // Press articles are grouped by years
         // we need to loop twice
@@ -6644,9 +6942,11 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         _this5.press = tmpPress;
 
         _this5.$notify({
-          type: 'success',
-          text: 'Status angepasst'
+          type: "success",
+          text: "Status angepasst"
         });
+
+        _this5.progress(el);
       });
     },
     getYears: function getYears(data) {
@@ -6680,6 +6980,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _config_years_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/config/years.js */ "./resources/js/admin/config/years.js");
 /* harmony import */ var _tinymce_tinymce_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @tinymce/tinymce-vue */ "./node_modules/@tinymce/tinymce-vue/lib/es2015/main/ts/index.js");
 /* harmony import */ var _mixins_helpers__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/mixins/helpers */ "./resources/js/admin/mixins/helpers.js");
+/* harmony import */ var _mixins_progress__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/mixins/progress */ "./resources/js/admin/mixins/progress.js");
 //
 //
 //
@@ -6806,6 +7107,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
@@ -6824,7 +7126,7 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     type: String
   },
-  mixins: [_mixins_helpers__WEBPACK_IMPORTED_MODULE_7__["default"]],
+  mixins: [_mixins_helpers__WEBPACK_IMPORTED_MODULE_7__["default"], _mixins_progress__WEBPACK_IMPORTED_MODULE_8__["default"]],
   data: function data() {
     return {
       // fields to validate
@@ -6984,13 +7286,16 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     // Delete a single image by name
-    deleteImageUpload: function deleteImageUpload(file) {
+    deleteImageUpload: function deleteImageUpload(file, event) {
       var _this5 = this;
 
       if (confirm("Bitte löschen bestätigen!")) {
         var uri = "/api/press/delete/file/".concat(file);
+        var el = this.progress(event.target);
         this.axios["delete"](uri).then(function (response) {
           _this5.press.media = null;
+
+          _this5.progress(el);
         });
       }
     },
@@ -7007,13 +7312,16 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     // Delete a single file by name
-    deleteFileUpload: function deleteFileUpload(file) {
+    deleteFileUpload: function deleteFileUpload(file, event) {
       var _this6 = this;
 
       if (confirm("Bitte löschen bestätigen!")) {
         var uri = "/api/press/delete/file/".concat(file);
+        var el = this.progress(event.target);
         this.axios["delete"](uri).then(function (response) {
           _this6.press.file = null;
+
+          _this6.progress(el);
         });
       }
     },
@@ -7112,6 +7420,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _layout_PageHeader_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/layout/PageHeader.vue */ "./resources/js/admin/layout/PageHeader.vue");
 /* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuedraggable */ "./node_modules/vuedraggable/dist/vuedraggable.common.js");
 /* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuedraggable__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _mixins_progress__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/mixins/progress */ "./resources/js/admin/mixins/progress.js");
 //
 //
 //
@@ -7195,6 +7504,32 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -7202,11 +7537,14 @@ __webpack_require__.r(__webpack_exports__);
     draggable: vuedraggable__WEBPACK_IMPORTED_MODULE_1___default.a,
     PageHeader: _layout_PageHeader_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
+  mixins: [_mixins_progress__WEBPACK_IMPORTED_MODULE_2__["default"]],
   data: function data() {
     return {
       projects: [],
-      grouped: [],
-      debounce: false
+      groupedProjects: [],
+      filteredProjects: [],
+      debounce: false,
+      search: ""
     };
   },
   created: function created() {
@@ -7219,14 +7557,14 @@ __webpack_require__.r(__webpack_exports__);
       var uri = "/api/projects/get";
       this.axios.get(uri).then(function (response) {
         _this.projects = response.data.data;
-        _this.grouped = _.groupBy(_this.projects, "category_type_id");
       });
     },
-    destroy: function destroy(id) {
+    destroy: function destroy(id, event) {
       var _this2 = this;
 
       if (confirm("Bitte löschen bestätigen!")) {
         var uri = "/api/project/destroy/".concat(id);
+        var el = this.progress(event.target);
         this.axios["delete"](uri).then(function (response) {
           _this2.fetch();
 
@@ -7234,13 +7572,16 @@ __webpack_require__.r(__webpack_exports__);
             type: "success",
             text: "Eintrag gelöscht"
           });
+
+          _this2.progress(el);
         });
       }
     },
-    clone: function clone(id) {
+    clone: function clone(id, event) {
       var _this3 = this;
 
       var uri = "/api/project/clone/".concat(id);
+      var el = this.progress(event.target);
       this.axios.get(uri).then(function (response) {
         _this3.fetch();
 
@@ -7248,12 +7589,15 @@ __webpack_require__.r(__webpack_exports__);
           type: "success",
           text: "Eintrag kopiert"
         });
+
+        _this3.progress(el);
       });
     },
-    toggleStatus: function toggleStatus(id) {
+    toggleStatus: function toggleStatus(id, event) {
       var _this4 = this;
 
       var uri = "/api/project/status/".concat(id);
+      var el = this.progress(event.target);
       this.axios.get(uri).then(function (response) {
         var index = _this4.projects.findIndex(function (x) {
           return x.id === id;
@@ -7265,26 +7609,72 @@ __webpack_require__.r(__webpack_exports__);
           type: "success",
           text: "Status angepasst"
         });
+
+        _this4.progress(el);
       });
     },
-    updateOrder: function updateOrder() {// let projects = this.projects.map(function(project, index) {
-      //     project.order = index;
-      //     return project;
-      // });
-      //console.log(this.grouped);
-      // Object.keys(this.grouped).forEach(key => {
-      //   const user = this.grouped[key];
-      //   console.log(user);
-      // });
-      // if (this.debounce) return;
-      // this.debounce = setTimeout(function(projects) {
-      //   this.debounce = false
-      //   let uri = `/api/project/order`;
-      //   this.axios.post(uri, {projects: projects}).then((response) => {
-      //     this.$router.push({name: 'projects'});
-      //   });
-      // }.bind(this, projects), 1000);
-      // this.$notify({type: 'success', text: 'Reihenfolge angepasst'});
+    // updateOrder() {
+    //   let projects = this.projects.map(function(project, index) {
+    //       project.order = index;
+    //       return project;
+    //   });
+    //   console.log(this.grouped);
+    //   Object.keys(this.grouped).forEach(key => {
+    //     const user = this.grouped[key];
+    //     console.log(user);
+    //   });
+    //   if (this.debounce) return;
+    //   this.debounce = setTimeout(function(projects) {
+    //     this.debounce = false
+    //     let uri = `/api/project/order`;
+    //     this.axios.post(uri, {projects: projects}).then((response) => {
+    //       this.$router.push({name: 'projects'});
+    //     });
+    //   }.bind(this, projects), 1000);
+    //   this.$notify({type: 'success', text: 'Reihenfolge angepasst'});
+    // },
+    updateOrder: function updateOrder(groupIndex) {
+      var projects = this.groupedProjects[groupIndex].map(function (project, index) {
+        project.order = index;
+        return project;
+      });
+      if (this.debounce) return;
+      this.debounce = setTimeout(function (projects) {
+        var _this5 = this;
+
+        this.debounce = false;
+        var uri = "/api/project/order";
+        this.axios.post(uri, {
+          projects: projects
+        }).then(function (response) {
+          _this5.fetch();
+        });
+      }.bind(this, projects), 500);
+      this.$notify({
+        type: "success",
+        text: "Reihenfolge angepasst"
+      });
+    },
+    clearSearch: function clearSearch() {
+      this.search = "";
+    }
+  },
+  computed: {
+    grouped: function grouped() {
+      var _this6 = this;
+
+      var filteredProjects = this.projects;
+
+      var filter = function filter(c) {
+        return c.name.de.toLowerCase().includes(_this6.search.toLowerCase()) || c.category.name.de.toLowerCase().includes(_this6.search.toLowerCase()) || c.category_type.name_singular.de.toLowerCase().includes(_this6.search.toLowerCase()) || c.status.toLowerCase().includes(_this6.search.toLowerCase());
+      };
+
+      if (this.search) {
+        filteredProjects = this.projects.filter(filter);
+      }
+
+      this.groupedProjects = _.groupBy(filteredProjects, "category_type_id");
+      return this.groupedProjects;
     }
   }
 });
@@ -7312,6 +7702,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _tinymce_tinymce_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @tinymce/tinymce-vue */ "./node_modules/@tinymce/tinymce-vue/lib/es2015/main/ts/index.js");
 /* harmony import */ var _config_years_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/config/years.js */ "./resources/js/admin/config/years.js");
 /* harmony import */ var _mixins_helpers__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/mixins/helpers */ "./resources/js/admin/mixins/helpers.js");
+/* harmony import */ var _mixins_progress__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/mixins/progress */ "./resources/js/admin/mixins/progress.js");
 //
 //
 //
@@ -7659,6 +8050,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
@@ -7679,7 +8071,7 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     type: String
   },
-  mixins: [_mixins_helpers__WEBPACK_IMPORTED_MODULE_9__["default"]],
+  mixins: [_mixins_helpers__WEBPACK_IMPORTED_MODULE_9__["default"], _mixins_progress__WEBPACK_IMPORTED_MODULE_10__["default"]],
   data: function data() {
     return {
       // fields with possible errors
@@ -7933,22 +8325,26 @@ __webpack_require__.r(__webpack_exports__);
       return "/media/".concat(file, "/sm");
     },
     // Delete a single file by name
-    deleteFile: function deleteFile(file) {
+    deleteFile: function deleteFile(file, event) {
       var _this6 = this;
 
       if (confirm('Bitte löschen bestätigen!')) {
         var uri = "/api/project/file/delete/".concat(file);
+        var el = this.progress(event.target);
         this.axios["delete"](uri).then(function (response) {
           _this6.project.downloads.splice(_this6.project.downloads.indexOf(file), 1);
+
+          _this6.progress(el);
         });
       }
     },
-    deleteImage: function deleteImage(image) {
+    deleteImage: function deleteImage(image, event) {
       var _this7 = this;
 
       if (confirm('Bitte löschen bestätigen!')) {
         var uri = "/api/project/image/delete/".concat(image),
             self = this;
+        var el = this.progress(event.target);
         this.axios["delete"](uri).then(function (response) {
           self.project.images.splice(_this7.project.images.indexOf(image), 1);
         })["catch"](function (error) {
@@ -7956,13 +8352,11 @@ __webpack_require__.r(__webpack_exports__);
             type: 'error',
             text: error.response.data
           });
+          this.progress(el);
         });
       }
     },
-    // Update order
-    updateImageOrder: function updateImageOrder() {},
-    updateFileOrder: function updateFileOrder() {},
-    toggleFile: function toggleFile(file) {
+    toggleFile: function toggleFile(file, event) {
       var _this8 = this;
 
       if (file.id === null) {
@@ -7972,16 +8366,19 @@ __webpack_require__.r(__webpack_exports__);
         this.project.downloads[index].publish = file.publish == 1 ? 0 : 1;
       } else {
         var uri = "/api/project/file/status/".concat(file.id);
+        var el = this.progress(event.target);
         this.axios.get(uri).then(function (response) {
           var index = _this8.project.downloads.findIndex(function (x) {
             return x.id === file.id;
           });
 
           _this8.project.downloads[index].publish = response.data;
+
+          _this8.progress(el);
         });
       }
     },
-    toggleImage: function toggleImage(image) {
+    toggleImage: function toggleImage(image, event) {
       var _this9 = this;
 
       if (image.id === null) {
@@ -7991,12 +8388,15 @@ __webpack_require__.r(__webpack_exports__);
         this.project.images[index].publish = image.publish == 1 ? 0 : 1;
       } else {
         var uri = "/api/project/image/status/".concat(image.id);
+        var el = this.progress(event.target);
         this.axios.get(uri).then(function (response) {
           var index = _this9.project.images.findIndex(function (x) {
             return x.id === image.id;
           });
 
           _this9.project.images[index].publish = response.data;
+
+          _this9.progress(el);
         });
       }
     },
@@ -8266,10 +8666,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-loading-overlay */ "./node_modules/vue-loading-overlay/dist/vue-loading.min.js");
-/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_project_grid_Media_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/components/project/grid/Media.vue */ "./resources/js/admin/components/project/grid/Media.vue");
-/* harmony import */ var _components_project_grid_ButtonAdd_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/project/grid/ButtonAdd.vue */ "./resources/js/admin/components/project/grid/ButtonAdd.vue");
+/* harmony import */ var _components_project_grid_Media_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/components/project/grid/Media.vue */ "./resources/js/admin/components/project/grid/Media.vue");
+/* harmony import */ var _components_project_grid_ButtonAdd_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/components/project/grid/ButtonAdd.vue */ "./resources/js/admin/components/project/grid/ButtonAdd.vue");
 //
 //
 //
@@ -8377,20 +8775,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    loading: vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0___default.a,
-    ButtonAdd: _components_project_grid_ButtonAdd_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-    GridMedia: _components_project_grid_Media_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+    ButtonAdd: _components_project_grid_ButtonAdd_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    GridMedia: _components_project_grid_Media_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   data: function data() {
     return {
       hasOverlay: false,
       isLoading: false,
-      fullPage: false,
       tmpGridId: null,
       tmpPosition: null,
       // Project images
@@ -8626,6 +9023,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _layout_PageHeader_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/layout/PageHeader.vue */ "./resources/js/admin/layout/PageHeader.vue");
 /* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuedraggable */ "./node_modules/vuedraggable/dist/vuedraggable.common.js");
 /* harmony import */ var vuedraggable__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuedraggable__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _mixins_progress__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/mixins/progress */ "./resources/js/admin/mixins/progress.js");
 //
 //
 //
@@ -8666,6 +9064,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -8673,6 +9092,7 @@ __webpack_require__.r(__webpack_exports__);
     draggable: vuedraggable__WEBPACK_IMPORTED_MODULE_1___default.a,
     PageHeader: _layout_PageHeader_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
+  mixins: [_mixins_progress__WEBPACK_IMPORTED_MODULE_2__["default"]],
   data: function data() {
     return {
       team: [],
@@ -8686,43 +9106,50 @@ __webpack_require__.r(__webpack_exports__);
     fetch: function fetch() {
       var _this = this;
 
-      var uri = '/api/team/get';
+      var uri = "/api/team/get";
       this.axios.get(uri).then(function (response) {
         _this.team = response.data.data;
       });
     },
-    destroy: function destroy(id) {
+    destroy: function destroy(id, event) {
       var _this2 = this;
 
-      if (confirm('Bitte löschen bestätigen!')) {
+      if (confirm("Bitte löschen bestätigen!")) {
         var uri = "/api/team/destroy/".concat(id);
+        var el = this.progress(event.target);
         this.axios["delete"](uri).then(function (response) {
           _this2.fetch();
 
           _this2.$notify({
-            type: 'success',
-            text: 'Eintrag gelöscht'
+            type: "success",
+            text: "Eintrag gelöscht"
           });
+
+          _this2.progress(el);
         });
       }
     },
-    clone: function clone(id) {
+    clone: function clone(id, event) {
       var _this3 = this;
 
       var uri = "/api/team/clone/".concat(id);
+      var el = this.progress(event.target);
       this.axios.get(uri).then(function (response) {
         _this3.team.push(response.data);
 
         _this3.$notify({
-          type: 'success',
-          text: 'Eintrag kopiert'
+          type: "success",
+          text: "Eintrag kopiert"
         });
+
+        _this3.progress(el);
       });
     },
-    toggleStatus: function toggleStatus(id) {
+    toggleStatus: function toggleStatus(id, event) {
       var _this4 = this;
 
       var uri = "/api/team/status/".concat(id);
+      var el = this.progress(event.target);
       this.axios.get(uri).then(function (response) {
         var index = _this4.team.findIndex(function (x) {
           return x.id === id;
@@ -8731,9 +9158,11 @@ __webpack_require__.r(__webpack_exports__);
         _this4.team[index].publish = response.data;
 
         _this4.$notify({
-          type: 'success',
-          text: 'Status angepasst'
+          type: "success",
+          text: "Status angepasst"
         });
+
+        _this4.progress(el);
       });
     },
     updateOrder: function updateOrder() {
@@ -8751,13 +9180,13 @@ __webpack_require__.r(__webpack_exports__);
           team: team
         }).then(function (response) {
           _this5.$router.push({
-            name: 'team'
+            name: "team"
           });
         });
       }.bind(this, team), 1000);
       this.$notify({
-        type: 'success',
-        text: 'Reihenfolge angepasst'
+        type: "success",
+        text: "Reihenfolge angepasst"
       });
     }
   }
@@ -8781,6 +9210,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _tinymce_tinymce_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @tinymce/tinymce-vue */ "./node_modules/@tinymce/tinymce-vue/lib/es2015/main/ts/index.js");
 /* harmony import */ var _mixins_helpers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/mixins/helpers */ "./resources/js/admin/mixins/helpers.js");
 /* harmony import */ var vue_masked_input__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vue-masked-input */ "./node_modules/vue-masked-input/dist/maskedInput.js");
+/* harmony import */ var _mixins_progress__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/mixins/progress */ "./resources/js/admin/mixins/progress.js");
 //
 //
 //
@@ -8886,6 +9316,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
@@ -8903,7 +9334,7 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     type: String
   },
-  mixins: [_mixins_helpers__WEBPACK_IMPORTED_MODULE_5__["default"]],
+  mixins: [_mixins_helpers__WEBPACK_IMPORTED_MODULE_5__["default"], _mixins_progress__WEBPACK_IMPORTED_MODULE_7__["default"]],
   data: function data() {
     return {
       // fields to validate
@@ -9036,13 +9467,16 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     // Delete a single file by name
-    deleteImageUpload: function deleteImageUpload(file) {
+    deleteImageUpload: function deleteImageUpload(file, event) {
       var _this4 = this;
 
       if (confirm("Bitte löschen bestätigen!")) {
         var uri = "/api/team/delete/file/".concat(file);
+        var el = this.progress(event.target);
         this.axios["delete"](uri).then(function (response) {
           _this4.team.media = null;
+
+          _this4.progress(el);
         });
       }
     }
@@ -9135,8 +9569,8 @@ __webpack_require__.r(__webpack_exports__);
       this.$refs.dropzone_file.removeFile(asset);
       this.$parent.afterFileUpload(asset);
     },
-    deleteFileUpload: function deleteFileUpload(asset) {
-      this.$parent.deleteFileUpload(asset);
+    deleteFileUpload: function deleteFileUpload(asset, event) {
+      this.$parent.deleteFileUpload(asset, event);
     },
     getAssetUri: function getAssetUri(asset) {
       return "/storage/media/downloads/".concat(asset);
@@ -9225,8 +9659,8 @@ __webpack_require__.r(__webpack_exports__);
       this.$refs.dropzone_image.removeFile(asset);
       this.$parent.afterImageUpload(asset);
     },
-    deleteImageUpload: function deleteImageUpload(asset) {
-      this.$parent.deleteImageUpload(asset);
+    deleteImageUpload: function deleteImageUpload(asset, $event) {
+      this.$parent.deleteImageUpload(asset, $event);
     },
     getAssetUri: function getAssetUri(asset) {
       return "/media/".concat(asset, "/sm");
@@ -31031,7 +31465,10 @@ var render = function() {
                                       on: {
                                         click: function($event) {
                                           $event.preventDefault()
-                                          return _vm.toggleStatus(award.id)
+                                          return _vm.toggleStatus(
+                                            award.id,
+                                            $event
+                                          )
                                         }
                                       }
                                     }),
@@ -31052,7 +31489,7 @@ var render = function() {
                                       on: {
                                         click: function($event) {
                                           $event.preventDefault()
-                                          return _vm.clone(award.id)
+                                          return _vm.clone(award.id, $event)
                                         }
                                       }
                                     }),
@@ -31063,7 +31500,7 @@ var render = function() {
                                       on: {
                                         click: function($event) {
                                           $event.preventDefault()
-                                          return _vm.destroy(award.id)
+                                          return _vm.destroy(award.id, $event)
                                         }
                                       }
                                     })
@@ -31502,7 +31939,7 @@ var render = function() {
                               class: [
                                 book.publish == 0 ? "is-disabled" : "",
                                 "list-item",
-                                "list-item--sortable"
+                                "is-sortable"
                               ]
                             },
                             [
@@ -31525,7 +31962,7 @@ var render = function() {
                                     on: {
                                       click: function($event) {
                                         $event.preventDefault()
-                                        return _vm.toggleStatus(book.id)
+                                        return _vm.toggleStatus(book.id, $event)
                                       }
                                     }
                                   }),
@@ -31546,7 +31983,7 @@ var render = function() {
                                     on: {
                                       click: function($event) {
                                         $event.preventDefault()
-                                        return _vm.clone(book.id)
+                                        return _vm.clone(book.id, $event)
                                       }
                                     }
                                   }),
@@ -31557,7 +31994,7 @@ var render = function() {
                                     on: {
                                       click: function($event) {
                                         $event.preventDefault()
-                                        return _vm.destroy(book.id)
+                                        return _vm.destroy(book.id, $event)
                                       }
                                     }
                                   })
@@ -32028,13 +32465,19 @@ var render = function() {
                                       [
                                         _c("div", [
                                           _vm._v(
-                                            _vm._s(
-                                              categoryType.name_singular.de
-                                            )
+                                            "\n                      " +
+                                              _vm._s(
+                                                categoryType.name_singular.de
+                                              ) +
+                                              "\n                      "
                                           ),
                                           _c("br"),
                                           _vm._v(
-                                            _vm._s(categoryType.name_plural.de)
+                                            "\n                      " +
+                                              _vm._s(
+                                                categoryType.name_plural.de
+                                              ) +
+                                              "\n                    "
                                           )
                                         ]),
                                         _vm._v(" "),
@@ -32057,7 +32500,8 @@ var render = function() {
                                                 click: function($event) {
                                                   $event.preventDefault()
                                                   return _vm.toggleTypeStatus(
-                                                    categoryType.id
+                                                    categoryType.id,
+                                                    $event
                                                   )
                                                 }
                                               }
@@ -32084,7 +32528,8 @@ var render = function() {
                                                 click: function($event) {
                                                   $event.preventDefault()
                                                   return _vm.cloneType(
-                                                    categoryType.id
+                                                    categoryType.id,
+                                                    $event
                                                   )
                                                 }
                                               }
@@ -32098,7 +32543,8 @@ var render = function() {
                                                 click: function($event) {
                                                   $event.preventDefault()
                                                   return _vm.destroyType(
-                                                    categoryType.id
+                                                    categoryType.id,
+                                                    $event
                                                   )
                                                 }
                                               }
@@ -32142,7 +32588,7 @@ var render = function() {
                                 on: {
                                   click: function($event) {
                                     $event.preventDefault()
-                                    return _vm.toggleStatus(category.id)
+                                    return _vm.toggleStatus(category.id, $event)
                                   }
                                 }
                               }),
@@ -32163,7 +32609,7 @@ var render = function() {
                                 on: {
                                   click: function($event) {
                                     $event.preventDefault()
-                                    return _vm.clone(category.id)
+                                    return _vm.clone(category.id, $event)
                                   }
                                 }
                               }),
@@ -32174,7 +32620,7 @@ var render = function() {
                                 on: {
                                   click: function($event) {
                                     $event.preventDefault()
-                                    return _vm.destroy(category.id)
+                                    return _vm.destroy(category.id, $event)
                                   }
                                 }
                               })
@@ -32473,7 +32919,10 @@ var render = function() {
                                 on: {
                                   click: function($event) {
                                     $event.preventDefault()
-                                    return _vm.toggleStatus(categoryType.id)
+                                    return _vm.toggleStatus(
+                                      categoryType.id,
+                                      $event
+                                    )
                                   }
                                 }
                               }),
@@ -32494,7 +32943,7 @@ var render = function() {
                                 on: {
                                   click: function($event) {
                                     $event.preventDefault()
-                                    return _vm.clone(categoryType.id)
+                                    return _vm.clone(categoryType.id, $event)
                                   }
                                 }
                               }),
@@ -32505,7 +32954,7 @@ var render = function() {
                                 on: {
                                   click: function($event) {
                                     $event.preventDefault()
-                                    return _vm.destroy(categoryType.id)
+                                    return _vm.destroy(categoryType.id, $event)
                                   }
                                 }
                               })
@@ -32929,85 +33378,65 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("loading", {
-        attrs: {
-          active: _vm.isLoading,
-          "is-full-page": _vm.fullPage,
-          height: 30,
-          width: 30
-        },
-        on: {
-          "update:active": function($event) {
-            _vm.isLoading = $event
-          }
-        }
-      }),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "grids" },
-        [
-          _c("button-create", {
-            attrs: { gridId: _vm.gridId, gridPosition: 0 }
-          }),
-          _vm._v(" "),
-          _c("div", { staticClass: "grid-1fr" }, [
-            _c("div", { staticClass: "span" }, [
-              _c(
-                "div",
-                { staticClass: "grid-1fr-highlight" },
-                _vm._l(_vm.elements, function(element) {
-                  return _c(
-                    "div",
-                    { key: element.id, staticClass: "span" },
-                    [_c("grid-media", { attrs: { element: element } })],
-                    1
-                  )
-                }),
-                0
-              )
-            ])
+  return _c("div", [
+    _c(
+      "div",
+      { staticClass: "grids" },
+      [
+        _c("button-create", { attrs: { gridId: _vm.gridId, gridPosition: 0 } }),
+        _vm._v(" "),
+        _c("div", { staticClass: "grid-1fr" }, [
+          _c("div", { staticClass: "span" }, [
+            _c(
+              "div",
+              { staticClass: "grid-1fr-highlight" },
+              _vm._l(_vm.elements, function(element) {
+                return _c(
+                  "div",
+                  { key: element.id, staticClass: "span" },
+                  [_c("grid-media", { attrs: { element: element } })],
+                  1
+                )
+              }),
+              0
+            )
           ])
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c("div", { class: [_vm.hasOverlay ? "is-visible" : "", "overlay"] }, [
-        _c("div", [
-          _c("a", {
-            staticClass: "icon-close icon-close-overlay",
-            attrs: { href: "javascript:;" },
-            on: {
-              click: function($event) {
-                $event.preventDefault()
-                return _vm.toggleOverlay()
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.showMedia,
-                  expression: "showMedia"
-                }
-              ]
-            },
-            [_c("grid-media-selector", { attrs: { projects: _vm.projects } })],
-            1
-          )
         ])
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c("div", { class: [_vm.hasOverlay ? "is-visible" : "", "overlay"] }, [
+      _c("div", [
+        _c("a", {
+          staticClass: "icon-close-overlay",
+          attrs: { href: "javascript:;" },
+          on: {
+            click: function($event) {
+              $event.preventDefault()
+              return _vm.toggleOverlay()
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.showMedia,
+                expression: "showMedia"
+              }
+            ]
+          },
+          [_c("grid-media-selector", { attrs: { projects: _vm.projects } })],
+          1
+        )
       ])
-    ],
-    1
-  )
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -33037,6 +33466,12 @@ var render = function() {
       _c("page-header"),
       _vm._v(" "),
       _c("notifications", { attrs: { classes: "notification" } }),
+      _vm._v(" "),
+      _c("div", { staticClass: "progress" }, [
+        _c("div", {
+          class: _vm.isLoading ? "is-loading progress__bar" : "progress__bar"
+        })
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "container" }, [
         _c("main", { staticClass: "content", attrs: { role: "main" } }, [
@@ -33287,163 +33722,418 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("loading", {
-        attrs: {
-          active: _vm.isLoading,
-          "is-full-page": _vm.fullPage,
-          height: 30,
-          width: 30
-        },
-        on: {
-          "update:active": function($event) {
-            _vm.isLoading = $event
-          }
-        }
-      }),
+  return _c("div", [
+    _c("div", { staticClass: "progress" }, [
+      _c("div", {
+        class: _vm.isLoading ? "is-loading progress__bar" : "progress__bar"
+      })
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "grids" }, [
+      _vm.layout == "1fr"
+        ? _c("div", [
+            _c("div", { staticClass: "grid-1fr" }, [
+              _c("div", { staticClass: "span" }, [
+                _vm.elements[0] && _vm.elements[0].position == "0"
+                  ? _c("div", [
+                      _vm.elements[0].isMedia
+                        ? _c(
+                            "div",
+                            [
+                              _c("grid-media", {
+                                attrs: { element: _vm.elements[0] }
+                              })
+                            ],
+                            1
+                          )
+                        : _vm._e()
+                    ])
+                  : _c(
+                      "div",
+                      [
+                        _c("buttons-create", {
+                          attrs: {
+                            gridId: _vm.gridId,
+                            gridPosition: 0,
+                            showArticle: false
+                          }
+                        })
+                      ],
+                      1
+                    )
+              ])
+            ])
+          ])
+        : _vm._e(),
       _vm._v(" "),
-      _c("div", { staticClass: "grids" }, [
-        _vm.layout == "1fr"
-          ? _c("div", [
-              _c("div", { staticClass: "grid-1fr" }, [
-                _c("div", { staticClass: "span" }, [
-                  _vm.elements[0] && _vm.elements[0].position == "0"
-                    ? _c("div", [
-                        _vm.elements[0].isMedia
-                          ? _c(
-                              "div",
-                              [
-                                _c("grid-media", {
-                                  attrs: { element: _vm.elements[0] }
-                                })
-                              ],
-                              1
-                            )
-                          : _vm._e()
-                      ])
-                    : _c(
-                        "div",
-                        [
-                          _c("buttons-create", {
-                            attrs: {
-                              gridId: _vm.gridId,
-                              gridPosition: 0,
-                              showArticle: false
-                            }
-                          })
-                        ],
-                        1
-                      )
-                ])
+      _vm.layout == "2fr"
+        ? _c("div", [
+            _c("div", { staticClass: "grid-2fr" }, [
+              _c("div", { staticClass: "span" }, [
+                _vm.elements[0] && _vm.elements[0].position == "0"
+                  ? _c(
+                      "div",
+                      [
+                        _c("grid-media", {
+                          attrs: { element: _vm.elements[0] }
+                        })
+                      ],
+                      1
+                    )
+                  : _c(
+                      "div",
+                      [
+                        _c("buttons-create", {
+                          attrs: {
+                            gridId: _vm.gridId,
+                            gridPosition: 0,
+                            showArticle: false
+                          }
+                        })
+                      ],
+                      1
+                    )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "span" }, [
+                _vm.elements[1] && _vm.elements[1].position == "1"
+                  ? _c(
+                      "div",
+                      [
+                        _c("grid-media", {
+                          attrs: { element: _vm.elements[1] }
+                        })
+                      ],
+                      1
+                    )
+                  : _c(
+                      "div",
+                      [
+                        _c("buttons-create", {
+                          attrs: {
+                            gridId: _vm.gridId,
+                            gridPosition: 1,
+                            showArticle: false
+                          }
+                        })
+                      ],
+                      1
+                    )
               ])
             ])
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.layout == "2fr"
-          ? _c("div", [
-              _c("div", { staticClass: "grid-2fr" }, [
-                _c("div", { staticClass: "span" }, [
-                  _vm.elements[0] && _vm.elements[0].position == "0"
-                    ? _c(
-                        "div",
-                        [
-                          _c("grid-media", {
-                            attrs: { element: _vm.elements[0] }
-                          })
-                        ],
-                        1
-                      )
-                    : _c(
-                        "div",
-                        [
-                          _c("buttons-create", {
-                            attrs: {
-                              gridId: _vm.gridId,
-                              gridPosition: 0,
-                              showArticle: false
-                            }
-                          })
-                        ],
-                        1
-                      )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "span" }, [
-                  _vm.elements[1] && _vm.elements[1].position == "1"
-                    ? _c(
-                        "div",
-                        [
-                          _c("grid-media", {
-                            attrs: { element: _vm.elements[1] }
-                          })
-                        ],
-                        1
-                      )
-                    : _c(
-                        "div",
-                        [
-                          _c("buttons-create", {
-                            attrs: {
-                              gridId: _vm.gridId,
-                              gridPosition: 1,
-                              showArticle: false
-                            }
-                          })
-                        ],
-                        1
-                      )
-                ])
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.layout == "3fr"
+        ? _c("div", [
+            _c("div", { staticClass: "grid-3fr" }, [
+              _c("div", { staticClass: "span" }, [
+                _vm.elements[0] && _vm.elements[0].position == "0"
+                  ? _c("div", [
+                      _vm.elements[0].isMedia
+                        ? _c(
+                            "div",
+                            [
+                              _c("grid-media", {
+                                attrs: { element: _vm.elements[0] }
+                              })
+                            ],
+                            1
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.elements[0].isArticle
+                        ? _c(
+                            "div",
+                            [
+                              _c("grid-article", {
+                                attrs: { element: _vm.elements[0] }
+                              })
+                            ],
+                            1
+                          )
+                        : _vm._e()
+                    ])
+                  : _c(
+                      "div",
+                      [
+                        _c("buttons-create", {
+                          attrs: {
+                            gridId: _vm.gridId,
+                            gridPosition: 0,
+                            showArticle: true
+                          }
+                        })
+                      ],
+                      1
+                    )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "span" }, [
+                _vm.elements[1] && _vm.elements[1].position == "1"
+                  ? _c("div", [
+                      _vm.elements[1].isMedia
+                        ? _c(
+                            "div",
+                            [
+                              _c("grid-media", {
+                                attrs: { element: _vm.elements[1] }
+                              })
+                            ],
+                            1
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.elements[1].isArticle
+                        ? _c(
+                            "div",
+                            [
+                              _c("grid-article", {
+                                attrs: { element: _vm.elements[1] }
+                              })
+                            ],
+                            1
+                          )
+                        : _vm._e()
+                    ])
+                  : _c(
+                      "div",
+                      [
+                        _c("buttons-create", {
+                          attrs: {
+                            gridId: _vm.gridId,
+                            gridPosition: 1,
+                            showArticle: true
+                          }
+                        })
+                      ],
+                      1
+                    )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "span" }, [
+                _vm.elements[2] && _vm.elements[2].position == "2"
+                  ? _c("div", [
+                      _vm.elements[2].isMedia
+                        ? _c(
+                            "div",
+                            [
+                              _c("grid-media", {
+                                attrs: { element: _vm.elements[2] }
+                              })
+                            ],
+                            1
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.elements[2].isArticle
+                        ? _c(
+                            "div",
+                            [
+                              _c("grid-article", {
+                                attrs: { element: _vm.elements[2] }
+                              })
+                            ],
+                            1
+                          )
+                        : _vm._e()
+                    ])
+                  : _c(
+                      "div",
+                      [
+                        _c("buttons-create", {
+                          attrs: {
+                            gridId: _vm.gridId,
+                            gridPosition: 2,
+                            showArticle: true
+                          }
+                        })
+                      ],
+                      1
+                    )
               ])
             ])
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.layout == "3fr"
-          ? _c("div", [
-              _c("div", { staticClass: "grid-3fr" }, [
-                _c("div", { staticClass: "span" }, [
-                  _vm.elements[0] && _vm.elements[0].position == "0"
-                    ? _c("div", [
-                        _vm.elements[0].isMedia
-                          ? _c(
-                              "div",
-                              [
-                                _c("grid-media", {
-                                  attrs: { element: _vm.elements[0] }
-                                })
-                              ],
-                              1
-                            )
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _vm.elements[0].isArticle
-                          ? _c(
-                              "div",
-                              [
-                                _c("grid-article", {
-                                  attrs: { element: _vm.elements[0] }
-                                })
-                              ],
-                              1
-                            )
-                          : _vm._e()
-                      ])
-                    : _c(
-                        "div",
-                        [
-                          _c("buttons-create", {
-                            attrs: {
-                              gridId: _vm.gridId,
-                              gridPosition: 0,
-                              showArticle: true
-                            }
-                          })
-                        ],
-                        1
-                      )
-                ]),
-                _vm._v(" "),
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.layout == "2fr-1fr"
+        ? _c("div", [
+            _c("div", { staticClass: "grid-2fr-1fr" }, [
+              _c("div", { staticClass: "span" }, [
+                _vm.elements[0] && _vm.elements[0].position == "0"
+                  ? _c(
+                      "div",
+                      [
+                        _c("grid-media", {
+                          attrs: { element: _vm.elements[0] }
+                        })
+                      ],
+                      1
+                    )
+                  : _c(
+                      "div",
+                      [
+                        _c("buttons-create", {
+                          attrs: {
+                            gridId: _vm.gridId,
+                            gridPosition: 0,
+                            showArticle: false
+                          }
+                        })
+                      ],
+                      1
+                    )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "span" }, [
+                _vm.elements[1] && _vm.elements[1].position == "1"
+                  ? _c("div", [
+                      _vm.elements[1].isMedia
+                        ? _c(
+                            "div",
+                            [
+                              _c("grid-media", {
+                                attrs: { element: _vm.elements[1] }
+                              })
+                            ],
+                            1
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.elements[1].isArticle
+                        ? _c(
+                            "div",
+                            [
+                              _c("grid-article", {
+                                attrs: { element: _vm.elements[1] }
+                              })
+                            ],
+                            1
+                          )
+                        : _vm._e()
+                    ])
+                  : _c(
+                      "div",
+                      [
+                        _c("buttons-create", {
+                          attrs: {
+                            gridId: _vm.gridId,
+                            gridPosition: 1,
+                            showArticle: true
+                          }
+                        })
+                      ],
+                      1
+                    )
+              ])
+            ])
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.layout == "1fr-2fr"
+        ? _c("div", [
+            _c("div", { staticClass: "grid-1fr-2fr" }, [
+              _c("div", { staticClass: "span" }, [
+                _vm.elements[0] && _vm.elements[0].position == "0"
+                  ? _c("div", [
+                      _vm.elements[0].isMedia
+                        ? _c(
+                            "div",
+                            [
+                              _c("grid-media", {
+                                attrs: { element: _vm.elements[0] }
+                              })
+                            ],
+                            1
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.elements[0].isArticle
+                        ? _c(
+                            "div",
+                            [
+                              _c("grid-article", {
+                                attrs: { element: _vm.elements[0] }
+                              })
+                            ],
+                            1
+                          )
+                        : _vm._e()
+                    ])
+                  : _c(
+                      "div",
+                      [
+                        _c("buttons-create", {
+                          attrs: {
+                            gridId: _vm.gridId,
+                            gridPosition: 0,
+                            showArticle: true
+                          }
+                        })
+                      ],
+                      1
+                    )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "span" }, [
+                _vm.elements[1] && _vm.elements[1].position == "1"
+                  ? _c(
+                      "div",
+                      [
+                        _c("grid-media", {
+                          attrs: { element: _vm.elements[1] }
+                        })
+                      ],
+                      1
+                    )
+                  : _c(
+                      "div",
+                      [
+                        _c("buttons-create", {
+                          attrs: {
+                            gridId: _vm.gridId,
+                            gridPosition: 1,
+                            showArticle: false
+                          }
+                        })
+                      ],
+                      1
+                    )
+              ])
+            ])
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.layout == "2fr-1fr_stacked"
+        ? _c("div", [
+            _c("div", { staticClass: "grid-2fr-1fr_stacked" }, [
+              _c("div", { staticClass: "span" }, [
+                _vm.elements[0] && _vm.elements[0].position == "0"
+                  ? _c(
+                      "div",
+                      [
+                        _c("grid-media", {
+                          attrs: { element: _vm.elements[0] }
+                        })
+                      ],
+                      1
+                    )
+                  : _c(
+                      "div",
+                      [
+                        _c("buttons-create", {
+                          attrs: {
+                            gridId: _vm.gridId,
+                            gridPosition: 0,
+                            showArticle: false
+                          }
+                        })
+                      ],
+                      1
+                    )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "span grid-stacked" }, [
                 _c("div", { staticClass: "span" }, [
                   _vm.elements[1] && _vm.elements[1].position == "1"
                     ? _c("div", [
@@ -33529,395 +34219,13 @@ var render = function() {
                 ])
               ])
             ])
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.layout == "2fr-1fr"
-          ? _c("div", [
-              _c("div", { staticClass: "grid-2fr-1fr" }, [
-                _c("div", { staticClass: "span" }, [
-                  _vm.elements[0] && _vm.elements[0].position == "0"
-                    ? _c(
-                        "div",
-                        [
-                          _c("grid-media", {
-                            attrs: { element: _vm.elements[0] }
-                          })
-                        ],
-                        1
-                      )
-                    : _c(
-                        "div",
-                        [
-                          _c("buttons-create", {
-                            attrs: {
-                              gridId: _vm.gridId,
-                              gridPosition: 0,
-                              showArticle: false
-                            }
-                          })
-                        ],
-                        1
-                      )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "span" }, [
-                  _vm.elements[1] && _vm.elements[1].position == "1"
-                    ? _c("div", [
-                        _vm.elements[1].isMedia
-                          ? _c(
-                              "div",
-                              [
-                                _c("grid-media", {
-                                  attrs: { element: _vm.elements[1] }
-                                })
-                              ],
-                              1
-                            )
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _vm.elements[1].isArticle
-                          ? _c(
-                              "div",
-                              [
-                                _c("grid-article", {
-                                  attrs: { element: _vm.elements[1] }
-                                })
-                              ],
-                              1
-                            )
-                          : _vm._e()
-                      ])
-                    : _c(
-                        "div",
-                        [
-                          _c("buttons-create", {
-                            attrs: {
-                              gridId: _vm.gridId,
-                              gridPosition: 1,
-                              showArticle: true
-                            }
-                          })
-                        ],
-                        1
-                      )
-                ])
-              ])
-            ])
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.layout == "1fr-2fr"
-          ? _c("div", [
-              _c("div", { staticClass: "grid-1fr-2fr" }, [
-                _c("div", { staticClass: "span" }, [
-                  _vm.elements[0] && _vm.elements[0].position == "0"
-                    ? _c("div", [
-                        _vm.elements[0].isMedia
-                          ? _c(
-                              "div",
-                              [
-                                _c("grid-media", {
-                                  attrs: { element: _vm.elements[0] }
-                                })
-                              ],
-                              1
-                            )
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _vm.elements[0].isArticle
-                          ? _c(
-                              "div",
-                              [
-                                _c("grid-article", {
-                                  attrs: { element: _vm.elements[0] }
-                                })
-                              ],
-                              1
-                            )
-                          : _vm._e()
-                      ])
-                    : _c(
-                        "div",
-                        [
-                          _c("buttons-create", {
-                            attrs: {
-                              gridId: _vm.gridId,
-                              gridPosition: 0,
-                              showArticle: true
-                            }
-                          })
-                        ],
-                        1
-                      )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "span" }, [
-                  _vm.elements[1] && _vm.elements[1].position == "1"
-                    ? _c(
-                        "div",
-                        [
-                          _c("grid-media", {
-                            attrs: { element: _vm.elements[1] }
-                          })
-                        ],
-                        1
-                      )
-                    : _c(
-                        "div",
-                        [
-                          _c("buttons-create", {
-                            attrs: {
-                              gridId: _vm.gridId,
-                              gridPosition: 1,
-                              showArticle: false
-                            }
-                          })
-                        ],
-                        1
-                      )
-                ])
-              ])
-            ])
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.layout == "2fr-1fr_stacked"
-          ? _c("div", [
-              _c("div", { staticClass: "grid-2fr-1fr_stacked" }, [
-                _c("div", { staticClass: "span" }, [
-                  _vm.elements[0] && _vm.elements[0].position == "0"
-                    ? _c(
-                        "div",
-                        [
-                          _c("grid-media", {
-                            attrs: { element: _vm.elements[0] }
-                          })
-                        ],
-                        1
-                      )
-                    : _c(
-                        "div",
-                        [
-                          _c("buttons-create", {
-                            attrs: {
-                              gridId: _vm.gridId,
-                              gridPosition: 0,
-                              showArticle: false
-                            }
-                          })
-                        ],
-                        1
-                      )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "span grid-stacked" }, [
-                  _c("div", { staticClass: "span" }, [
-                    _vm.elements[1] && _vm.elements[1].position == "1"
-                      ? _c("div", [
-                          _vm.elements[1].isMedia
-                            ? _c(
-                                "div",
-                                [
-                                  _c("grid-media", {
-                                    attrs: { element: _vm.elements[1] }
-                                  })
-                                ],
-                                1
-                              )
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _vm.elements[1].isArticle
-                            ? _c(
-                                "div",
-                                [
-                                  _c("grid-article", {
-                                    attrs: { element: _vm.elements[1] }
-                                  })
-                                ],
-                                1
-                              )
-                            : _vm._e()
-                        ])
-                      : _c(
-                          "div",
-                          [
-                            _c("buttons-create", {
-                              attrs: {
-                                gridId: _vm.gridId,
-                                gridPosition: 1,
-                                showArticle: true
-                              }
-                            })
-                          ],
-                          1
-                        )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "span" }, [
-                    _vm.elements[2] && _vm.elements[2].position == "2"
-                      ? _c("div", [
-                          _vm.elements[2].isMedia
-                            ? _c(
-                                "div",
-                                [
-                                  _c("grid-media", {
-                                    attrs: { element: _vm.elements[2] }
-                                  })
-                                ],
-                                1
-                              )
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _vm.elements[2].isArticle
-                            ? _c(
-                                "div",
-                                [
-                                  _c("grid-article", {
-                                    attrs: { element: _vm.elements[2] }
-                                  })
-                                ],
-                                1
-                              )
-                            : _vm._e()
-                        ])
-                      : _c(
-                          "div",
-                          [
-                            _c("buttons-create", {
-                              attrs: {
-                                gridId: _vm.gridId,
-                                gridPosition: 2,
-                                showArticle: true
-                              }
-                            })
-                          ],
-                          1
-                        )
-                  ])
-                ])
-              ])
-            ])
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.layout == "1fr_stacked-2fr"
-          ? _c("div", [
-              _c("div", { staticClass: "grid-1fr_stacked-2fr" }, [
-                _c("div", { staticClass: "span grid-stacked" }, [
-                  _c("div", { staticClass: "span" }, [
-                    _vm.elements[0] && _vm.elements[0].position == "0"
-                      ? _c("div", [
-                          _vm.elements[0].isMedia
-                            ? _c(
-                                "div",
-                                [
-                                  _c("grid-media", {
-                                    attrs: { element: _vm.elements[0] }
-                                  })
-                                ],
-                                1
-                              )
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _vm.elements[0].isArticle
-                            ? _c(
-                                "div",
-                                [
-                                  _c("grid-article", {
-                                    attrs: { element: _vm.elements[0] }
-                                  })
-                                ],
-                                1
-                              )
-                            : _vm._e()
-                        ])
-                      : _c(
-                          "div",
-                          [
-                            _c("buttons-create", {
-                              attrs: {
-                                gridId: _vm.gridId,
-                                gridPosition: 0,
-                                showArticle: true
-                              }
-                            })
-                          ],
-                          1
-                        )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "span" }, [
-                    _vm.elements[1] && _vm.elements[1].position == "1"
-                      ? _c("div", [
-                          _vm.elements[1].isMedia
-                            ? _c(
-                                "div",
-                                [
-                                  _c("grid-media", {
-                                    attrs: { element: _vm.elements[1] }
-                                  })
-                                ],
-                                1
-                              )
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _vm.elements[1].isArticle
-                            ? _c(
-                                "div",
-                                [
-                                  _c("grid-article", {
-                                    attrs: { element: _vm.elements[1] }
-                                  })
-                                ],
-                                1
-                              )
-                            : _vm._e()
-                        ])
-                      : _c(
-                          "div",
-                          [
-                            _c("buttons-create", {
-                              attrs: {
-                                gridId: _vm.gridId,
-                                gridPosition: 1,
-                                showArticle: true
-                              }
-                            })
-                          ],
-                          1
-                        )
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "span" }, [
-                  _vm.elements[2] && _vm.elements[2].position == "2"
-                    ? _c(
-                        "div",
-                        [
-                          _c("grid-media", {
-                            attrs: { element: _vm.elements[2] }
-                          })
-                        ],
-                        1
-                      )
-                    : _c(
-                        "div",
-                        [
-                          _c("buttons-create", {
-                            attrs: {
-                              gridId: _vm.gridId,
-                              gridPosition: 2,
-                              showArticle: false
-                            }
-                          })
-                        ],
-                        1
-                      )
-                ])
-              ])
-            ])
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.layout == "1fr-1fr-1fr_stacked"
-          ? _c("div", [
-              _c("div", { staticClass: "grid-1fr-1fr-1fr_stacked" }, [
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.layout == "1fr_stacked-2fr"
+        ? _c("div", [
+            _c("div", { staticClass: "grid-1fr_stacked-2fr" }, [
+              _c("div", { staticClass: "span grid-stacked" }, [
                 _c("div", { staticClass: "span" }, [
                   _vm.elements[0] && _vm.elements[0].position == "0"
                     ? _c("div", [
@@ -34000,362 +34308,126 @@ var render = function() {
                         ],
                         1
                       )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "span grid-stacked" }, [
-                  _c("div", { staticClass: "span" }, [
-                    _vm.elements[2] && _vm.elements[2].position == "2"
-                      ? _c("div", [
-                          _vm.elements[2].isMedia
-                            ? _c(
-                                "div",
-                                [
-                                  _c("grid-media", {
-                                    attrs: { element: _vm.elements[2] }
-                                  })
-                                ],
-                                1
-                              )
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _vm.elements[2].isArticle
-                            ? _c(
-                                "div",
-                                [
-                                  _c("grid-article", {
-                                    attrs: { element: _vm.elements[2] }
-                                  })
-                                ],
-                                1
-                              )
-                            : _vm._e()
-                        ])
-                      : _c(
-                          "div",
-                          [
-                            _c("buttons-create", {
-                              attrs: {
-                                gridId: _vm.gridId,
-                                gridPosition: 2,
-                                showArticle: true
-                              }
-                            })
-                          ],
-                          1
-                        )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "span" }, [
-                    _vm.elements[3] && _vm.elements[3].position == "3"
-                      ? _c("div", [
-                          _vm.elements[3].isMedia
-                            ? _c(
-                                "div",
-                                [
-                                  _c("grid-media", {
-                                    attrs: { element: _vm.elements[3] }
-                                  })
-                                ],
-                                1
-                              )
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _vm.elements[3].isArticle
-                            ? _c(
-                                "div",
-                                [
-                                  _c("grid-article", {
-                                    attrs: { element: _vm.elements[3] }
-                                  })
-                                ],
-                                1
-                              )
-                            : _vm._e()
-                        ])
-                      : _c(
-                          "div",
-                          [
-                            _c("buttons-create", {
-                              attrs: {
-                                gridId: _vm.gridId,
-                                gridPosition: 3,
-                                showArticle: true
-                              }
-                            })
-                          ],
-                          1
-                        )
-                  ])
                 ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "span" }, [
+                _vm.elements[2] && _vm.elements[2].position == "2"
+                  ? _c(
+                      "div",
+                      [
+                        _c("grid-media", {
+                          attrs: { element: _vm.elements[2] }
+                        })
+                      ],
+                      1
+                    )
+                  : _c(
+                      "div",
+                      [
+                        _c("buttons-create", {
+                          attrs: {
+                            gridId: _vm.gridId,
+                            gridPosition: 2,
+                            showArticle: false
+                          }
+                        })
+                      ],
+                      1
+                    )
               ])
             ])
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.layout == "1fr-1fr_stacked-1fr"
-          ? _c("div", [
-              _c("div", { staticClass: "grid-1fr-1fr_stacked-1fr" }, [
-                _c("div", { staticClass: "span" }, [
-                  _vm.elements[0] && _vm.elements[0].position == "0"
-                    ? _c("div", [
-                        _vm.elements[0].isMedia
-                          ? _c(
-                              "div",
-                              [
-                                _c("grid-media", {
-                                  attrs: { element: _vm.elements[0] }
-                                })
-                              ],
-                              1
-                            )
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _vm.elements[0].isArticle
-                          ? _c(
-                              "div",
-                              [
-                                _c("grid-article", {
-                                  attrs: { element: _vm.elements[0] }
-                                })
-                              ],
-                              1
-                            )
-                          : _vm._e()
-                      ])
-                    : _c(
-                        "div",
-                        [
-                          _c("buttons-create", {
-                            attrs: {
-                              gridId: _vm.gridId,
-                              gridPosition: 0,
-                              showArticle: true
-                            }
-                          })
-                        ],
-                        1
-                      )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "span grid-stacked" }, [
-                  _c("div", { staticClass: "span" }, [
-                    _vm.elements[1] && _vm.elements[1].position == "1"
-                      ? _c("div", [
-                          _vm.elements[1].isMedia
-                            ? _c(
-                                "div",
-                                [
-                                  _c("grid-media", {
-                                    attrs: { element: _vm.elements[1] }
-                                  })
-                                ],
-                                1
-                              )
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _vm.elements[1].isArticle
-                            ? _c(
-                                "div",
-                                [
-                                  _c("grid-article", {
-                                    attrs: { element: _vm.elements[1] }
-                                  })
-                                ],
-                                1
-                              )
-                            : _vm._e()
-                        ])
-                      : _c(
-                          "div",
-                          [
-                            _c("buttons-create", {
-                              attrs: {
-                                gridId: _vm.gridId,
-                                gridPosition: 1,
-                                showArticle: true
-                              }
-                            })
-                          ],
-                          1
-                        )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "span" }, [
-                    _vm.elements[2] && _vm.elements[2].position == "2"
-                      ? _c("div", [
-                          _vm.elements[2].isMedia
-                            ? _c(
-                                "div",
-                                [
-                                  _c("grid-media", {
-                                    attrs: { element: _vm.elements[2] }
-                                  })
-                                ],
-                                1
-                              )
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _vm.elements[2].isArticle
-                            ? _c(
-                                "div",
-                                [
-                                  _c("grid-article", {
-                                    attrs: { element: _vm.elements[2] }
-                                  })
-                                ],
-                                1
-                              )
-                            : _vm._e()
-                        ])
-                      : _c(
-                          "div",
-                          [
-                            _c("buttons-create", {
-                              attrs: {
-                                gridId: _vm.gridId,
-                                gridPosition: 2,
-                                showArticle: true
-                              }
-                            })
-                          ],
-                          1
-                        )
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "span" }, [
-                  _vm.elements[3] && _vm.elements[3].position == "3"
-                    ? _c("div", [
-                        _vm.elements[3].isMedia
-                          ? _c(
-                              "div",
-                              [
-                                _c("grid-media", {
-                                  attrs: { element: _vm.elements[3] }
-                                })
-                              ],
-                              1
-                            )
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _vm.elements[3].isArticle
-                          ? _c(
-                              "div",
-                              [
-                                _c("grid-article", {
-                                  attrs: { element: _vm.elements[3] }
-                                })
-                              ],
-                              1
-                            )
-                          : _vm._e()
-                      ])
-                    : _c(
-                        "div",
-                        [
-                          _c("buttons-create", {
-                            attrs: {
-                              gridId: _vm.gridId,
-                              gridPosition: 3,
-                              showArticle: true
-                            }
-                          })
-                        ],
-                        1
-                      )
-                ])
-              ])
-            ])
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.layout == "1fr_stacked-1fr-1fr"
-          ? _c("div", [
-              _c("div", { staticClass: "grid-1fr_stacked-1fr-1fr" }, [
-                _c("div", { staticClass: "span grid-stacked" }, [
-                  _c("div", { staticClass: "span" }, [
-                    _vm.elements[0] && _vm.elements[0].position == "0"
-                      ? _c("div", [
-                          _vm.elements[0].isMedia
-                            ? _c(
-                                "div",
-                                [
-                                  _c("grid-media", {
-                                    attrs: { element: _vm.elements[0] }
-                                  })
-                                ],
-                                1
-                              )
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _vm.elements[0].isArticle
-                            ? _c(
-                                "div",
-                                [
-                                  _c("grid-article", {
-                                    attrs: { element: _vm.elements[0] }
-                                  })
-                                ],
-                                1
-                              )
-                            : _vm._e()
-                        ])
-                      : _c(
-                          "div",
-                          [
-                            _c("buttons-create", {
-                              attrs: {
-                                gridId: _vm.gridId,
-                                gridPosition: 0,
-                                showArticle: true
-                              }
-                            })
-                          ],
-                          1
-                        )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "span" }, [
-                    _vm.elements[1] && _vm.elements[1].position == "1"
-                      ? _c("div", [
-                          _vm.elements[1].isMedia
-                            ? _c(
-                                "div",
-                                [
-                                  _c("grid-media", {
-                                    attrs: { element: _vm.elements[1] }
-                                  })
-                                ],
-                                1
-                              )
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _vm.elements[1].isArticle
-                            ? _c(
-                                "div",
-                                [
-                                  _c("grid-article", {
-                                    attrs: { element: _vm.elements[1] }
-                                  })
-                                ],
-                                1
-                              )
-                            : _vm._e()
-                        ])
-                      : _c(
-                          "div",
-                          [
-                            _c("buttons-create", {
-                              attrs: {
-                                gridId: _vm.gridId,
-                                gridPosition: 1,
-                                showArticle: true
-                              }
-                            })
-                          ],
-                          1
-                        )
-                  ])
-                ]),
-                _vm._v(" "),
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.layout == "1fr-1fr-1fr_stacked"
+        ? _c("div", [
+            _c("div", { staticClass: "grid-1fr-1fr-1fr_stacked" }, [
+              _c("div", { staticClass: "span" }, [
+                _vm.elements[0] && _vm.elements[0].position == "0"
+                  ? _c("div", [
+                      _vm.elements[0].isMedia
+                        ? _c(
+                            "div",
+                            [
+                              _c("grid-media", {
+                                attrs: { element: _vm.elements[0] }
+                              })
+                            ],
+                            1
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.elements[0].isArticle
+                        ? _c(
+                            "div",
+                            [
+                              _c("grid-article", {
+                                attrs: { element: _vm.elements[0] }
+                              })
+                            ],
+                            1
+                          )
+                        : _vm._e()
+                    ])
+                  : _c(
+                      "div",
+                      [
+                        _c("buttons-create", {
+                          attrs: {
+                            gridId: _vm.gridId,
+                            gridPosition: 0,
+                            showArticle: true
+                          }
+                        })
+                      ],
+                      1
+                    )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "span" }, [
+                _vm.elements[1] && _vm.elements[1].position == "1"
+                  ? _c("div", [
+                      _vm.elements[1].isMedia
+                        ? _c(
+                            "div",
+                            [
+                              _c("grid-media", {
+                                attrs: { element: _vm.elements[1] }
+                              })
+                            ],
+                            1
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.elements[1].isArticle
+                        ? _c(
+                            "div",
+                            [
+                              _c("grid-article", {
+                                attrs: { element: _vm.elements[1] }
+                              })
+                            ],
+                            1
+                          )
+                        : _vm._e()
+                    ])
+                  : _c(
+                      "div",
+                      [
+                        _c("buttons-create", {
+                          attrs: {
+                            gridId: _vm.gridId,
+                            gridPosition: 1,
+                            showArticle: true
+                          }
+                        })
+                      ],
+                      1
+                    )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "span grid-stacked" }, [
                 _c("div", { staticClass: "span" }, [
                   _vm.elements[2] && _vm.elements[2].position == "2"
                     ? _c("div", [
@@ -34441,68 +34513,419 @@ var render = function() {
                 ])
               ])
             ])
-          : _vm._e()
-      ]),
+          ])
+        : _vm._e(),
       _vm._v(" "),
-      _c("div", { class: [_vm.hasOverlay ? "is-visible" : "", "overlay"] }, [
-        _c("div", [
-          _c("a", {
-            staticClass: "icon-close icon-close-overlay",
-            attrs: { href: "javascript:;" },
-            on: {
-              click: function($event) {
-                $event.preventDefault()
-                return _vm.toggleOverlay()
-              }
+      _vm.layout == "1fr-1fr_stacked-1fr"
+        ? _c("div", [
+            _c("div", { staticClass: "grid-1fr-1fr_stacked-1fr" }, [
+              _c("div", { staticClass: "span" }, [
+                _vm.elements[0] && _vm.elements[0].position == "0"
+                  ? _c("div", [
+                      _vm.elements[0].isMedia
+                        ? _c(
+                            "div",
+                            [
+                              _c("grid-media", {
+                                attrs: { element: _vm.elements[0] }
+                              })
+                            ],
+                            1
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.elements[0].isArticle
+                        ? _c(
+                            "div",
+                            [
+                              _c("grid-article", {
+                                attrs: { element: _vm.elements[0] }
+                              })
+                            ],
+                            1
+                          )
+                        : _vm._e()
+                    ])
+                  : _c(
+                      "div",
+                      [
+                        _c("buttons-create", {
+                          attrs: {
+                            gridId: _vm.gridId,
+                            gridPosition: 0,
+                            showArticle: true
+                          }
+                        })
+                      ],
+                      1
+                    )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "span grid-stacked" }, [
+                _c("div", { staticClass: "span" }, [
+                  _vm.elements[1] && _vm.elements[1].position == "1"
+                    ? _c("div", [
+                        _vm.elements[1].isMedia
+                          ? _c(
+                              "div",
+                              [
+                                _c("grid-media", {
+                                  attrs: { element: _vm.elements[1] }
+                                })
+                              ],
+                              1
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.elements[1].isArticle
+                          ? _c(
+                              "div",
+                              [
+                                _c("grid-article", {
+                                  attrs: { element: _vm.elements[1] }
+                                })
+                              ],
+                              1
+                            )
+                          : _vm._e()
+                      ])
+                    : _c(
+                        "div",
+                        [
+                          _c("buttons-create", {
+                            attrs: {
+                              gridId: _vm.gridId,
+                              gridPosition: 1,
+                              showArticle: true
+                            }
+                          })
+                        ],
+                        1
+                      )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "span" }, [
+                  _vm.elements[2] && _vm.elements[2].position == "2"
+                    ? _c("div", [
+                        _vm.elements[2].isMedia
+                          ? _c(
+                              "div",
+                              [
+                                _c("grid-media", {
+                                  attrs: { element: _vm.elements[2] }
+                                })
+                              ],
+                              1
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.elements[2].isArticle
+                          ? _c(
+                              "div",
+                              [
+                                _c("grid-article", {
+                                  attrs: { element: _vm.elements[2] }
+                                })
+                              ],
+                              1
+                            )
+                          : _vm._e()
+                      ])
+                    : _c(
+                        "div",
+                        [
+                          _c("buttons-create", {
+                            attrs: {
+                              gridId: _vm.gridId,
+                              gridPosition: 2,
+                              showArticle: true
+                            }
+                          })
+                        ],
+                        1
+                      )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "span" }, [
+                _vm.elements[3] && _vm.elements[3].position == "3"
+                  ? _c("div", [
+                      _vm.elements[3].isMedia
+                        ? _c(
+                            "div",
+                            [
+                              _c("grid-media", {
+                                attrs: { element: _vm.elements[3] }
+                              })
+                            ],
+                            1
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.elements[3].isArticle
+                        ? _c(
+                            "div",
+                            [
+                              _c("grid-article", {
+                                attrs: { element: _vm.elements[3] }
+                              })
+                            ],
+                            1
+                          )
+                        : _vm._e()
+                    ])
+                  : _c(
+                      "div",
+                      [
+                        _c("buttons-create", {
+                          attrs: {
+                            gridId: _vm.gridId,
+                            gridPosition: 3,
+                            showArticle: true
+                          }
+                        })
+                      ],
+                      1
+                    )
+              ])
+            ])
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.layout == "1fr_stacked-1fr-1fr"
+        ? _c("div", [
+            _c("div", { staticClass: "grid-1fr_stacked-1fr-1fr" }, [
+              _c("div", { staticClass: "span grid-stacked" }, [
+                _c("div", { staticClass: "span" }, [
+                  _vm.elements[0] && _vm.elements[0].position == "0"
+                    ? _c("div", [
+                        _vm.elements[0].isMedia
+                          ? _c(
+                              "div",
+                              [
+                                _c("grid-media", {
+                                  attrs: { element: _vm.elements[0] }
+                                })
+                              ],
+                              1
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.elements[0].isArticle
+                          ? _c(
+                              "div",
+                              [
+                                _c("grid-article", {
+                                  attrs: { element: _vm.elements[0] }
+                                })
+                              ],
+                              1
+                            )
+                          : _vm._e()
+                      ])
+                    : _c(
+                        "div",
+                        [
+                          _c("buttons-create", {
+                            attrs: {
+                              gridId: _vm.gridId,
+                              gridPosition: 0,
+                              showArticle: true
+                            }
+                          })
+                        ],
+                        1
+                      )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "span" }, [
+                  _vm.elements[1] && _vm.elements[1].position == "1"
+                    ? _c("div", [
+                        _vm.elements[1].isMedia
+                          ? _c(
+                              "div",
+                              [
+                                _c("grid-media", {
+                                  attrs: { element: _vm.elements[1] }
+                                })
+                              ],
+                              1
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.elements[1].isArticle
+                          ? _c(
+                              "div",
+                              [
+                                _c("grid-article", {
+                                  attrs: { element: _vm.elements[1] }
+                                })
+                              ],
+                              1
+                            )
+                          : _vm._e()
+                      ])
+                    : _c(
+                        "div",
+                        [
+                          _c("buttons-create", {
+                            attrs: {
+                              gridId: _vm.gridId,
+                              gridPosition: 1,
+                              showArticle: true
+                            }
+                          })
+                        ],
+                        1
+                      )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "span" }, [
+                _vm.elements[2] && _vm.elements[2].position == "2"
+                  ? _c("div", [
+                      _vm.elements[2].isMedia
+                        ? _c(
+                            "div",
+                            [
+                              _c("grid-media", {
+                                attrs: { element: _vm.elements[2] }
+                              })
+                            ],
+                            1
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.elements[2].isArticle
+                        ? _c(
+                            "div",
+                            [
+                              _c("grid-article", {
+                                attrs: { element: _vm.elements[2] }
+                              })
+                            ],
+                            1
+                          )
+                        : _vm._e()
+                    ])
+                  : _c(
+                      "div",
+                      [
+                        _c("buttons-create", {
+                          attrs: {
+                            gridId: _vm.gridId,
+                            gridPosition: 2,
+                            showArticle: true
+                          }
+                        })
+                      ],
+                      1
+                    )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "span" }, [
+                _vm.elements[3] && _vm.elements[3].position == "3"
+                  ? _c("div", [
+                      _vm.elements[3].isMedia
+                        ? _c(
+                            "div",
+                            [
+                              _c("grid-media", {
+                                attrs: { element: _vm.elements[3] }
+                              })
+                            ],
+                            1
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.elements[3].isArticle
+                        ? _c(
+                            "div",
+                            [
+                              _c("grid-article", {
+                                attrs: { element: _vm.elements[3] }
+                              })
+                            ],
+                            1
+                          )
+                        : _vm._e()
+                    ])
+                  : _c(
+                      "div",
+                      [
+                        _c("buttons-create", {
+                          attrs: {
+                            gridId: _vm.gridId,
+                            gridPosition: 3,
+                            showArticle: true
+                          }
+                        })
+                      ],
+                      1
+                    )
+              ])
+            ])
+          ])
+        : _vm._e()
+    ]),
+    _vm._v(" "),
+    _c("div", { class: [_vm.hasOverlay ? "is-visible" : "", "overlay"] }, [
+      _c("div", [
+        _c("a", {
+          staticClass: "icon-close-overlay",
+          attrs: { href: "javascript:;" },
+          on: {
+            click: function($event) {
+              $event.preventDefault()
+              return _vm.toggleOverlay()
             }
-          }),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.showMedia,
-                  expression: "showMedia"
-                }
-              ]
-            },
-            [
-              _c(_vm.selector, {
-                tag: "grid-media-selector",
-                attrs: { projects: _vm.projects }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.showNews,
-                  expression: "showNews"
-                }
-              ]
-            },
-            [
-              _c(_vm.selector, {
-                tag: "grid-article-selector",
-                attrs: { news: _vm.news }
-              })
-            ],
-            1
-          )
-        ])
+          }
+        }),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.showMedia,
+                expression: "showMedia"
+              }
+            ]
+          },
+          [
+            _c(_vm.selector, {
+              tag: "grid-media-selector",
+              attrs: { projects: _vm.projects }
+            })
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.showNews,
+                expression: "showNews"
+              }
+            ]
+          },
+          [
+            _c(_vm.selector, {
+              tag: "grid-article-selector",
+              attrs: { news: _vm.news }
+            })
+          ],
+          1
+        )
       ])
-    ],
-    1
-  )
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -34714,7 +35137,7 @@ var render = function() {
                               class: [
                                 job.publish == 0 ? "is-disabled" : "",
                                 "list-item",
-                                "list-item--sortable"
+                                "is-sortable"
                               ]
                             },
                             [
@@ -34742,7 +35165,7 @@ var render = function() {
                                     on: {
                                       click: function($event) {
                                         $event.preventDefault()
-                                        return _vm.toggleStatus(job.id)
+                                        return _vm.toggleStatus(job.id, $event)
                                       }
                                     }
                                   }),
@@ -34763,7 +35186,7 @@ var render = function() {
                                     on: {
                                       click: function($event) {
                                         $event.preventDefault()
-                                        return _vm.clone(job.id)
+                                        return _vm.clone(job.id, $event)
                                       }
                                     }
                                   }),
@@ -34774,7 +35197,7 @@ var render = function() {
                                     on: {
                                       click: function($event) {
                                         $event.preventDefault()
-                                        return _vm.destroy(job.id)
+                                        return _vm.destroy(job.id, $event)
                                       }
                                     }
                                   })
@@ -35189,7 +35612,10 @@ var render = function() {
                                       on: {
                                         click: function($event) {
                                           $event.preventDefault()
-                                          return _vm.toggleStatus(lecture.id)
+                                          return _vm.toggleStatus(
+                                            lecture.id,
+                                            $event
+                                          )
                                         }
                                       }
                                     }),
@@ -35210,7 +35636,7 @@ var render = function() {
                                       on: {
                                         click: function($event) {
                                           $event.preventDefault()
-                                          return _vm.clone(lecture.id)
+                                          return _vm.clone(lecture.id, $event)
                                         }
                                       }
                                     }),
@@ -35221,7 +35647,7 @@ var render = function() {
                                       on: {
                                         click: function($event) {
                                           $event.preventDefault()
-                                          return _vm.destroy(lecture.id)
+                                          return _vm.destroy(lecture.id, $event)
                                         }
                                       }
                                     })
@@ -35665,7 +36091,7 @@ var render = function() {
                                 on: {
                                   click: function($event) {
                                     $event.preventDefault()
-                                    return _vm.toggleStatus(n.id)
+                                    return _vm.toggleStatus(n.id, $event)
                                   }
                                 }
                               }),
@@ -35686,7 +36112,7 @@ var render = function() {
                                 on: {
                                   click: function($event) {
                                     $event.preventDefault()
-                                    return _vm.clone(n.id)
+                                    return _vm.clone(n.id, $event)
                                   }
                                 }
                               }),
@@ -35697,7 +36123,7 @@ var render = function() {
                                 on: {
                                   click: function($event) {
                                     $event.preventDefault()
-                                    return _vm.destroy(n.id)
+                                    return _vm.destroy(n.id, $event)
                                   }
                                 }
                               })
@@ -36140,20 +36566,20 @@ var render = function() {
                               },
                               [
                                 _c("div", { staticClass: "list-item-body" }, [
-                                  _c("h3", [_vm._v(_vm._s(p.title.de) + " ")]),
+                                  _c("h3", [_vm._v(_vm._s(p.title.de))]),
                                   _vm._v(" "),
                                   _c("p", [_vm._v(_vm._s(p.description.de))]),
                                   _vm._v(" "),
                                   p.project
                                     ? _c("span", [
                                         _vm._v(
-                                          "\n                  Projekt: " +
+                                          "Projekt: " +
                                             _vm._s(p.project.name.de) +
                                             ", " +
                                             _vm._s(p.project.location.de) +
                                             " (" +
                                             _vm._s(p.project.year) +
-                                            ")\n                "
+                                            ")"
                                         )
                                       ])
                                     : _vm._e()
@@ -36174,7 +36600,7 @@ var render = function() {
                                       on: {
                                         click: function($event) {
                                           $event.preventDefault()
-                                          return _vm.toggleStatus(p.id)
+                                          return _vm.toggleStatus(p.id, $event)
                                         }
                                       }
                                     }),
@@ -36195,7 +36621,7 @@ var render = function() {
                                       on: {
                                         click: function($event) {
                                           $event.preventDefault()
-                                          return _vm.clone(p.id)
+                                          return _vm.clone(p.id, $event)
                                         }
                                       }
                                     }),
@@ -36206,7 +36632,7 @@ var render = function() {
                                       on: {
                                         click: function($event) {
                                           $event.preventDefault()
-                                          return _vm.destroy(p.id)
+                                          return _vm.destroy(p.id, $event)
                                         }
                                       }
                                     })
@@ -36270,11 +36696,7 @@ var render = function() {
                           },
                           _vm._l(_vm.options.years, function(option) {
                             return _c("option", { key: option.value }, [
-                              _vm._v(
-                                "\n                      " +
-                                  _vm._s(option) +
-                                  "\n                    "
-                              )
+                              _vm._v(_vm._s(option))
                             ])
                           }),
                           0
@@ -36846,7 +37268,7 @@ var render = function() {
               _vm.projects.length
                 ? _c(
                     "div",
-                    _vm._l(_vm.grouped, function(categories) {
+                    _vm._l(_vm.grouped, function(categories, index) {
                       return _c("div", { key: categories.index }, [
                         _c("div", { staticClass: "list-items" }, [
                           _c(
@@ -36878,156 +37300,188 @@ var render = function() {
                                 ])
                               }),
                               _vm._v(" "),
-                              _vm._l(categories, function(project) {
-                                return _c("div", { key: project.id }, [
-                                  _c(
-                                    "div",
-                                    {
-                                      class: [
-                                        project.publish == 0
-                                          ? "is-disabled"
-                                          : "",
-                                        "list-item",
-                                        "list-item--project"
-                                      ],
-                                      attrs: { "data-icons": "6" }
+                              _c(
+                                "draggable",
+                                {
+                                  attrs: {
+                                    "ghost-class": "draggable-ghost",
+                                    tag: "div"
+                                  },
+                                  on: {
+                                    end: function($event) {
+                                      return _vm.updateOrder(index)
+                                    }
+                                  },
+                                  model: {
+                                    value: _vm.grouped[index],
+                                    callback: function($$v) {
+                                      _vm.$set(_vm.grouped, index, $$v)
                                     },
-                                    [
-                                      _c(
-                                        "div",
-                                        { staticClass: "list-item-body" },
-                                        [
-                                          _c("h3", [
-                                            _vm._v(
-                                              _vm._s(project.name.de) +
-                                                ", " +
-                                                _vm._s(project.location.de)
-                                            )
-                                          ]),
-                                          _vm._v(" "),
-                                          _c("span", [
-                                            _vm._v(
-                                              _vm._s(project.year) +
-                                                ", " +
-                                                _vm._s(project.status)
-                                            )
-                                          ]),
-                                          _vm._v(" "),
-                                          project.competition
-                                            ? _c("span", [
-                                                _vm._v(
-                                                  "Wettbewerb (" +
-                                                    _vm._s(
-                                                      project.competition
-                                                    ) +
-                                                    ")"
-                                                )
-                                              ])
-                                            : _vm._e()
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        {
-                                          staticClass: "list-item-action",
-                                          attrs: { "data-icons": "6" }
-                                        },
-                                        [
-                                          _c("router-link", {
-                                            class: [
-                                              project.images.length > 0
-                                                ? ""
-                                                : "is-disabled",
-                                              "icon-grid icon-mini"
-                                            ],
-                                            attrs: {
-                                              to: {
-                                                name: "project-grids",
-                                                params: { id: project.id }
-                                              },
-                                              title: "Layout"
-                                            }
-                                          }),
-                                          _vm._v(" "),
-                                          _c("a", {
-                                            class: [
-                                              project.publish == 1
-                                                ? "icon-eye"
-                                                : "icon-eye-off",
-                                              "icon-mini"
-                                            ],
-                                            attrs: {
-                                              href: "javascript:;",
-                                              title: "Publizieren"
-                                            },
-                                            on: {
-                                              click: function($event) {
-                                                $event.preventDefault()
-                                                return _vm.toggleStatus(
-                                                  project.id
-                                                )
-                                              }
-                                            }
-                                          }),
-                                          _vm._v(" "),
-                                          _c("a", {
-                                            staticClass:
-                                              "icon-external-link icon-mini",
-                                            attrs: {
-                                              href:
-                                                "/bauten/vorschau/" +
-                                                project.id,
-                                              target: "_blank",
-                                              title: "Vorschau"
-                                            }
-                                          }),
-                                          _vm._v(" "),
-                                          _c("router-link", {
-                                            staticClass: "icon-edit icon-mini",
-                                            attrs: {
-                                              to: {
-                                                name: "project-edit",
-                                                params: { id: project.id }
-                                              },
-                                              title: "Bearbeiten"
-                                            }
-                                          }),
-                                          _vm._v(" "),
-                                          _c("a", {
-                                            staticClass: "icon-copy icon-mini",
-                                            attrs: {
-                                              href: "javascript:;",
-                                              title: "Duplizieren"
-                                            },
-                                            on: {
-                                              click: function($event) {
-                                                $event.preventDefault()
-                                                return _vm.clone(project.id)
-                                              }
-                                            }
-                                          }),
-                                          _vm._v(" "),
-                                          _c("a", {
-                                            staticClass: "icon-trash icon-mini",
-                                            attrs: {
-                                              href: "javascript:;",
-                                              title: "Löschen"
-                                            },
-                                            on: {
-                                              click: function($event) {
-                                                $event.preventDefault()
-                                                return _vm.destroy(project.id)
-                                              }
-                                            }
-                                          })
+                                    expression: "grouped[index]"
+                                  }
+                                },
+                                _vm._l(categories, function(project) {
+                                  return _c("div", { key: project.id }, [
+                                    _c(
+                                      "div",
+                                      {
+                                        class: [
+                                          project.publish == 0
+                                            ? "is-disabled"
+                                            : "",
+                                          "list-item",
+                                          "list-item--project is-sortable"
                                         ],
-                                        1
-                                      )
-                                    ]
-                                  )
-                                ])
-                              })
+                                        attrs: { "data-icons": "6" }
+                                      },
+                                      [
+                                        _c(
+                                          "div",
+                                          { staticClass: "list-item-body" },
+                                          [
+                                            _c("h3", [
+                                              _vm._v(
+                                                _vm._s(project.name.de) +
+                                                  ", " +
+                                                  _vm._s(project.location.de)
+                                              )
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("span", [
+                                              _vm._v(
+                                                _vm._s(project.year) +
+                                                  ", " +
+                                                  _vm._s(project.status)
+                                              )
+                                            ]),
+                                            _vm._v(" "),
+                                            project.competition
+                                              ? _c("span", [
+                                                  _vm._v(
+                                                    "Wettbewerb (" +
+                                                      _vm._s(
+                                                        project.competition
+                                                      ) +
+                                                      ")"
+                                                  )
+                                                ])
+                                              : _vm._e()
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass: "list-item-action",
+                                            attrs: { "data-icons": "6" }
+                                          },
+                                          [
+                                            _c("router-link", {
+                                              class: [
+                                                project.images.length > 0
+                                                  ? ""
+                                                  : "is-disabled",
+                                                "icon-grid icon-mini"
+                                              ],
+                                              attrs: {
+                                                to: {
+                                                  name: "project-grids",
+                                                  params: { id: project.id }
+                                                },
+                                                title: "Layout"
+                                              }
+                                            }),
+                                            _vm._v(" "),
+                                            _c("a", {
+                                              class: [
+                                                project.publish == 1
+                                                  ? "icon-eye"
+                                                  : "icon-eye-off",
+                                                "icon-mini"
+                                              ],
+                                              attrs: {
+                                                href: "javascript:;",
+                                                title: "Publizieren"
+                                              },
+                                              on: {
+                                                click: function($event) {
+                                                  $event.preventDefault()
+                                                  return _vm.toggleStatus(
+                                                    project.id,
+                                                    $event
+                                                  )
+                                                }
+                                              }
+                                            }),
+                                            _vm._v(" "),
+                                            _c("a", {
+                                              staticClass:
+                                                "icon-external-link icon-mini",
+                                              attrs: {
+                                                href:
+                                                  "/bauten/vorschau/" +
+                                                  project.id,
+                                                target: "_blank",
+                                                title: "Vorschau"
+                                              }
+                                            }),
+                                            _vm._v(" "),
+                                            _c("router-link", {
+                                              staticClass:
+                                                "icon-edit icon-mini",
+                                              attrs: {
+                                                to: {
+                                                  name: "project-edit",
+                                                  params: { id: project.id }
+                                                },
+                                                title: "Bearbeiten"
+                                              }
+                                            }),
+                                            _vm._v(" "),
+                                            _c("a", {
+                                              staticClass:
+                                                "icon-copy icon-mini",
+                                              attrs: {
+                                                href: "javascript:;",
+                                                title: "Duplizieren"
+                                              },
+                                              on: {
+                                                click: function($event) {
+                                                  $event.preventDefault()
+                                                  return _vm.clone(
+                                                    project.id,
+                                                    $event
+                                                  )
+                                                }
+                                              }
+                                            }),
+                                            _vm._v(" "),
+                                            _c("a", {
+                                              staticClass:
+                                                "icon-trash icon-mini",
+                                              attrs: {
+                                                href: "javascript:;",
+                                                title: "Löschen"
+                                              },
+                                              on: {
+                                                click: function($event) {
+                                                  $event.preventDefault()
+                                                  return _vm.destroy(
+                                                    project.id,
+                                                    $event
+                                                  )
+                                                }
+                                              }
+                                            })
+                                          ],
+                                          1
+                                        )
+                                      ]
+                                    )
+                                  ])
+                                }),
+                                0
+                              )
                             ],
                             2
                           )
@@ -37038,7 +37492,52 @@ var render = function() {
                   )
                 : _c("div", [
                     _c("p", [_vm._v("Es sind keine Projekte vorhanden...")])
+                  ]),
+              _vm._v(" "),
+              _c("footer", { staticClass: "form-footer" }, [
+                _c("div", [
+                  _c("div", { staticClass: "search-wrapper" }, [
+                    _vm.search
+                      ? _c("a", {
+                          staticClass: "icon-delete",
+                          attrs: { href: "javascript:;" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.clearSearch()
+                            }
+                          }
+                        })
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.search,
+                          expression: "search"
+                        }
+                      ],
+                      staticClass: "search",
+                      attrs: {
+                        type: "text",
+                        placeholder:
+                          "Filter nach Projektname, Kategorie, Typ oder Status"
+                      },
+                      domProps: { value: _vm.search },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.search = $event.target.value
+                        }
+                      }
+                    })
                   ])
+                ])
+              ])
             ],
             1
           )
@@ -37920,7 +38419,10 @@ var render = function() {
                                         on: {
                                           click: function($event) {
                                             $event.preventDefault()
-                                            return _vm.toggleImage(image)
+                                            return _vm.toggleImage(
+                                              image,
+                                              $event
+                                            )
                                           }
                                         }
                                       }),
@@ -37942,7 +38444,10 @@ var render = function() {
                                         on: {
                                           click: function($event) {
                                             $event.preventDefault()
-                                            return _vm.deleteImage(image.name)
+                                            return _vm.deleteImage(
+                                              image.name,
+                                              $event
+                                            )
                                           }
                                         }
                                       })
@@ -37995,7 +38500,7 @@ var render = function() {
                                         "div",
                                         { staticClass: "dz-edit-form-row" },
                                         [
-                                          _c("label", [_vm._v("Alt-Tag:")]),
+                                          _c("label", [_vm._v("Legende:")]),
                                           _vm._v(" "),
                                           _c("input", {
                                             directives: [
@@ -38375,7 +38880,7 @@ var render = function() {
                                         on: {
                                           click: function($event) {
                                             $event.preventDefault()
-                                            return _vm.toggleFile(file)
+                                            return _vm.toggleFile(file, $event)
                                           }
                                         }
                                       }),
@@ -38397,7 +38902,10 @@ var render = function() {
                                         on: {
                                           click: function($event) {
                                             $event.preventDefault()
-                                            return _vm.deleteFile(file.name)
+                                            return _vm.deleteFile(
+                                              file.name,
+                                              $event
+                                            )
                                           }
                                         }
                                       })
@@ -38436,7 +38944,7 @@ var render = function() {
                                         "div",
                                         { staticClass: "dz-edit-form-row" },
                                         [
-                                          _c("label", [_vm._v("Alt-Tag:")]),
+                                          _c("label", [_vm._v("Legende:")]),
                                           _vm._v(" "),
                                           _c("input", {
                                             directives: [
@@ -38732,32 +39240,72 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("loading", {
-        attrs: {
-          active: _vm.isLoading,
-          "is-full-page": _vm.fullPage,
-          height: 30,
-          width: 30
-        },
-        on: {
-          "update:active": function($event) {
-            _vm.isLoading = $event
-          }
-        }
-      }),
+  return _c("div", [
+    _c("div", { staticClass: "progress" }, [
+      _c("div", {
+        class: _vm.isLoading ? "is-loading progress__bar" : "progress__bar"
+      })
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "grids" }, [
+      _vm.layout == "2fr"
+        ? _c("div", [
+            _c("div", { staticClass: "grid-2fr" }, [
+              _c("div", { staticClass: "span" }, [
+                _vm.elements[0] && _vm.elements[0].position == "0"
+                  ? _c(
+                      "div",
+                      [
+                        _c("grid-media", {
+                          attrs: { element: _vm.elements[0] }
+                        })
+                      ],
+                      1
+                    )
+                  : _c(
+                      "div",
+                      [
+                        _c("button-add", {
+                          attrs: { gridId: _vm.gridId, gridPosition: 0 }
+                        })
+                      ],
+                      1
+                    )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "span" }, [
+                _vm.elements[1] && _vm.elements[1].position == "1"
+                  ? _c(
+                      "div",
+                      [
+                        _c("grid-media", {
+                          attrs: { element: _vm.elements[1] }
+                        })
+                      ],
+                      1
+                    )
+                  : _c(
+                      "div",
+                      [
+                        _c("button-add", {
+                          attrs: { gridId: _vm.gridId, gridPosition: 1 }
+                        })
+                      ],
+                      1
+                    )
+              ])
+            ])
+          ])
+        : _vm._e(),
       _vm._v(" "),
-      _c("div", { staticClass: "grids" }, [
-        _vm.layout == "2fr"
-          ? _c("div", [
-              _c("div", { staticClass: "grid-2fr" }, [
+      _vm.layout == "1fr_stacked-1fr"
+        ? _c("div", [
+            _c("div", { staticClass: "grid-1fr_stacked-1fr" }, [
+              _c("div", { staticClass: "span grid-stacked" }, [
                 _c("div", { staticClass: "span" }, [
                   _vm.elements[0] && _vm.elements[0].position == "0"
                     ? _c(
                         "div",
-                        { staticStyle: { "background-color": "red" } },
                         [
                           _c("grid-media", {
                             attrs: { element: _vm.elements[0] }
@@ -38797,57 +39345,79 @@ var render = function() {
                         1
                       )
                 ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "span" }, [
+                _vm.elements[2] && _vm.elements[2].position == "2"
+                  ? _c(
+                      "div",
+                      [
+                        _c("grid-media", {
+                          attrs: { element: _vm.elements[2] }
+                        })
+                      ],
+                      1
+                    )
+                  : _c(
+                      "div",
+                      [
+                        _c("button-add", {
+                          attrs: { gridId: _vm.gridId, gridPosition: 2 }
+                        })
+                      ],
+                      1
+                    )
               ])
             ])
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.layout == "1fr_stacked-1fr"
-          ? _c("div", [
-              _c("div", { staticClass: "grid-1fr_stacked-1fr" }, [
-                _c("div", { staticClass: "span grid-stacked" }, [
-                  _c("div", { staticClass: "span" }, [
-                    _vm.elements[0] && _vm.elements[0].position == "0"
-                      ? _c(
-                          "div",
-                          [
-                            _c("grid-media", {
-                              attrs: { element: _vm.elements[0] }
-                            })
-                          ],
-                          1
-                        )
-                      : _c(
-                          "div",
-                          [
-                            _c("button-add", {
-                              attrs: { gridId: _vm.gridId, gridPosition: 0 }
-                            })
-                          ],
-                          1
-                        )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "span" }, [
-                    _vm.elements[1] && _vm.elements[1].position == "1"
-                      ? _c(
-                          "div",
-                          [
-                            _c("grid-media", {
-                              attrs: { element: _vm.elements[1] }
-                            })
-                          ],
-                          1
-                        )
-                      : _c(
-                          "div",
-                          [
-                            _c("button-add", {
-                              attrs: { gridId: _vm.gridId, gridPosition: 1 }
-                            })
-                          ],
-                          1
-                        )
-                  ])
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.layout == "1fr-1fr_stacked"
+        ? _c("div", [
+            _c("div", { staticClass: "grid-1fr-1fr_stacked" }, [
+              _c("div", { staticClass: "span" }, [
+                _vm.elements[0] && _vm.elements[0].position == "0"
+                  ? _c(
+                      "div",
+                      [
+                        _c("grid-media", {
+                          attrs: { element: _vm.elements[0] }
+                        })
+                      ],
+                      1
+                    )
+                  : _c(
+                      "div",
+                      [
+                        _c("button-add", {
+                          attrs: { gridId: _vm.gridId, gridPosition: 0 }
+                        })
+                      ],
+                      1
+                    )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "span grid-stacked" }, [
+                _c("div", { staticClass: "span" }, [
+                  _vm.elements[1] && _vm.elements[1].position == "1"
+                    ? _c(
+                        "div",
+                        [
+                          _c("grid-media", {
+                            attrs: { element: _vm.elements[1] }
+                          })
+                        ],
+                        1
+                      )
+                    : _c(
+                        "div",
+                        [
+                          _c("button-add", {
+                            attrs: { gridId: _vm.gridId, gridPosition: 1 }
+                          })
+                        ],
+                        1
+                      )
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "span" }, [
@@ -38873,139 +39443,64 @@ var render = function() {
                 ])
               ])
             ])
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.layout == "1fr-1fr_stacked"
-          ? _c("div", [
-              _c("div", { staticClass: "grid-1fr-1fr_stacked" }, [
-                _c("div", { staticClass: "span" }, [
-                  _vm.elements[0] && _vm.elements[0].position == "0"
-                    ? _c(
-                        "div",
-                        [
-                          _c("grid-media", {
-                            attrs: { element: _vm.elements[0] }
-                          })
-                        ],
-                        1
-                      )
-                    : _c(
-                        "div",
-                        [
-                          _c("button-add", {
-                            attrs: { gridId: _vm.gridId, gridPosition: 0 }
-                          })
-                        ],
-                        1
-                      )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "span grid-stacked" }, [
-                  _c("div", { staticClass: "span" }, [
-                    _vm.elements[1] && _vm.elements[1].position == "1"
-                      ? _c(
-                          "div",
-                          [
-                            _c("grid-media", {
-                              attrs: { element: _vm.elements[1] }
-                            })
-                          ],
-                          1
-                        )
-                      : _c(
-                          "div",
-                          [
-                            _c("button-add", {
-                              attrs: { gridId: _vm.gridId, gridPosition: 1 }
-                            })
-                          ],
-                          1
-                        )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "span" }, [
-                    _vm.elements[2] && _vm.elements[2].position == "2"
-                      ? _c(
-                          "div",
-                          [
-                            _c("grid-media", {
-                              attrs: { element: _vm.elements[2] }
-                            })
-                          ],
-                          1
-                        )
-                      : _c(
-                          "div",
-                          [
-                            _c("button-add", {
-                              attrs: { gridId: _vm.gridId, gridPosition: 2 }
-                            })
-                          ],
-                          1
-                        )
-                  ])
-                ])
-              ])
-            ])
-          : _vm._e()
-      ]),
-      _vm._v(" "),
-      _c("div", { class: [_vm.hasOverlay ? "is-visible" : "", "overlay"] }, [
-        _c("div", [
-          _c("a", {
-            staticClass: "icon-close icon-close-overlay",
-            attrs: { href: "javascript:;" },
-            on: {
-              click: function($event) {
-                $event.preventDefault()
-                return _vm.toggleOverlay()
-              }
+          ])
+        : _vm._e()
+    ]),
+    _vm._v(" "),
+    _c("div", { class: [_vm.hasOverlay ? "is-visible" : "", "overlay"] }, [
+      _c("div", [
+        _c("a", {
+          staticClass: "icon-close-overlay",
+          attrs: { href: "javascript:;" },
+          on: {
+            click: function($event) {
+              $event.preventDefault()
+              return _vm.toggleOverlay()
             }
-          }),
+          }
+        }),
+        _vm._v(" "),
+        _c("div", [
+          _c("h1", [_vm._v("Projektbild auswählen")]),
           _vm._v(" "),
-          _c("div", [
-            _c("h1", [_vm._v("Projektbild auswählen")]),
-            _vm._v(" "),
-            _c("div", { staticClass: "project-selector" }, [
-              _c("div", { staticClass: "project-selector__item" }, [
-                _c(
-                  "div",
-                  { staticClass: "project-selector__media" },
-                  _vm._l(_vm.images, function(image) {
-                    return _c("figure", { key: image.id }, [
-                      _c(
-                        "a",
-                        {
-                          attrs: { href: "" },
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              return _vm.storeImage(image.id)
-                            }
+          _c("div", { staticClass: "project-selector" }, [
+            _c("div", { staticClass: "project-selector__item" }, [
+              _c(
+                "div",
+                { staticClass: "project-selector__media" },
+                _vm._l(_vm.images, function(image) {
+                  return _c("figure", { key: image.id }, [
+                    _c(
+                      "a",
+                      {
+                        attrs: { href: "" },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.storeImage(image.id)
                           }
-                        },
-                        [
-                          _c("img", {
-                            attrs: {
-                              src: _vm.getAssetSource(image.name),
-                              height: "50",
-                              width: "50"
-                            }
-                          })
-                        ]
-                      )
-                    ])
-                  }),
-                  0
-                )
-              ])
+                        }
+                      },
+                      [
+                        _c("img", {
+                          attrs: {
+                            src: _vm.getAssetSource(image.name),
+                            height: "50",
+                            width: "50"
+                          }
+                        })
+                      ]
+                    )
+                  ])
+                }),
+                0
+              )
             ])
           ])
         ])
       ])
-    ],
-    1
-  )
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -39261,7 +39756,7 @@ var render = function() {
                                     on: {
                                       click: function($event) {
                                         $event.preventDefault()
-                                        return _vm.toggleStatus(t.id)
+                                        return _vm.toggleStatus(t.id, $event)
                                       }
                                     }
                                   }),
@@ -39282,7 +39777,7 @@ var render = function() {
                                     on: {
                                       click: function($event) {
                                         $event.preventDefault()
-                                        return _vm.clone(t.id)
+                                        return _vm.clone(t.id, $event)
                                       }
                                     }
                                   }),
@@ -39293,7 +39788,7 @@ var render = function() {
                                     on: {
                                       click: function($event) {
                                         $event.preventDefault()
-                                        return _vm.destroy(t.id)
+                                        return _vm.destroy(t.id, $event)
                                       }
                                     }
                                   })
@@ -39776,7 +40271,7 @@ var render = function() {
                       on: {
                         click: function($event) {
                           $event.preventDefault()
-                          return _vm.deleteFileUpload(_vm.asset)
+                          return _vm.deleteFileUpload(_vm.asset, $event)
                         }
                       }
                     })
@@ -39885,7 +40380,7 @@ var render = function() {
                       on: {
                         click: function($event) {
                           $event.preventDefault()
-                          return _vm.deleteImageUpload(_vm.asset)
+                          return _vm.deleteImageUpload(_vm.asset, $event)
                         }
                       }
                     })
@@ -65595,19 +66090,15 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/store */ "./resources/js/admin/store.js");
-/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-loading-overlay */ "./node_modules/vue-loading-overlay/dist/vue-loading.min.js");
-/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _components_home_MediaSelector_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/home/MediaSelector.vue */ "./resources/js/admin/components/home/MediaSelector.vue");
-/* harmony import */ var _components_home_ArticleSelector_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/components/home/ArticleSelector.vue */ "./resources/js/admin/components/home/ArticleSelector.vue");
-
+/* harmony import */ var _components_home_MediaSelector_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/components/home/MediaSelector.vue */ "./resources/js/admin/components/home/MediaSelector.vue");
+/* harmony import */ var _components_home_ArticleSelector_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/home/ArticleSelector.vue */ "./resources/js/admin/components/home/ArticleSelector.vue");
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    loading: vue_loading_overlay__WEBPACK_IMPORTED_MODULE_1___default.a,
-    GridMediaSelector: _components_home_MediaSelector_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-    GridArticleSelector: _components_home_ArticleSelector_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+    GridMediaSelector: _components_home_MediaSelector_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    GridArticleSelector: _components_home_ArticleSelector_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   data: function data() {
     return {
@@ -65617,7 +66108,6 @@ __webpack_require__.r(__webpack_exports__);
       news: [],
       // loading
       isLoading: false,
-      fullPage: false,
       // overlay
       hasOverlay: false,
       showMedia: false,
@@ -65811,6 +66301,26 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         this.errors[field] = false;
       }
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/admin/mixins/progress.js":
+/*!***********************************************!*\
+  !*** ./resources/js/admin/mixins/progress.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    progress: function progress(el) {
+      el.classList.toggle('is-loading');
+      return el;
     }
   }
 });

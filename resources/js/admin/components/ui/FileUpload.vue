@@ -23,7 +23,7 @@
               <a
                 href="javascript:;"
                 class="icon-trash icon-mini"
-                @click.prevent="deleteFileUpload(asset)"
+                @click.prevent="deleteFileUpload(asset,$event)"
               ></a>
             </div>
           </figure>
@@ -72,8 +72,8 @@ export default {
       this.$parent.afterFileUpload(asset);
     },
 
-    deleteFileUpload(asset) {
-      this.$parent.deleteFileUpload(asset);
+    deleteFileUpload(asset,event) {
+      this.$parent.deleteFileUpload(asset,event);
     },
 
     getAssetUri(asset) {

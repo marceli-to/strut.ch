@@ -1,6 +1,6 @@
 /**
  * -----------------------------------------------------------------------------
- * File: component/cards/post-preview
+ * File: modules/project-selector
  * -----------------------------------------------------------------------------
  *
  */
@@ -8,16 +8,13 @@
 .project-selector__item {
 
   &.is-multi {
-    border-radius: 2px;
-    border: 2px solid $color--dark;
     @include responsive-prop('margin-bottom', $space-sm);
-    @include responsive-prop('padding', $space-xs);
-    padding-bottom: 5px !important;
   }
 
   h2 {
     @include font-size($fs-sm);
     @include font-bold();
+    margin-bottom: 10px !important;
   }
 
   .project-selector__media {
@@ -33,8 +30,8 @@
       }
 
       img {
-        background-color: $color--light-grey;
-        padding: 5px;
+        background-color: $color--white;
+        padding: 2px;
         display: block;
         height: 100%;
         width: auto;

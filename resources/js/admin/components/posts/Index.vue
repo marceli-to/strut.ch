@@ -12,7 +12,7 @@
               @end="updateOrder"
               ghost-class="draggable-ghost"
               tag="div">
-              <div class="list-item list-item--sortable" v-for="post in posts" :key="post.id">
+              <div class="list-item is-sortable" v-for="post in posts" :key="post.id">
                 <div class="list-item-body">
                   <h3>{{ post.title }}</h3>
                   <div v-html="post.body">{{ post.body }}</div>
@@ -63,7 +63,7 @@
         });
       },
 
-      toggleStatus(id) {
+      toggleStatus(id,event) {
         let uri = `/api/post/status/${id}`;
         this.axios.get(uri).then(response => {
           const index = this.posts.findIndex(x => x.id === id);

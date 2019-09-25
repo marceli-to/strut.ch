@@ -220,7 +220,7 @@
                       <a
                         href="javascript:;"
                         :class="[image.publish == 1 ? 'icon-eye' : 'icon-eye-off', 'icon-mini']"
-                        @click.prevent="toggleImage(image)"
+                        @click.prevent="toggleImage(image,$event)"
                       ></a>
                       <a
                         href="javascript:;"
@@ -230,7 +230,7 @@
                       <a
                         href="javascript:;"
                         class="icon-trash icon-mini"
-                        @click.prevent="deleteImage(image.name)"
+                        @click.prevent="deleteImage(image.name,$event)"
                       ></a>
                     </div>
                     <div class="dz-edit-form">
@@ -249,7 +249,7 @@
                         </a>
                       </div>
                       <div class="dz-edit-form-row">
-                        <label>Alt-Tag:</label>
+                        <label>Legende:</label>
                         <input
                           type="text"
                           v-model="image.caption.de"
@@ -300,7 +300,7 @@
                       <a 
                         href="javascript:;"
                         :class="[file.publish == 1 ? 'icon-eye' : 'icon-eye-off', 'icon-mini']"
-                        @click.prevent="toggleFile(file)"
+                        @click.prevent="toggleFile(file,$event)"
                       ></a>
                       <a
                         href="javascript:;"
@@ -310,7 +310,7 @@
                       <a
                         href="javascript:;"
                         class="icon-trash icon-mini"
-                        @click.prevent="deleteFile(file.name)"
+                        @click.prevent="deleteFile(file.name,$event)"
                       ></a>
                     </div>
                     <div class="dz-edit-form">
@@ -324,7 +324,7 @@
                         {{file.name}}
                       </div>
                       <div class="dz-edit-form-row">
-                        <label>Alt-Tag:</label>
+                        <label>Legende:</label>
                         <input
                           type="text"
                           v-model="file.caption.de"
@@ -356,6 +356,7 @@ import tinyConfig from "@/config/tinyconfig.js";
 import Editor from "@tinymce/tinymce-vue";
 import years from "@/config/years.js";
 import Helpers from '@/mixins/helpers';
+import Progress from '@/mixins/progress';
 
 export default {
   components: {
@@ -369,7 +370,7 @@ export default {
     type: String
   },
   
-  mixins: [Helpers],
+  mixins: [Helpers,Progress],
     
   data() {
     return {
@@ -625,33 +626,33 @@ export default {
     },
 
     // Delete a single file by name
-    deleteFile(file) {
+    deleteFile(file,event) {
       if(confirm('Bitte löschen bestätigen!')) {
         let uri = `/api/project/file/delete/${file}`;
+        let el = this.progress(event.target);
         this.axios.delete(uri).then(response => {
           this.project.downloads.splice(this.project.downloads.indexOf(file), 1);
+          this.progress(el);
         });
       }
     },
 
-    deleteImage(image) {
+    deleteImage(image,event) {
       if(confirm('Bitte löschen bestätigen!')) {
         let uri = `/api/project/image/delete/${image}`, self = this;
+        let el = this.progress(event.target);
         this.axios.delete(uri)
         .then(response => {
           self.project.images.splice(this.project.images.indexOf(image), 1);
         })
         .catch(function(error) {
           self.$notify({type: 'error', text: error.response.data});
+          this.progress(el);
         });
       }
     },
 
-    // Update order
-    updateImageOrder() { },
-    updateFileOrder() { },
-
-    toggleFile(file) {
+    toggleFile(file,event) {
 
       if (file.id === null) {
           const index = this.project.downloads.findIndex(x => x.name === file.name);
@@ -659,23 +660,27 @@ export default {
       }
       else {
         let uri = `/api/project/file/status/${file.id}`;
+        let el = this.progress(event.target);
         this.axios.get(uri).then(response => {
           const index = this.project.downloads.findIndex(x => x.id === file.id);
           this.project.downloads[index].publish = response.data;
+          this.progress(el);
         });
       }
     },
 
-    toggleImage(image) {
+    toggleImage(image,event) {
       if (image.id === null) {
           const index = this.project.images.findIndex(x => x.name === image.name);
           this.project.images[index].publish = image.publish == 1 ? 0 : 1;
       }
       else {
         let uri = `/api/project/image/status/${image.id}`;
+        let el = this.progress(event.target)
         this.axios.get(uri).then(response => {
           const index = this.project.images.findIndex(x => x.id === image.id);
           this.project.images[index].publish = response.data;
+          this.progress(el);
         });
       }
     },

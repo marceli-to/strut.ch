@@ -1,9 +1,41 @@
 /**
  * -----------------------------------------------------------------------------
- * File: component/animations
+ * File: components/animations
  * -----------------------------------------------------------------------------
- *
  */
+
+@keyframes loadingBtn {
+  from {
+    width: 0; 
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes loadingIcon {
+  0% {
+    opacity: 1;
+    transform: rotate(0);
+  }
+  50% {
+    opacity: .3;
+    transform: rotate(180deg);
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(0);
+  }
+}
+
+@keyframes loading {
+  from {
+    width: 0; 
+  }
+  to {
+    width: 100%;
+  }
+}
 
 .fade-out {
   visibility: hidden;

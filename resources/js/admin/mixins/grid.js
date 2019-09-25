@@ -1,12 +1,10 @@
 import store from "@/store";
-import Loading from 'vue-loading-overlay';
 import GridMediaSelector from '@/components/home/MediaSelector.vue';
 import GridArticleSelector from '@/components/home/ArticleSelector.vue';
 
 export default {
 
   components: {
-    loading: Loading,
     GridMediaSelector: GridMediaSelector,
     GridArticleSelector: GridArticleSelector,
   },
@@ -20,7 +18,6 @@ export default {
 
       // loading
       isLoading: false,
-      fullPage: false,
 
       // overlay
       hasOverlay: false,
@@ -35,106 +32,106 @@ export default {
     }
   },
 
-    methods: {
+  methods: {
 
-      createArticle(gridId, position) {
-        this.isLoading = true;
-        this.axios.get('/api/news/get').then(response => {
-          this.news = response.data.data;
+    createArticle(gridId, position) {
+      this.isLoading = true;
+      this.axios.get('/api/news/get').then(response => {
+        this.news = response.data.data;
+        this.toggleOverlay();
+        this.isLoading = false;
+        this.showNews = true;
+        this.selector = 'GridArticleSelector';
+        this.tmpGridId = gridId;
+        this.tmpPosition = position;
+      });
+    },
+
+    createMedia(gridId, position) {
+      this.isLoading = true;
+      this.axios.get('/api/projects/fetch/1/asc').then(response => {
+        this.projects = response.data.data;
+        this.toggleOverlay();
+        this.isLoading = false;
+        this.showMedia = true;
+        this.selector = 'GridMediaSelector';
+        this.tmpGridId = gridId;
+        this.tmpPosition = position;
+      });
+    },
+
+    storeArticle(newsId) {
+      let uri = '/api/home/grid/element/store';
+      let data = {
+        'grid_id': this.tmpGridId,
+        'position': this.tmpPosition,
+        'news_id': newsId
+      };
+      this.isLoading = true;
+      this.axios.post(uri, data).then((response) => {
           this.toggleOverlay();
-          this.isLoading = false;
-          this.showNews = true;
-          this.selector = 'GridArticleSelector';
-          this.tmpGridId = gridId;
-          this.tmpPosition = position;
-        });
-      },
-
-      createMedia(gridId, position) {
-        this.isLoading = true;
-        this.axios.get('/api/projects/fetch/1/asc').then(response => {
-          this.projects = response.data.data;
-          this.toggleOverlay();
-          this.isLoading = false;
-          this.showMedia = true;
-          this.selector = 'GridMediaSelector';
-          this.tmpGridId = gridId;
-          this.tmpPosition = position;
-        });
-      },
-
-      storeArticle(newsId) {
-        let uri = '/api/home/grid/element/store';
-        let data = {
-          'grid_id': this.tmpGridId,
-          'position': this.tmpPosition,
-          'news_id': newsId
-        };
-        this.isLoading = true;
-        this.axios.post(uri, data).then((response) => {
-            this.toggleOverlay();
-            this.$notify({type: 'success', text: 'Element hinzugefügt!' });
-            this.fetchElements();
-            store.commit('gridChanged');
-        });
-      },
-
-      storeMedia(imageId) {
-        let uri = '/api/home/grid/element/store';
-        let data = {
-          'grid_id': this.tmpGridId,
-          'position': this.tmpPosition,
-          'project_image_id': imageId
-        };
-
-        this.isLoading = true;
-        this.axios.post(uri, data).then((response) => {
-          this.toggleOverlay();
-          this.$notify({type: 'success', text: 'Bild hinzugefügt!'});
+          this.$notify({type: 'success', text: 'Element hinzugefügt!' });
           this.fetchElements();
           store.commit('gridChanged');
-        });
-      },
+      });
+    },
 
-      deleteArticle(gridElementId) {
-        let uri = `/api/home/grid/element/delete/${gridElementId}`;
-        this.isLoading = true;
-        this.axios.delete(uri).then(response => {
-          this.$notify({type: 'success', text: 'Element gelöscht!'});
-          this.fetchElements();
-          store.commit('gridChanged');
-        });
-      },
+    storeMedia(imageId) {
+      let uri = '/api/home/grid/element/store';
+      let data = {
+        'grid_id': this.tmpGridId,
+        'position': this.tmpPosition,
+        'project_image_id': imageId
+      };
 
-      deleteMedia(gridElementId) {
-        let uri = `/api/home/grid/element/delete/${gridElementId}`, self = this;
-        this.isLoading = true;
-        this.axios.delete(uri).then(response => {
-          this.$notify({type: 'success', text: 'Bild gelöscht!'});
-          this.fetchElements();
-          store.commit('gridChanged');
-        });
-      },
+      this.isLoading = true;
+      this.axios.post(uri, data).then((response) => {
+        this.toggleOverlay();
+        this.$notify({type: 'success', text: 'Bild hinzugefügt!'});
+        this.fetchElements();
+        store.commit('gridChanged');
+      });
+    },
 
-      // Helper methods
-      getPreviewImage(file) {
-        return `/media/${file}/sm`;
-      },
+    deleteArticle(gridElementId) {
+      let uri = `/api/home/grid/element/delete/${gridElementId}`;
+      this.isLoading = true;
+      this.axios.delete(uri).then(response => {
+        this.$notify({type: 'success', text: 'Element gelöscht!'});
+        this.fetchElements();
+        store.commit('gridChanged');
+      });
+    },
 
-      toggleOverlay() {
+    deleteMedia(gridElementId) {
+      let uri = `/api/home/grid/element/delete/${gridElementId}`, self = this;
+      this.isLoading = true;
+      this.axios.delete(uri).then(response => {
+        this.$notify({type: 'success', text: 'Bild gelöscht!'});
+        this.fetchElements();
+        store.commit('gridChanged');
+      });
+    },
 
-        // toggle class on html to prevent double scrollbars
-        let html = document.querySelector('html');
-        html.classList.toggle('has-overlay');
+    // Helper methods
+    getPreviewImage(file) {
+      return `/media/${file}/sm`;
+    },
 
-        // toggle the overlay itself
-        this.hasOverlay = this.hasOverlay ? false : true;
+    toggleOverlay() {
 
-        // reset news/projects
-        if (!this.hasOverlay) {
-            this.showNews = false;
-            this.showMedia = false;
-        }
-      },
-    }
+      // toggle class on html to prevent double scrollbars
+      let html = document.querySelector('html');
+      html.classList.toggle('has-overlay');
+
+      // toggle the overlay itself
+      this.hasOverlay = this.hasOverlay ? false : true;
+
+      // reset news/projects
+      if (!this.hasOverlay) {
+          this.showNews = false;
+          this.showMedia = false;
+      }
+    },
+  }
 };

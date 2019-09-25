@@ -3,6 +3,9 @@
   <div>
     <page-header/>
     <notifications classes="notification"/>
+    <div class="progress">
+      <div :class="isLoading ? 'is-loading progress__bar': 'progress__bar'"></div>
+    </div>
     <div class="container">
       <main class="content" role="main">
         <div>
@@ -24,7 +27,6 @@
               <grid-row :layout="grid.layout.key" :gridId="grid.id"></grid-row>
             </div>
           </div>
-
           <footer :class="[hasChanges ? '' : 'is-hidden', 'form-footer is-warning']">
             <div>
               <span style="max-width: 50%">Das Layout hat nicht publizierte Anpassungen. Damit diese auf der Webseite sichtbar werden, muss das aktuelle Layout publiziert werden.</span>
@@ -59,6 +61,7 @@ export default {
   data() {
     return {
       grids: [],
+      isLoading: false,
     };
   },
 
@@ -81,24 +84,24 @@ export default {
             }
           });
         });
+        this.isLoading = false;
       });
     },
 
     publish() {
-      if (
-        confirm(
-          "Mit dieser Aktion wird die bestehende Homepage angepasst. Bitte publizieren bestätigen."
-        )
-      ) {
+      if (confirm("Mit dieser Aktion wird die bestehende Homepage angepasst. Bitte publizieren bestätigen.")) {
+        this.isLoading = true;
         this.axios.get("/api/home/grids/deploy").then(response => {
           this.$notify({ type: "success", text: "Homepage wurde publiziert!" });
           store.commit('gridDeployed');
+          this.isLoading = false;
         });
       }
     },
 
     addRow(id) {
       let uri = `/api/home/grid/store/${id}`;
+      this.isLoading = true;
       this.axios.get(uri).then(response => {
         this.grids = response.data.data;
         this.$notify({ type: "success", text: "Zeile hinzugefügt!" });
@@ -108,6 +111,7 @@ export default {
 
     deleteRow(id, event) {
       let uri = `/api/home/grid/delete/${id}`;
+      this.isLoading = true;
       this.axios.delete(uri).then(response => {
         let row = event.target.parentNode,
           self = this;
@@ -116,6 +120,7 @@ export default {
           const index = self.grids.findIndex(x => x.id === id);
           self.grids.splice(index, 1);
           self.$notify({ type: "success", text: "Zeile gelöscht!" });
+          self.isLoading = false;
         }, 200);
       });
     }

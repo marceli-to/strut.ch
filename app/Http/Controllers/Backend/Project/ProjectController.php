@@ -61,8 +61,8 @@ class ProjectController extends Controller
 
     public function all()
     {
-        $projects = $this->project->orderBy('year', 'DESC')
-                                  ->orderBy('order', 'ASC')
+        $projects = $this->project->orderBy('order', 'ASC')
+                                  ->orderBy('year', 'ASC')
                                   ->with('images')
                                   ->with('category', 'categoryType')
                                   ->get();
@@ -78,8 +78,8 @@ class ProjectController extends Controller
     public function fetch($publish = 0, $order = 'ASC')
     {
         $projects = $this->project->where('publish', '=', $publish)
-                                  ->orderBy('name->de', $order)
                                   ->orderBy('year', 'DESC')
+                                  ->orderBy('name->de', $order)
                                   ->with('images')
                                   ->get();
         return new ProjectCollection($projects);

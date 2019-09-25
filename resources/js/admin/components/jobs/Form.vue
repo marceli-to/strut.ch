@@ -80,6 +80,7 @@ import FileUpload from "@/components/ui/FileUpload.vue";
 import tinyConfig from "@/config/tinyconfig.js";
 import Editor from "@tinymce/tinymce-vue";
 import Helpers from '@/mixins/helpers';
+import Progress from '@/mixins/progress';
 
 export default {
   components: {
@@ -92,7 +93,7 @@ export default {
     type: String
   },
 
-  mixins: [Helpers],
+  mixins: [Helpers, Progress],
 
   data() {
     return {
@@ -217,11 +218,13 @@ export default {
     },
 
     // Delete a single file by name
-    deleteFileUpload(file) {
+    deleteFileUpload(file,event) {
       if (confirm("Bitte löschen bestätigen!")) {
         let uri = `/api/job/delete/file/${file}`;
+        let el = this.progress(event.target);
         this.axios.delete(uri).then(response => {
           this.job.media = null;
+          this.progress(el);
         });
       }
     },

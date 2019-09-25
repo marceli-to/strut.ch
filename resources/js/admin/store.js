@@ -21,6 +21,6 @@ export default new Vuex.Store({
         },
         gridDeployed (state) {
             state.hasChanges = false;
-        }
+        },
     }
 });

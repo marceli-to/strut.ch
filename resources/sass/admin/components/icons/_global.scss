@@ -123,4 +123,7 @@
     display: inline-block !important;
     height: 18px !important;
     width: 18px !important;
+    &.is-loading {
+        animation: loadingIcon 1s infinite;
+    }
 }

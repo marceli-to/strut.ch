@@ -86,6 +86,7 @@ import PageHeader from "@/layout/PageHeader.vue";
 import FormButtons from "@/components/ui/buttons/FormButtons.vue";
 import ImageUpload from "@/components/ui/ImageUpload.vue";
 import Helpers from "@/mixins/helpers";
+import Progress from "@/mixins/progress";
 
 export default {
   components: {
@@ -97,7 +98,7 @@ export default {
     type: String
   },
 
-  mixins: [Helpers],
+  mixins: [Helpers, Progress],
 
   data() {
     return {
@@ -219,11 +220,13 @@ export default {
     },
 
     // Delete a single file by name
-    deleteImageUpload(file) {
+    deleteImageUpload(file,event) {
       if (confirm("Bitte löschen bestätigen!")) {
         let uri = `/api/news/delete/file/${file}`;
+        let el = this.progress(event.target);
         this.axios.delete(uri).then(response => {
           this.news.media = null;
+          this.progress(el);
         });
       }
     },

@@ -1,6 +1,8 @@
 <template>
   <div>
-    <loading :active.sync="isLoading" :is-full-page="fullPage" :height="30" :width="30"></loading>
+    <div class="progress">
+      <div :class="isLoading ? 'is-loading progress__bar': 'progress__bar'"></div>
+    </div>
     <div class="grids">
       <div v-if="layout == '1fr'">
         <div class="grid-1fr">
@@ -389,7 +391,7 @@
         <a
           href="javascript:;"
           @click.prevent="toggleOverlay()"
-          class="icon-close icon-close-overlay"
+          class="icon-close-overlay"
         ></a>
         <div v-show="showMedia">
           <grid-media-selector :projects="projects" v-bind:is="selector"></grid-media-selector>

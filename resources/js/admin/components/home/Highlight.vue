@@ -1,6 +1,5 @@
 <template>
   <div>
-    <loading :active.sync="isLoading" :is-full-page="fullPage" :height="30" :width="30"></loading>
     <div class="grids">
       <button-create :gridId="gridId" :gridPosition="0"></button-create>
       <div class="grid-1fr">
@@ -18,7 +17,7 @@
         <a
           href="javascript:;"
           @click.prevent="toggleOverlay()"
-          class="icon-close icon-close-overlay"
+          class="icon-close-overlay"
         ></a>
         <div v-show="showMedia">
           <grid-media-selector :projects="projects"></grid-media-selector>

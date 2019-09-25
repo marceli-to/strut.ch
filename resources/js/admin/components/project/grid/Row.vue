@@ -1,11 +1,13 @@
 <template>
   <div>
-    <loading :active.sync="isLoading" :is-full-page="fullPage" :height="30" :width="30"></loading>
+    <div class="progress">
+      <div :class="isLoading ? 'is-loading progress__bar': 'progress__bar'"></div>
+    </div>
     <div class="grids">
       <div v-if="layout == '2fr'">
         <div class="grid-2fr">
           <div class="span">
-            <div v-if="elements[0] && elements[0].position == '0'" style="background-color:red">
+            <div v-if="elements[0] && elements[0].position == '0'">
               <grid-media :element="elements[0]"></grid-media>
             </div>
             <div v-else>
@@ -86,7 +88,7 @@
 
     <div :class="[hasOverlay ? 'is-visible': '', 'overlay']">
       <div>
-        <a href="javascript:;" @click.prevent="toggleOverlay()" class="icon-close icon-close-overlay"></a>
+        <a href="javascript:;" @click.prevent="toggleOverlay()" class="icon-close-overlay"></a>
         <div>
           <h1>Projektbild auswählen</h1>
           <div class="project-selector">
@@ -106,13 +108,11 @@
   </div>
 </template>
 <script>
-import Loading from 'vue-loading-overlay';
 import GridMedia from "@/components/project/grid/Media.vue";
 import ButtonAdd from "@/components/project/grid/ButtonAdd.vue";
 
 export default {
   components: {
-    loading: Loading,
     ButtonAdd: ButtonAdd,
     GridMedia: GridMedia
   },
@@ -121,7 +121,6 @@ export default {
     return {
       hasOverlay: false,
       isLoading: false,
-      fullPage: false,
 
       tmpGridId: null,
       tmpPosition: null,

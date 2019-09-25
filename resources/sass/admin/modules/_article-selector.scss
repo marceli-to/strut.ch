@@ -12,13 +12,13 @@
   
   > div {
     background-color: transparent;
-    border: 2px solid $color--dark;
+    border: 2px solid $color--white;
     border-radius: 2px;
     padding: 10px;
     transition: background-color .12s ease-out;
 
     &:hover {
-      background-color: $color--light-grey;
+      background-color: $color--dark-grey;
       cursor: pointer;
     }
   }
@@ -56,8 +56,8 @@
     display: inline-block;
 
     img {
-      background-color: $color--light-grey;
-      padding: 5px;
+      background-color: $color--white;
+      padding: 2px;
       display: block;
       height: auto;
       width: 100%;

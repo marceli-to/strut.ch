@@ -7,15 +7,15 @@
 .icon-close {
     @extend %icon-dashboard;
     background-image: url($url-icons + 'close.svg');
-    //right: 20px;
     @include responsive-prop('left', $space-md);
     position: absolute;
     top: auto;
 }
 
 .icon-close-overlay {
-    background-image: url($url-icons + 'close-dark.svg');
+    @extend %icon-dashboard;
+    background-image: url($url-icons + 'close.svg');
+    position: absolute;
     top: -15px;
-    left: auto;
     right: 20px;
 }
