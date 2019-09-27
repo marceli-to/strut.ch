@@ -3,9 +3,7 @@ namespace App\Http\Controllers\Backend\Project;
 
 use App\Models\ProjectGridElement;
 use App\Models\ProjectImage;
-
 use App\Http\Resources\ProjectGridCollection;
-
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 

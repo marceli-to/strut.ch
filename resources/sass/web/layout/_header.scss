@@ -4,19 +4,12 @@
  * -----------------------------------------------------------------------------
  */
 
+// Global header
 header.site-header {
     background-color: $color--white;
     @include responsive-prop('height', $header-heights);
     @include responsive-prop('min-height', $header-heights);
-
-    // fixed header:
-    // left: 0;
-    // position: fixed;
-    // top: 0;
-    
-    // non-fixed header:
     position: relative;
-
     width: 100%;
     z-index: 5;
 
@@ -26,5 +19,10 @@ header.site-header {
             padding-top: 20px;
         }
     }
+}
+
+// Content header
+%content-header,
+header.content-header {
 }
 

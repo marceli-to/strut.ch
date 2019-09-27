@@ -9,6 +9,7 @@
 @import 'config/form';
 @import 'config/icons';
 @import 'config/global';
+@import 'config/grid';
 @import 'config/spaces';
 @import 'config/typo';
 
@@ -33,6 +34,7 @@
 @import 'components/boxes/global';
 @import 'components/buttons/global';
 @import 'components/buttons/primary';
+@import 'components/buttons/project-toggle';
 @import 'components/cards/global';
 @import 'components/headings/global';
 @import 'components/headings/h1';
@@ -53,12 +55,16 @@
 @import 'form/forms/custom';
 
 // Layout
+@import 'layout/article';
 @import 'layout/base';
-@import 'layout/header';
-@import 'layout/main';
 @import 'layout/footer';
-@import 'layout/navigation';
+@import 'layout/header';
 @import 'layout/grid';
+@import 'layout/main';
+@import 'layout/navigation';
+
+// Views
+@import 'views/project';
 
 // 3rd party
 // @import 'vendor/swiper/swiper';

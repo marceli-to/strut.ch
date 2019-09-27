@@ -53,11 +53,15 @@ $page-max-width: (
   lg:    $page-max-width-lg
 );
 
-$header-height: 80px;
+// Header
+$header-height:     90px;
+$header-height-sm:  90px;
+$header-height-md:  165px;
+$header-height-lg:  165px;
 
 $header-heights: (
-  null:  80px,
-  sm:    160px,
-  md:    160px,
-  lg:    160px
+  null:  $header-height,
+  sm:    $header-height-sm,
+  md:    $header-height-md,
+  lg:    $header-height-lg
 );

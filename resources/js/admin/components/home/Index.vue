@@ -29,12 +29,24 @@
           </div>
           <footer :class="[hasChanges ? '' : 'is-hidden', 'form-footer is-warning']">
             <div>
-              <span style="max-width: 50%">Das Layout hat nicht publizierte Anpassungen. Damit diese auf der Webseite sichtbar werden, muss das aktuelle Layout publiziert werden.</span>
-              <button
-                type="submit"
-                class="btn-secondary"
-                @click.prevent="publish()"
-              >Änderungen publizieren</button>
+              <div class="fs-xs">
+                Die Seite hat nicht publizierte Änderungen. Damit diese auf der Webseite sichtbar werden, muss das aktuelle Layout publiziert werden.
+              </div>
+              <div>
+                <button
+                  type="submit"
+                  class="btn-secondary"
+                  @click.prevent="publish()"
+                >Änderungen publizieren</button>
+              </div>
+              <div>
+                <button
+                  type="submit"
+                  class="btn-primary"
+                  @click.prevent="restore()"
+                  >Änderungen verwerfen</button>
+              </div>
+
             </div>
           </footer>
         </div>
@@ -61,7 +73,7 @@ export default {
   data() {
     return {
       grids: [],
-      isLoading: false,
+      isLoading: false
     };
   },
 
@@ -80,7 +92,7 @@ export default {
               (el.environment == "production" && el.action == "delete") ||
               el.environment == "development"
             ) {
-              store.commit('gridChanged');
+              store.commit("gridChanged");
             }
           });
         });
@@ -89,12 +101,32 @@ export default {
     },
 
     publish() {
-      if (confirm("Mit dieser Aktion wird die bestehende Homepage angepasst. Bitte publizieren bestätigen.")) {
+      if (
+        confirm(
+          "Bitte publizieren bestätigen."
+        )
+      ) {
         this.isLoading = true;
         this.axios.get("/api/home/grids/deploy").then(response => {
-          this.$notify({ type: "success", text: "Homepage wurde publiziert!" });
-          store.commit('gridDeployed');
+          this.$notify({ type: "success", text: "Seite publiziert!" });
+          store.commit("gridDeployed");
           this.isLoading = false;
+        });
+      }
+    },
+
+    restore() {
+      if (
+        confirm(
+          "Bitte zurücksetzen bestätigen."
+        )
+      ) {
+        this.isLoading = true;
+        this.axios.get("/api/home/grids/reset").then(response => {
+          this.$notify({type: "success", text: "Seite publiziert!"});
+          store.commit("gridDeployed");
+          this.isLoading = false;
+          this.$router.go();
         });
       }
     },
@@ -128,10 +160,9 @@ export default {
 
   computed: {
     hasChanges: function() {
-      return store.state.hasChanges
+      return store.state.hasChanges;
     }
   }
-
 };
 </script>
 

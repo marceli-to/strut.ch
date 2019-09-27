@@ -31,6 +31,15 @@ class ProjectGrid extends Model
     }
 
     /**
+     * Get the images for the grid.
+     */
+
+    public function elements()
+    {
+        return $this->hasMany('App\Models\ProjectGridElement', 'grid_id', 'id');
+    }
+
+    /**
      * Scope a query to only grids by a project.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query

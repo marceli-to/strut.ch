@@ -19,5 +19,8 @@ require('./modules/menu.js');
 // Team
 require('./modules/team.js');
 
+// Project
+require('./modules/project.js');
+
 // Masonry
 require('./modules/packery.js');

@@ -8,20 +8,19 @@ use App\Models\Project;
 use App\Models\ProjectFile;
 use App\Models\ProjectImage;
 
+use App\Models\ProjectGrid;
+
 use Illuminate\Http\Request;
 
 class ProjectsController extends Controller
 {
     protected $navigationService;
-    
     protected $mediaService;
-
     protected $project;
-
     protected $projectFile;
-    
     protected $projectImage;
-    
+    protected $projectGrid;
+
     protected $view_path = 'web.pages.projects';
 
     protected $menu;
@@ -31,7 +30,8 @@ class ProjectsController extends Controller
         MediaService $mediaService,
         Project $project,
         ProjectFile $projectFile,
-        ProjectImage $projectImage
+        ProjectImage $projectImage,
+        ProjectGrid $projectGrid
     )
     {
         $this->navigation   = $navigationService;
@@ -39,6 +39,7 @@ class ProjectsController extends Controller
         $this->project      = $project;
         $this->projectFile  = $projectFile;
         $this->projectImage = $projectImage;
+        $this->projectGrid  = $projectGrid;
     }
 
     /**
@@ -58,12 +59,20 @@ class ProjectsController extends Controller
      */
     public function project($id = NULL, $slug = NULL)
     {
+        
         $project = $this->project->with('category')
                                  ->with('categoryType')
-                                 ->with('images')
                                  ->with('downloads')
                                  ->findOrFail($id);
-        return view($this->view_path . '.project', ['menu' => $this->menu, 'project' => $project]);
+
+        return view(
+            $this->view_path . '.project',
+            [
+                'menu'    => $this->menu,
+                'project' => $project,
+                'grids'   => $this->getProjectGrid($id)
+            ]
+        );
     }
 
     /**
@@ -74,11 +83,33 @@ class ProjectsController extends Controller
     public function preview(Project $project)
     {
         return view(
-            $this->view_path . '.project',
+            $this->view_path . '.preview',
             [
-                'menu' => $this->menu, 
-                'project' => $project,
-                'is_preview' => TRUE
+                'menu'          => $this->menu, 
+                'project'       => $project,
+                'grids'         => $this->getProjectGrid($project->id),
+                'is_preview'    => TRUE
             ]);
+    }
+
+    protected function getProjectGrid($projectId)
+    {
+        $grids = $this->projectGrid->byProject($projectId)
+                                   ->with('layout')
+                                   ->with('elements.image')
+                                   ->orderBy('order')
+                                   ->get();
+
+        $project_grids = [];
+        foreach($grids as $g)
+        {
+            $project_grids[$g->id]['key'] = $g->layout->key;
+
+            // Sort elements by position
+            $sorted = $g->elements->sortBy('position');
+            $project_grids[$g->id]['elements'] = $sorted->values()->all();
+        }
+
+        return $project_grids;
     }
 }

@@ -1,5 +1,20 @@
 @extends('web.layout.app')
 @section('content')
+<style>
+.label-preview {
+  background-color: rebeccapurple;
+  color: #fff;
+  display: inline-block;
+  right: 5px;
+  top: 5px;
+  padding: 10px 15px;
+  line-height: 1;
+  position: fixed;
+  width: auto;
+  z-index: 1000;
+}
+</style>
+<span class="label-preview">Vorschau</span>
 <section class="project">
   <header class="project__header">
     <div>
@@ -12,9 +27,9 @@
   </header>
   <article>
     <a href="javascript:;" 
-       class="btn-project-toggle" 
-       data-toggle=".project__description"
-       title="Projektbeschreibung anzeigen">
+        class="btn-project-toggle" 
+        data-toggle=".project__description"
+        title="Projektbeschreibung anzeigen">
       <span>Info</span>
     </a>
     <h1>{{$project->name}}, {{$project->location}}</h1>

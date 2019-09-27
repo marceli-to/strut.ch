@@ -6,14 +6,10 @@
 
 main.site-content {
     
-    // fixed header:
-    // padding-top: 80px;
-
-    // @include bp-sm() {
-    //     padding-top: 160px;
-    // }
-    
     > div {
         @extend %page-block;
+        @include bp-md() {
+            padding-bottom: 20px;
+        }
     }
 }

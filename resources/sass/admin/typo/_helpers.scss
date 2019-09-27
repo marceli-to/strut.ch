@@ -15,7 +15,9 @@
 
 .nobr { white-space: nowrap; }
 
-
+.fs-xxs {
+	@include font-size($fs-xxs);
+}
 .fs-xs {
 	@include font-size($fs-xs);
 }

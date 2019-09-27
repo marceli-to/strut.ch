@@ -5,100 +5,66 @@
  *
  */
 
-$grid-gap: 24px;
-
-.span {
-    border-top: 1px solid $color--black;
-    padding-top: 5px;
-}
-
-.no-cssgrid {
-    .grid {
-        @extend %clearfix;
-    }
+.grid-2x1fr + .grid-2x1fr {
+    margin-top: $grid-gap;
 }
 
 .cssgrid {
-    %grid-1-1-1 {
+    
+    // Grid definition
+    %grid {
         display: grid;
+        display: -ms-grid;
         grid-gap: $grid-gap;
-        grid-template-columns: 1fr;
+    }
 
+    // Grid with 2 equal columns
+    %grid-2x1fr,
+    .grid-2x1fr {
+        @extend %grid;
         @include bp-sm() {
             grid-template-columns: repeat(2, 1fr);
         }
-
-        @include bp-md() {
-            grid-template-columns: repeat(3, 1fr);
-        }
-    }
-
-    .grid-team {
-        @extend %grid-1-1-1;
     }
 }
 
-.grid-team-flexbox {
-    display: flex;
-    flex-flow: column wrap;
-    align-content: space-between;
-    /* Your container needs a fixed height, and it 
-     * needs to be taller than your tallest column. */
-    height: 1200px; 
+.no-cssgrid {
 
-    @include bp-sm() {
-        .span {
-            width: 50%;
-            width: calc(50% - 12px);
-            margin-bottom: $grid-gap; /* Optional */
-        }
-          
-        /* Re-order items into 2 rows */
-        .span:nth-child(2n+1) { order: 1; margin-right: 24px; }
-        .span:nth-child(2n)   { order: 2; }
+    // Grid definition
+    %grid {
+        @extend %clearfix;
     }
-
-    @include bp-md() {
-        .span {
-            width: calc(33.33333% - 16px);
-            margin-bottom: $grid-gap; /* Optional */
-        }
-          
-        /* Re-order items into 3 rows */
-        .span:nth-child(3n+1) { order: 1; margin-right: 24px; }
-        .span:nth-child(3n+2) { order: 2; margin-right: 24px; }
-        .span:nth-child(3n)   { order: 3; }
-    }
-}
-
-/* Force new columns */
-@include bp-sm() {
-    .grid-team-flexbox::before,
-    .grid-team-flexbox::after {
-        content: "";
-        flex-basis: 100%;
-        width: 0;
-        order: 1;
-    }
-}
-
-@include bp-md() {
-    .grid-team-flexbox::before,
-    .grid-team-flexbox::after {
-        content: "";
-        flex-basis: 100%;
-        width: 0;
-        order: 2;
-    }
-}
-
-.grid-team-masonry {
+    
+    // Grid items
     .span {
-        @include bp-sm() {
+        display: block;
+    }
+    
+    // Grid with 2 equal columns
+    %grid-2x1fr,
+    .grid-2x1fr {
+        @extend %grid;
+        
+        .span {
+            float: left;
+            margin-right: 24px;
             width: calc(50% - 12px);
-        }
-        @include bp-md() {
-            width: calc(33.3333% - 16px);
+    
+            &:nth-child(2n+2) {
+                margin-right: 0;
+            }
         }
     }
 }
+
+
+// .grid-team-masonry {
+//     .span {
+//         @include bp-sm() {
+//             width: calc(50% - 12px);
+//         }
+//         @include bp-md() {
+//             width: calc(33.3333% - 16px);
+//         }
+//     }
+// }

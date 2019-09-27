@@ -21,18 +21,26 @@ footer.form-footer {
         transition: transform .16s ease-out;
     }
 
-    // &.is-warning {
-    //     background-color: $color--info;
-    // }
-
     > div {
         @extend %page-block;
         @extend %v-center;
         @include responsive-prop('height', $footer-heights);
     }
     
-    a {
-		@include responsive-prop('margin-left', $space-md);
+    &.is-warning {
+        > div {
+            display: grid !important;
+            grid-template-columns: 1fr auto auto;
+            grid-gap: 20px;
+        }
+    }    
+    a:not(.btn-preview) {
+        color: $color--dark;
+        @include responsive-prop('margin-left', $space-md);
+        text-decoration: underline;
+        &:hover {
+            text-decoration: none;
+        }
     }
     
     .filter {

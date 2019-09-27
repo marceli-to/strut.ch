@@ -74,6 +74,35 @@ class HomeGridController extends Controller
     }
 
     /**
+     * Reset changes
+     *
+     * @return \Illuminate\Http\Response
+     */
+
+    public function reset()
+    {
+        $elements = $this->homeGridElement->toDelete()->orWhere->isDevelopment()->get();
+        if (!empty($elements))
+        {
+            foreach($elements as $element)
+            {
+                if ($element->action == 'delete')
+                {
+                    $element->environment = 'production';
+                    $element->action = 'keep';
+                    $element->save();
+                }
+                if ($element->environment == 'development')
+                {
+                    $element->delete();
+                }
+            }
+        }
+
+        return response()->json('success');
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @return \Illuminate\Http\Response

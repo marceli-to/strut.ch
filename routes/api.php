@@ -139,6 +139,7 @@ Route::middleware('auth:api')->group(function() {
     // Home grid routes
     Route::get('home/grids', 'Backend\Home\HomeGridController@get');
     Route::get('home/grids/deploy', 'Backend\Home\HomeGridController@deploy');
+    Route::get('home/grids/reset', 'Backend\Home\HomeGridController@reset');
     Route::get('home/grid/store/{layoutId}', 'Backend\Home\HomeGridController@store');
     Route::delete('home/grid/delete/{id}', 'Backend\Home\HomeGridController@destroy');
 

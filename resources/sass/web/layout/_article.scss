@@ -1,10 +1,12 @@
 /**
  * -----------------------------------------------------------------------------
- * File: components/headings/h1
+ * File: layout/article
  * -----------------------------------------------------------------------------
  */
 
-h1 {
-  @include font-size($fs-md);
-  margin: 0;
+%article,
+.article {
+  border-top: 1px solid $color--black;
+  padding-top: 5px;
+  position: relative;
 }
