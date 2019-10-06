@@ -8,6 +8,7 @@ use App\Models\Job;
 use App\Models\Team;
 use App\Models\Award;
 use App\Models\Lecture;
+use App\Models\Content;
 use Illuminate\Http\Request;
 
 class AboutController extends Controller
@@ -22,6 +23,10 @@ class AboutController extends Controller
     protected $team;
     protected $award;
     protected $lecture;
+    protected $content;
+
+    // Static content key
+    protected $key = 'about';
 
     // View path
     protected $view_path = 'web.pages.about';
@@ -32,7 +37,8 @@ class AboutController extends Controller
         Job $job,
         Team $team,
         Award $award,
-        Lecture $lecture
+        Lecture $lecture,
+        Content $content
     )
     {
         $this->navigation = $navigationService;
@@ -42,29 +48,65 @@ class AboutController extends Controller
         $this->team = $team;
         $this->award = $award;
         $this->lecture = $lecture;
+        $this->content = $content;
     }
 
     public function about()
     {
-        $team = $this->team->orderBy('order', 'ASC')->get();
-        return view($this->view_path . '.index', ['menu' => $this->menu, 'team' => $team]);
+        // Get content data
+        $content = $this->content->published()
+                                 ->where('key', '=', $this->key)
+                                 ->get()
+                                 ->first();
+        // Get team data
+        $team = $this->team->published()->orderBy('order', 'ASC')->get();
+        
+        return view(
+                $this->view_path . '.about', 
+                [
+                    'menu' => $this->menu,
+                    'team' => $team,
+                    'content' => $content
+                ]
+        );
     }
 
     public function jobs()
     {
-        $jobs = $this->job->orderBy('order', 'ASC')->get();
-        return view($this->view_path . '.jobs', ['menu' => $this->menu, 'jobs' => $jobs]);
+        $jobs = $this->job->published()->orderBy('order', 'ASC')->get();
+        return view(
+            $this->view_path . '.jobs', 
+            [
+                'menu' => $this->menu,
+                'jobs' => $jobs,
+            ]
+        );
     }
 
     public function awards()
     {
-        $awards = $this->award->orderBy('year', 'DESC')->get();
-        return view($this->view_path . '.awards', ['menu' => $this->menu, 'awards' => $awards]);
+        $awards  = $this->award->published()->orderBy('year', 'DESC')->get();
+        $grouped_awards = $awards->groupBy('year');
+         return view(
+            $this->view_path . '.awards', 
+            [
+                'menu' => $this->menu,
+                'awards' => \AppHelper::partition($grouped_awards, 'year'),
+            ]
+        );
     }
 
     public function lectures()
     {
-        $lectures = $this->lecture->orderBy('year', 'DESC')->get();
-        return view($this->view_path . '.lectures', ['menu' => $this->menu, 'lectures' => $lectures]);
+        $lectures = $this->lecture->published()->orderBy('year', 'DESC')->get();
+        $grouped_lectures = $lectures->groupBy('year');
+
+        return view(
+            $this->view_path . '.lectures', 
+            [
+                'menu' => $this->menu,
+                'lectures' => \AppHelper::partition($grouped_lectures, 'year'),
+            ]
+        );
     }
 }

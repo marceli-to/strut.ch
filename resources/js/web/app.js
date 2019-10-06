@@ -6,21 +6,22 @@
 
 require('./bootstrap');
 
-/**
- * Import Modules
- */
-
-// Swiper
-// require('./modules/swiper.js');
-
 // Menu
 require('./modules/menu.js');
 
 // Team
 require('./modules/team.js');
 
+// Contact
+require('./modules/contact.js');
+require('./modules/maps.js');
+
 // Project
 require('./modules/project.js');
 
 // Masonry
+//require('./vendor/packery/packery.min.js');
 require('./modules/packery.js');
+
+// Fancybox
+require('./modules/fancybox.js');

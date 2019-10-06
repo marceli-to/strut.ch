@@ -28,10 +28,10 @@ class NavigationService
         $this->categoryType = $categoryType;
     }
 
-    public function boot()
+    public function boot($projectId = NULL, $categoryId = NULL, $typeId = NULL)
     {
         $menu = [
-            'projects'      => $this->getProjects(),
+            'projects'      => $this->getProjects($projectId,$categoryId,$typeId),
             'works'         => $this->getWorks(),
             'publications'  => $this->getPublications(),
             'contact'       => $this->getContact(),
@@ -49,37 +49,39 @@ class NavigationService
      * @param int $categoryTypeId
      */
 
-    private function getProjects($projectId = NULL, $categoryId = NULL, $categoryTypeId = NULL)
+    private function getProjects($projectId = NULL, $categoryId = NULL, $typeId = NULL)
     {
-        $categories = $this->category->with('types.projects')->get();
+        $categories = $this->category->with('activeTypes.activeProjects')->get();
+
         $menu_projects = [];
         foreach($categories as $index => $category)
         {
             $menu_projects[$index]['slug']          = str_slug(\AppHelper::transliterate($category->getTranslation('name', 'de')), '-');
             $menu_projects[$index]['name']          = $category->getTranslation('name', 'de');
-            $menu_projects[$index]['is-active']     = FALSE;
+            $menu_projects[$index]['is-active']     = $categoryId == $category->id ? TRUE : FALSE;
             $menu_projects[$index]['is-clickable']  = FALSE;
             $menu_projects[$index]['show_types']    = (bool) $category->show_types;
             
-            if (count($category->types) > 0)
+            if (count($category->activeTypes) > 0)
             {
-                foreach($category->types as $idx => $type)
+                foreach($category->activeTypes as $idx => $type)
                 {
-                    if (count($type->projects) > 0)
+                    if (count($type->activeProjects) > 0)
                     {
                         $menu_projects[$index]['types'][$idx]['slug']         = str_slug(\AppHelper::transliterate($type->getTranslation('name_plural', 'de')), '-');
                         $menu_projects[$index]['types'][$idx]['name']         = $type->getTranslation('name_plural', 'de');
-                        $menu_projects[$index]['types'][$idx]['is-active']    = FALSE;
+                        $menu_projects[$index]['types'][$idx]['is-active']    = $typeId == $type->id ? TRUE : FALSE;
                         $menu_projects[$index]['types'][$idx]['is-visible']   = (bool) $type->visible;
                         $menu_projects[$index]['types'][$idx]['is-clickable'] = FALSE;
 
                         $type_name_singular = $type->getTranslation('name_singular', 'de');
 
-                        foreach($type->projects as $i => $p)
+                        foreach($type->activeProjects as $i => $p)
                         {
-                            $menu_projects[$index]['types'][$idx]['projects'][$i]['name']  = $p->getTranslation('name', 'de') . ', ' . $p->getTranslation('location', 'de');
-                            $menu_projects[$index]['types'][$idx]['projects'][$i]['route'] = 'bauten';
-                            $menu_projects[$index]['types'][$idx]['projects'][$i]['slug']  = 
+                            $menu_projects[$index]['types'][$idx]['projects'][$i]['name']       = $p->getTranslation('name', 'de') . ', ' . $p->getTranslation('location', 'de');
+                            $menu_projects[$index]['types'][$idx]['projects'][$i]['route']      = 'bauten';
+                            $menu_projects[$index]['types'][$idx]['projects'][$i]['is-active']  = $projectId == $p->id ? TRUE : FALSE;
+                            $menu_projects[$index]['types'][$idx]['projects'][$i]['slug']       = 
                                 $p->id .'/'.
                                 str_slug(
                                     \AppHelper::transliterate($p->getTranslation('name', 'de')) . '-' .

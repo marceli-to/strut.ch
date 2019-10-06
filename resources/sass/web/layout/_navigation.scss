@@ -8,7 +8,7 @@ nav.site-nav {
     background-color: $color--white;
     left: 0;
     opacity: 0;
-    overflow-y: scroll;
+    overflow-y: auto;
     padding-bottom: 10px;
     pointer-events: none;
     position: absolute;
@@ -59,7 +59,28 @@ nav.site-nav {
 
         a {
             @include font-size($fs-nav);
+
         }
+    }
+
+    ul.is-projects,
+    ul.is-projects ul,
+    ul.is-projects ul ul {
+        a {
+            &.is-active + ul {
+                display: block !important;
+            }
+        }
+    }
+
+    ul.is-open,
+    ul.is-open ul {
+        margin-bottom: $space-sm;
+    }
+
+    ul.is-open ul ul,
+    ul.is-open ul.is-open ul {
+        margin-bottom: 0 !important;
     }
     
     ul ul {
@@ -122,5 +143,12 @@ nav.site-nav {
                 }
             }
         }
+
+        ul.is-open,
+        ul.is-open ul,
+        ul.is-open ul.is-open ul {
+            margin-bottom: 0;
+        }
+
     }
 }

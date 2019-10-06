@@ -1,0 +1,56 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: views/press
+ * -----------------------------------------------------------------------------
+ *
+ */
+
+.downloads {
+
+  .downloads__grid {
+    @extend %grid-3x1fr;
+  }
+
+  h2 {
+    @include font-size($fs-md);
+    margin-bottom: $space-xs;
+    @include bp-md() {
+      margin-bottom: $space-md;
+    }
+  }
+
+  article {
+    @extend %article;
+    @include font-size($fs-sm);
+  }
+
+  .download-group {
+
+    &.has-offset {
+      @include bp-md() {
+        padding-top: 8px;
+      }
+    }
+
+    &.is-article {
+      @extend %article;
+    }
+
+    h3 {
+      margin-bottom: $space-xs;
+    }
+
+    h3, h4 {
+      @include font-size($fs-sm);
+    }
+  }
+
+  .download-group__item {
+    margin-bottom: $space-xs;
+    margin-top: $space-xs;
+    @include bp-md() {
+      margin-bottom: $space-sm;
+    }
+  }
+
+}

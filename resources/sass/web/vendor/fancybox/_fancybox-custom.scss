@@ -1,0 +1,17 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: vendor/fancybox/fancybox-custom
+ * -----------------------------------------------------------------------------
+ *
+ */
+
+.fancybox-is-open .fancybox-bg {
+  background-color: $color--white;
+  opacity: 1 !important;
+}
+
+a[data-fb="gallery"] {
+  &:after {
+    display: none !important;
+  }
+}

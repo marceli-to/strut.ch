@@ -18,7 +18,7 @@ body {
     @include font-regular();
     @include font-size($fs-sm);
     @include font-smoothing();
-    text-rendering: optimizeLegibility; // geometricPrecision
+    text-rendering: optimizeLegibility;
 }
 
 // Scrollbars

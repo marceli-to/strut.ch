@@ -1,0 +1,77 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: views/about
+ * -----------------------------------------------------------------------------
+ *
+ */
+
+.about {
+
+  // Corporate
+  .about-grid {
+    @extend %clearfix;
+    @include responsive-prop('margin-bottom', $spaces-lg);
+
+    .span {
+      margin-bottom: $space-md;
+
+      @include bp-sm() {
+        float: left;
+
+        &:nth-child(1) {
+          margin-right: 24px;
+          width: calc(33.33333% - 16px);
+        }
+
+        &:nth-child(2) {
+          width: calc(66.66667% - 8px);
+        }
+      }
+    }
+
+    article {
+      @include word-break();
+    }
+  }
+
+  // Team
+  .about__team {
+
+    .team-member {
+      margin-bottom: 0;
+      width: 100%;
+      @include bp-sm() {
+        width: calc(33.33333% - 16px);
+        &:nth-child(3n+3) {
+          margin-right: 0;
+        }
+      }
+
+      article {
+        @include font-size($fs-sm);
+      }
+
+      header {
+        @include font-size($fs-md);
+
+        h3 {
+          color: $color--green;
+        }
+      }
+
+      figure {
+        display: block;
+        margin-bottom: $space-xs;
+        max-width: 40%;
+        @include bp-md() {
+          margin-bottom: $space-sm;
+          max-width: 50%;
+        }
+      }
+
+      .team-member__cv {
+        margin-top: $space-xs;
+      }
+    }
+  }
+}

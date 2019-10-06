@@ -1,0 +1,31 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: layout/content
+ * -----------------------------------------------------------------------------
+ *
+ */
+
+.content {
+
+  .content-grid {
+    @extend %grid-2fr1fr;
+  }
+
+  article {
+    @extend %article;
+    @include font-size($fs-md);
+  }
+
+  h1 {
+    @extend %heading-sm;
+  }
+
+  img {
+    @extend %is-responsive;
+  }
+
+  a {
+    @extend %anchor-underline;
+  }
+
+}

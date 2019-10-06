@@ -25,6 +25,10 @@
     @include responsive-prop('padding-top', $space-xs);
     @include responsive-prop('margin-bottom', $space-xs);
 
+    &[data-icons="2"] {
+        grid-template-columns: auto 46px;
+    }
+    
     &[data-icons="6"] {
         grid-template-columns: auto 158px;
     }
@@ -87,9 +91,14 @@
     grid-gap: 10px;
     text-align: right;
 
+    &[data-icons="2"] {
+        grid-template-columns: repeat(2, 18px);
+    }
+
     &[data-icons="6"] {
         grid-template-columns: repeat(6, 18px);
     }
+
 }
 
 // Cards

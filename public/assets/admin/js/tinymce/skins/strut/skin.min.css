@@ -92,3 +92,8 @@
     border-top: none;
     padding: 20px 16px;
 }
+
+.tox-collection__item-icon,
+.tox .tox-collection__item-icon {
+    display: none !important;
+}

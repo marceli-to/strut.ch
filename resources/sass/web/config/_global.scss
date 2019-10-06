@@ -41,7 +41,7 @@ $breakpoints: (
 /* Global element dimensions
  * ---------------------- */
 
-$page-max-width:     100%;
+$page-max-width:     434px;
 $page-max-width-sm:  100%;
 $page-max-width-md:  100%;
 $page-max-width-lg:  1400px;
@@ -65,3 +65,7 @@ $header-heights: (
   md:    $header-height-md,
   lg:    $header-height-lg
 );
+
+// Content media offset
+$content-media-offset-sm: 18px;
+$content-media-offset-md: 27px;

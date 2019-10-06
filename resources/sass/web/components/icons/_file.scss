@@ -1,0 +1,29 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: components/icons/file
+ * -----------------------------------------------------------------------------
+ */
+
+%icon-file,
+.icon-file {
+  @extend %icon;
+  @extend %icon-bg;
+  background-image: url($url-icons + 'doc-sm-green.svg');
+  background-size: 9px auto;
+  margin-bottom: 2px;
+  padding-left: 18px;
+  &:after {
+    left: 18px !important;
+    width: calc(100% - 18px) !important;
+  }
+
+  @include bp-md() {
+    background-image: url($url-icons + 'doc-lg-green.svg');
+    background-size: 13px auto;
+    padding-left: 25px;
+    &:after {
+      left: 25px !important;
+      width: calc(100% - 25px) !important;
+    }
+  }
+}

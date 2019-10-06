@@ -8,8 +8,30 @@ class Job extends Model
 {
     use HasTranslations;
 
-    public $translatable = ['title', 'lead', 'info'];
+    public $translatable = [
+        'title',
+        'lead',
+        'info'
+    ];
 
-    protected $fillable = ['title', 'lead', 'info',  'media', 'order', 'publish'];
+    protected $fillable = [
+        'title',
+        'lead',
+        'info',
+        'media',
+        'order',
+        'publish'
+    ];
 
+    /**
+     * Get only published records
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+
+    public function scopePublished($query)
+    {
+        return $query->where('publish', '=', '1');
+    }
 }

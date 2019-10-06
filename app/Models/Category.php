@@ -21,6 +21,17 @@ class Category extends Model
         return $this->hasMany('App\Models\CategoryType');
     }
 
+    /**
+     * Get the types for the category (published and ordered).
+     */
+    public function activeTypes()
+    {
+        return $this->hasMany('App\Models\CategoryType')
+                    ->orderBy('order', 'ASC')
+                    ->where('publish', '=', 1);
+    }
+
+
     public function projects()
     {
         return $this->hasMany('App\Models\Project');

@@ -26,7 +26,7 @@
                     <strong>{{ t.firstname }} {{ t.name }}</strong>
                   </span>
                   <span v-if="t.role.de">{{ t.role.de }}</span>
-                  <span v-if="t.position.de">{{ t.position.de }}</span>
+                  <span v-if="t.position.de">{{ t.position.de }}</span><span v-else>&nbsp;</span>
                   <span v-if="t.email">{{ t.email }}</span>
                   <span v-if="t.phone">{{ t.phone }}</span>
                 </div>

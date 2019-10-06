@@ -73,12 +73,12 @@ class MediaService
     /**
      * Maximum width for large landscape images
      */    
-    protected $max_width_lg = 1600;    
+    protected $max_width_lg = 2000;    
 
     /**
      * Maximum height for large portrait images
      */    
-    protected $max_height_lg = 900;
+    protected $max_height_lg = 1500;
 
     /**
      * Image prefix
@@ -215,13 +215,13 @@ class MediaService
                     $height = $image->getHeight();
                     
                     // Resize landscape image
-                    if ($width > $height)
+                    if ($width > $height && $width >= $this->max_width_sm)
                     {
                         $image->resize($this->max_width_sm, null, function ($constraint) {
                             $constraint->aspectRatio();
                         });
                     }
-                    else
+                    else if ($height >= $this->max_height_sm)
                     {
                         $image->resize(null, $this->max_height_sm, function ($constraint) {
                             $constraint->aspectRatio();
@@ -255,13 +255,13 @@ class MediaService
                     $height = $image->getHeight();
                     
                     // Resize landscape image
-                    if ($width > $height)
+                    if ($width > $height && $width >= $this->max_width_lg)
                     {
                         $image->resize($this->max_width_lg, null, function ($constraint) {
                             $constraint->aspectRatio();
                         });
                     }
-                    else
+                    else if ($height >= $this->max_height_lg)
                     {
                         $image->resize(null, $this->max_height_lg, function ($constraint) {
                             $constraint->aspectRatio();

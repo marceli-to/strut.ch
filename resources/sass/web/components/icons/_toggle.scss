@@ -1,0 +1,53 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: components/icons/toggle
+ * -----------------------------------------------------------------------------
+ */
+
+%icon-toggle,
+.icon-toggle {
+  @include background-default();
+  background-image: url($url-icons + 'chevron-down-green.svg');
+  background-size: 16px auto;
+  background-position: top 4px right;
+  color: $color--green;
+  padding-right: 24px;
+  
+  &:after {
+    max-width: calc(100% - 24px);
+  }
+
+  @include bp-md() {
+    background-size: 24px auto;
+    background-position: top 5px right;
+    padding-right: 32px;
+    &:after {
+      max-width: calc(100% - 32px);
+    }
+  }
+
+  &.is-active {
+    background-image: url($url-icons + 'chevron-up-green.svg');
+  }
+
+  &.is-reverse {
+    background-position: top 4px left;
+    padding-left: 24px;
+
+    &:after {
+      max-width: calc(100% - 48px);
+      left: 24px;
+    }
+
+    @include bp-md() {
+      background-size: 24px auto;
+      background-position: top 5px left;
+      padding-left: 32px;
+
+      &:after {
+        max-width: calc(100% - 64px);
+        left: 32px;
+      }
+    }
+  }
+}

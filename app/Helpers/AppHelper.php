@@ -1,6 +1,8 @@
 <?php
 namespace App\Helpers;
 
+use Illuminate\Support\Collection;
+
 class AppHelper
 {
     /**
@@ -50,5 +52,29 @@ class AppHelper
         );
         
         return (string) str_replace($search, $replace, mb_strtolower($string, 'UTF-8'));
+    }
+
+    /**
+     * Function: partition
+     * Returns an array with equally distributed columns
+     * 
+     * @param array $data
+     * @param string $groupBy
+     */
+
+    public static function partition($records, $groupBy = 'year', $cols = 3)
+    {
+        // determine group size
+        $size = (int) ceil(count($records)/$cols);
+       
+        $chunks  = array_chunk($records->toArray(), $size);
+        $columns = [];
+        foreach($chunks as $chunk)
+        {
+            $collection = collect($chunk);
+            $columns[] = $collection->flatten(1)->groupBy($groupBy);
+        }
+
+        return $columns;
     }
 }

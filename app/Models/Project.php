@@ -54,5 +54,17 @@ class Project extends Model
     {
         return $this->belongsTo('App\Models\CategoryType');
     }
+
+    /**
+     * Get only published records
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+
+    public function scopePublished($query)
+    {
+        return $query->where('publish', '=', '1');
+    }
 }
 

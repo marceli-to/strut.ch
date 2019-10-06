@@ -1,5 +1,3 @@
-import Packery from '../vendor/packery/packery.min.js';
-
 var PackeryUi = (function() {
 
     /* --------------------------------------------------------------
@@ -10,6 +8,11 @@ var PackeryUi = (function() {
 	var selectors = {
         html: 'html',
         body: 'body',
+        masonry: {
+            container: '.js-msnry',
+            item: '.js-msnry-item',
+            button: '.js-msnry-btn'
+        },
 	};
 
     /* --------------------------------------------------------------
@@ -19,26 +22,30 @@ var PackeryUi = (function() {
     // Init
 	var _initialize = function() {
 
-        var $grid = $('.js-masonry').packery({
-            itemSelector: '.span',
-            percentPosition: true,
-            gutter: 24,
-            //stagger: 30,
-            transitionDuration: 0
+        $(selectors.masonry.container).imagesLoaded( function() {
+            var $grid = $(selectors.masonry.container).packery({
+                itemSelector: selectors.masonry.item,
+                percentPosition: true,
+                gutter: 24,
+                transitionDuration: 0
+            });
+    
+            $grid.on('click', selectors.masonry.button, function(event) {
+                var $item = $(event.currentTarget);
+                $item.parent(selectors.masonry.item).toggleClass('has-detail');
+                $item.next('div').toggle();
+                $item.toggleClass('is-active');
+    
+                if ($item.parent(selectors.masonry.item).hasClass('.has-detail')) {
+                    $grid.packery('fit', event.currentTarget);
+                }
+                else {
+                    $grid.packery('shiftLayout');
+                }
+            });
         });
 
-        $grid.on('click', '.js-btn-packery', function( event ) {
-            var $item = $(event.currentTarget);
-            $item.parent('.span').toggleClass('has-detail');
-            $item.next('div').toggle();
 
-            if ($item.parent('.span').hasClass('.has-detail')) {
-                $grid.packery('fit', event.currentTarget);
-            }
-            else {
-                $grid.packery('shiftLayout');
-            }
-        });
 
     };
 

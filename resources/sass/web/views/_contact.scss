@@ -1,0 +1,37 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: views/contact
+ * -----------------------------------------------------------------------------
+ *
+ */
+
+.contact {
+
+  .contact-grid {
+    @extend %grid-2fr1fr;
+    position: relative;
+  }
+
+  .contact__imprint {
+    margin-top: $space-md;
+    @include bp-md() {
+      margin-top: $space-xl;
+    }
+
+    > div {
+      margin-top: $space-sm;
+    }
+  }
+
+  .contact__maps {
+    min-height: 300px;
+
+    @include bp-sm {
+      min-height: 400px;
+    }
+
+    @include bp-md {
+      min-height: 500px;
+    }
+  }
+}

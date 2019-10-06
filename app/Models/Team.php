@@ -10,8 +10,35 @@ class Team extends Model
 
     protected $table = 'team';
 
-    public $translatable = ['role', 'position', 'cv'];
+    public $translatable = [
+        'role',
+        'position',
+        'cv'
+    ];
 
-    protected $fillable = ['name', 'firstname', 'role',  'position', 'phone', 'email', 'cv', 'media', 'order', 'publish'];
+    protected $fillable = [
+        'name',
+        'firstname',
+        'role',
+        'position',
+        'phone',
+        'email',
+        'cv',
+        'media',
+        'order',
+        'publish'
+    ];
+
+    /**
+     * Get only published records
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+
+    public function scopePublished($query)
+    {
+        return $query->where('publish', '=', '1');
+    }
 
 }

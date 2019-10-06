@@ -5,66 +5,151 @@
  *
  */
 
-.grid-2x1fr + .grid-2x1fr {
-    margin-top: $grid-gap;
+// Subsequent grids
+[class^='grid-'] + [class^='grid-'] {
+  margin-top: $grid-gap;
 }
 
+// Grid items
+.span {
+  &.has-media {
+    @include bp-sm() {
+      margin-top: $content-media-offset-sm;
+    }
+
+    @include bp-md() {
+      margin-top: $content-media-offset-md;
+    }
+  }
+}
+
+// Grids with cssgrid support
 .cssgrid {
-    
-    // Grid definition
-    %grid {
-        display: grid;
-        display: -ms-grid;
-        grid-gap: $grid-gap;
+  
+  // Grid definition
+  %grid {
+    display: grid;
+    display: -ms-grid;
+    grid-gap: $grid-gap;
+  }
+
+  // Grid with 2 equal columns
+  %grid-2x1fr,
+  .grid-2x1fr {
+    @extend %grid;
+    @include bp-sm() {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  // Grid with 2 columns (1/3, 2/3)
+  %grid-2fr1fr,
+  .grid-2fr1fr {
+    @extend %grid;
+    @include bp-sm() {
+      grid-template-columns: 1fr 2fr;
+    }
+  }
+  
+  // Grid with 2 columns (sm+) and 3 columns (md+)
+  %grid-3x1fr,
+  .grid-3x1fr {
+    @extend %grid;
+    @include bp-sm() {
+      grid-template-columns: repeat(2, 1fr);
     }
 
-    // Grid with 2 equal columns
-    %grid-2x1fr,
-    .grid-2x1fr {
-        @extend %grid;
-        @include bp-sm() {
-            grid-template-columns: repeat(2, 1fr);
-        }
-    }
+    @include bp-md() {
+      grid-template-columns: repeat(3, 1fr);
+    }        
+  }
 }
 
+// Fallback for cssgrid
 .no-cssgrid {
 
-    // Grid definition
-    %grid {
-        @extend %clearfix;
-    }
-    
-    // Grid items
+  // Grid definition
+  %grid {
+    @extend %clearfix;
+  }
+  
+  // Grid items
+  .span {
+    display: block;
+  }
+  
+  // Grid with 2 equal columns
+  %grid-2x1fr,
+  .grid-2x1fr {
+    @extend %grid;
     .span {
-        display: block;
+      float: left;
+      margin-right: 24px;
+      width: calc(50% - 12px);
+
+      &:nth-child(2n+2) {
+        margin-right: 0;
+      }
     }
-    
-    // Grid with 2 equal columns
-    %grid-2x1fr,
-    .grid-2x1fr {
-        @extend %grid;
-        
-        .span {
-            float: left;
-            margin-right: 24px;
-            width: calc(50% - 12px);
-    
-            &:nth-child(2n+2) {
-                margin-right: 0;
-            }
+  }
+
+  // Grid with 2 columns (1/3, 2/3)
+  %grid-2fr1fr,
+  .grid-2fr1fr {
+    @extend %grid;
+    .span {
+      margin-bottom: 24px;
+      @include bp-sm() {
+        float: left;
+        margin-bottom: 0;
+        margin-right: 24px;
+                    
+        &:nth-child(1) {
+          width: calc(33.3333% - 12px);
         }
+
+        &:nth-child(2) {
+          margin-right: 0;
+          width: calc(66.6667% - 12px);
+        }
+      }
     }
+  }
+
+  // Grid with 2 columns (sm+) and 3 columns (md+)
+  %grid-3x1fr,
+  .grid-3x1fr {
+    @extend %grid;
+    .span {
+      margin-bottom: 24px;
+    }
+
+    @include bp-sm() {
+      .span {
+        float: left;
+        margin-right: 24px;
+        width: calc(50% - 12px);
+
+        &:nth-child(2n+2) {
+          margin-right: 0;
+        }
+      }
+    }
+    
+    @include bp-md() {
+      .span {
+        float: left;
+        margin-right: 24px;
+        width: calc(33.33333% - 16px);
+
+        &:nth-child(2n+2) {
+          margin-right: 24px;
+        }
+
+        &:nth-child(3n+3) {
+          margin-right: 0;
+        }
+      }
+    }
+  }
 }
-
-
-// .grid-team-masonry {
-//     .span {
-//         @include bp-sm() {
-//             width: calc(50% - 12px);
-//         }
-//         @include bp-md() {
-//             width: calc(33.3333% - 16px);
-//         }
-//     }
-// }

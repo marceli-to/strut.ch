@@ -1,50 +1,38 @@
 @extends('web.layout.app')
 @section('content')
-<div style="padding-bottom: 40px">
-  
-    <style>
-      .grid {
-        display: grid;
-        grid-template-columns: 1fr 2fr;
-        grid-gap: 30px;
-        margin-top: 30px;
-      }
-      .grid-books {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        grid-gap: 30px;
-      }
-      p {
-        line-height: 1.25;
-      }
-      article {
-        margin-bottom: 30px;
-      }
-      img {
-        display: block;
-        height: auto;
-        width: 100%;
-      }
-    </style>
-    <div>
-      <h2>Bücher</h2>
-      <div class="grid-books">
-        @foreach($books as $b)
-          <article style="border-top: 1px solid #000;padding-top: 10px">
-            <div style="font-size:24px; margin-bottom: 10px">{{$b->title}}</div>
-            @if ($b->media)
-              <img src="/media/{{$b->media}}/sm" style="margin-top: 10px; margin-bottom: 5px">
-            @endif
-            <div>
-              <p>@php echo nl2br($b->description) @endphp</p>
-              {!! $b->info !!}
-              @if ($b->url)
-                <a href="{{$b->url}}" target="_blank">bestellen</a>
-              @endif
-            </div>
+<section class="content books">
+  <h1>Bücher</h1>
+  <div class="books__grid js-msnry">
+      @foreach($books as $b)
+        <div class="book js-msnry-item">
+          <article>
+              <header>
+                <h3>{{$b->title}}</h3>
+                <figure>
+                  <img src="/media/{{$b->media}}/sm" width="600" height="400" alt="{{ config('app.name') }} - {{$b->title}}">
+                </figure>
+                <div class="book__detail">
+                  <p>@php echo nl2br($b->description) @endphp</p>
+                  <div>
+                    <a href="javascript:;" class="icon-toggle is-reverse js-msnry-btn">Info</a>
+                    <div class="book__info" style="display:none">{!! $b->info !!}</div>
+                    @if ($b->url)
+                      <div class="book__order">
+                        @php if (strpos($b->url, '@') != FALSE): @endphp
+                          <a href="mailto:{{$b->url}}?subject=Bestellung {{$b->title}}&body=Ich bestelle 1 Exemplar '{{$b->title}}'" title="Buch «{{$b->title}}» Bestellen">
+                            Bestellen
+                          </a>
+                        @php else: @endphp
+                          <a href="{{$b->url}}" target="_blank" title="Buch «{{$b->title}}» Bestellen">Bestellen</a>
+                        @php endif; @endphp
+                      </div>
+                    @endif
+                  </div>
+                </div>
+              </header>
           </article>
-        @endforeach
-      </div>
+        </div>
+      @endforeach
     </div>
-  </div>
+</section>
 @endsection

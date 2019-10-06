@@ -1,45 +1,27 @@
 @extends('web.layout.app')
 @section('content')
-<div style="padding-bottom: 40px">
-  
-    <style>
-      .grid {
-        display: grid;
-        grid-template-columns: 1fr 2fr;
-        grid-gap: 30px;
-        margin-top: 30px;
-      }
-      p {
-        line-height: 1.25;
-      }
-      article {
-        margin-bottom: 30px;
-      }
-      img {
-        display: block;
-        height: auto;
-        width: 100%;
-      }
-    </style>
-    <div class="grid">
-      <div>
-        <h2 style="border-bottom: 1px solid #000">
-          Jobs
-        </h2>
+<section class="content jobs">
+  <div class="jobs-grid">
+    <div class="span">
+      <h1>Jobs</h1>
+      @if ($jobs)
         @foreach($jobs as $j)
-          <article>
-            <h1 style="padding-top: 10px; font-size: 24px; margin-bottom: 30px">
-                {{$j->title}}
-            </h1>
-            <p style="font-size: 24px;">
-              {{$j->lead}}
-            </p>
-            <p>
-              {!!$j->info!!}
-            </p>
+          <article class="job">
+            <h2>{{$j->title}}</h2>
+            <p class="job__lead">{{$j->lead}}</p>
+            <div class="job__description">{!!$j->info!!}</div>
           </article>
         @endforeach
-      </div>
+      @endif
+    </div>
+    <div class="span has-media">
+      <figure>
+        <img src="/storage/media/static/strut.ch_jobs-1.jpg" width="918" height="657" alt="Strut Architekten - Jobs">
+      </figure>
+      <figure>
+        <img src="/storage/media/static/strut.ch_jobs-1.jpg" width="918" height="657" alt="Strut Architekten - Jobs">
+      </figure>
     </div>
   </div>
+</section>
 @endsection

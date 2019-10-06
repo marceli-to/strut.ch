@@ -47,6 +47,27 @@
 	transform: translateY(-50%);
 }
 
+/**
+ * Cross browser opacity
+ * -----------------------------------------------------------------------------
+ * 
+ * Usage:
+ *
+ *      img {
+ *          @include opacity(1,100);
+ *      }
+ *
+ */
+ 
+@mixin word-break() {
+  -ms-word-break: break-all;
+  word-break: break-all;
+  word-break: break-word;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  hyphens: auto;
+}
+
 
 /**
  * Cross browser opacity
@@ -62,7 +83,7 @@
  
 @mixin opacity($x: 0.5, $y: 60) {
 	opacity: $x;
-    filter: alpha(opacity=$y);
+  filter: alpha(opacity=$y);
 }
 
 

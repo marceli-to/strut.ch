@@ -28,7 +28,6 @@
 
 // Components
 @import 'components/anchors/global';
-@import 'components/articles/global';
 @import 'components/blocks';
 @import 'components/brand';
 @import 'components/boxes/global';
@@ -41,7 +40,9 @@
 @import 'components/headings/h2';
 @import 'components/headings/h3';
 @import 'components/icons/global';
+@import 'components/icons/file';
 @import 'components/icons/menu';
+@import 'components/icons/toggle';
 @import 'components/images';
 @import 'components/tables/global';
 
@@ -62,10 +63,19 @@
 @import 'layout/grid';
 @import 'layout/main';
 @import 'layout/navigation';
+@import 'layout/content';
 
 // Views
+@import 'views/about';
+@import 'views/awards';
+@import 'views/books';
+@import 'views/contact';
+@import 'views/downloads';
+@import 'views/jobs';
+@import 'views/lectures';
 @import 'views/project';
+@import 'views/press';
 
-// 3rd party
-// @import 'vendor/swiper/swiper';
-// @import 'vendor/swiper/swiper-custom';
+// Vendor
+@import 'vendor/fancybox/fancybox';
+@import 'vendor/fancybox/fancybox-custom';

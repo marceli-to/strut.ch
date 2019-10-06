@@ -42,14 +42,31 @@ class PublicationsController extends Controller
 
     public function press()
     {        
-        $press = $this->press->orderBy('year', 'DESC')->get();
-        return view($this->view_path . '.press', ['menu' => $this->menu, 'press' => $press]);
+        $press = $this->press->published()
+                             ->with('project')
+                             ->orderBy('year', 'DESC')
+                             ->get();
+        $grouped_press = $press->groupBy('year');
+        
+        return view(
+            $this->view_path . '.press', 
+            [
+                'menu' => $this->menu,
+                'press' => \AppHelper::partition($grouped_press, 'year'),
+            ]
+        );
     }
 
     public function books()
     {
-        $books = $this->book->get();
-        return view($this->view_path . '.books', ['menu' => $this->menu, 'books' => $books]);
+        $books = $this->book->published()->orderBy('order', 'ASC')->get();
+        return view(
+            $this->view_path . '.books', 
+            [
+                'menu' => $this->menu,
+                'books' => $books,
+            ]
+        );
     }
 
     public function downloads()

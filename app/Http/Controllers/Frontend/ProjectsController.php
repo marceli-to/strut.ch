@@ -59,11 +59,17 @@ class ProjectsController extends Controller
      */
     public function project($id = NULL, $slug = NULL)
     {
-        
-        $project = $this->project->with('category')
+        $project = $this->project->published()
+                                 ->with('category')
                                  ->with('categoryType')
                                  ->with('downloads')
                                  ->findOrFail($id);
+
+        $this->menu = $this->navigation->boot(
+            $project->id,
+            $project->category->id,
+            $project->categoryType->id
+        );
 
         return view(
             $this->view_path . '.project',

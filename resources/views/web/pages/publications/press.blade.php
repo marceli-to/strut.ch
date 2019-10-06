@@ -1,47 +1,45 @@
 @extends('web.layout.app')
 @section('content')
-<div style="padding-bottom: 40px">
-  
-    <style>
-      .grid {
-        display: grid;
-        grid-template-columns: 1fr 2fr;
-        grid-gap: 30px;
-        margin-top: 30px;
-      }
-      .grid-press {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        grid-gap: 30px;
-      }
-      p {
-        line-height: 1.25;
-      }
-      article {
-        margin-bottom: 30px;
-      }
-      img {
-        display: block;
-        height: auto;
-        width: 100%;
-      }
-    </style>
-    <div>
-      <h2>Presse</h2>
-      <div class="grid-press">
-        @foreach($press as $p)
-          <article style="border-top: 1px solid #000;padding-top: 10px">
-            <div style="font-size:24px; margin-bottom: 10px">{{$p->year}}</div>
-            <div>
-              <strong>{{ $p->title }}</strong><br>
-              {!! $p->description !!}
-              @if ($p->media)
-                <img src="/media/{{$p->media}}/sm" style="margin-top: 10px; max-width: 80%">
-              @endif
-            </div>
+<section class="content press">
+  <h1>Presse</h1>
+  <div class="press-list">
+    @if ($press)
+      @foreach($press as $press_year_group)
+        <div class="span">
+          <article class="press-group">
+            @foreach($press_year_group as $year => $press_group)
+              <h2>{{$year}}</h2>
+              @foreach($press_group as $p)
+                <div class="press-item @if ($p['file'] || $p['url']) has-link @endif">
+                  <h3>
+                    @if ($p['file'])
+                      <a href="{{ asset('storage/media/downloads/' . $p['file']) }}" target="_blank" title="{{$p['title']['de']}}">
+                        {{$p['title']['de']}}
+                      </a>
+                    @elseif ($p['url'])
+                      <a href="{{ $p['url'] }}" target="_blank" title="{{$p['title']['de']}}">
+                        {{$p['title']['de']}}
+                      </a>
+                    @else
+                      {{$p['title']['de']}}
+                    @endif
+                  </h3>
+                  <div>
+                    {{$p['description']['de']}}@if ($p['project']), {{$p['project']['name']['de']}} {{$p['project']['location']['de']}} ({{$p['project']['year']}})@endif
+                  </div>
+                  @if ($p['media'])
+                    <figure>
+                      <img src="/media/{{$p['media']}}/sm" width="600" height="400" alt="{{$p['title']['de']}}">
+                    </figure>
+                  @endif
+                </div>
+              @endforeach
+            @endforeach
           </article>
-        @endforeach
-      </div>
-    </div>
+        </div>
+      @endforeach
+    @endif
   </div>
+</section>
 @endsection
+

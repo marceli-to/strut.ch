@@ -51,6 +51,10 @@ import ProjectEdit from '@/components/project/Edit.vue';
 // Project Grids
 import ProjectGridIndex from '@/components/project/grid/Index.vue';
 
+// Static content
+import ContentIndex from '@/components/content/Index.vue';
+import ContentCreate from '@/components/content/Create.vue';
+import ContentEdit from '@/components/content/Edit.vue';
 
 // Masonry
 import HomeGridIndex from '@/components/home/Index.vue';
@@ -299,6 +303,26 @@ const routes = [
         name: 'project-grids',
         path: '/admin/project/grid/:id',
         component: ProjectGridIndex,
+        meta: { requiresAuth: true },
+    },
+
+    // Content
+    {
+        name: 'contents',
+        path: '/admin/contents',
+        component: ContentIndex,
+        meta: { requiresAuth: true },
+    },
+    {
+        name: 'content-create',
+        path: '/admin/content/create',
+        component: ContentCreate,
+        meta: { requiresAuth: true },
+    },
+    {
+        name: 'content-edit',
+        path: '/admin/content/edit/:id',
+        component: ContentEdit,
         meta: { requiresAuth: true },
     },
 ];

@@ -7,10 +7,9 @@
 .brand {
     height: 60px;
     display: block;
-    //@include responsive-prop('right', $space-xs);
     left: calc(100% - 126px);
     position: absolute;
-    @include responsive-prop('top', $space-xs);
+    @include responsive-prop('top', $spaces-xs);
     width: 116px;
     z-index: 15;
 

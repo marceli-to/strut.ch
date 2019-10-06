@@ -23,7 +23,9 @@ Route::get('werkliste', 'Frontend\ContactController@index')->name('page.works');
 // Publikationen
 Route::get('presse', 'Frontend\PublicationsController@press')->name('page.press');
 Route::get('buecher', 'Frontend\PublicationsController@books')->name('page.books');
-Route::get('downloads', 'Frontend\PublicationsController@downloads')->name('page.downloads');
+
+// Publikationen - Downloads
+Route::get('downloads', 'Frontend\DownloadsController@index')->name('page.downloads');
 
 // Kontakt
 Route::get('kontakt', 'Frontend\ContactController@index')->name('page.contact');
@@ -42,17 +44,13 @@ Route::get('/', 'Frontend\HomeController@index')->name('page.home');
  * Image routes
  */
 
-Route::get('media/thumbnail/{file}', 'MediaController@thumbnail');
-Route::get('media/preview/{file}', 'MediaController@preview');
-Route::get('media/{file}/{size?}', 'MediaController@resize');
+Route::middleware('cache.headers:public;max_age=2628000;etag')->group(function() {
+	Route::get('media/thumbnail/{file}', 'MediaController@thumbnail');
+	Route::get('media/preview/{file}', 'MediaController@preview');
+	Route::get('media/{file}/{size?}', 'MediaController@resize');
+});
 
 
-/**
- * Development Routes
- */
-
-//Route::view('/', 'web.pages.home');
-//Route::view('/ueber-uns', 'web.pages.about-us');
 
 /**
  * Admin Routes

@@ -1,11 +1,21 @@
 /**
  * -----------------------------------------------------------------------------
- * File: component/articles/global
+ * File: views/press
  * -----------------------------------------------------------------------------
  *
  */
 
-%article,
-.article {
-    display: block;    
+.press {
+
+  .press-list {
+    @extend %grid-3x1fr;
+  }
+
+  .press-group {
+    @extend %card-group;
+  }
+
+  .press-item {
+    @extend %card;
+  }
 }

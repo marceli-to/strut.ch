@@ -161,6 +161,14 @@ Route::middleware('auth:api')->group(function() {
     Route::delete('news/destroy/{id}', 'Backend\News\NewsController@destroy');
     Route::delete('news/delete/file/{file}', 'Backend\News\NewsController@unlink');
 
+    // Content routes
+    Route::get('contents/get', 'Backend\Content\ContentController@get');
+    Route::post('content/create', 'Backend\Content\ContentController@store');
+    Route::get('content/edit/{id}', 'Backend\Content\ContentController@edit');
+    Route::post('content/update/{id}', 'Backend\Content\ContentController@update');
+    Route::get('content/status/{id}', 'Backend\Content\ContentController@status');
+    Route::delete('content/delete/file/{file}', 'Backend\Content\ContentController@unlink');
+
 
     // Media routes
     Route::post('media/upload','MediaController@upload');

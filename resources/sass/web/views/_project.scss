@@ -11,19 +11,12 @@
     @extend %content-header;
 
     h2 {
-      @include font-size($fs-sm);
-      line-height: 1 !important;
-      margin-bottom: 0;
-  
-      @include bp-md() {
-        margin-bottom: 4px;
-      }
+      @extend %heading-sm;
     }
 
     nav.project-browse {
       display: none;
     }
-
   }
 
   article {
@@ -43,7 +36,6 @@
 
       @include bp-md() {
         background-color: $color--white;
-        //display: none;
         left: 0;
         opacity: 0;
         padding-bottom: 24px;
@@ -51,28 +43,16 @@
         top: 60px;
         width: 100%;
         z-index: -1;
-        //transition: opacity .12s ease-in-out;
-
-        // * {
-        //   opacity: 0;
-        //   transition: opacity .12s .36s ease-in-out;
-        // }
 
         &.is-visible {
-          //display: block;
           opacity: 1;
           z-index: 1;
-
-          // * {
-          //   opacity: 1;
-          // }
         }
       }
 
       > div {
         @extend %grid-2x1fr;
       }
-
     }
 
     .project__images {

@@ -1,0 +1,41 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: views/jobs
+ * -----------------------------------------------------------------------------
+ *
+ */
+.jobs {
+
+  .jobs-grid {
+    @extend %grid-2fr1fr;
+  }
+
+  h2 {
+    margin-bottom: $space-md;
+    @include bp-md() {
+      margin-bottom: $space-xl;
+    }
+  }
+
+  .job {
+    @include word-break();
+
+    + .job {
+      margin-top: $space-md;
+      @include bp-md() {
+        margin-top: $space-xl;
+      }
+    }
+
+    .job__lead {
+      margin-bottom: $space-sm;
+      @include bp-md() {
+        margin-bottom: $space-lg;
+      }
+    }
+
+    .job__description {
+      @include font-size($fs-sm);
+    }
+  }
+}

@@ -1,0 +1,64 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: views/books
+ * -----------------------------------------------------------------------------
+ *
+ */
+
+.books {
+ 
+  .books__grid {
+
+    .book {
+      margin-bottom: 0;
+      width: 100%;
+      @include bp-sm() {
+        width: calc(33.33333% - 16px);
+        &:nth-child(3n+3) {
+          margin-right: 0;
+        }
+      }
+
+      article {
+        @include font-size($fs-sm);
+      }
+
+      header {
+        @include font-size($fs-md);
+      }
+
+      figure {
+        display: block;
+        margin-bottom: $space-xs;
+        margin-top: $space-xs;
+        @include bp-md() {
+          margin-bottom: $space-sm;
+          margin-top: $space-md;
+        }
+      }
+
+      .book__detail {
+        @include font-size($fs-sm);
+
+        > div {
+          margin-top: $space-sm;
+          @include bp-md() {
+            margin-top: $space-lg;
+          }
+        }
+      }
+
+      .book__info {
+        @include word-break();
+        margin-bottom: $space-sm;
+        @include bp-md() {
+          margin-bottom: $space-lg;
+        }
+      }
+
+      .book__order {
+        margin-top: $space-xxs;
+      }
+    }
+  }
+}

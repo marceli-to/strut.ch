@@ -10,8 +10,8 @@
 .page-block {
     margin-left: auto;
     margin-right: auto;
-    @include responsive-prop('padding-left', $space-xs);
-    @include responsive-prop('padding-right', $space-xs);
+    @include responsive-prop('padding-left', $spaces-xs);
+    @include responsive-prop('padding-right', $spaces-xs);
     position: relative;
     @include responsive-prop('max-width', $page-max-width);
 }

@@ -13,3 +13,10 @@
     max-width: 100%;
     width: 100%;
 }
+
+figure + figure {
+    margin-top: $space-sm;
+    @include bp-md() {
+        margin-top: $space-md;
+    }
+}
