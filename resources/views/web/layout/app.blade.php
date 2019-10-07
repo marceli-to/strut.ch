@@ -26,52 +26,58 @@
              class="js-btn-sub-menu is-parent {{request()->routeIs('page.project*') ? 'is-active' : ''}}"
           >Bauten</a>
           <ul class="is-projects">
-            @foreach ($menu['projects']['items'] as $c)
-              <li>
-                  <a href="javascript:;" 
-                     class="js-btn-sub-menu {{ $c['is-active'] ? 'is-active' : '' }}">
-                    {{$c['name']}}
-                  </a>
-                  @if ($c['show_types'])
-                    <ul>
-                      @foreach ($c['types'] as $t)
-                        <li>
-                          <a href="javascript:;" 
-                            class="js-btn-sub-menu {{ $t['is-active'] ? 'is-active' : '' }}">
-                            {{$t['name']}}
-                          </a>
+            @if (isset($menu['projects']['items']))
+              @foreach ($menu['projects']['items'] as $c)
+                <li>
+                    <a href="javascript:;" 
+                      class="js-btn-sub-menu {{ $c['is-active'] ? 'is-active' : '' }}">
+                      {{$c['name']}}
+                    </a>
+                    @if ($c['show_types'])
+                      <ul>
+                        @if (isset($c['types']))
+                          @foreach ($c['types'] as $t)
+                            <li>
+                              <a href="javascript:;" 
+                                class="js-btn-sub-menu {{ $t['is-active'] ? 'is-active' : '' }}">
+                                {{$t['name']}}
+                              </a>
+                              <ul class="has-indent">
+                                @foreach ($t['projects'] as $p)
+                                  <li>
+                                    <a href="{{ url($p['route'] .'/'. $p['slug']) }}" 
+                                      title="{{ $p['name'] }}"
+                                      class="{{ $p['is-active'] ? 'is-active' : '' }}"
+                                    >
+                                      {{ $p['name'] }}
+                                    </a>
+                                  </li>
+                                @endforeach
+                              </ul>
+                            </li>
+                          @endforeach
+                        @endif
+                      </ul>
+                    @else
+                      @if (isset($c['types']))
+                        @foreach ($c['types'] as $t)
                           <ul class="has-indent">
                             @foreach ($t['projects'] as $p)
                               <li>
                                 <a href="{{ url($p['route'] .'/'. $p['slug']) }}" 
-                                   title="{{ $p['name'] }}"
-                                   class="{{ $p['is-active'] ? 'is-active' : '' }}"
-                                >
+                                  title="{{ $p['name'] }}"
+                                  class="{{ $p['is-active'] ? 'is-active' : '' }}">
                                   {{ $p['name'] }}
                                 </a>
                               </li>
                             @endforeach
                           </ul>
-                        </li>
-                      @endforeach
-                    </ul>
-                  @else
-                    @foreach ($c['types'] as $t)
-                      <ul class="has-indent">
-                        @foreach ($t['projects'] as $p)
-                          <li>
-                            <a href="{{ url($p['route'] .'/'. $p['slug']) }}" 
-                               title="{{ $p['name'] }}"
-                               class="{{ $p['is-active'] ? 'is-active' : '' }}">
-                              {{ $p['name'] }}
-                            </a>
-                          </li>
                         @endforeach
-                      </ul>
-                    @endforeach
-                  @endif
-              </li>
-            @endforeach   
+                      @endif
+                    @endif
+                </li>
+              @endforeach
+            @endif   
           </ul>
         </li>
         <li>
@@ -130,7 +136,7 @@
     </div>
   </nav>
 </header>
-<main class="site-content" role="main">
+<main class="site-content {{request()->routeIs('page.home') ? 'site-content--home' : ''}}" role="main">
   <div>@yield('content')</div>
 </main>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD87zTe10NbK_liZzlO93W17qHiFVwlU8c"></script>

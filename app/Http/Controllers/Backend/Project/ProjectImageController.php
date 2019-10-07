@@ -77,17 +77,10 @@ class ProjectImageController extends Controller
             if ($this->gridService->isGridImage($image->id))
             {
                 return response()->json(
-                    'Dieses Bild kann nicht gelöscht werden. (Grund: wird als Grid-Element verwendet)',
+                    'Dieses Bild kann nicht gelöscht werden. (Grund: in Verwendung)',
                     422
                 );
             }
-            
-            // // Delete grid element
-            // $gridElement = $this->projectGridElement->where('project_image_id', $image->id)->first();
-            // if ($gridElement)
-            // {
-            //     $gridElement->delete();
-            // }
             
             // Delete image
             $image->delete();

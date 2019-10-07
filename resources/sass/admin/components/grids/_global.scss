@@ -70,7 +70,7 @@
         display: flex;
         align-items: center;
         justify-content:center;
-        min-height: 200px;
+        min-height: 400px;
 
         div {
             text-align: center;
@@ -155,7 +155,8 @@
     .grid-2fr {
         grid-template-columns: repeat(2, 1fr);
     }
-    
+
+    .grid-3fr-landscape,
     .grid-3fr {
         grid-template-columns: repeat(3, 1fr);
     }
@@ -192,6 +193,10 @@
         grid-template-columns: 1fr 1fr 1fr;
     }
 
+    .grid-3fr-landscape .span {
+        min-height: 200px;
+    }   
+
     .grid-stacked {
         grid-gap: 10px;
         grid-template-columns: 1fr;
@@ -199,14 +204,14 @@
     }
     
     .grid-stacked .span {
-        min-height: 100px;
+        min-height: 200px;
         width: 100%;
     }
 
     .grid-1fr-highlight {
         display: grid;
         grid-gap: 10px;
-        grid-template-columns: repeat(auto-fit, minmax(300px, .5fr));
+        grid-template-columns: repeat(auto-fit, minmax(200px, .5fr));
         padding: 10px;
 
         .span {

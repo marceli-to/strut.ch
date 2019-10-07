@@ -8,12 +8,14 @@
         <article>
           {!! $contact->text !!}
         </article>
-        <div class="contact__imprint">
-          <a href="javascript:;" class="icon-toggle js-btn-toggle">Impressum</a>
-          <div style="display:none">
-              {!! $imprint->text !!}
+        @if ($imprint)
+          <div class="contact__imprint">
+            <a href="javascript:;" class="icon-toggle js-btn-toggle">Impressum</a>
+            <div style="display:none">
+                {!! $imprint->text !!}
+            </div>
           </div>
-        </div>
+        @endif
       </div>
       <div class="span has-media">
         <div class="contact__maps" id="js-maps"></div>

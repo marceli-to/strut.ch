@@ -81,6 +81,49 @@
           </div>
         </div>
       </div>
+      <div v-if="layout == '3fr-landscape'">
+        <div class="grid-3fr-landscape">
+          <div class="span">
+            <div v-if="elements[0] && elements[0].position == '0'">
+              <div v-if="elements[0].isMedia">
+                <grid-media :element="elements[0]"></grid-media>
+              </div>
+              <div v-if="elements[0].isArticle">
+                <grid-article :element="elements[0]"></grid-article>
+              </div>
+            </div>
+            <div v-else>
+              <buttons-create :gridId="gridId" :gridPosition="0" :showArticle="true"></buttons-create>
+            </div>
+          </div>
+          <div class="span">
+            <div v-if="elements[1] && elements[1].position == '1'">
+              <div v-if="elements[1].isMedia">
+                <grid-media :element="elements[1]"></grid-media>
+              </div>
+              <div v-if="elements[1].isArticle">
+                <grid-article :element="elements[1]"></grid-article>
+              </div>
+            </div>
+            <div v-else>
+              <buttons-create :gridId="gridId" :gridPosition="1" :showArticle="true"></buttons-create>
+            </div>
+          </div>
+          <div class="span">
+            <div v-if="elements[2] && elements[2].position == '2'">
+              <div v-if="elements[2].isMedia">
+                <grid-media :element="elements[2]"></grid-media>
+              </div>
+              <div v-if="elements[2].isArticle">
+                <grid-article :element="elements[2]"></grid-article>
+              </div>
+            </div>
+            <div v-else>
+              <buttons-create :gridId="gridId" :gridPosition="2" :showArticle="true"></buttons-create>
+            </div>
+          </div>
+        </div>
+      </div>
       <div v-if="layout == '2fr-1fr'">
         <div class="grid-2fr-1fr">
           <div class="span">

@@ -142,19 +142,21 @@ export default {
     },
 
     deleteRow(id, event) {
-      let uri = `/api/home/grid/delete/${id}`;
-      this.isLoading = true;
-      this.axios.delete(uri).then(response => {
-        let row = event.target.parentNode,
-          self = this;
-        row.classList.add("fade-out");
-        setTimeout(function() {
-          const index = self.grids.findIndex(x => x.id === id);
-          self.grids.splice(index, 1);
-          self.$notify({ type: "success", text: "Zeile gelöscht!" });
-          self.isLoading = false;
-        }, 200);
-      });
+      if (confirm("Bitte löschen bestätigen!")) {
+        let uri = `/api/home/grid/delete/${id}`;
+        this.isLoading = true;
+        this.axios.delete(uri).then(response => {
+          let row = event.target.parentNode,
+            self = this;
+          row.classList.add("fade-out");
+          setTimeout(function() {
+            const index = self.grids.findIndex(x => x.id === id);
+            self.grids.splice(index, 1);
+            self.$notify({ type: "success", text: "Zeile gelöscht!" });
+            self.isLoading = false;
+          }, 200);
+        });
+      }
     }
   },
 

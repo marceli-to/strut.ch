@@ -20,66 +20,25 @@
     <h1>{{$project->name}}, {{$project->location}}</h1>
     <div class="project__images">
       @foreach($grids as $g)
+        
         @if ($g['key'] == '2fr')
-          <div class="grid-2x1fr">
-              <div class="span">
-                @if (isset($g['elements'][0]))
-                  <img src="/media/{{$g['elements'][0]->image->name}}/sm">
-                @endif
-              </div>
-              <div class="span">
-                @if (isset($g['elements'][1]))
-                  <img src="/media/{{$g['elements'][1]->image->name}}/sm">
-                @endif
-              </div>
-          </div>
+          @if (isset($g['elements']))
+            @include('web.partials.grids.projects.2fr', array('elements' => $g['elements']))
+          @endif
         @endif
+
         @if ($g['key'] == '1fr_stacked-1fr')
-          <div class="grid-2x1fr">
-            <div class="span">
-              <div class="grid-stack">
-                <div style="margin-bottom: 24px">
-                  @if (isset($g['elements'][0]))
-                    <img src="/media/{{$g['elements'][0]->image->name}}/sm">
-                  @endif
-                </div>
-                <div>
-                  @if (isset($g['elements'][1]))
-                    <img src="/media/{{$g['elements'][1]->image->name}}/sm">
-                  @endif
-                </div>
-              </div>
-            </div>
-            <div class="span">
-              @if (isset($g['elements'][2]))
-                <img src="/media/{{$g['elements'][2]->image->name}}/sm">
-              @endif
-            </div>
-          </div>
+          @if (isset($g['elements']))
+            @include('web.partials.grids.projects.1fr_stacked1fr', array('elements' => $g['elements']))
+          @endif
         @endif
+
         @if ($g['key'] == '1fr-1fr_stacked')
-          <div class="grid-2x1fr">
-            <div class="span">
-              @if (isset($g['elements'][0]))
-                <img src="/media/{{$g['elements'][0]->image->name}}/sm">
-              @endif
-            </div>
-            <div class="span">
-              <div class="grid-stack">
-                  <div style="margin-bottom: 24px">
-                    @if (isset($g['elements'][1]))
-                      <img src="/media/{{$g['elements'][1]->image->name}}/sm">
-                    @endif
-                  </div>
-                  <div>
-                    @if (isset($g['elements'][2]))
-                      <img src="/media/{{$g['elements'][2]->image->name}}/sm">
-                    @endif
-                  </div>
-                </div>
-            </div>
-          </div>
+          @if (isset($g['elements']))
+            @include('web.partials.grids.projects.1fr1fr_stacked', array('elements' => $g['elements']))
+          @endif
         @endif
+
       @endforeach
     </div>
     <div class="project__description">

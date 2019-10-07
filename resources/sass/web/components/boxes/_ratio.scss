@@ -1,0 +1,209 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: component/boxes/ratio
+ * -----------------------------------------------------------------------------
+ */
+
+.ratio-boxes {
+  position: relative;
+  width: calc(100% + #{$space-md});
+  
+  // box types
+  [class^='box__'] {
+    height: 0;
+    overflow: hidden;
+    background: white;
+    position: relative;
+
+    > a {
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width:calc(100% - #{$space-md});
+      height: calc(100% - #{$space-md});
+
+      figure {
+        height: 100%;
+      }
+
+      img {
+        @extend %is-object-fit;
+      }
+    }
+
+    > article {
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width:calc(100% - #{$space-md});
+      height: calc(100% - #{$space-md});
+    }
+  }
+
+  .box__a,
+  .box__b {
+    padding-top: 66.666666666666667%;
+  }
+
+  .box__c {
+    padding-top: 68.444444444444444%;
+  }
+
+  .box__d {
+    padding-top: 68.444444444444444%;
+  }
+
+  .box__e {
+    padding-top: 136.888888888888889%;
+  }
+}
+
+// Grids
+.cssgrid {
+  .ratio-boxes {
+  
+    // grids
+    [class^='box-'] {
+      @include bp-sm() {
+        display: grid;
+      }
+    }
+  
+    .box-1fr {
+      grid-template-columns: 1fr
+    }
+  
+    .box-2x1fr {
+      @include bp-sm() {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  
+    .box-3x1fr {
+      @include bp-sm() {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+  
+    .box-2fr1fr {
+      @include bp-sm() {
+        grid-template-columns: 2fr 1fr;
+      }
+    }
+  
+    .box-2fr1fr_stacked {
+      @include bp-sm() {
+        grid-template-columns: 2fr 1fr;
+      }
+    }
+  
+    .box-1fr_stacked2fr {
+      @include bp-sm() {
+        grid-template-columns: 1fr 2fr;
+      }
+    }
+  
+    .box-1fr2fr {
+      @include bp-sm() {
+        grid-template-columns: 1fr 2fr;
+      }
+    }
+  }
+}
+
+.no-cssgrid {
+  .ratio-boxes {
+  
+    // grids
+    [class^='box-'] {
+      @extend %clearfix;
+      > div {
+        float: left;
+        width: 100%;
+      }
+    }
+
+    [class^='box__'] {
+      margin-bottom: $space-md;
+      @include bp-sm() {
+        margin-bottom: 0;
+      }
+    }
+  
+    .box-1fr {
+      > div {
+        width: 100%;
+      }
+    }
+  
+    .box-2x1fr {
+      @include bp-sm() {
+        > div {
+          width: 50%;
+        }
+      }
+    }
+  
+    .box-3x1fr {
+      @include bp-sm() {
+        > div {
+          width: 33.33333%;
+        }
+      }
+    }
+  
+    .box-2fr1fr {
+      @include bp-sm() {
+        > div {
+          &:first-of-type {
+            width: 66.66667%
+          }
+          &:last-of-type {
+            width: 33.33333%
+          }
+        }
+      }
+    }
+  
+    .box-2fr1fr_stacked {
+      @include bp-sm() {
+        > div {
+          &:first-of-type {
+            width: 66.66667%
+          }
+          &:last-of-type {
+            width: 33.33333%
+          }
+        }
+      }
+    }
+  
+    .box-1fr_stacked2fr {
+      @include bp-sm() {
+        > div {
+          &:first-of-type {
+            width: 33.33333%
+          }
+          &:last-of-type {
+            width: 66.66667%
+          }
+        }
+      }
+    }
+  
+    .box-1fr2fr {
+      @include bp-sm() {
+        > div {
+          &:first-of-type {
+            width: 33.33333%
+          }
+          &:last-of-type {
+            width: 66.66667%
+          }
+        }
+      }
+    }
+  }
+}

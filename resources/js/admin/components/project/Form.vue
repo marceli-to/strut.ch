@@ -588,7 +588,7 @@ export default {
         file_response.id = null;
         file_response.caption = {de: null, en: null};
         file_response.order = -1;
-        file_response.publish = 0;
+        file_response.publish = 1;
         this.project.downloads.push(file_response);
       }
       this.$refs.dropzoneFiles.removeFile(file);
@@ -603,7 +603,7 @@ export default {
         file_response.id = null;
         file_response.caption = {de: null, en: null};
         file_response.order = -1;
-        file_response.publish = 0;
+        file_response.publish = 1;
         file_response.is_preview_type = null;
         file_response.is_preview_status = null;
         file_response.is_preview_year = null;
@@ -629,9 +629,10 @@ export default {
     deleteFile(file,event) {
       if(confirm('Bitte löschen bestätigen!')) {
         let uri = `/api/project/file/delete/${file}`;
-        let el = this.progress(event.target);
+        let el = this.progress(event.target), self = this;
+        const index = this.project.downloads.findIndex(x => x.name === file);
         this.axios.delete(uri).then(response => {
-          this.project.downloads.splice(this.project.downloads.indexOf(file), 1);
+          this.project.downloads.splice(index, 1);
           this.progress(el);
         });
       }
@@ -641,13 +642,14 @@ export default {
       if(confirm('Bitte löschen bestätigen!')) {
         let uri = `/api/project/image/delete/${image}`, self = this;
         let el = this.progress(event.target);
+        const index = this.project.images.findIndex(x => x.name === image);
         this.axios.delete(uri)
         .then(response => {
-          self.project.images.splice(this.project.images.indexOf(image), 1);
+          self.project.images.splice(index, 1);
         })
         .catch(function(error) {
           self.$notify({type: 'error', text: error.response.data});
-          this.progress(el);
+          self.progress(el);
         });
       }
     },

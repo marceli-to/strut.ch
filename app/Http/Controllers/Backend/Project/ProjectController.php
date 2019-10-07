@@ -118,7 +118,7 @@ class ProjectController extends Controller
                     'project_id'        => $project->id,
                     'name'              => $i['name'],
                     'caption'           => ['de' => $i['caption']['de']],
-                    'publish'           => $i['publish'] ? $i['publish'] : 0,
+                    'publish'           => 1,
                     'is_preview_type'   => $i['is_preview_type'] ? $i['is_preview_type'] : 0,
                     'is_preview_status' => $i['is_preview_status'] ? $i['is_preview_status'] : 0,
                     'is_preview_year'   => $i['is_preview_year'] ? $i['is_preview_year'] : 0
@@ -303,5 +303,4 @@ class ProjectController extends Controller
         $projects = $this->project->get();
         return new ProjectCollection($projects);
     }
-
 }

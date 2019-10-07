@@ -14,6 +14,14 @@
     width: 100%;
 }
 
+%is-object-fit,
+.is-object-fit {
+    display: block;
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+}
+
 figure + figure {
     margin-top: $space-sm;
     @include bp-md() {

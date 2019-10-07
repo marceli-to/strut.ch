@@ -22,7 +22,9 @@ export default {
   methods: {
     
     deleteImage(id) {
-      this.$parent.deleteImage(id);
+      if (confirm("Bitte löschen bestätigen!")) {
+        this.$parent.deleteImage(id);
+      }
     },
 
     getPreviewImage(image) {

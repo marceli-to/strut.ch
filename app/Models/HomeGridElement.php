@@ -42,6 +42,18 @@ class HomeGridElement extends Model
     }
 
     /**
+     * Scope a query to only grids by a project.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+
+    public function scopeHighlight($query)
+    {
+        return $query->where('grid_id', '=', 1);
+    } 
+
+    /**
      * Get records which need to be deleted
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
@@ -63,5 +75,17 @@ class HomeGridElement extends Model
     public function scopeIsDevelopment($query)
     {
         return $query->where('environment', '=', 'development');
+    }
+
+    /**
+     * Get records which need to be deleted
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+
+    public function scopeIsProduction($query)
+    {
+        return $query->where('environment', '=', 'production');
     }  
 }

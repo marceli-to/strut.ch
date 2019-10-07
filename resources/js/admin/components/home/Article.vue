@@ -29,7 +29,9 @@ export default {
 
   methods: {
     deleteArticle(elementId) {
-      this.$parent.deleteArticle(elementId);
+      if (confirm("Bitte löschen bestätigen!")) {
+        this.$parent.deleteArticle(elementId);
+      }
     },
     getImageSource(file) {
       return `/media/${file}/sm`;

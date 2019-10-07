@@ -51,7 +51,7 @@ class NavigationService
 
     private function getProjects($projectId = NULL, $categoryId = NULL, $typeId = NULL)
     {
-        $categories = $this->category->with('activeTypes.activeProjects')->get();
+        $categories = $this->category->published()->with('activeTypes.activeProjects')->get();
 
         $menu_projects = [];
         foreach($categories as $index => $category)

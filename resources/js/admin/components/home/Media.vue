@@ -25,7 +25,9 @@ export default {
 
   methods: {
     deleteMedia(elementId) {
-      this.$parent.deleteMedia(elementId);
+      if (confirm("Bitte löschen bestätigen!")) {
+        this.$parent.deleteMedia(elementId);
+      }
     }
   }
 };

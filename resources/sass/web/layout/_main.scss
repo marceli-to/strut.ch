@@ -14,4 +14,12 @@ main.site-content {
             padding-bottom: 20px;
         }
     }
+
+    &.site-content--home {
+        > div {
+            @include bp-md() {
+                padding-bottom: 0;
+            }
+        }
+    }
 }

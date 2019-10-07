@@ -14,13 +14,17 @@ use Illuminate\Http\Request;
 
 class ProjectsController extends Controller
 {
+    // Services
     protected $navigationService;
     protected $mediaService;
+
+    // Models
     protected $project;
     protected $projectFile;
     protected $projectImage;
     protected $projectGrid;
 
+    // View path
     protected $view_path = 'web.pages.projects';
 
     protected $menu;

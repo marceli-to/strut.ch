@@ -4,7 +4,7 @@
   <div class="jobs-grid">
     <div class="span">
       <h1>Jobs</h1>
-      @if ($jobs)
+      @if (!$jobs->isEmpty())
         @foreach($jobs as $j)
           <article class="job">
             <h2>{{$j->title}}</h2>
@@ -12,6 +12,10 @@
             <div class="job__description">{!!$j->info!!}</div>
           </article>
         @endforeach
+      @else
+        <article class="job">
+          Zeit sind alle unsere Stellen besetzt.
+        </article>
       @endif
     </div>
     <div class="span has-media">

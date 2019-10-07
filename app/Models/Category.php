@@ -31,9 +31,20 @@ class Category extends Model
                     ->where('publish', '=', 1);
     }
 
-
     public function projects()
     {
         return $this->hasMany('App\Models\Project');
+    }
+
+    /**
+     * Get only published records
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+
+    public function scopePublished($query)
+    {
+        return $query->where('publish', '=', '1');
     }
 }

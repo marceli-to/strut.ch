@@ -8,7 +8,7 @@
 .downloads {
 
   .downloads__grid {
-    @extend %grid-3x1fr;
+    @extend %grid-sm2x1fr-md3x1fr;
   }
 
   h2 {

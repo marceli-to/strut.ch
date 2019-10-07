@@ -17,11 +17,21 @@ class HomeGrid extends Model
     }
 
     /**
-     * Get the elements for the row.
+     * Get the images for the grid.
+     */
+
+    public function images()
+    {
+        return $this->hasMany('App\Models\ProjectImage');
+    }
+
+    /**
+     * Get the images for the grid.
      */
 
     public function elements()
     {
         return $this->hasMany('App\Models\HomeGridElement', 'grid_id', 'id');
     }
+  
 }

@@ -23,6 +23,13 @@
   }
 }
 
+// Grid stacks
+.grid-stack {
+  > div:first-of-type {
+    margin-bottom: 24px;
+  }
+}
+
 // Grids with cssgrid support
 .cssgrid {
   
@@ -43,17 +50,26 @@
   }
 
   // Grid with 2 columns (1/3, 2/3)
-  %grid-2fr1fr,
-  .grid-2fr1fr {
+  %grid-1fr2fr,
+  .grid-1fr2fr {
     @extend %grid;
     @include bp-sm() {
       grid-template-columns: 1fr 2fr;
     }
   }
+
+  // Grid with 2 columns (2/3, 1/3)
+  %grid-2fr1fr,
+  .grid-2fr1fr {
+    @extend %grid;
+    @include bp-sm() {
+      grid-template-columns: 2fr 1fr;
+    }
+  }
   
   // Grid with 2 columns (sm+) and 3 columns (md+)
-  %grid-3x1fr,
-  .grid-3x1fr {
+  %grid-sm2x1fr-md3x1fr,
+  .grid-sm2x1fr-md3x1fr {
     @extend %grid;
     @include bp-sm() {
       grid-template-columns: repeat(2, 1fr);
@@ -93,9 +109,32 @@
     }
   }
 
-  // Grid with 2 columns (1/3, 2/3)
+  // Grid with 2 columns (2/3, 1/3)
   %grid-2fr1fr,
   .grid-2fr1fr {
+    @extend %grid;
+    .span {
+      margin-bottom: 24px;
+      @include bp-sm() {
+        float: left;
+        margin-bottom: 0;
+        margin-right: 24px;
+                    
+        &:nth-child(1) {
+          width: calc(66.6667% - 12px);
+        }
+
+        &:nth-child(2) {
+          margin-right: 0;
+          width: calc(33.3333% - 12px);
+        }
+      }
+    }
+  }
+
+  // Grid with 2 columns (1/3, 2/3)
+  %grid-1fr2fr,
+  .grid-1fr2fr {
     @extend %grid;
     .span {
       margin-bottom: 24px;
@@ -117,8 +156,8 @@
   }
 
   // Grid with 2 columns (sm+) and 3 columns (md+)
-  %grid-3x1fr,
-  .grid-3x1fr {
+  %grid-sm2x1fr-md3x1fr,
+  .grid-sm2x1fr-md3x1fr {
     @extend %grid;
     .span {
       margin-bottom: 24px;

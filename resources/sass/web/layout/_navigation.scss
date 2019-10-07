@@ -78,8 +78,7 @@ nav.site-nav {
         margin-bottom: $space-sm;
     }
 
-    ul.is-open ul ul,
-    ul.is-open ul.is-open ul {
+    ul.has-indent {
         margin-bottom: 0 !important;
     }
     

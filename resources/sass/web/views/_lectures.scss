@@ -7,7 +7,7 @@
 .lectures {
 
   .lectures-list {
-    @extend %grid-3x1fr;
+    @extend %grid-sm2x1fr-md3x1fr;
   }
 
   .lecture-group {
