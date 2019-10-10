@@ -33,7 +33,8 @@ footer.form-footer {
             grid-template-columns: 1fr auto auto;
             grid-gap: 20px;
         }
-    }    
+    }   
+     
     a:not(.btn-preview) {
         color: $color--dark;
         @include responsive-prop('margin-left', $space-md);

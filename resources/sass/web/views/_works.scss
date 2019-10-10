@@ -1,0 +1,178 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: views/press
+ * -----------------------------------------------------------------------------
+ *
+ */
+
+.works {
+
+  nav.work-groups {
+
+    li {
+      display: inline-block;
+      margin-right: $space-sm;
+
+      a {
+        @include background-default();
+        background-image: none;
+        color: $color--black;
+        display: inline-block;
+        transition: background-image .12s ease-out;
+        padding-right: 8px;
+  
+        &:after {
+          display: none;
+        }
+  
+        &:hover,
+        &.is-active {
+          background-image: url($url-icons + 'dot.svg');
+          background-position: center right;
+          background-size: 4px auto;
+          @include bp-md() {
+            background-size: 5px auto;
+          }
+        }
+  
+        @include bp-md() {
+          margin-bottom: 2px;
+          margin-right: $space-lg;
+          padding-right: 12px;
+        }
+      }
+    }
+  }
+
+  .works-list {
+    @extend %grid-sm2x1fr-md3x1fr;
+  }
+ 
+  .work-group {
+    @extend %card-group;
+    h2 {
+      margin-bottom: $space-xs;
+      @include bp-sm() {
+        margin-bottom: $space-sm;
+      }
+    }
+    
+  }
+
+  .is-type,
+  .is-competition {
+
+    h2 {
+      margin-bottom: $space-xs;
+      @include bp-sm() {
+        margin-bottom: $space-sm;
+      }
+    }
+
+    h3 {
+      @include font-size($fs-sm);
+    }
+
+    .article {
+      @extend %article;
+    }
+  }
+
+
+
+  .work-item {
+    @extend %card;
+    margin-bottom: 0;
+
+    &:last-child {
+      margin-bottom: $space-sm;
+    }
+
+    + h2 {
+      margin-top: $space-sm;
+    }
+
+    h3 {
+      @include font-regular();
+    }
+
+    figure {
+      margin: 4px 0 $space-sm 0;
+    }
+  }
+}
+
+nav.work-groups {
+  .span {
+    margin-bottom: $space-xs;
+  }
+}
+
+.cssgrid {
+
+  .works .works-list {
+    grid-gap: 0;
+    @include bp-sm() {
+      grid-column-gap: $space-md;
+    }
+  }
+
+  nav.work-groups {
+    @include bp-sm() {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: $space-md;
+      .span {
+        margin-bottom: 0;
+      }
+    }
+
+    @include bp-md() {
+      grid-template-columns: 2fr 1fr;
+
+      > div {
+        &:nth-child(2) {
+          padding-left: 8px;
+        }
+      }
+    }
+  }
+}
+
+.no-cssgrid {
+
+  nav.work-groups {
+    @extend %clearfix;
+    @include bp-sm() {
+      .span {
+        float: left;
+        margin-bottom: 0;
+        margin-right: #{$space-md};
+        width: calc(50% - #{$space-md}/2);
+        &:nth-child(2) {
+          margin-right: 0;
+        }
+      }
+    }
+  
+    @include bp-md() {
+      .span {
+        
+        &:nth-child(1) {
+          margin-right: $space-md;
+          width: calc(66.66667% - #{$space-md}/2);
+        }
+  
+        &:nth-child(2) {
+          float: right;
+          width: calc(33.33333% - #{$space-md}/2);
+        }
+      }
+    }
+  }
+
+  .works .works-list .span {
+    margin-bottom: 0;
+  }
+}
+

@@ -1,0 +1,31 @@
+/**
+ * -----------------------------------------------------------------------------
+ * File: components/icons/file
+ * -----------------------------------------------------------------------------
+ */
+
+%icon-arrow,
+.icon-arrow {
+  @extend %icon;
+  @extend %icon-bg;
+  background-image: url($url-icons + 'arrow-link.svg');
+  background-size: 12px auto;
+  background-position: top 3px left;
+  margin-bottom: 2px;
+  padding-left: 18px;
+  &:after {
+    left: 18px !important;
+    width: calc(100% - 18px) !important;
+  }
+
+  @include bp-md() {
+    background-image: url($url-icons + 'arrow-link.svg');
+    background-size: 22px auto;
+    background-position: top 3px left;
+    padding-left: 32px;
+    &:after {
+      left: 32px !important;
+      width: calc(100% - 32px) !important;
+    }
+  }
+}

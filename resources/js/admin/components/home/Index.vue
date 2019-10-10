@@ -146,8 +146,7 @@ export default {
         let uri = `/api/home/grid/delete/${id}`;
         this.isLoading = true;
         this.axios.delete(uri).then(response => {
-          let row = event.target.parentNode,
-            self = this;
+          let row = event.target.parentNode, self = this;
           row.classList.add("fade-out");
           setTimeout(function() {
             const index = self.grids.findIndex(x => x.id === id);

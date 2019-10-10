@@ -18,6 +18,21 @@
   text-decoration: none;
   width: auto;
 
+
+  // background-image: linear-gradient(to right, $color--green 100%, $color--green 100%);
+  // background-position: 0 16px;
+  // background-repeat: repeat-x;
+  // background-size: 100% 1px;
+  // transition: background-image .12s ease-out;
+
+  // @include bp-md() {
+  //   background-position: 0 22px;
+  // }
+
+  // &:hover {
+  //   background-image: none;
+  // }
+
   &:after {
     background-color: $color--green;
     bottom: 1px;

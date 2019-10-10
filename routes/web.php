@@ -18,7 +18,10 @@ Route::get('bauten/vorschau/{project}', 'Frontend\ProjectsController@preview')->
 Route::get('bauten/{id}/{slug?}', 'Frontend\ProjectsController@project')->name('page.project-detail');
 
 // Werkliste
-Route::get('werkliste', 'Frontend\WorksController@index')->name('page.works');
+Route::get('werkliste', 'Frontend\WorksController@byStatus')->name('page.works');
+Route::get('werkliste/status', 'Frontend\WorksController@byStatus')->name('page.works.status');
+Route::get('werkliste/jahr', 'Frontend\WorksController@byYear')->name('page.works.year');
+Route::get('werkliste/typ', 'Frontend\WorksController@byType')->name('page.works.type');
 
 // Publikationen
 Route::get('presse', 'Frontend\PublicationsController@press')->name('page.press');

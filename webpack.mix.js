@@ -10,6 +10,8 @@ mix.webpackConfig({
     },
 });
 
+//mix.browserSync('strut.ch.local');
+
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management

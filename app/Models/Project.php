@@ -66,5 +66,17 @@ class Project extends Model
     {
         return $query->where('publish', '=', '1');
     }
+
+    /**
+     * Get only published records
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+
+    public function scopeCompetition($query)
+    {
+        return $query->where('competition', '!=', NULL);
+    }
 }
 

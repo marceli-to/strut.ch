@@ -129,8 +129,8 @@ export default {
 
       // reset news/projects
       if (!this.hasOverlay) {
-          this.showNews = false;
-          this.showMedia = false;
+        this.showNews = false;
+        this.showMedia = false;
       }
     },
   }

@@ -63,13 +63,13 @@
       background-color: transparent;
       background-image: url($url-icons + 'arrow-link.svg');
       background-size: contain;
-      background-position: top 3px left;
+      background-position: top 2px left;
       height: 16px;
       top: 0;
       width: 16px;
 
       @include bp-md() {
-        background-position: top 4px left;
+        background-position: top 3px left;
         height: 22px;
         top: 0;
         width: 22px;

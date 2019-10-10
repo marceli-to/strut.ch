@@ -56,7 +56,7 @@ import ContentIndex from '@/components/content/Index.vue';
 import ContentCreate from '@/components/content/Create.vue';
 import ContentEdit from '@/components/content/Edit.vue';
 
-// Masonry
+// Home Grids
 import HomeGridIndex from '@/components/home/Index.vue';
 
 // Page
@@ -113,6 +113,8 @@ const routes = [
         component: NewsEdit,
         meta: { requiresAuth: true },
     },
+
+    // Home grid
     {
         name: 'home',
         path: '/admin/home',
