@@ -8,6 +8,8 @@ use App\Models\Project;
 use App\Models\ProjectFile;
 use App\Models\ProjectImage;
 use App\Models\ProjectGrid;
+use App\Models\Category;
+
 
 use Illuminate\Http\Request;
 
@@ -22,6 +24,7 @@ class ProjectsController extends Controller
     protected $projectFile;
     protected $projectImage;
     protected $projectGrid;
+    protected $category;
 
     // View path
     protected $view_path = 'web.pages.projects';
@@ -34,7 +37,8 @@ class ProjectsController extends Controller
         Project $project,
         ProjectFile $projectFile,
         ProjectImage $projectImage,
-        ProjectGrid $projectGrid
+        ProjectGrid $projectGrid,
+        Category $category
     )
     {
         $this->navigation   = $navigationService;
@@ -43,6 +47,7 @@ class ProjectsController extends Controller
         $this->projectFile  = $projectFile;
         $this->projectImage = $projectImage;
         $this->projectGrid  = $projectGrid;
+        $this->category     = $category;
     }
 
     /**
@@ -79,6 +84,7 @@ class ProjectsController extends Controller
             [
                 'menu'    => $this->menu,
                 'project' => $project,
+                'browse'  => $this->getProjectNav($id),
                 'grids'   => $this->getProjectGrid($id)
             ]
         );
@@ -120,5 +126,49 @@ class ProjectsController extends Controller
         }
 
         return $project_grids;
+    }
+
+    protected function getProjectNav($id = NULL)
+    {
+        // Build project nav
+        $projects     = $this->category->published()->with('activeTypes.activeProjects')->get();
+        $project_keys = [];
+        
+        foreach($projects as $category)
+        {
+            foreach($category->activeTypes as $type)
+            {
+                foreach($type->activeProjects as $p)
+                {
+                    $project_keys[] = (int) $p->id;
+                }
+            }
+        }
+
+        // Get current key
+        $key = array_search ($id, $project_keys);
+
+        if ($key == 0)
+        {
+            $prevId = end($project_keys);
+            $nextId = $project_keys[$key+1];
+        }
+        else if ($key == count($project_keys) - 1)
+        {
+            $prevId = $project_keys[$key-1];
+            $nextId = $project_keys[0];
+        }
+        else
+        {
+            $prevId = $project_keys[$key-1];
+            $nextId = $project_keys[$key+1];
+        }
+
+        $project_nav = [
+            'prev' => $this->project->with('images')->find($prevId),
+            'next' => $this->project->with('images')->find($nextId),
+        ];
+
+        return $project_nav;
     }
 }

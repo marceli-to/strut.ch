@@ -70,7 +70,7 @@
         display: flex;
         align-items: center;
         justify-content:center;
-        min-height: 400px;
+        min-height: 300px;
 
         div {
             text-align: center;
@@ -194,7 +194,7 @@
     }
 
     .grid-3fr-landscape .span {
-        min-height: 200px;
+        min-height: 175px;
     }   
 
     .grid-stacked {
@@ -204,7 +204,7 @@
     }
     
     .grid-stacked .span {
-        min-height: 200px;
+        min-height: 125px;
         width: 100%;
     }
 
@@ -217,8 +217,12 @@
         .span {
             border: none;
             display: block;
-            min-height: auto;
+            min-height: auto !important;
             padding: 0;
         }
+    }
+
+    .is-highlight .span {
+        min-height: 200px;
     }
 }

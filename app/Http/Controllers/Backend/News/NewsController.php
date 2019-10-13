@@ -46,6 +46,9 @@ class NewsController extends Controller
             'date' => [
                 'de' => $request->input('date.de'),
             ],
+            'subtitle' => [
+                'de' => $request->input('subtitle.de'),
+            ],
             'title' => [
                 'de' => $request->input('title.de'),
             ],
@@ -88,6 +91,7 @@ class NewsController extends Controller
     {
         $news = $this->news->findOrFail($id);
         $news->setTranslation('date', 'de', $request->input('date.de'));
+        $news->setTranslation('subtitle', 'de', $request->input('subtitle.de'));
         $news->setTranslation('title', 'de', $request->input('title.de'));
         $news->setTranslation('text', 'de', $request->input('text.de'));
         $news->setTranslation('link', 'de', $request->input('link.de') ? \AppHelper::addScheme($request->input('link.de')) : NULL);

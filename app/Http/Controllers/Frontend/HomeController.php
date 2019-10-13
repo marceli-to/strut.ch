@@ -110,7 +110,8 @@ class HomeController extends Controller
 
         $highlight = [
             'image' => $project_image,
-            'title' => $project->name . ', ' . $project->location . ' ' . $project->year,
+            'name'  => $project->name . ', ' . $project->location . ' ' . $project->year,
+            'title' => $project->title,
             'slug'  => $project_slug,
         ];
 

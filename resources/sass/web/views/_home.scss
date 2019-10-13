@@ -5,13 +5,65 @@
  *
  */
 
+%figcaption {
+  display: block;
+  margin-bottom: 2px;
+  width: 100%;
+
+  @include bp-sm() {
+    background-color: rgba(255,255,255,.4);
+    height: 100%;
+    margin-bottom: 0;
+    left: 0;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    transition: opacity .12s ease-out;
+  }
+
+  span {
+    //@include word-break();
+    color: $color--black;
+    display: block;
+    @include font-size($fs-md);
+    height: auto;
+    width: 100%;
+
+    @include bp-sm() {
+      height: auto;
+      @include font-size($fs-lg);
+      left: 0;
+      padding: 0 $space-sm;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+}
+
 .home {
 
   // Highlight
   figure.is-highlight {
+    position: relative;
     margin-bottom: $space-md;
+    
     img {
       @extend %is-responsive;
+    }
+
+    figcaption {
+      @extend %figcaption;
+    }
+
+    @include bp-sm() {
+      &:hover {
+        figcaption {
+          opacity: 1;
+        }
+      }
     }
   }
 
@@ -21,48 +73,14 @@
     position: relative;
 
     figure {
-      //position: relative;
 
       figcaption {
-        display: block;
-        margin-bottom: 2px;
-        width: 100%;
-
-        @include bp-sm() {
-          background-color: rgba(255,255,255,.4);
-          height: 100%;
-          margin-bottom: 0;
-          left: 0;
-          opacity: 0;
-          position: absolute;
-          text-align: center;
-          top: 0;
-          transition: opacity .12s ease-out;
-        }
-
-        span {
-          @include word-break();
-          color: $color--black;
-          display: block;
-          @include font-size($fs-lg);
-          height: auto;
-          width: 100%;
-
-          @include bp-sm() {
-            height: auto;
-            left: 0;
-            padding: 0 $space-sm;
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-          }
-        }
+        @extend %figcaption;
       }
     }
 
     a {
       display: block;
-
       @include bp-sm() {
         &:hover {
           figure {
@@ -87,9 +105,43 @@
         top: 50%;
         transform: translateY(-50%);
         width: 100%;
+
+        &.has-date {
+          transform: translateY(-40%);
+        }
         
         h2 {
           @include font-size($fs-lg);
+          @include bp-sm() {
+            @include font-size($fs-md);
+          }
+          @include bp-lg() {
+            @include font-size($fs-lg);
+          }
+        }
+
+        h2, p {
+          margin-bottom: $space-xs;
+          
+          @include bp-sm() {
+            margin-bottom: $space-xxs;
+          }
+
+          @include bp-md() {
+            margin-bottom: $space-xs;
+          }
+        }
+
+        .news-subtitle {
+          @include font-size($fs-md);
+
+          @include bp-sm() {
+            @include font-size($fs-sm);
+          }
+
+          @include bp-lg() {
+            @include font-size($fs-md);
+          }
         }
 
         a {
@@ -97,13 +149,15 @@
         }
 
         figure {
-          margin-bottom: $space-xxs;
+          margin-bottom: $space-sm;
+          margin-top: $space-sm;
           @include bp-md() {
-            margin-bottom: $space-sm;
+            margin-bottom: $space-md;
+            margin-top: $space-md;
           }
           img {
             @extend %is-responsive;
-            max-width: 40%;
+            max-width: 70%;
             margin-left: auto;
             margin-right: auto;
           }

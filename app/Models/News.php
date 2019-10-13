@@ -11,6 +11,7 @@ class News extends Model
 
     public $translatable = [
         'date',
+        'subtitle',
         'title',
         'text',
         'link',
@@ -19,6 +20,7 @@ class News extends Model
 
     protected $fillable = [
         'date',
+        'subtitle',
         'title',
         'text',
         'link',

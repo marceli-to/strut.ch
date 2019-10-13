@@ -19,6 +19,7 @@
       </div>
       <div class="span has-media">
         <div class="contact__maps" id="js-maps"></div>
+        <a href="https://goo.gl/maps/iP116gayDdwGiKFm7" target="_blank" rel="noopener">Auf Google Maps anzeigen</a>
       </div>
     </div>
   @endif

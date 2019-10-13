@@ -11,9 +11,9 @@
   }
 
   h2 {
-    margin-bottom: $space-md;
+    margin-bottom: $space-sm;
     @include bp-md() {
-      margin-bottom: $space-xl;
+      margin-bottom: $space-lg;
     }
   }
 

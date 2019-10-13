@@ -6,7 +6,11 @@
           <a href="{{ route('page.projects') }}/{{$elements[0]->projectimage->project->id}}">
             <figure>
               <figcaption>
-                <span>{{$elements[0]->projectimage->project->name}}, {{$elements[0]->projectimage->project->location}}</span>
+                @if ($elements[0]->projectimage->project->title)
+                  <span>{{$elements[0]->projectimage->project->title}}</span>
+                @else
+                  <span>{{$elements[0]->projectimage->project->name}}, {{$elements[0]->projectimage->project->location}}</span>
+                @endif
               </figcaption>
               <img src="/media/{{$elements[0]->projectimage->name}}/lg" 
                 height="932" 

@@ -9,6 +9,7 @@
 
   .project__header {
     @extend %content-header;
+    position: relative;
 
     h2 {
       @extend %heading-sm;
@@ -16,6 +17,18 @@
 
     nav.project-browse {
       display: none;
+      position: absolute;
+      right: 0;
+      top: 0;
+
+      @include bp-sm() {
+        display: block;
+      }
+
+      span {
+        display: inline-block;
+        padding-right: $space-xs;
+      }
     }
   }
 
@@ -38,7 +51,7 @@
         background-color: $color--white;
         left: 0;
         opacity: 0;
-        padding-bottom: 24px;
+        padding-bottom: $space-sm;
         position: absolute;
         top: 60px;
         width: 100%;
@@ -48,6 +61,10 @@
           opacity: 1;
           z-index: 1;
         }
+      }
+
+      a {
+        @extend %anchor-underline;
       }
 
       > div {
@@ -63,6 +80,41 @@
 
       img {
         @extend %is-object-fit;
+      }
+    }
+  }
+
+  .project__nav {
+    margin-top: $space-lg;
+
+    @include bp-sm() {
+      display: none;
+    }
+    
+    a {
+      color: $color--green;
+      text-decoration: none;
+    }
+    
+    
+    article {
+      padding-top: $space-xxs;
+    }
+
+    h3 {
+      color: $color--black;
+      @include font-size($fs-md);
+      margin-top: $space-xxs;
+    }
+
+
+    figure {
+      display: block;
+      margin-top: $space-xxs;
+
+      img {
+        @extend %is-responsive;
+        max-width: 70%;
       }
     }
   }

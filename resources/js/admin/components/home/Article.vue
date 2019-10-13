@@ -8,9 +8,8 @@
         >Löschen</a>
       <div>{{element.date}}</div>
       <div><strong>{{element.title}}</strong></div>
-      <div>
-        {{ element.text | truncate(25, '...') }}
-      </div>
+      <div v-if="element.subtitle">{{element.subtitle}}</div>
+      <div>{{ element.text | truncate(25, '...') }}</div>
       <figure v-if="element.media">
           <img :src="getImageSource(element.media)" height="50" width="50">
       </figure>

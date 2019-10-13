@@ -36,6 +36,10 @@
               <input type="text" @focus="removeError('title', 'de')" v-model="news.title.de">
             </div>
             <div class="form-row">
+              <label>Subtitel</label>
+              <input type="text" v-model="news.subtitle.de">
+            </div>
+            <div class="form-row">
               <label>Text</label>
               <textarea v-model="news.text.de" rows="5"></textarea>
             </div>
@@ -128,6 +132,9 @@ export default {
       // model
       news: {
         date: {
+          de: null,
+        },
+        subtitle: {
           de: null,
         },
         title: {

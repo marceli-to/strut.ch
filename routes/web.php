@@ -43,6 +43,22 @@ Route::get('votraege', 'Frontend\AboutController@lectures')->name('page.lectures
 Route::get('/', 'Frontend\HomeController@index')->name('page.home');
 
 
+// PDF routes
+
+// Concat 'Projektdokumentationen'
+Route::get('/download/pdf/{id}/{slug?}', 'Frontend\PdfController@byCategory')->name('pdf.concat.category');
+
+// Download 'Werklisten'
+Route::get('/werkliste/pdf/gesamt', 'Frontend\PdfController@worksAll')->name('pdf.works.all');
+Route::get('/werkliste/pdf/wohnen', 'Frontend\PdfController@worksLiving')->name('pdf.works.living');
+Route::get('/werkliste/pdf/gewerbe', 'Frontend\PdfController@worksBusiness')->name('pdf.works.business');
+Route::get('/werkliste/pdf/oeffentlich', 'Frontend\PdfController@worksPublic')->name('pdf.works.public');
+Route::get('/werkliste/pdf/wettbewerb', 'Frontend\PdfController@worksCompetition')->name('pdf.works.competition');
+Route::get('/werkliste/pdf/status', 'Frontend\PdfController@worksState')->name('pdf.works.state');
+Route::get('/werkliste/pdf/jahr', 'Frontend\PdfController@worksYear')->name('pdf.works.year');
+Route::get('/werkliste/pdf/typ', 'Frontend\PdfController@worksType')->name('pdf.works.type');
+
+
 /**
  * Image routes
  */
@@ -50,9 +66,9 @@ Route::get('/', 'Frontend\HomeController@index')->name('page.home');
 Route::middleware('cache.headers:public;max_age=2628000;etag')->group(function() {
 	Route::get('media/thumbnail/{file}', 'MediaController@thumbnail');
 	Route::get('media/preview/{file}', 'MediaController@preview');
+	Route::get('media/grid/{file}', 'MediaController@grid');
 	Route::get('media/{file}/{size?}', 'MediaController@resize');
 });
-
 
 
 /**
@@ -63,3 +79,15 @@ Route::view('admin', 'admin.app');
 Route::get('admin/{any}', function () {
 	return view('admin.app');
 })->where('any', '.*');
+
+
+/**
+ * Routes for artisan commands
+ */
+Route::get('/artisan/symlink', function () {
+	Artisan::call('storage:link');
+});
+
+Route::get('/artisan/clearimages', function () {
+	Artisan::call('images:clear');
+});

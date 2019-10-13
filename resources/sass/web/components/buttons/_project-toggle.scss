@@ -6,10 +6,27 @@
 
 .btn-project-toggle {
   color: $color--green;
+  display: none;
   @include font-size($fs-md);
   line-height: 1 !important;
   text-decoration: none;
   right: 0;
   position: absolute;
   top: 6px;
+
+  @include bp-md() {
+    display: block;
+  }
+
+  &.is-open {
+    @include background-default();
+    background-image: url($url-icons + 'cross.svg');
+    background-size: 27px 27px;
+    height: 27px;
+    width: 27px;
+    
+    span {
+      display: none;
+    }
+  }
 }

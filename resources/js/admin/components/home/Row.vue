@@ -486,6 +486,7 @@ export default {
                 articleId: e.news.id,
                 date: e.news.date.de,
                 title: e.news.title.de,
+                subtitle: e.news.subtitle.de || null,
                 text: e.news.text.de,
                 media: e.news.media
               };

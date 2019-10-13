@@ -215,7 +215,7 @@ export default {
     },
 
     getAssetSource(asset) {
-      return `/media/${asset}/xs`;
+      return `/media/grid/${asset}`;
     },
 
     toggleOverlay() {

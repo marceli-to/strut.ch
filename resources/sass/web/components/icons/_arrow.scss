@@ -10,8 +10,7 @@
   @extend %icon-bg;
   background-image: url($url-icons + 'arrow-link.svg');
   background-size: 12px auto;
-  background-position: top 3px left;
-  margin-bottom: 2px;
+  background-position: top 4px left;
   padding-left: 18px;
   &:after {
     left: 18px !important;
@@ -21,7 +20,7 @@
   @include bp-md() {
     background-image: url($url-icons + 'arrow-link.svg');
     background-size: 22px auto;
-    background-position: top 3px left;
+    background-position: top 4px left;
     padding-left: 32px;
     &:after {
       left: 32px !important;

@@ -26,6 +26,14 @@
   .contact__maps {
     min-height: 300px;
 
+    + a {
+      display: inline-block;
+      margin-top: $space-xxs;
+      @include bp-sm() {
+        margin-top: $space-sm;
+      }
+    }
+
     @include bp-sm {
       min-height: 400px;
     }

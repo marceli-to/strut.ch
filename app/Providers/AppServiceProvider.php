@@ -25,6 +25,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        setLocale(LC_ALL, 'de_CH');
+
         Blade::directive('cachebust', function ($expression) {
             return "?v=" . Str::random(10);
         });

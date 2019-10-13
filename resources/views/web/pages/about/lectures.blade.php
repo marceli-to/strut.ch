@@ -15,7 +15,7 @@
                   <div>{{$lecture['description']['de']}}</div>
                   @if ($lecture['media'])
                     <figure>
-                      <img src="/media/{{$lecture['media']}}/sm" width="600" height="400" alt="{{$lecture['title']['de']}}">
+                      <img src="{!! ImageHelper::get($lecture['media'], 'xs') !!}" width="600" height="400" alt="{{$lecture['title']['de']}}">
                     </figure>
                   @endif
                 </div>

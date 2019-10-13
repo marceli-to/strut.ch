@@ -54,7 +54,7 @@ class WorksController extends Controller
         $grouped_competition = $competition->groupBy('competition');
 
         return view(
-            $this->view_path . '.status', 
+            $this->view_path . '.state', 
             [
                 'menu'          => $this->menu,
                 'projects'      => $grouped_projects,
@@ -91,12 +91,30 @@ class WorksController extends Controller
         $projects = $this->category->published()->with('activeTypes.activeProjects')->get();
         $grouped_projects = $projects->groupBy('name');
 
+
+        // Filter out categories & types without files
+        $categories = [];
+        $types      = [];
+        foreach($projects as $category) {
+            foreach($category->activeTypes as $type) {
+                foreach($type->activeProjects as $project) {
+                    if ($project)
+                    {
+                        $categories[$category->id] = true;
+                        $types[$type->id] = true;
+                    }
+                }
+            }   
+        }
+
         return view(
             $this->view_path . '.type', 
             [
                 'menu'          => $this->menu,
                 'projects'      => $grouped_projects,
-                'listBy'        => 'type'
+                'listBy'        => 'type',
+                'categories' => $categories,
+                'types'      => $types
             ]
         );
     }

@@ -95,6 +95,7 @@ class ProjectController extends Controller
     public function store(Request $request)
     {   
         $project = new Project([
+            'title'             => ['de' => $request->input('title.de')],
             'name'              => ['de' => $request->input('name.de')],
             'location'          => ['de' => $request->input('location.de')],
             'description'       => ['de' => $request->input('description.de')],
@@ -167,6 +168,7 @@ class ProjectController extends Controller
     {
         $project = $this->project->findOrFail($id);
 
+        $project->setTranslation('title', 'de', $request->input('title.de'));
         $project->setTranslation('name', 'de', $request->input('name.de'));
         $project->setTranslation('location', 'de', $request->input('location.de'));
         $project->setTranslation('description', 'de', $request->input('description.de'));

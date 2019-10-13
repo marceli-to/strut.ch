@@ -29,7 +29,7 @@
                   </div>
                   @if ($p['media'])
                     <figure>
-                      <img src="/media/{{$p['media']}}/sm" width="600" height="400" alt="{{$p['title']['de']}}">
+                      <img src="{!! ImageHelper::get($p['media'], 'xs') !!}" width="600" height="400" alt="{{$p['title']['de']}}">
                     </figure>
                   @endif
                 </div>

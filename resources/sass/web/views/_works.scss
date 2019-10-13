@@ -19,7 +19,7 @@
         color: $color--black;
         display: inline-block;
         transition: background-image .12s ease-out;
-        padding-right: 8px;
+        padding-right: 10px;
   
         &:after {
           display: none;
@@ -28,16 +28,17 @@
         &:hover,
         &.is-active {
           background-image: url($url-icons + 'dot.svg');
-          background-position: center right;
+          background-position: top 7px right 1px;
           background-size: 4px auto;
           @include bp-md() {
+            background-position: top 10px right 0;
             background-size: 5px auto;
           }
         }
   
         @include bp-md() {
           margin-bottom: 2px;
-          margin-right: $space-lg;
+          margin-right: $space-md;
           padding-right: 12px;
         }
       }
@@ -78,11 +79,11 @@
     }
   }
 
-
-
   .work-item {
     @extend %card;
     margin-bottom: 0;
+    word-break: keep-all;
+    hyphens: none;
 
     &:last-child {
       margin-bottom: $space-sm;

@@ -6,7 +6,11 @@
             <a href="{{ route('page.projects') }}/{{$elements[0]->projectimage->project->id}}">
               <figure>
                 <figcaption>
-                  <span>{{$elements[0]->projectimage->project->name}}, {{$elements[0]->projectimage->project->location}}</span>
+                  @if ($elements[0]->projectimage->project->title)
+                    <span>{{$elements[0]->projectimage->project->title}}</span>
+                  @else
+                    <span>{{$elements[0]->projectimage->project->name}}, {{$elements[0]->projectimage->project->location}}</span>
+                  @endif
                 </figcaption>
                 <img src="/media/{{$elements[0]->projectimage->name}}/lg" 
                   height="616" 
@@ -25,7 +29,11 @@
             <a href="{{ route('page.projects') }}/{{$elements[1]->projectimage->project->id}}">
               <figure>
                 <figcaption>
-                  <span>{{$elements[1]->projectimage->project->name}}, {{$elements[1]->projectimage->project->location}}</span>
+                  @if ($elements[1]->projectimage->project->title)
+                    <span>{{$elements[1]->projectimage->project->title}}</span>
+                  @else
+                    <span>{{$elements[1]->projectimage->project->name}}, {{$elements[1]->projectimage->project->location}}</span>
+                  @endif
                 </figcaption>
                 <img src="/media/{{$elements[1]->projectimage->name}}/lg" 
                   height="616" 

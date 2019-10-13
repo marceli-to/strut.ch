@@ -25,6 +25,16 @@ class Content extends Model
     ];
 
     /**
+     * Relationships
+     */
+
+    public function images()
+    {
+        return $this->hasMany('App\Models\ContentImage');
+    }
+
+
+    /**
      * Get only published records
      *
      * @param  \Illuminate\Database\Eloquent\Builder $query

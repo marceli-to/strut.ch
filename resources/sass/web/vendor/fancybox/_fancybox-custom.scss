@@ -10,8 +10,84 @@
   opacity: 1 !important;
 }
 
-a[data-fb="gallery"] {
+a[data-fancybox] {
   &:after {
     display: none !important;
+  }
+}
+
+.fancybox-toolbar {
+  height: 38px;
+  width: 100%;
+  z-index: 999999;
+
+  @include bp-md() {
+    height: 67px;
+  }
+}
+
+.btn-fancybox-close {
+  @include background-default();
+  background-image: url($url-icons + 'cross.svg');
+  background-size: cover;
+  height: 18px;
+  right: 10px;
+  position: absolute;
+  top: 10px;
+  width: 18px;
+  z-index: 1;
+
+  @include bp-md() {
+    height: 27px;
+    right: 20px;
+    top: 20px;
+    width: 27px;
+  }
+}
+
+.btn-fancybox-prev,
+.btn-fancybox-next {
+  display: block;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  width: 50%;
+  z-index: 99998;
+}
+
+.btn-fancybox-next {
+  cursor: url($url-icons + 'arrow-next_sm.png'), auto;
+  @include bp-md() {
+    cursor: url($url-icons + 'arrow-next_lg.png'), auto;
+  }
+  right: 0;
+}
+
+.btn-fancybox-prev {
+  cursor: url($url-icons + 'arrow-prev_sm.png'), auto;
+  @include bp-md() {
+    cursor: url($url-icons + 'arrow-prev_lg.png'), auto;
+  }
+  left: 0;
+}
+
+.fb-caption {
+  padding: 0 0 0 10px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -24px;
+  z-index: 99996;
+  pointer-events: none;
+  text-align: left;
+  transition: opacity 200ms;
+  background: none;
+
+  @include bp-sm() {
+    padding-left: 0;
+  }
+  
+  @include bp-md() {
+    bottom: -32px;
   }
 }

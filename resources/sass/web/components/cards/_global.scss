@@ -12,9 +12,20 @@
 
   h2 {
     border-top: 1px solid $color--black;
-    margin-bottom: $space-sm;
+    margin-bottom: $space-xs;
     line-height: 1 !important;
     padding-top: 5px;
+    @include bp-md() {
+      margin-bottom: $space-sm;
+      padding-top: 7px;
+    }
+  }
+
+  > div + h2 {
+    margin-top: $space-sm;
+    @include bp-md() {
+      margin-top: $space-md;
+    }
   }
 }
 
@@ -41,21 +52,17 @@
     height: 1px;
     left: 0;
     position: absolute;
-    top: 6px;
+    top: 7px;
     width: 14px;
 
     @include bp-md() {
-      top: 9px;
+      height: 2px;
+      top: 10px;
       width: 20px;
     }
   }
 
   &.has-link {
-
-    // remove underline
-    // a:hover:after {
-    //   display: none !important;
-    // }
 
     // add arrow icon
     &:before {
@@ -63,13 +70,13 @@
       background-color: transparent;
       background-image: url($url-icons + 'arrow-link.svg');
       background-size: contain;
-      background-position: top 2px left;
+      background-position: top 3px left;
       height: 16px;
       top: 0;
       width: 16px;
 
       @include bp-md() {
-        background-position: top 3px left;
+        background-position: top 4px left;
         height: 22px;
         top: 0;
         width: 22px;
@@ -82,8 +89,14 @@
   }
 
   figure {
-    margin-bottom: $space-sm;
-    margin-top: $space-sm;
+    margin-bottom: $space-xxs;
+    margin-top: $space-xs;
+
+    @include bp-md() {
+      margin-bottom: $space-sm;
+      margin-top: $space-xs;
+    }
+
     img {
       display: block;
       height: auto;

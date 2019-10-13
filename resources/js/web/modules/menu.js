@@ -20,6 +20,7 @@ var Menu = (function() {
         visible: 'is-visible',
         open:    'is-open',
         parent:  'is-parent',
+        hasMenu: 'has-menu',
     };
 
     // media queries
@@ -52,6 +53,7 @@ var Menu = (function() {
     };
 
     var _toggle = function() {
+        $(selectors.html).toggleClass(classes.hasMenu);
         $(selectors.menu).toggleClass(classes.visible);
         $(selectors.btnMenu).toggleClass(classes.active);
     };
@@ -78,7 +80,6 @@ var Menu = (function() {
                 $(this).hide();
                 $(this).removeClass(classes.open).hide();
             });
-
             $(btn).next('ul').addClass(classes.open).show();
             _incrementMenuHeight();
         }
@@ -96,9 +97,15 @@ var Menu = (function() {
             _incrementMenuHeight(height);
         }
         // The clicked its is NOT a parent and has no visible child items
-        // 1. show child item
-        // 2. increment menu
+        // 1. hide all parents
+        // 2. show child item
+        // 3. increment menu
         else {
+            // Felix' menu fix
+            $(btn).parents('li').nextAll('li').find('ul').hide();
+            $(btn).parents('li').prevAll('li').find('ul').hide();
+            // -- Felix' menu fix
+
             $(btn).next('ul').addClass(classes.open).show();
             _incrementMenuHeight();
         }
@@ -107,7 +114,7 @@ var Menu = (function() {
     var _incrementMenuHeight = function() {
         if (mq.md.matches) {
             let h = $(selectors.menu).find('ul.is-open').first().height();
-            $(selectors.menu).height(h + 40);
+            $(selectors.menu).height(h + 30);
         }
     }
 

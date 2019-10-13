@@ -27,6 +27,10 @@
           width: calc(66.66667% - 8px);
         }
       }
+
+      &.has-media {
+        margin-bottom: 0 !important;
+      }
     }
 
     article {
@@ -56,15 +60,18 @@
 
         h3 {
           color: $color--green;
+          a:after {
+            display: none;
+          }
         }
       }
 
       figure {
         display: block;
         margin-bottom: $space-xs;
+        margin-top: $space-xxs;
         max-width: 40%;
         @include bp-md() {
-          margin-bottom: $space-sm;
           max-width: 50%;
         }
       }

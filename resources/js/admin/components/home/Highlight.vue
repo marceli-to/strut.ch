@@ -2,7 +2,7 @@
   <div>
     <div class="grids">
       <button-create :gridId="gridId" :gridPosition="0"></button-create>
-      <div class="grid-1fr">
+      <div class="grid-1fr is-highlight">
         <div class="span">
           <div class="grid-1fr-highlight">
             <div class="span" v-for="element in elements" :key="element.id">

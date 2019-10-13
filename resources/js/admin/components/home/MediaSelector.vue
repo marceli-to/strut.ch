@@ -36,7 +36,7 @@ export default {
     },
 
     getImageSource(file) {
-      return `/media/${file}/xs`;
+      return `/media/grid/${file}`;
     }
   },
   

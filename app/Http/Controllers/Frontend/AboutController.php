@@ -9,6 +9,7 @@ use App\Models\Team;
 use App\Models\Award;
 use App\Models\Lecture;
 use App\Models\Content;
+use App\Models\ContentImage;
 use Illuminate\Http\Request;
 
 class AboutController extends Controller
@@ -24,6 +25,7 @@ class AboutController extends Controller
     protected $award;
     protected $lecture;
     protected $content;
+    protected $contentImage;
 
     // Static content key
     protected $key = 'about';
@@ -38,7 +40,8 @@ class AboutController extends Controller
         Team $team,
         Award $award,
         Lecture $lecture,
-        Content $content
+        Content $content,
+        ContentImage $contentImage
     )
     {
         $this->navigation = $navigationService;
@@ -49,13 +52,15 @@ class AboutController extends Controller
         $this->award = $award;
         $this->lecture = $lecture;
         $this->content = $content;
+        $this->contentImage = $contentImage;
     }
 
     public function about()
     {
         // Get content data
         $content = $this->content->published()
-                                 ->where('key', '=', $this->key)
+                                 ->with('images')
+                                 ->where('key', '=', 'about')
                                  ->get()
                                  ->first();
         // Get team data
@@ -73,12 +78,21 @@ class AboutController extends Controller
 
     public function jobs()
     {
+        // Get content data
+        $content = $this->content->published()
+                                 ->with('images')
+                                 ->where('key', '=', 'jobs')
+                                 ->get()
+                                 ->first();        
+        // Get jobs data
         $jobs = $this->job->published()->orderBy('order', 'ASC')->get();
+
         return view(
             $this->view_path . '.jobs', 
             [
                 'menu' => $this->menu,
                 'jobs' => $jobs,
+                'content' => $content
             ]
         );
     }

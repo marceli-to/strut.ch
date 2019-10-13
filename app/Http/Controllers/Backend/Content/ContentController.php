@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Backend\Content;
 
 use App\Services\MediaService;
 use App\Models\Content;
+use App\Models\ContentImage;
 use App\Http\Resources\ContentCollection;
 
 use App\Http\Controllers\Controller;
@@ -19,11 +20,13 @@ class ContentController extends Controller
      * 
      * @param MediaService $mediaService
      * @param Content $content
+     * @param ContentImage $contentImage
      */
-    public function __construct(MediaService $mediaService, Content $content)
+    public function __construct(MediaService $mediaService, Content $content, ContentImage $contentImage)
     {
         $this->mediaService = $mediaService;
         $this->content = $content;
+        $this->contentImage = $contentImage;
     }
 
     /**
@@ -33,7 +36,7 @@ class ContentController extends Controller
      */
     public function get()
     {
-        $contents = $this->content->get();
+        $contents = $this->content->with('images')->get();
         return new ContentCollection($contents);
     }
 
@@ -54,10 +57,24 @@ class ContentController extends Controller
                 'de' => $request->input('text.de'),
                 'en' => $request->input('text.en')
             ],
-            'media' =>  $request->input('media')           
         ]);
 
         $content->save();
+
+        if (!empty($request->images))
+        {
+            foreach($request->images as $i)
+            {
+                $image = new ContentImage([
+                    'content'  => $content->id,
+                    'name'     => $i['name'],
+                    'caption'  => $i['caption'],
+                    'publish'  => 1,
+                ]);
+                $image->save();
+            }
+        }
+
         return response()->json(['contentId' => $content->id]);
     }
 
@@ -69,7 +86,7 @@ class ContentController extends Controller
      */
     public function edit($id)
     {
-        $content = $this->content->findOrFail($id);
+        $content = $this->content->with('images')->findOrFail($id);
         return response()->json($content);
     }
 
@@ -85,8 +102,24 @@ class ContentController extends Controller
         $content = $this->content->findOrFail($id);
         $content->setTranslation('title', 'de', $request->input('title.de'));
         $content->setTranslation('text', 'de', $request->input('text.de'));
-        $content->media = $request->input('media') ? $request->input('media') : NULL;
         $content->save();
+
+        if (!empty($request->images))
+        {
+            foreach($request->images as $i)
+            {
+                $image = ContentImage::updateOrCreate(
+                    ['id' => $i['id']], 
+                    [
+                        'content_id' => $content->id,
+                        'name'       => $i['name'],
+                        'caption'    => $i['caption'],
+                        'publish'    => $i['publish'] ? $i['publish'] : 0,
+                    ]
+                );
+            }
+        }
+
         return response()->json('successfully updated');
     }
 
@@ -112,11 +145,10 @@ class ContentController extends Controller
      */
     public function unlink($filename)
     {
-        $content = $this->content->where('media', $filename)->first();
-        if ($content)
+        $image = $this->contentImage->where('name', $filename)->first();
+        if ($image)
         {
-            $content->media = null;
-            $content->save();
+            $image->delete();
         }
         $this->mediaService->delete($filename);
         return response()->json('successfully deleted');

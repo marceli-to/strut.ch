@@ -9,6 +9,7 @@ class Project extends Model
     use HasTranslations;
 
     public $translatable = [
+        'title',
         'name',
         'location',
         'description',
@@ -16,6 +17,7 @@ class Project extends Model
     ];
 
     protected $fillable = [
+        'title',
         'name',
         'location',
         'description',

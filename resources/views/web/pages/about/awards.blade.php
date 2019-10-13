@@ -15,7 +15,7 @@
                   <div>{{$award['description']['de']}}</div>
                   @if ($award['media'])
                     <figure>
-                      <img src="/media/{{$award['media']}}/sm" width="600" height="400" alt="{{$award['title']['de']}}">
+                      <img src="{!! ImageHelper::get($award['media'], 'xs') !!}" width="600" height="400" alt="{{$award['title']['de']}}">
                     </figure>
                   @endif
                 </div>

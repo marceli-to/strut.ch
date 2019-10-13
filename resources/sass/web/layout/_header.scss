@@ -21,6 +21,10 @@ header.site-header {
     }
 }
 
+.has-menu header.site-header {
+    position: fixed;
+}
+
 // Content header
 %content-header,
 header.content-header {

@@ -8,15 +8,27 @@
         @foreach($project_category as $category)
           <div class="span">
             <article class="is-type">
-              <h2>{{$category->name}}</h2>
-              @foreach($category->activeTypes as $type)
-                <article>
-                  <h3>{{$type->name_plural}}</h3>
-                  @foreach($type->activeProjects as $project)
-                    @include('web.pages.works.partials.item', array('project' => $project, 'image_by' => 'type'))
-                  @endforeach
-                </article>
-              @endforeach
+              @if (array_key_exists($category->id, $categories))
+                <h2>{{$category->name}}</h2>
+                @foreach($category->activeTypes as $type)
+                  @if (array_key_exists($type->id, $types))
+                    @if ($category->show_types)
+                      <article>
+                        <h3>{{$type->name_plural}}</h3>
+                        @foreach($type->activeProjects as $project)
+                          @include('web.pages.works.partials.item', array('project' => $project, 'image_by' => 'type'))
+                        @endforeach
+                      </article>
+                    @else
+                      <div>
+                        @foreach($type->activeProjects as $project)
+                          @include('web.pages.works.partials.item', array('project' => $project, 'image_by' => 'type'))
+                        @endforeach
+                      </div>
+                    @endif
+                  @endif
+                @endforeach
+              @endif
             </article>
           </div>
         @endforeach

@@ -30,6 +30,11 @@ class MediaController extends Controller
     {
         return $this->mediaService->thumbnail($image);
     }
+    
+    public function grid($image = NULL)
+    {
+        return $this->mediaService->grid($image);
+    }
 
     public function resize($image, $size = 'sm')
     {

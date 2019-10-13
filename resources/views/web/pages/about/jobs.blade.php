@@ -13,18 +13,23 @@
           </article>
         @endforeach
       @else
-        <article class="job">
-          Zeit sind alle unsere Stellen besetzt.
-        </article>
+        @if ($content)
+          <article class="job">
+            {!! $content->text !!}
+          </article>
+        @endif
       @endif
     </div>
     <div class="span has-media">
-      <figure>
-        <img src="/storage/media/static/strut.ch_jobs-1.jpg" width="918" height="657" alt="Strut Architekten - Jobs">
-      </figure>
-      <figure>
-        <img src="/storage/media/static/strut.ch_jobs-1.jpg" width="918" height="657" alt="Strut Architekten - Jobs">
-      </figure>
+      @if ($content->images)
+        @foreach($content->images as $image)
+          <figure>
+            <a href="{!! ImageHelper::get($image->name, 'lg') !!}" @if ($content->images->count() > 1)data-fancybox="gallery" @else data-fancybox="single" @endif>
+              <img src="{!! ImageHelper::get($image->name, 'md') !!}" width="960" height="650" alt="{{ config('app.name') }} - Jobs">
+            </a>
+          </figure>
+        @endforeach
+      @endif
     </div>
   </div>
 </section>

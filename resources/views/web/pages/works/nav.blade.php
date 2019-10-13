@@ -14,13 +14,13 @@
   </div>
   <div class="span">
       @if ($listBy == 'status')
-        <a href="" class="icon-file">Werkliste nach Status</a>
+        <a href="{{ route('pdf.works.state') }}" target="_blank" class="icon-file">Werkliste nach Status</a>
       @endif
       @if ($listBy == 'year')
-        <a href="" class="icon-file">Werkliste nach Jahr</a>
+        <a href="{{ route('pdf.works.year') }}" target="_blank" class="icon-file">Werkliste nach Jahr</a>
       @endif
       @if ($listBy == 'type')
-        <a href="" class="icon-file">Werkliste nach Typ</a>
+        <a href="{{ route('pdf.works.type') }}" target="_blank" class="icon-file">Werkliste nach Typ</a>
       @endif
     </a>
   </div>

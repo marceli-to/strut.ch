@@ -47,7 +47,7 @@
               :labelRestrictions="'jpg, png | max. 8 MB'"
               :maxFiles="1"
               :maxFilesize="8"
-              :asset="content.media"
+              :assets="content.images"
               :assetType="'image'"
               :acceptedFiles="'.png,.jpg'"
               :uploadUrl="'/api/media/upload'"
@@ -118,7 +118,7 @@ export default {
           de: null,
           en: null
         },
-        media: null
+        images: null
       },
 
       // tinymce config
@@ -196,18 +196,27 @@ export default {
         this.$notify({ type: "error", text: "Ungültiges Dateiformat." });
       } else {
         let file_response = JSON.parse(file.xhr.response);
-        this.content.media = file_response.name;
+        file_response.id = null;
+        file_response.caption = null;
+        file_response.order = -1;
+        file_response.publish = 1;
+        this.content.images.push(file_response);
       }
     },
 
     // Delete a single file by name
-    deleteImageUpload(file,event) {
-      if (confirm("Bitte löschen bestätigen!")) {
-        let uri = `/api/content/delete/file/${file}`;
+    deleteImageUpload(image,event) {
+      if(confirm('Bitte löschen bestätigen!')) {
+        let uri = `/api/content/delete/file/${image.name}`, self = this;
         let el = this.progress(event.target);
-        this.axios.delete(uri).then(response => {
-          this.content.media = null;
-          this.progress(el);
+        const index = this.content.images.findIndex(x => x.name === image);
+        this.axios.delete(uri)
+        .then(response => {
+          self.content.images.splice(index, 1);
+        })
+        .catch(function(error) {
+          self.$notify({type: 'error', text: error.response.data});
+          self.progress(el);
         });
       }
     },

@@ -12,7 +12,10 @@
           <div class="article-selector__text">
               <div class="item-date">{{ n.date.de }}</div>
               <h2>{{ n.title.de }}</h2>
-              <div class="item-text">{{ n.text.de }}</div>
+              <div class="item-text">
+                <strong>{{ n.subtitle.de }}</strong><br>
+                {{ n.text.de }}
+              </div>
           </div>
         </div>
       </div>

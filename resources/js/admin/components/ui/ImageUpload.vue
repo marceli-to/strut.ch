@@ -30,6 +30,27 @@
         </div>
       </div>
     </div>
+
+    <div class="form-row" v-if="assets">
+      <label>{{labelExisting}}</label>
+      <div class="dropzone-existing-assets">
+        <div>
+          <figure  v-for="asset in assets" :key="asset.id" :class="[assetType == 'image' ? 'is-image' : '', 'dz-existing-asset']">
+            <a :href="getAssetUri(asset.name)" target="_blank" class="dz-file-preview">
+              <img :src="getAssetSource(asset.name)" height="300" width="300">
+            </a>
+            <div class="dz-toolbar">
+              <a :href="getAssetUri(asset.name)" target="_blank" class="icon-external-link icon-mini"></a>
+              <a
+                href="javascript:;"
+                class="icon-trash icon-mini"
+                @click.prevent="deleteImageUpload(asset,$event)"
+              ></a>
+            </div>
+          </figure>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -46,6 +67,7 @@ export default {
     labelExisting: String,
     labelRestrictions: String,
     asset: String,
+    assets: Array,
     assetType: String,
     acceptedFiles: String,
     maxFiles: Number,
@@ -72,8 +94,8 @@ export default {
       this.$parent.afterImageUpload(asset);
     },
 
-    deleteImageUpload(asset,$event) {
-      this.$parent.deleteImageUpload(asset,$event);
+    deleteImageUpload(asset, $event) {
+      this.$parent.deleteImageUpload(asset, $event);
     },
 
     getAssetUri(asset) {

@@ -53,12 +53,12 @@ class MediaService
     /**
      * Maximum width for extra small landscape images
      */    
-    protected $max_width_xs = 160;    
+    protected $max_width_xs = 500;    
 
     /**
      * Maximum height for extra small portrait images
      */    
-    protected $max_height_xs = 90;
+    protected $max_height_xs = 350;
 
     /**
      * Maximum width for small landscape images
@@ -71,14 +71,30 @@ class MediaService
     protected $max_height_sm = 500;
 
     /**
+     * Maximum width for medium landscape images
+     */    
+    protected $max_width_md = 1200;    
+
+    /**
+     * Maximum height for medium portrait images
+     */    
+    protected $max_height_md = 800;
+
+    /**
      * Maximum width for large landscape images
      */    
-    protected $max_width_lg = 2000;    
+    protected $max_width_lg = 1600;    
 
     /**
      * Maximum height for large portrait images
      */    
-    protected $max_height_lg = 1500;
+    protected $max_height_lg = 900;
+
+    /**
+     * Image quality
+     */
+
+    protected $quality = 85;
 
     /**
      * Image prefix
@@ -88,10 +104,12 @@ class MediaService
     public function __construct()
     {
         $this->path_source    = storage_path('app/public/media/');
-        $this->path_large     = storage_path('app/public/media/large/');
         $this->path_xsmall    = storage_path('app/public/media/xsmall/');
         $this->path_small     = storage_path('app/public/media/small/');
+        $this->path_medium    = storage_path('app/public/media/medium/');
+        $this->path_large     = storage_path('app/public/media/large/');
         $this->path_thumbs    = storage_path('app/public/media/thumbs/');
+        $this->path_grid      = storage_path('app/public/media/grid/');
         $this->path_downloads = storage_path('app/public/media/downloads');
         $this->path_uploads   = storage_path('app/public/tmp/uploads');
         $this->_mkdir();
@@ -106,7 +124,7 @@ class MediaService
     public function upload(Request $request)
     {
         $file = $request->file('file');
-        $name = $this->_sanitizeFilename(trim($file->getClientOriginalName()));
+        $name = $this->_sanitizeFilename(trim($file->getClientOriginalName()), true, true);
         $name = uniqid() . '_' . $this->prefix . '_' . $name;
         $file->move($this->path_source, $name);
 
@@ -128,7 +146,7 @@ class MediaService
     public function uploadDocument(Request $request)
     {
         $file = $request->file('file');
-        $name = $this->_sanitizeFilename(trim($file->getClientOriginalName()));
+        $name = $this->_sanitizeFilename(trim($file->getClientOriginalName()), true, true);
         $name = uniqid() . '_' . $name;
         $file->move($this->path_downloads, $name);
 
@@ -163,6 +181,36 @@ class MediaService
         }
     }
 
+    public function grid($image = NULL)
+    {
+        if ($image != NULL)
+        {
+            // Generate xsmall sized images
+            if (!File::exists($this->path_grid . $image))
+            {
+                // Create image instance
+                $image = \Image::make($this->path_source . $image);
+                
+                // Resize image
+                $image->resize(null, 90, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+
+                $image->save($this->path_grid . $image->basename);
+                return \Response::make($image, 200, ['Content-Type' => 'image/jpeg']);
+            }
+            else
+            {   
+                $filename = $image;
+                $img = \Image::cache(function($image) use ($filename) {
+                    return $image->make($this->path_grid . $filename);
+                }, 300, false);
+                
+                return \Response::make($img, 200, ['Content-Type' => 'image/jpeg']);
+            }
+        }
+    }
+
     /**
      * Resize an image.
      * 
@@ -175,20 +223,33 @@ class MediaService
     {
         if ($image != NULL)
         {
-            // Generate small images
+            // Generate extra small sized images
             if ($size == 'xs')
             {
                 if (!File::exists($this->path_xsmall . $image))
                 {
                     // Create image instance
                     $image = \Image::make($this->path_source . $image);
-                    
-                    // Resize image
-                    $image->resize(null, $this->max_height_xs, function ($constraint) {
-                        $constraint->aspectRatio();
-                    });
 
-                    $image->save($this->path_xsmall . $image->basename);
+                    // Get width and height
+                    $width  = $image->getWidth();
+                    $height = $image->getHeight();
+                    
+                    // Resize landscape image
+                    if ($width > $height && $width >= $this->max_width_xs)
+                    {
+                        $image->resize($this->max_width_xs, null, function ($constraint) {
+                            $constraint->aspectRatio();
+                        });
+                    }
+                    else if ($height >= $this->max_height_xs)
+                    {
+                        $image->resize(null, $this->max_height_xs, function ($constraint) {
+                            $constraint->aspectRatio();
+                        });
+                    }
+
+                    $image->save($this->path_xsmall . $image->basename, $this->quality);
                     return \Response::make($image, 200, ['Content-Type' => 'image/jpeg']);
                 }
                 else
@@ -202,7 +263,7 @@ class MediaService
                 }
             }
 
-            // Generate small images
+            // Generate small sized images
             if ($size == 'sm')
             {
                 if (!File::exists($this->path_small . $image))
@@ -228,7 +289,7 @@ class MediaService
                         });
                     }
 
-                    $image->save($this->path_small . $image->basename);
+                    $image->save($this->path_small . $image->basename, $this->quality);
                     return \Response::make($image, 200, ['Content-Type' => 'image/jpeg']);
                 }
                 else
@@ -242,7 +303,47 @@ class MediaService
                 }
             }
 
-            // Generate large images
+            // Generate medium sized images
+            if ($size == 'md')
+            {
+                if (!File::exists($this->path_medium . $image))
+                {
+                    // Create image instance
+                    $image = \Image::make($this->path_source . $image);
+
+                    // Get width and height
+                    $width  = $image->getWidth();
+                    $height = $image->getHeight();
+                    
+                    // Resize landscape image
+                    if ($width > $height && $width >= $this->max_width_md)
+                    {
+                        $image->resize($this->max_width_md, null, function ($constraint) {
+                            $constraint->aspectRatio();
+                        });
+                    }
+                    else if ($height >= $this->max_height_md)
+                    {
+                        $image->resize(null, $this->max_height_md, function ($constraint) {
+                            $constraint->aspectRatio();
+                        });
+                    }
+
+                    $image->save($this->path_medium . $image->basename, $this->quality);
+                    return \Response::make($image, 200, ['Content-Type' => 'image/jpeg']);
+                }
+                else
+                {   
+                    $filename = $image;
+                    $img = \Image::cache(function($image) use ($filename) {
+                        return $image->make($this->path_medium . $filename);
+                    }, 300, false);
+                    
+                    return \Response::make($img, 200, ['Content-Type' => 'image/jpeg']);
+                }
+            }
+
+            // Generate large sized images
             if ($size == 'lg')
             {
                 if (!File::exists($this->path_large . $image))
@@ -268,7 +369,7 @@ class MediaService
                         });
                     }
 
-                    $image->save($this->path_large . $image->basename);
+                    $image->save($this->path_large . $image->basename, $this->quality);
                     return \Response::make($image, 200, ['Content-Type' => 'image/jpeg']);
                 }
                 else
@@ -309,10 +410,10 @@ class MediaService
 
     private function _sanitizeFilename($string, $force_lowercase = true, $anal = false)
     {
-        $strip = array("~", "`", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "_", "=", "+", "[", "{", "]", "}", "\\", "|", ";", ":", "\"", "'", "&#8216;", "&#8217;", "&#8220;", "&#8221;", "&#8211;", "&#8212;", "â€”", "â€“", ",", "<", ">", "/", "?");
+        $strip = array("~", "`", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "=", "+", "[", "{", "]", "}", "\\", "|", ";", ":", "\"", "'", "&#8216;", "&#8217;", "&#8220;", "&#8221;", "&#8211;", "&#8212;", "â€”", "â€“", ",", "<", ">", "/", "?");
         $clean = trim(str_replace($strip, "", strip_tags($string)));
         $clean = preg_replace('/\s+/', "-", $clean);
-        $clean = ($anal) ? preg_replace("/[^a-zA-Z0-9]/", "", $clean) : $clean ;
+        $clean = ($anal) ? preg_replace("/[^a-zA-Z0-9.\-_]/", "", $clean) : $clean ;
         return ($force_lowercase) ? (function_exists('mb_strtolower')) ? mb_strtolower($clean, 'UTF-8') : strtolower($clean) : $clean;
     }
 
@@ -342,7 +443,12 @@ class MediaService
         {
             File::makeDirectory($this->path_thumbs, 0775, true, true);
         }
-        
+
+        if (!File::isDirectory($this->path_grid))
+        {
+            File::makeDirectory($this->path_grid, 0775, true, true);
+        }
+
         if (!File::isDirectory($this->path_xsmall))
         {
             File::makeDirectory($this->path_xsmall, 0775, true, true);
@@ -351,6 +457,11 @@ class MediaService
         if (!File::isDirectory($this->path_small))
         {
             File::makeDirectory($this->path_small, 0775, true, true);
+        }
+
+        if (!File::isDirectory($this->path_medium))
+        {
+            File::makeDirectory($this->path_medium, 0775, true, true);
         }
 
         if (!File::isDirectory($this->path_large))

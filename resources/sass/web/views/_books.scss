@@ -33,7 +33,7 @@
         margin-top: $space-xs;
         @include bp-md() {
           margin-bottom: $space-sm;
-          margin-top: $space-md;
+          margin-top: $space-sm;
         }
       }
 
@@ -41,18 +41,18 @@
         @include font-size($fs-sm);
 
         > div {
-          margin-top: $space-sm;
+          margin-top: $space-xs;
           @include bp-md() {
-            margin-top: $space-lg;
+            margin-top: $space-sm;
           }
         }
       }
 
       .book__info {
         @include word-break();
-        margin-bottom: $space-sm;
+        margin-bottom: $space-xs;
         @include bp-md() {
-          margin-bottom: $space-lg;
+          margin-bottom: $space-sm;
         }
       }
 
