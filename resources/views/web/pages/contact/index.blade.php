@@ -1,4 +1,6 @@
 @extends('web.layout.app')
+@section('seo_title', 'Kontakt')
+@section('seo_description', '')
 @section('content')
 <section class="content contact">
   @if ($contact)

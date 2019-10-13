@@ -1,4 +1,6 @@
 @extends('web.layout.app')
+@section('seo_title', $project->name . ', ' . $project->location .' - '. $project->categoryType->name_singular)
+@section('seo_description', '')
 @section('content')
 <style>
 .label-preview {

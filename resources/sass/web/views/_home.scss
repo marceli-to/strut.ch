@@ -41,6 +41,19 @@
       transform: translateY(-50%);
     }
   }
+
+  &.is-sm {
+    @include bp-sm() {
+      display: none;
+    }
+  }
+
+  &.is-md {
+    display: none;
+    @include bp-sm() {
+      display: block;
+    }
+  }
 }
 
 .home {

@@ -94,7 +94,7 @@ class MediaService
      * Image quality
      */
 
-    protected $quality = 85;
+    protected $quality = 90;
 
     /**
      * Image prefix

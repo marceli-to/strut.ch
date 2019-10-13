@@ -67,25 +67,31 @@ class ProjectsController extends Controller
      */
     public function project($id = NULL, $slug = NULL)
     {
+        // Project
         $project = $this->project->published()
                                  ->with('category')
                                  ->with('categoryType')
                                  ->with('downloads')
                                  ->findOrFail($id);
-
+        
+        // Menu
         $this->menu = $this->navigation->boot(
             $project->id,
             $project->category->id,
             $project->categoryType->id
         );
 
+        // Open graph image
+        $og_image = $this->projectImage->where('project_id', '=', $id)->get()->first();
+
         return view(
             $this->view_path . '.project',
             [
-                'menu'    => $this->menu,
-                'project' => $project,
-                'browse'  => $this->getProjectNav($id),
-                'grids'   => $this->getProjectGrid($id)
+                'menu'     => $this->menu,
+                'project'  => $project,
+                'og_image' => $og_image ? $og_image->name : null,
+                'browse'   => $this->getProjectNav($id),
+                'grids'    => $this->getProjectGrid($id)
             ]
         );
     }

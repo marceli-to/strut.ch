@@ -1,4 +1,7 @@
 @extends('web.layout.app')
+@section('seo_title', $project->name . ', ' . $project->location .' - '. $project->categoryType->name_singular)
+@section('seo_description', substr(strip_tags($project->description),0,255))
+@section('og_image', url('/') . ImageHelper::get($og_image, 'lg'))
 @section('content')
 <section class="project js-project">
   <header class="project__header">

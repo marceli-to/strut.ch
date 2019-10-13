@@ -1,4 +1,6 @@
 @extends('web.layout.app')
+@section('seo_title', 'Über uns')
+@section('seo_description', substr(strip_tags($content->text),0,255))
 @section('content')
 <section class="content about">
   @if ($content)

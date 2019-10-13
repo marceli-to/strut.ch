@@ -9,14 +9,14 @@
   @extend %icon;
   @extend %icon-bg;
   background-image: url($url-icons + 'arrow-link.svg');
-  background-size: 12px auto;
-  background-position: top 4px left;
-  padding-left: 18px;
+  background-size: 16px auto;
+  background-position: top 3px left;
+  padding-left: 24px;
   &:after {
-    left: 18px !important;
-    width: calc(100% - 18px) !important;
+    left: 24px !important;
+    width: calc(100% - 24px) !important;
   }
-
+  
   @include bp-md() {
     background-image: url($url-icons + 'arrow-link.svg');
     background-size: 22px auto;

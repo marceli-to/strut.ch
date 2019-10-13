@@ -12,7 +12,7 @@
     @endif
     @if ($news->media)
       <figure>
-        <img src="/media/{{$news->media}}/sm">
+        <img src="{!! ImageHelper::get($news->media, 'xs') !!}" width="500" height="350">
       </figure>
     @endif
     @if ($news->link && $news->linkText)

@@ -43,7 +43,11 @@
       top: 0;
       left: 0;
       width:calc(100% - #{$space-md});
-      height: calc(100% - #{$space-md});
+      height: 100%;
+
+      @include bp-sm() {
+        height: calc(100% - #{$space-md});
+      }
     }
   }
 

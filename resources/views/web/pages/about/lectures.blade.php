@@ -1,4 +1,6 @@
 @extends('web.layout.app')
+@section('seo_title', 'Vorträge')
+@section('seo_description', '')
 @section('content')
 <section class="content lectures">
   <h1>Vorträge</h1>

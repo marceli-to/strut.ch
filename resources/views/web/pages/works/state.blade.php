@@ -1,4 +1,6 @@
 @extends('web.layout.app')
+@section('seo_title', 'Werkliste')
+@section('seo_description', '')
 @section('content')
 <section class="content works">
   @include('web.pages.works.nav')
