@@ -16,6 +16,9 @@ require('./modules/team.js');
 require('./modules/contact.js');
 require('./modules/maps.js');
 
+// Header
+require('./modules/header.js');
+
 // Project
 require('./modules/project.js');
 

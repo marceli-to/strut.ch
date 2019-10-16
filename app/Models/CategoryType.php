@@ -35,4 +35,15 @@ class CategoryType extends Model
                     ->orderBy('order', 'ASC')
                     ->where('publish', '=', 1);
     }
+
+    /**
+     * Get the projects for the type (published and ordered).
+     */
+    public function activeProjectsWithDetail()
+    {
+        return $this->hasMany('App\Models\Project')
+                    ->orderBy('order', 'ASC')
+                    ->where('publish', '=', 1)
+                    ->where('has_detail', '=', 1);
+    }
 }

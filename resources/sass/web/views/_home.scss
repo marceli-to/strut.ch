@@ -120,7 +120,19 @@
         width: 100%;
 
         &.has-date {
-          transform: translateY(-40%);
+          transform: translateY(calc(-50% + 10px));
+
+          @include bp-sm() {
+            transform: translateY(calc(-50% + 9px));
+          }
+
+          @include bp-md() {
+            transform: translateY(calc(-50% + 18px));
+          }
+
+          @include bp-lg() {
+            transform: translateY(calc(-50% + 13px));
+          }
         }
         
         h2 {

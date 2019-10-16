@@ -42,6 +42,11 @@ class Project extends Model
         return $this->hasMany('App\Models\ProjectImage');
     }
 
+    public function activeImages()
+    {
+        return $this->hasMany('App\Models\ProjectImage')->where('publish', '=', 1);
+    }
+
     public function downloads()
     {
         return $this->hasMany('App\Models\ProjectFile');

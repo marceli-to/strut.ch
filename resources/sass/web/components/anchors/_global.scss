@@ -58,3 +58,11 @@
     }
   }
 }
+
+.anchor-dark {
+  color: $color--black !important;
+  text-decoration: none;
+  &:after {
+    display: none !important;
+  }
+}

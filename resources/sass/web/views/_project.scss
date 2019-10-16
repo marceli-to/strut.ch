@@ -63,6 +63,10 @@
         }
       }
 
+      .project__description-body {
+        @include word-break();
+      }
+
       a {
         @extend %anchor-underline;
       }

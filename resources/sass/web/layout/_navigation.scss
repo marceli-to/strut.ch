@@ -43,6 +43,10 @@ nav.site-nav {
         &.is-inactive {
             color: $color--grey;
         }
+
+        &.is-parent.is-active + ul {
+            display: block;
+        }
     }
 
     ul {
@@ -50,7 +54,7 @@ nav.site-nav {
         &.has-indent {
             padding-left: 25px;
             li {
-                padding: 2px 0;
+                padding: 3px 0;
             }
         }
 
@@ -115,6 +119,10 @@ nav.site-nav {
 
         &.is-visible {
             height: 40px;
+        }
+
+        a.is-parent.is-active + ul {
+            display: none;
         }
 
         ul {

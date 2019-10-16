@@ -81,8 +81,11 @@ class ProjectsController extends Controller
             $project->categoryType->id
         );
 
-        // Open graph image
-        $og_image = $this->projectImage->where('project_id', '=', $id)->get()->first();
+        // Open graph image (first active image)
+        $og_image = $this->projectImage->where('project_id', '=', $id)
+                                       ->where('publish', '=', 1)
+                                       ->get()
+                                       ->first();
 
         return view(
             $this->view_path . '.project',
@@ -137,14 +140,14 @@ class ProjectsController extends Controller
     protected function getProjectNav($id = NULL)
     {
         // Build project nav
-        $projects     = $this->category->published()->with('activeTypes.activeProjects')->get();
+        $projects     = $this->category->published()->with('activeTypes.activeProjectsWithDetail')->get();
         $project_keys = [];
         
         foreach($projects as $category)
         {
             foreach($category->activeTypes as $type)
             {
-                foreach($type->activeProjects as $p)
+                foreach($type->activeProjectsWithDetail as $p)
                 {
                     $project_keys[] = (int) $p->id;
                 }
@@ -171,8 +174,8 @@ class ProjectsController extends Controller
         }
 
         $project_nav = [
-            'prev' => $this->project->with('images')->find($prevId),
-            'next' => $this->project->with('images')->find($nextId),
+            'prev' => $this->project->with('activeImages')->find($prevId),
+            'next' => $this->project->with('activeImages')->find($nextId),
         ];
 
         return $project_nav;

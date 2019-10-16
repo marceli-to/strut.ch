@@ -5,7 +5,6 @@
  */
 
 main.site-content {
-    
     > div {
         @extend %page-block;
         padding-bottom: 10px;

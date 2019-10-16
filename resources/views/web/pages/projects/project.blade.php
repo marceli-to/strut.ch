@@ -10,8 +10,8 @@
       <nav class="project-browse">
         <span data-label-prev style="display:none">Vorheriges Projekt</span>
         <span data-label-next style="display:none">Nächstes Projekt</span>
-        <a href="{{ route('page.projects') }}/{{$browse['prev']->id}}" class="icon-browse-prev" data-prev></a>
-        <a href="{{ route('page.projects') }}/{{$browse['next']->id}}" class="icon-browse-next" data-next></a>
+        <a href="{{ route('page.projects') }}/{!! AppHelper::getSlug($browse['prev']) !!}" class="icon-browse-prev" data-prev></a>
+        <a href="{{ route('page.projects') }}/{!! AppHelper::getSlug($browse['next']) !!}" class="icon-browse-next" data-next></a>
       </nav>
     </div>
   </header>
@@ -48,7 +48,7 @@
     </div>
     <div class="project__description">
       <div>
-        <div class="span">{!! $project->description !!}</div>
+        <div class="span project__description-body">{!! $project->description !!}</div>
         <div class="span">
             {!! $project->info !!}
             @if ($project->downloads)
@@ -72,7 +72,7 @@
           <span>Nächstes Projekt</span>
           <h3>{{$browse['next']->name}}, {{$browse['next']->location}}</h3>
           @if ($browse['next']->images)
-            @foreach($browse['next']->images as $image)
+            @foreach($browse['next']->activeImages as $image)
               <figure>
                 <img src="{!! ImageHelper::get($image->name, 'sm') !!}" width="900" height="500" alt="{{$browse['next']->name}}, {{$browse['next']->location}}">
               </figure>

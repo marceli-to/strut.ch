@@ -76,4 +76,15 @@ class AppHelper
 
         return $columns;
     }
+
+    public static function getSlug($project = NULL)
+    {
+        return $project->id .'/'.
+            str_slug(
+                AppHelper::transliterate($project->getTranslation('name', 'de')) . '-' .
+                AppHelper::transliterate($project->getTranslation('location', 'de')) . '-' .
+                $project->year
+                , '-'
+            );
+    }
 }

@@ -38,11 +38,10 @@
           <div v-show="tabs.data.active">
             <div class="grid-project">
               <div>
-                <div class="form-row" :class="errors.title.de ? 'has-error': ''">
-                  <label>Kurztitel (für Teaser) *</label>
+                <div class="form-row">
+                  <label>Kurztitel (für Teaser)</label>
                   <input
                     type="text"
-                    @focus="removeError('title', 'de')"
                     name="name"
                     v-model="project.title.de"
                   >
@@ -385,9 +384,6 @@ export default {
     return {
       // fields with possible errors
       errors: {
-        title: {
-          de: false
-        },
         name: {
           de: false
         },
@@ -517,17 +513,11 @@ export default {
     // Validation methods
     validate() {
       if (
-        this.project.title.de &&
         this.project.name.de &&
         this.project.location.de &&
         this.project.year
       ) {
         return true;
-      }
-
-      if (!this.project.title.de) {
-        this.errors.title.de = true;
-        this.tabs.data.error = true;
       }
 
       if (!this.project.name.de) {

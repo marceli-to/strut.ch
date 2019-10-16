@@ -3,7 +3,7 @@
     <div class="box__b">
       @if (isset($elements[0]))
         @if ($elements[0]->project_image_id)
-          <a href="{{ route('page.projects') }}/{{$elements[0]->projectimage->project->id}}">
+          <a href="{{ route('page.projects') }}/{!! AppHelper::getSlug($elements[0]->projectimage->project) !!}">
             <figure>
               @include('web.partials.grids.home.caption', array('element' => $elements[0]))
               <img src="{!! ImageHelper::get($elements[0]->projectimage->name, 'lg') !!}" 
@@ -20,7 +20,7 @@
     <div class="box__b">
       @if (isset($elements[1]))
         @if ($elements[1]->project_image_id)
-          <a href="{{ route('page.projects') }}/{{$elements[1]->projectimage->project->id}}">
+          <a href="{{ route('page.projects') }}/{!! AppHelper::getSlug($elements[1]->projectimage->project) !!}">
             <figure>
               @include('web.partials.grids.home.caption', array('element' => $elements[1]))
               <img src="{!! ImageHelper::get($elements[1]->projectimage->name, 'lg') !!}" 

@@ -6,16 +6,18 @@
     @foreach($projects as $project_category)
       @foreach($project_category as $category)
         @foreach($category->activeTypes as $type)
-          <span class="content-title">{{$type->name_plural}}</span>
-          <div class="content-items">
-            @php
-              $activeProjects = collect($type->activeProjects);
-              $sortedProjects = $activeProjects->sortByDesc('year');
-            @endphp
-            @foreach($sortedProjects as $project)
-              <div class="content-item">{{ $project->name }}, {{ $project->location }} – {{ $project->year }}</div>
-            @endforeach
-          </div>
+          @php
+            $activeProjects = collect($type->activeProjects);
+            $sortedProjects = $activeProjects->sortByDesc('year');
+          @endphp
+          @if ($activeProjects->count() > 0)
+            <span class="content-title">{{$type->name_plural}}</span>
+            <div class="content-items">
+              @foreach($sortedProjects as $project)
+                <div class="content-item">{{ $project->name }}, {{ $project->location }} – {{ $project->year }}</div>
+              @endforeach
+            </div>
+          @endif
         @endforeach
       @endforeach
     @endforeach

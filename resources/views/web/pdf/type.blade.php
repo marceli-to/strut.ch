@@ -9,22 +9,24 @@
           <div class="content-items">
           @foreach($category->activeTypes as $type)
             @if ($category->show_types)
+              @php
+                $activeProjects = collect($type->activeProjects);
+                $sortedProjects = $activeProjects->sortByDesc('year');
+              @endphp
+              @if ($activeProjects->count() > 0)
                 <div class="content-item"><strong>{{$type->name_plural}}</strong></div>
-                @php
-                  $activeProjects = collect($type->activeProjects);
-                  $sortedProjects = $activeProjects->sortByDesc('year');
-                @endphp
                 @foreach($sortedProjects as $project)
-                  <div class="content-item">{{ $project->name }}, {{ $project->location }} – {{ $project->year }}</div>
+                  <div class="content-item">{{ $project->name }}, {{ $project->location }} – {{ $project->year }}, {{$project->status}}</div>
                 @endforeach
                 <br>
+              @endif
             @else
                 @php
                   $activeProjects = collect($type->activeProjects);
                   $sortedProjects = $activeProjects->sortByDesc('year');
                 @endphp
                 @foreach($sortedProjects as $project)
-                  <div class="content-item">{{ $project->name }}, {{ $project->location }} – {{ $project->year }}</div>
+                  <div class="content-item">{{ $project->name }}, {{ $project->location }} – {{ $project->year }}, {{$project->status}}</div>
                 @endforeach
             @endif
           @endforeach

@@ -68,7 +68,7 @@ class PdfController extends Controller
     ];
 
     $pdf = PDF::loadView('web.pdf.all', $data);
-    return $pdf->stream($this->_getFileName('alle'));
+    return $pdf->stream($this->_getFileName('gesamt'));
   }
 
   public function worksLiving()
@@ -204,6 +204,6 @@ class PdfController extends Controller
 
   private function _getFileName($type = NULL)
   {
-    return $this->filenamePrefix . $type . '-' . date('d.m.Y:H:i:s', time()) . '.pdf';
+    return $this->filenamePrefix . $type . '-' . date('d.m.Y', time()) . '.pdf';
   }
 }
