@@ -1,3 +1,5 @@
+function debounce(a,b,c){var d;return function(){var e=this,f=arguments;clearTimeout(d),d=setTimeout(function(){d=null,c||a.apply(e,f)},b),c&&!d&&a.apply(e,f)}}
+
 var Menu = (function() {
 
     /* --------------------------------------------------------------
@@ -25,9 +27,8 @@ var Menu = (function() {
 
     // media queries
     var mq = {
-        sm: window.matchMedia("(min-width: 600px)"),
-        md: window.matchMedia("(min-width: 900px)"),
-        lg: window.matchMedia("(min-width: 1200px)")
+        sm: window.matchMedia("(max-width: 900px)"),
+        md: window.matchMedia("(min-width: 901px)")
     };
 
     /* --------------------------------------------------------------
@@ -50,7 +51,19 @@ var Menu = (function() {
             _toggleSub(this);
         });
 
+        $(window).resize(function(event){
+            if (mq.md.matches) {
+                _resize();
+            }
+        });
     };
+
+    var _resize = debounce(function(){
+        $(selectors.html).removeClass(classes.hasMenu);
+        $(selectors.menu).removeClass(classes.visible);
+        $(selectors.btnMenu).removeClass(classes.active);
+        _incrementMenuHeight();
+    }, 200)
 
     var _toggle = function() {
         $(selectors.html).toggleClass(classes.hasMenu);

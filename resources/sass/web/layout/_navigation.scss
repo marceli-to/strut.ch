@@ -7,20 +7,20 @@
 nav.site-nav {
     background-color: $color--white;
     left: 0;
-    min-height: calc(100% - #{$header-height});
+    min-height: 100%;
     opacity: 0;
     overflow-y: auto;
-    padding-bottom: 10px;
+    padding-bottom: 20px;
+    padding-top: calc(#{$header-height} - 27px);
     pointer-events: none;
     position: fixed;
-    top: $header-height;
     transition: opacity 0s ease-in;
     width: 100%;
     z-index: -1;
     -webkit-overflow-scrolling: touch;
 
     &.is-visible {
-        height: calc(100vh - 80px);
+        height: 100%;
         opacity: 1;
         pointer-events: all;
         z-index: 10;
@@ -32,13 +32,9 @@ nav.site-nav {
     }
 
     a {
+        @extend %anchor-underline-nav;
         color: $color--black;
         text-decoration: none;
-
-        &:hover,
-        &.is-active {
-            text-decoration: underline;
-        }
 
         &.is-inactive {
             color: $color--grey;
@@ -47,6 +43,10 @@ nav.site-nav {
         &.is-parent.is-active + ul {
             display: block;
         }
+    }
+
+    ul ul ul a {
+        @extend %anchor-underline-subnav;
     }
 
     ul {
@@ -111,6 +111,7 @@ nav.site-nav {
         opacity: 1;
         overflow: visible;
         padding-bottom: 0;
+        padding-top: 0;
         pointer-events: all;
         position: relative;
         top: 0;

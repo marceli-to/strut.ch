@@ -47,7 +47,9 @@
             @if ($t->phone) {{$t->phone}}<br> @endif
             @if ($t->email) <a href="mailto:{{$t->email}}" class="anchor-dark">{{$t->email}}</a> @endif
           </div>
-          <a href="javascript:;" class="icon-toggle js-msnry-btn">Lebenslauf</a>
+          <a href="javascript:;" class="icon-toggle js-msnry-btn">
+            <span>Lebenslauf</span>
+          </a>
           <div class="team-member__cv" style="display:none">{!! $t->cv !!}</div>
         </article>
       </div>

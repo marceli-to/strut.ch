@@ -10,6 +10,10 @@
   .contact-grid {
     @extend %grid-1fr2fr;
     position: relative;
+
+    article a {
+      @extend %anchor-underline-lg;
+    }
   }
 
   .contact__imprint {
@@ -21,16 +25,23 @@
     > div {
       margin-top: $space-sm;
     }
+
+    a:not(.icon-toggle) {
+      @extend %anchor-underline;
+    }
   }
 
   .contact__maps {
     min-height: 300px;
 
-    + a {
-      display: inline-block;
-      margin-top: $space-xxs;
+    + div {
+      margin-top: $space-xs;
       @include bp-sm() {
         margin-top: $space-sm;
+      }
+
+      a {
+        @extend %anchor-underline;
       }
     }
 

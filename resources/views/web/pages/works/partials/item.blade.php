@@ -1,7 +1,7 @@
 <div class="work-item {{$project->has_detail ? 'has-link' : ''}}">
   <h3>
     @if ($project->has_detail)
-      <a href="{{ route('page.projects') }}/{{$project->id}}">
+      <a href="{{ route('page.projects') }}/{!! AppHelper::getSlug($project) !!}">
         {{$project->name}}, {{$project->location}}
       </a>
     @else
@@ -12,7 +12,7 @@
     @if ($image_by == 'type')
       @if ($img->is_preview_type)
         <figure>
-          <img src="/media/{{$img->name}}/sm" 
+          <img src="{!! ImageHelper::get($img->name, 'sm') !!}" 
               width="600"
               height="400"
               alt="@if ($img->caption){{$img->caption}} – @endif{{$project->name}}, {{$project->location}}">
@@ -23,7 +23,7 @@
     @if ($image_by == 'status')
       @if ($img->is_preview_status)
         <figure>
-          <img src="/media/{{$img->name}}/sm" 
+          <img src="{!! ImageHelper::get($img->name, 'sm') !!}" 
               width="600"
               height="400"
               alt="@if ($img->caption){{$img->caption}} – @endif{{$project->name}}, {{$project->location}}">

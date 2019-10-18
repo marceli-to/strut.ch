@@ -70,7 +70,7 @@
 }
 
 [class^='box-']:last-child {
-  > div:last-child [class^='box__'] {
+  > div:last-child[class^='box__'] {
     margin-bottom: 0 !important;
   }
 }

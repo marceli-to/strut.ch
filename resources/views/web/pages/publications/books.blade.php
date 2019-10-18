@@ -16,20 +16,22 @@
                 <div class="book__detail">
                   <p>@php echo nl2br($b->description) @endphp</p>
                   <div>
-                    <a href="javascript:;" class="icon-toggle is-reverse js-msnry-btn">Info</a>
+                    <a href="javascript:;" class="icon-toggle is-reverse js-msnry-btn">
+                      <span>Info</span>
+                    </a>
                     <div class="book__info" style="display:none">{!! $b->info !!}</div>
                     @if ($b->url)
                       <div class="book__order">
                         @php if (strpos($b->url, '@') != FALSE): @endphp
                           <a href="mailto:{{$b->url}}?subject=Bestellung {{$b->title}}&body=Ich bestelle 1 Exemplar '{{$b->title}}'" 
                              title="Buch «{{$b->title}}» Bestellen" class="icon-arrow">
-                            Bestellen
+                            <span>Bestellen</span>
                           </a>
                         @php else: @endphp
                           <a href="{{$b->url}}" 
                              target="_blank" 
                              title="Buch «{{$b->title}}» Bestellen" class="icon-arrow">
-                             Bestellen
+                             <span>Bestellen</span>
                           </a>
                         @php endif; @endphp
                       </div>

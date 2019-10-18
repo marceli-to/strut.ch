@@ -43,6 +43,10 @@
     h3, h4 {
       @include font-size($fs-sm);
     }
+
+    a span {
+      @extend %anchor-underline;
+    }
   }
 
   .download-group__item {

@@ -7,12 +7,13 @@ var FancyBox = (function() {
   };
 
   var _initialize = function() {
-    
+
     $(selectors.gallery).fancybox({
       buttons: [
         "close"
       ],
       infobar: false,
+
       btnTpl: {
         close: '<a href="javascript:;" data-fancybox-close class="btn-fancybox-close"></a>',
         arrowLeft: '<a href="javascript:;" data-fancybox-prev class="btn-fancybox-prev"><span></span></a>',
@@ -20,18 +21,30 @@ var FancyBox = (function() {
       },
 
       baseTpl:
-      '<div class="fancybox-container" role="dialog" tabindex="-1">' +
-      '<div class="fancybox-bg"></div>' +
-      '<div class="fancybox-inner">' +
-      '<div class="fancybox-infobar"><span data-fancybox-index></span>&nbsp;/&nbsp;<span data-fancybox-count></span></div>' +
-      '<div class="fancybox-toolbar">{{buttons}}</div>' +
-      '<div class="fancybox-navigation">{{arrows}}</div>' +
-      '<div class="fancybox-stage"></div>' +
-      '</div>' +
-      '</div>',
+        '<div class="fancybox-container" role="dialog" tabindex="-1">' +
+        '<div class="fancybox-bg"></div>' +
+        '<div class="fancybox-inner">' +
+        '<div class="fancybox-infobar"><span data-fancybox-index></span>&nbsp;/&nbsp;<span data-fancybox-count></span></div>' +
+        '<div class="fancybox-toolbar">{{buttons}}</div>' +
+        '<div class="fancybox-navigation">{{arrows}}</div>' +
+        '<div class="fancybox-stage"></div>' +
+        '</div>' +
+        '</div>',
       
-      afterLoad : function(fb, item){
+      afterLoad: function(fb, item){
         item.$content.remove('.fb-caption').append('<div class="fb-caption">' + item.opts.caption + '</div>');
+      },
+
+      afterShow: function(instance, current) {
+        $('.btn-fancybox-next').removeClass('is-inactive');
+        $('.btn-fancybox-prev').removeClass('is-inactive');
+
+        if (current.index  ===  instance.group.length - 1) {
+          $('.btn-fancybox-next').addClass('is-inactive');
+        }
+        if (current.index  ===  0) {
+          $('.btn-fancybox-prev').addClass('is-inactive');
+        }
       }
     });
 
@@ -44,15 +57,15 @@ var FancyBox = (function() {
         close: '<a href="javascript:;" data-fancybox-close class="btn-fancybox-close"></a>',
       },
       baseTpl:
-      '<div class="fancybox-container" role="dialog" tabindex="-1">' +
-      '<div class="fancybox-bg"></div>' +
-      '<div class="fancybox-inner">' +
-      '<div class="fancybox-infobar"><span data-fancybox-index></span>&nbsp;/&nbsp;<span data-fancybox-count></span></div>' +
-      '<div class="fancybox-toolbar">{{buttons}}</div>' +
-      '<div class="fancybox-navigation">{{arrows}}</div>' +
-      '<div class="fancybox-stage"></div>' +
-      '</div>' +
-      '</div>',
+        '<div class="fancybox-container" role="dialog" tabindex="-1">' +
+        '<div class="fancybox-bg"></div>' +
+        '<div class="fancybox-inner">' +
+        '<div class="fancybox-infobar"><span data-fancybox-index></span>&nbsp;/&nbsp;<span data-fancybox-count></span></div>' +
+        '<div class="fancybox-toolbar">{{buttons}}</div>' +
+        '<div class="fancybox-navigation">{{arrows}}</div>' +
+        '<div class="fancybox-stage"></div>' +
+        '</div>' +
+        '</div>',
       
       afterLoad : function(fb, item){
         item.$content.remove('.fb-caption').append('<div class="fb-caption">' + item.opts.caption + '</div>');

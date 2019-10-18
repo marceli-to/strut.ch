@@ -16,7 +16,7 @@
               @if ($activeProjects->count() > 0)
                 <div class="content-item"><strong>{{$type->name_plural}}</strong></div>
                 @foreach($sortedProjects as $project)
-                  <div class="content-item">{{ $project->name }}, {{ $project->location }} – {{ $project->year }}, {{$project->status}}</div>
+                  <div class="content-item">{{ $project->name }}, {{ $project->location }} – {{ $project->year }}, {!! config('status.' .$project->status) !!}</div>
                 @endforeach
                 <br>
               @endif
@@ -26,7 +26,7 @@
                   $sortedProjects = $activeProjects->sortByDesc('year');
                 @endphp
                 @foreach($sortedProjects as $project)
-                  <div class="content-item">{{ $project->name }}, {{ $project->location }} – {{ $project->year }}, {{$project->status}}</div>
+                  <div class="content-item">{{ $project->name }}, {{ $project->location }} – {{ $project->year }}, {!! config('status.' .$project->status) !!}</div>
                 @endforeach
             @endif
           @endforeach

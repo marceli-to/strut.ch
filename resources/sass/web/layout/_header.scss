@@ -9,47 +9,53 @@ header.site-header {
     background-color: $color--white;
     @include responsive-prop('height', $header-heights);
     opacity: 1;
-    position: relative;
+    position: fixed;
     width: 100%;
     z-index: 5;
-    //transition: height .16s ease-out;
 
     > div {
         @extend %page-block;
+        z-index: 20;
+
         @include bp-md() {
             padding-top: 20px;
+            position: relative;
+        }
+    }
+    
+    &.is-tiny {
+        background-color: transparent;
+        height: 45px;
+
+        .brand {
+            opacity: 0;
+        }
+
+        @include bp-md() {
+            background-color: $color--white;
+            height: 70px;
+            transform: translateY(0);
+            transition: transform .36s .24s ease-out;
         }
     }
 
-    &.is-tiny {
-        height: 45px !important;
-        position: fixed;
-        .brand {
-            display: none;
-        }
+    &.is-hidden {
         @include bp-md() {
-            height: 70px !important;
+            transform: translateY(-100%);
+            transition: transform .32s ease-out;
         }
     }
 }
 
-
-
 .has-menu header.site-header {
+    background-color: $color--white !important;
     height: 100%;
     position: fixed;
 
     .brand {
-        display: block !important;
-    }
-
-    @include bp-md() {
-        position: relative;
+        opacity: 1 !important;
     }
 }
-
-
-
 
 // Content header
 %content-header,

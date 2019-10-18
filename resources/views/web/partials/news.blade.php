@@ -18,7 +18,7 @@
     @if ($news->link && $news->linkText)
       <p>
         <a href="{{$news->link}}" class="icon-arrow">
-          {{ $news->linkText }}
+          </span>{{ $news->linkText }}</a>
         </a>
       </p>
     @endif

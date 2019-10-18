@@ -15,7 +15,7 @@
                 <div class="work-item {{$p['has_detail'] ? 'has-link' : ''}}">
                   <h3>
                     @if ($p['has_detail'])
-                      <a href="{{ route('page.projects') }}/{{$p['id']}}">
+                      <a href="{{ route('page.projects') }}/{!! AppHelper::getSlug($p) !!}">
                         {{$p['name']['de']}}, {{$p['location']['de']}}
                       </a>
                     @else
@@ -25,7 +25,7 @@
                   @foreach($p['images'] as $img)
                     @if ($img['is_preview_year'])
                       <figure>
-                        <img src="/media/{{$img['name']}}/sm" 
+                        <img src="{!! ImageHelper::get($img['name'], 'sm') !!}" 
                              width="600"
                              height="400"
                              alt="@if ($img['caption']['de']){{$img['caption']['de']}} – @endif{{$p['name']['de']}}, {{$p['location']['de']}}">

@@ -12,9 +12,9 @@
   background-size: 10px auto;
   color: $color--green;
   padding-left: 18px;
-  &:after {
-    left: 18px !important;
-    width: calc(100% - 18px) !important;
+
+  &:hover span {
+    @extend %anchor-underline;
   }
 
   @include bp-md() {
@@ -22,9 +22,5 @@
     background-size: 14px auto;
     background-position: top 2px left;
     padding-left: 25px;
-    &:after {
-      left: 25px !important;
-      width: calc(100% - 25px) !important;
-    }
   }
 }

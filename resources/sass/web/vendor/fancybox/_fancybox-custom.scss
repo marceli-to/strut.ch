@@ -61,6 +61,13 @@ a[data-fancybox] {
     cursor: url($url-icons + 'arrow-next_lg.png'), auto;
   }
   right: 0;
+
+  &.is-inactive {
+    cursor: url($url-icons + 'arrow-next_sm-grey.png'), auto;
+    @include bp-md() {
+      cursor: url($url-icons + 'arrow-next_lg-grey.png'), auto;
+    }
+  }
 }
 
 .btn-fancybox-prev {
@@ -69,6 +76,12 @@ a[data-fancybox] {
     cursor: url($url-icons + 'arrow-prev_lg.png'), auto;
   }
   left: 0;
+  &.is-inactive {
+    cursor: url($url-icons + 'arrow-prev_sm-grey.png'), auto;
+    @include bp-md() {
+      cursor: url($url-icons + 'arrow-prev_lg-grey.png'), auto;
+    }
+  }
 }
 
 .fb-caption {

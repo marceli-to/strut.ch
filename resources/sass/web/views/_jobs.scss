@@ -36,6 +36,10 @@
 
     .job__description {
       @include font-size($fs-sm);
+
+      a {
+        @extend %anchor-underline;
+      }
     }
   }
 }

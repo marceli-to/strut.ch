@@ -12,7 +12,9 @@
         </article>
         @if ($imprint)
           <div class="contact__imprint">
-            <a href="javascript:;" class="icon-toggle js-btn-toggle">Impressum</a>
+            <a href="javascript:;" class="icon-toggle js-btn-toggle">
+              <span>Impressum</span>
+            </a>
             <div style="display:none">
                 {!! $imprint->text !!}
             </div>
@@ -21,7 +23,7 @@
       </div>
       <div class="span has-media">
         <div class="contact__maps" id="js-maps"></div>
-        <a href="https://goo.gl/maps/iP116gayDdwGiKFm7" target="_blank" rel="noopener">Auf Google Maps anzeigen</a>
+        <div><a href="https://goo.gl/maps/iP116gayDdwGiKFm7" target="_blank" rel="noopener">Auf Google Maps anzeigen</a></div>
       </div>
     </div>
   @endif

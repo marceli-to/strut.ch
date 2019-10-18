@@ -65,8 +65,10 @@ footer {
     color: #000000;
     font-size: 12pt !important;
     line-height: 9pt !important;
-    bottom: 20.1mm;
-    position: fixed;
+    top: 277mm;
+    position: absolute;
+    /* bottom: 20.1mm;
+    position: fixed; */
     letter-spacing: 0.1mm !important;
     left: 6.8mm;
 }

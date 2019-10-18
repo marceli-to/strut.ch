@@ -9,21 +9,18 @@
   @include background-default();
   background-image: url($url-icons + 'chevron-down-green.svg');
   background-size: 16px auto;
-  background-position: top 4px right;
+  background-position: top 5px right;
   color: $color--green;
   padding-right: 24px;
-  
-  &:after {
-    max-width: calc(100% - 24px);
+
+  &:hover span {
+    @extend %anchor-underline;
   }
 
   @include bp-md() {
     background-size: 24px auto;
-    background-position: top 5px right;
+    background-position: top 6px right;
     padding-right: 32px;
-    &:after {
-      max-width: calc(100% - 32px);
-    }
   }
 
   &.is-active {
@@ -34,20 +31,10 @@
     background-position: top 4px left;
     padding-left: 24px;
 
-    &:after {
-      max-width: calc(100% - 48px);
-      left: 24px;
-    }
-
     @include bp-md() {
       background-size: 24px auto;
-      background-position: top 5px left;
+      background-position: top 6px left;
       padding-left: 32px;
-
-      &:after {
-        max-width: calc(100% - 64px);
-        left: 32px;
-      }
     }
   }
 }

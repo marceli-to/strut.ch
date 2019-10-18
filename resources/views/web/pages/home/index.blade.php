@@ -6,13 +6,16 @@
   @if ($highlight)
     <figure class="is-highlight">
       <a href="{{ route('page.projects') }}/{{ $highlight['slug'] }}" title="{{ config('app.name') }} - {{ $highlight['title'] }}">
-        <figcaption>
+        <figcaption class="is-sm">
+          <span>{{$highlight['name']}}</span>
+        </figcaption>
+        <figcaption class="is-md">
           @if ($highlight['title'])
             <span>{{$highlight['title']}}</span>
           @else
             <span>{{$highlight['name']}}</span>
           @endif
-        </figcaption>        
+        </figcaption>
         <img src="{!! ImageHelper::get($highlight['image'], 'lg') !!}" 
             width="1600" 
             height="1066"

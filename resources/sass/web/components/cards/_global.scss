@@ -62,6 +62,10 @@
     }
   }
 
+  a {
+    @extend %anchor-underline;
+  }
+
   &.has-link {
 
     // add arrow icon

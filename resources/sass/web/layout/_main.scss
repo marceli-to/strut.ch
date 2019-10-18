@@ -5,6 +5,12 @@
  */
 
 main.site-content {
+    padding-top: $header-height-sm;
+
+    @include bp-md() {
+        padding-top: $header-height-md;
+    }
+
     > div {
         @extend %page-block;
         padding-bottom: 10px;

@@ -9,7 +9,7 @@
       <div class="content-items">
         @foreach($projects[$year] as $project)
           <div class="content-item">
-            {{ $project->name }}, {{ $project->location }} – {{ $project->categoryType->name_singular }}, {{$project->status}}
+            {{ $project->name }}, {{ $project->location }} – {{ $project->categoryType->name_singular }}, {!! config('status.' .$project->status) !!}
           </div>
         @endforeach
       </div>

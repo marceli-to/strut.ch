@@ -58,7 +58,7 @@
                     target="_blank"
                     class="icon-file" 
                     title="Download Projektdokumentation">
-                    {{$project->name}}, {{$project->location}}
+                    <span>{{$project->name}}, {{$project->location}}</span>
                   </a>
                 @endforeach
               </p>

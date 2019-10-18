@@ -18,7 +18,7 @@
                       class="icon-file"
                       target="_blank"
                       title="Projektdokumentationen {{$category->name}}">
-                      Alle {{$category->name}}
+                      <span>Alle {{$category->name}}</span>
                     </a>
                     @foreach($category->activeTypes as $type)
                       @if (array_key_exists($type->id, $types))
@@ -34,7 +34,7 @@
                                         class="icon-file"
                                         target="_blank"
                                         title="Projektdokumentation {{$project->name}}, {{$project->location}}">
-                                        {{$project->name}}, {{$project->location}}
+                                        <span>{{$project->name}}, {{$project->location}}</span>
                                       </a>
                                     </div>
                                   @endif
@@ -53,7 +53,7 @@
                                         class="icon-file"
                                         target="_blank"
                                         title="Projektdokumentation {{$project->name}}, {{$project->location}}">
-                                        {{$project->name}}, {{$project->location}}
+                                        <span>{{$project->name}}, {{$project->location}}</span>
                                       </a>
                                     </div>
                                   @endif
@@ -75,14 +75,14 @@
       <article>
         <h2>Werkliste</h2>
         <div class="download-group has-offset">
-        <div><a href="{{ route('pdf.works.all') }}" class="icon-file" target="_blank">Gesamt</a></div>
-          <div><a href="{{ route('pdf.works.living') }}" class="icon-file" target="_blank">Wohnen</a></div>
-          <div><a href="{{ route('pdf.works.business') }}" class="icon-file" target="_blank">Gewerbe</a></div>
-          <div><a href="{{ route('pdf.works.public') }}" class="icon-file" target="_blank">Öffentlich</a></div>
-          <div><a href="{{ route('pdf.works.competition') }}" class="icon-file" target="_blank">Wettbewerb</a></div>
-          <div><a href="{{ route('pdf.works.state') }}" class="icon-file" target="_blank">Nach Status</a></div>
-          <div><a href="{{ route('pdf.works.year') }}" class="icon-file" target="_blank">Nach Jahr</a></div>
-          <div><a href="{{ route('pdf.works.type') }}" class="icon-file" target="_blank">Nach Typ</a></div>
+        <div><a href="{{ route('pdf.works.all') }}" class="icon-file" target="_blank"><span>Gesamt</span></a></div>
+          <div><a href="{{ route('pdf.works.living') }}" class="icon-file" target="_blank"><span>Wohnen</span></a></div>
+          <div><a href="{{ route('pdf.works.business') }}" class="icon-file" target="_blank"><span>Gewerbe</span></a></div>
+          <div><a href="{{ route('pdf.works.public') }}" class="icon-file" target="_blank"><span>Öffentlich</span></a></div>
+          <div><a href="{{ route('pdf.works.competition') }}" class="icon-file" target="_blank"><span>Wettbewerb</span></a></div>
+          <div><a href="{{ route('pdf.works.state') }}" class="icon-file" target="_blank"><span>Nach Status</span></a></div>
+          <div><a href="{{ route('pdf.works.year') }}" class="icon-file" target="_blank"><span>Nach Jahr</span></a></div>
+          <div><a href="{{ route('pdf.works.type') }}" class="icon-file" target="_blank"><span>Nach Typ</span></a></div>
         </div>
       </article>
     </div>
@@ -98,7 +98,7 @@
                      class="icon-file"
                      target="_blank"
                      title="Ausschreibung {{$j->title}}">
-                     {{$j->title}}
+                     <span>{{$j->title}}</span>
                   </a>
                 @endif
               </div>

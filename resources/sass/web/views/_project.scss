@@ -67,7 +67,7 @@
         @include word-break();
       }
 
-      a {
+      a:not(.icon-file) {
         @extend %anchor-underline;
       }
 

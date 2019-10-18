@@ -24,8 +24,9 @@
     @extend %is-responsive;
   }
 
-  a {
-    @extend %anchor-underline;
+  a:not(.icon-toggle),
+  a:not(.icon-file) {
+    //@extend %anchor-underline;
   }
 
 }

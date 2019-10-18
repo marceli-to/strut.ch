@@ -42,7 +42,6 @@ class WorksController extends Controller
                                   ->get();
         $grouped_projects = $projects->groupBy('status');
 
-
         // Get all projects marked as competition
         $competition = $this->project->published()
                                      ->competition()
@@ -90,7 +89,6 @@ class WorksController extends Controller
         // Get all projects and group them by categories
         $projects = $this->category->published()->with('activeTypes.activeProjects')->get();
         $grouped_projects = $projects->groupBy('name');
-
 
         // Filter out categories & types without files
         $categories = [];
