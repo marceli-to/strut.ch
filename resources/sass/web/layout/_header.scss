@@ -40,9 +40,13 @@ header.site-header {
     }
 
     &.is-hidden {
+
+        .brand {
+            opacity: 0;
+        }
+        
         @include bp-md() {
             transform: translateY(-100%);
-            transition: transform .32s ease-out;
         }
     }
 }
