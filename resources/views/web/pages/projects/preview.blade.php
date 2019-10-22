@@ -1,6 +1,7 @@
 @extends('web.layout.app')
 @section('seo_title', $project->name . ', ' . $project->location .' - '. $project->categoryType->name_singular)
-@section('seo_description', '')
+@section('seo_description', substr(strip_tags($project->description),0,255))
+@section('og_image', url('/') . ImageHelper::get($og_image, 'lg'))
 @section('content')
 <style>
 .label-preview {
@@ -17,13 +18,15 @@
 }
 </style>
 <span class="label-preview">Vorschau</span>
-<section class="project">
+<section class="project js-project">
   <header class="project__header">
     <div>
       <h2>{{$project->categoryType->name_singular}}</h2>
       <nav class="project-browse">
-        <a href="">&laquo;</a>
-        <a href="">&raquo;</a>
+        <span data-label-prev style="display:none">Vorheriges Projekt</span>
+        <span data-label-next style="display:none">Nächstes Projekt</span>
+        <a href="{{ route('page.projects') }}/{!! AppHelper::getSlug($browse['prev']) !!}" class="icon-browse-prev" data-prev></a>
+        <a href="{{ route('page.projects') }}/{!! AppHelper::getSlug($browse['next']) !!}" class="icon-browse-next" data-next></a>
       </nav>
     </div>
   </header>
@@ -59,23 +62,41 @@
       @endforeach
     </div>
     <div class="project__description">
-        <div>
-          <div class="span">{!! $project->description !!}</div>
-          <div class="span">
-              {!! $project->info !!}<br>
-              @if ($project->downloads)
+      <div>
+        <div class="span project__description-body">{!! $project->description !!}</div>
+        <div class="span">
+            {!! $project->info !!}
+            @if ($project->downloads)
+              <p>
                 @foreach($project->downloads as $download)
                   <a href="/storage/media/downloads/{{$download->name}}" 
                     target="_blank"
-                    class="icon-file"
+                    class="icon-file" 
                     title="Download Projektdokumentation">
-                    {{$project->name}}, {{$project->location}}
+                    <span>{{$project->name}}, {{$project->location}}</span>
                   </a>
                 @endforeach
-              @endif
-          </div>
+              </p>
+            @endif
         </div>
       </div>
+    </div>
+    <div class="project__nav">
+      <article>
+        <a href="{{ route('page.projects') }}/{{$browse['next']->id}}" title="Nächstes Projekt">
+          <span>Nächstes Projekt</span>
+          <h3>{{$browse['next']->name}}, {{$browse['next']->location}}</h3>
+          @if ($browse['next']->images)
+            @foreach($browse['next']->activeImages as $image)
+              <figure>
+                <img src="{!! ImageHelper::get($image->name, 'sm') !!}" width="900" height="500" alt="{{$browse['next']->name}}, {{$browse['next']->location}}">
+              </figure>
+              @php break; @endphp
+            @endforeach
+          @endif
+        </a>
+      </article>
+    </div>
   </article>
 </section>
 @endsection

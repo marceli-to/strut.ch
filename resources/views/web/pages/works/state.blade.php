@@ -1,6 +1,6 @@
 @extends('web.layout.app')
 @section('seo_title', 'Werkliste')
-@section('seo_description', '')
+@section('seo_description', 'Strut Architekten AG entwickelt und plant anspruchsvolle Wohn- und Gewerbebauten. Das Büro kann auf erfolgreiche Projekte und mehr als 20-jährige Erfahrungen zurückgreifen.')
 @section('content')
 <section class="content works">
   @include('web.pages.works.nav')

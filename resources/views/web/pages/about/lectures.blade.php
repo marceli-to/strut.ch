@@ -1,6 +1,6 @@
 @extends('web.layout.app')
 @section('seo_title', 'Vorträge')
-@section('seo_description', '')
+@section('seo_description', 'Roger Studerus und Felix Rutishauser tragen gemeinsam die Verantwortung für die Strut Architekten AG. Im Team mit Peter Kunz werden eigenständige Projekte entwickelt, welche den Menschen ins Zentrum rücken.')
 @section('content')
 <section class="content lectures">
   <h1>Vorträge</h1>

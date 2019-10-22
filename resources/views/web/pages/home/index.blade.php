@@ -1,6 +1,6 @@
 @extends('web.layout.app')
 @section('seo_title', 'Home')
-@section('seo_description', '')
+@section('seo_description', 'Strut Architekten AG aus Winterthur, Schweiz. Gegründet im Jahre 2015 durch Roger Studerus, Felix Rutishauser und Peter Kunz.')
 @section('content')
 <section class="home">
   @if ($highlight)
@@ -14,9 +14,9 @@
           @endif
         </figcaption>
         <img src="{!! ImageHelper::get($highlight['image'], 'lg') !!}" 
-            width="1600" 
-            height="1066"
-            alt="{{ $highlight['name'] }}">
+          width="1600" 
+          height="1066"
+          alt="{{ $highlight['name'] }}">
       </a>
     </figure>
   @endif

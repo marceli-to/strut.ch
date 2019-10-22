@@ -71,6 +71,10 @@ Route::middleware('cache.headers:public;max_age=2628000;etag')->group(function()
 });
 
 
+Route::get('404', ['as' => '404', 'uses' => 'Frontend\ErrorController@notfound']);
+Route::get('500', ['as' => '500', 'uses' => 'Frontend\ErrorController@fatal']);
+
+
 /**
  * Admin Routes
  */

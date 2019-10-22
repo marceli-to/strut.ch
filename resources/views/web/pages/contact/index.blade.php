@@ -1,6 +1,6 @@
 @extends('web.layout.app')
 @section('seo_title', 'Kontakt')
-@section('seo_description', '')
+@section('seo_description', 'Strut Architekten AG aus Winterthur, Schweiz. Gegründet im Jahre 2015 durch Roger Studerus, Felix Rutishauser und Peter Kunz.')
 @section('content')
 <section class="content contact">
   @if ($contact)

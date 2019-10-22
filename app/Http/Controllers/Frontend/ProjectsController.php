@@ -102,18 +102,40 @@ class ProjectsController extends Controller
     /**
      * Show a preview
      * 
-     * @param Project $project
+     * @param int $id
+     * @param int $slug
      */
-    public function preview(Project $project)
+    public function preview($id = NULL, $slug = NULL)
     {
+        // Project
+        $project = $this->project->with('category')
+                                 ->with('categoryType')
+                                 ->with('downloads')
+                                 ->findOrFail($id);
+        
+        // Menu
+        $this->menu = $this->navigation->boot(
+            $project->id,
+            $project->category->id,
+            $project->categoryType->id
+        );
+
+        // Open graph image (first active image)
+        $og_image = $this->projectImage->where('project_id', '=', $id)
+                                       ->where('publish', '=', 1)
+                                       ->get()
+                                       ->first();
+
         return view(
             $this->view_path . '.preview',
             [
-                'menu'          => $this->menu, 
-                'project'       => $project,
-                'grids'         => $this->getProjectGrid($project->id),
-                'is_preview'    => TRUE
-            ]);
+                'menu'     => $this->menu,
+                'project'  => $project,
+                'og_image' => $og_image ? $og_image->name : null,
+                'browse'   => $this->getProjectNav($id),
+                'grids'    => $this->getProjectGrid($id)
+            ]
+        );
     }
 
     protected function getProjectGrid($projectId)
