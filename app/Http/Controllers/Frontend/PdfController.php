@@ -149,6 +149,7 @@ class PdfController extends Controller
                               ->with('categoryType')
                               ->orderBy('status')
                               ->orderBy('year', 'DESC')
+                              ->orderBy('name->de')
                               ->get();
 
     // Get all projects marked as competition
@@ -174,6 +175,7 @@ class PdfController extends Controller
     $projects = $this->project->published()
                               ->with('categoryType')
                               ->orderBy('year', 'DESC')
+                              ->orderBy('name->de')
                               ->get();
     // Pdf data
     $data = [

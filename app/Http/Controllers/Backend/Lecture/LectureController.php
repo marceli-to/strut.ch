@@ -58,7 +58,9 @@ class LectureController extends Controller
                 'en' => $request->input('description.en'),
             ],
             'year' => $request->input('year'),          
-            'media' => $request->input('media'),          
+            'media' => $request->input('media'),
+            'url'   => $request->input('url') ? \AppHelper::addScheme($request->input('url')) : NULL,
+            'file'  => $request->input('file'),        
         ]);
 
         $lecture->save();
@@ -91,6 +93,8 @@ class LectureController extends Controller
         $lecture->setTranslation('description', 'de', $request->input('description.de'));
         $lecture->year = $request->input('year') ? $request->input('year') : NULL;
         $lecture->media = $request->input('media') ? $request->input('media') : NULL;
+        $lecture->file = $request->input('file') ? $request->input('file') : NULL;
+        $lecture->url = $request->input('url') ? \AppHelper::addScheme($request->input('url')) : NULL;
         $lecture->save();
         return response()->json('successfully updated');
     }
@@ -107,6 +111,8 @@ class LectureController extends Controller
         $lectureCopy = $lecture->replicate();
         $lectureCopy->setTranslation('title', 'de', $lecture->getTranslation('title', 'de') . ' (Kopie)');
         $lectureCopy->media = null;
+        $lectureCopy->file = 0;
+        $lectureCopy->url = 0;
         $lectureCopy->publish = 0;
         $lectureCopy->save();
         $lectures = $this->lecture->orderBy('year', 'DESC')->get()->groupBy('year');
@@ -140,6 +146,10 @@ class LectureController extends Controller
         {
             $this->mediaService->delete($lecture->media);
         }
+        if ($lecture->file)
+        {
+            $this->mediaService->delete($lecture->file);
+        }
         $lecture->delete();
         $lectures = $this->lecture->orderBy('year', 'DESC')->get()->groupBy('year');
         return new LectureCollection($lectures);
@@ -154,11 +164,22 @@ class LectureController extends Controller
     public function unlink($filename)
     {
         $lecture = $this->lecture->where('media', $filename)->first();
+        
+        // Media
         if ($lecture)
         {
             $lecture->media = null;
             $lecture->save();
         }
+
+        // File
+        $lecture = $this->lecture->where('file', $filename)->first();
+        if ($lecture)
+        {
+            $lecture->file = null;
+            $lecture->save();
+        }
+
         $this->mediaService->delete($filename);
         return response()->json('successfully deleted');
     }

@@ -12,8 +12,20 @@
             @foreach($award_year_group as $year => $award_group)
               <h2>{{$year}}</h2>
               @foreach($award_group as $award)
-                <div class="award">
-                  <h3>{{$award['title']['de']}}</h3>
+                <div class="award @if ($award['file'] || $award['url']) has-link @endif">
+                  <h3>
+                    @if ($award['file'])
+                      <a href="{{ asset('storage/media/downloads/' . $award['file']) }}" target="_blank" title="{{$award['title']['de']}}">
+                        {{$award['title']['de']}}
+                      </a>
+                    @elseif ($award['url'])
+                      <a href="{{ $award['url'] }}" target="_blank" title="{{$award['title']['de']}}">
+                        {{$award['title']['de']}}
+                      </a>
+                    @else
+                      {{$award['title']['de']}}
+                    @endif
+                  </h3>
                   <div>{{$award['description']['de']}}</div>
                   @if ($award['media'])
                     <figure>

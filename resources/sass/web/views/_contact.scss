@@ -35,7 +35,7 @@
     min-height: 300px;
 
     + div {
-      margin-top: $space-xs;
+      margin-top: $space-xxs;
       @include bp-sm() {
         margin-top: $space-sm;
       }

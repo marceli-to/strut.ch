@@ -38,8 +38,10 @@ class WorksController extends Controller
         $projects = $this->project->published()
                                   ->with('images')
                                   ->with('downloads')
-                                  ->orderBy('status')
+                                  ->orderBy('year', 'DESC')
+                                  ->orderBy('name->de')
                                   ->get();
+                                  
         $grouped_projects = $projects->groupBy('status');
 
         // Get all projects marked as competition
@@ -70,6 +72,7 @@ class WorksController extends Controller
                                   ->with('images')
                                   ->with('downloads')
                                   ->orderBy('year', 'DESC')
+                                  ->orderBy('name->de')
                                   ->get();
         $grouped_projects = $projects->groupBy('year');
         $project_columns  = \AppHelper::partition($grouped_projects, 'year');
@@ -93,9 +96,12 @@ class WorksController extends Controller
         // Filter out categories & types without files
         $categories = [];
         $types      = [];
-        foreach($projects as $category) {
-            foreach($category->activeTypes as $type) {
-                foreach($type->activeProjects as $project) {
+        foreach($projects as $category)
+        {
+            foreach($category->activeTypes as $type)
+            {
+                foreach($type->activeProjects as $project)
+                {
                     if ($project)
                     {
                         $categories[$category->id] = true;
@@ -111,8 +117,8 @@ class WorksController extends Controller
                 'menu'          => $this->menu,
                 'projects'      => $grouped_projects,
                 'listBy'        => 'type',
-                'categories' => $categories,
-                'types'      => $types
+                'categories'    => $categories,
+                'types'         => $types
             ]
         );
     }

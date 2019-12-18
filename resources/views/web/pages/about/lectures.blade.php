@@ -12,8 +12,20 @@
             @foreach($lecture_year_group as $year => $lecture_group)
               <h2>{{$year}}</h2>
               @foreach($lecture_group as $lecture)
-                <div class="lecture">
-                  <h3>{{$lecture['title']['de']}}</h3>
+                <div class="lecture @if ($lecture['file'] || $lecture['url']) has-link @endif">
+                  <h3>
+                    @if ($lecture['file'])
+                      <a href="{{ asset('storage/media/downloads/' . $lecture['file']) }}" target="_blank" title="{{$lecture['title']['de']}}">
+                        {{$lecture['title']['de']}}
+                      </a>
+                    @elseif ($lecture['url'])
+                      <a href="{{ $lecture['url'] }}" target="_blank" title="{{$lecture['title']['de']}}">
+                        {{$lecture['title']['de']}}
+                      </a>
+                    @else
+                      {{$lecture['title']['de']}}
+                    @endif
+                  </h3>
                   <div>{{$lecture['description']['de']}}</div>
                   @if ($lecture['media'])
                     <figure>

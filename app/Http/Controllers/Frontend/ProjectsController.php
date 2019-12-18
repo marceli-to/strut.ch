@@ -99,7 +99,7 @@ class ProjectsController extends Controller
         );
     }
 
-    /**
+/**
      * Show a preview
      * 
      * @param int $id

@@ -32,7 +32,8 @@ class CategoryType extends Model
     public function activeProjects()
     {
         return $this->hasMany('App\Models\Project')
-                    ->orderBy('order', 'ASC')
+                    ->orderBy('year', 'DESC')
+                    ->orderBy('name->de')
                     ->where('publish', '=', 1);
     }
 

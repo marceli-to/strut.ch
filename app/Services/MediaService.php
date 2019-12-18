@@ -88,7 +88,7 @@ class MediaService
     /**
      * Maximum height for large portrait images
      */    
-    protected $max_height_lg = 900;
+    protected $max_height_lg = 1100;
 
     /**
      * Image quality

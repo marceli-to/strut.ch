@@ -58,7 +58,9 @@ class AwardController extends Controller
                 'en' => $request->input('description.en'),
             ],
             'year' => $request->input('year'),          
-            'media' => $request->input('media'),          
+            'media' => $request->input('media'),
+            'url'   => $request->input('url') ? \AppHelper::addScheme($request->input('url')) : NULL,
+            'file'  => $request->input('file'),            
         ]);
 
         $award->save();
@@ -91,6 +93,8 @@ class AwardController extends Controller
         $award->setTranslation('description', 'de', $request->input('description.de'));
         $award->year = $request->input('year') ? $request->input('year') : NULL;
         $award->media = $request->input('media') ? $request->input('media') : NULL;
+        $award->file = $request->input('file') ? $request->input('file') : NULL;
+        $award->url = $request->input('url') ? \AppHelper::addScheme($request->input('url')) : NULL;
         $award->save();
         return response()->json('successfully updated');
     }
@@ -107,6 +111,8 @@ class AwardController extends Controller
         $awardCopy = $award->replicate();
         $awardCopy->setTranslation('title', 'de', $award->getTranslation('title', 'de') . ' (Kopie)');
         $awardCopy->media = null;
+        $awardCopy->file = null;
+        $awardCopy->url = null;
         $awardCopy->publish = 0;
         $awardCopy->save();
         $awards = $this->award->orderBy('year', 'DESC')->get()->groupBy('year');
@@ -141,6 +147,10 @@ class AwardController extends Controller
         {
             $this->mediaService->delete($award->media);
         }
+        if ($award->file)
+        {
+            $this->mediaService->delete($award->file);
+        }
         $award->delete();
 
         $awards = $this->award->orderBy('year', 'DESC')->get()->groupBy('year');
@@ -155,12 +165,22 @@ class AwardController extends Controller
      */
     public function unlink($filename)
     {
+        // Media
         $award = $this->award->where('media', $filename)->first();
         if ($award)
         {
             $award->media = null;
             $award->save();
         }
+
+        // File
+        $award = $this->award->where('file', $filename)->first();
+        if ($award)
+        {
+            $award->file = null;
+            $award->save();
+        }
+
         $this->mediaService->delete($filename);
         return response()->json('successfully deleted');
     }

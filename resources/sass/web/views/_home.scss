@@ -5,7 +5,7 @@
  *
  */
 
- %figcaption {
+%figcaption {
   display: block;
   margin-bottom: 2px;
   width: 100%;
@@ -111,12 +111,7 @@
       padding: 5px 0;
       text-align: center;
 
-      .news__date {
-        @include font-size($fs-news-sm);
-      }
-
       .news__body {
-        @include word-break();
         height: auto;
         padding: 20px;
         position: absolute;
@@ -141,12 +136,12 @@
         }
         
         h2 {
-          @include font-size($fs-news-lg);
+          @include font-size($fs-lg);
           @include bp-sm() {
-            @include font-size($fs-news-md);
+            @include font-size($fs-md);
           }
           @include bp-lg() {
-            @include font-size($fs-news-lg);
+            @include font-size($fs-lg);
           }
         }
 
@@ -163,19 +158,15 @@
         }
 
         .news-subtitle {
-          @include font-size($fs-news-md);
+          @include font-size($fs-md);
 
           @include bp-sm() {
-            @include font-size($fs-news-sm);
+            @include font-size($fs-sm);
           }
 
           @include bp-lg() {
-            @include font-size($fs-news-md);
+            @include font-size($fs-md);
           }
-        }
-
-        p {
-          @include font-size($fs-news-sm);
         }
 
         a {
@@ -185,10 +176,12 @@
         figure {
           margin-bottom: $space-sm;
           margin-top: $space-sm;
+          
           @include bp-md() {
             margin-bottom: $space-md;
             margin-top: $space-md;
           }
+          
           img {
             @extend %is-responsive;
             max-width: 70%;

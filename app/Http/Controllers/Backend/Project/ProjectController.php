@@ -79,10 +79,12 @@ class ProjectController extends Controller
     {
         $projects = $this->project->where('publish', '=', $publish)
                                   ->orderBy('year', 'DESC')
-                                  ->orderBy('name->de', $order)
+                                  //->orderBy('name->de', $order)
                                   ->with('images')
                                   ->get();
-        return new ProjectCollection($projects);
+
+                                  
+		return new ProjectCollection($projects);
     }
 
     /**

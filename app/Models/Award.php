@@ -17,7 +17,9 @@ class Award extends Model
         'title',
         'description', 
         'year', 
-        'media', 
+        'media',
+        'file',
+        'url', 
         'publish'
     ];
 

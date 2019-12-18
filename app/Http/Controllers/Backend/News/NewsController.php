@@ -30,7 +30,8 @@ class NewsController extends Controller
 
     public function get()
     {
-        $news = $this->news->orderBy('date->de', 'ASC')->get();
+        // $news = $this->news->orderBy('date->de', 'ASC')->get();  // does not work without json support
+        $news = $this->news->get();
         return new NewsCollection($news);
     }
 

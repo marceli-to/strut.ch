@@ -61,14 +61,7 @@
               </div>
               <div class="span form-row">
                 <label>Telefon</label>
-                <!-- <input
-                  type="text"
-                  @focus="removeError('phone')"
-                  name="phone"
-                  v-model="team.phone"
-                  placeholder="Format: +41 52 2xx xx xx"
-                > -->
-                <masked-input v-model="team.phone" mask="\+\4\1 \5\2 111 11 11" type="text" placeholder="+41 52 2xx xx xx" />
+                <masked-input v-model="team.phone" mask="\0\5\2 111 11 11" type="text" placeholder="052 2xx xx xx" />
               </div>
               <div class="span form-row" :class="errors.email ? 'has-error': ''">
                 <label>E-Mail *</label>

@@ -9,13 +9,11 @@
     @extend %icon-bg;
     background-image: url($url-icons + 'menu-burger.svg');
     background-size: 42px 23px;
-    background-position: center center;
-    background-color: transparent;
-    height: 33px;
-    left: -5px;
+    background-position: top left;
+    height: 27px;
     position: relative;
-    top: 5px;
-    width: 52px;
+    top: 10px;
+    width: 42px;
     z-index: 1;
 
     &.is-active {
@@ -26,8 +24,4 @@
     @include bp-md() {
         display: none;
     }
-}
-
-.is-tiny .icon-menu {
-    background-color: $color--white;
 }

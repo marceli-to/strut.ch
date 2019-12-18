@@ -37,7 +37,7 @@ Route::get('kontakt', 'Frontend\ContactController@index')->name('page.contact');
 Route::get('ueber-uns', 'Frontend\AboutController@about')->name('page.about');
 Route::get('jobs', 'Frontend\AboutController@jobs')->name('page.jobs');
 Route::get('auszeichnungen', 'Frontend\AboutController@awards')->name('page.awards');
-Route::get('votraege', 'Frontend\AboutController@lectures')->name('page.lectures');
+Route::get('vortraege', 'Frontend\AboutController@lectures')->name('page.lectures');
 
 // Home
 Route::get('/', 'Frontend\HomeController@index')->name('page.home');
@@ -58,6 +58,8 @@ Route::get('/werkliste/pdf/status', 'Frontend\PdfController@worksState')->name('
 Route::get('/werkliste/pdf/jahr', 'Frontend\PdfController@worksYear')->name('pdf.works.year');
 Route::get('/werkliste/pdf/typ', 'Frontend\PdfController@worksType')->name('pdf.works.type');
 
+Route::get('404', ['as' => '404', 'uses' => 'Frontend\ErrorController@notfound']);
+Route::get('500', ['as' => '500', 'uses' => 'Frontend\ErrorController@fatal']);
 
 /**
  * Image routes
@@ -69,10 +71,6 @@ Route::middleware('cache.headers:public;max_age=2628000;etag')->group(function()
 	Route::get('media/grid/{file}', 'MediaController@grid');
 	Route::get('media/{file}/{size?}', 'MediaController@resize');
 });
-
-
-Route::get('404', ['as' => '404', 'uses' => 'Frontend\ErrorController@notfound']);
-Route::get('500', ['as' => '500', 'uses' => 'Frontend\ErrorController@fatal']);
 
 
 /**
@@ -90,6 +88,18 @@ Route::get('admin/{any}', function () {
  */
 Route::get('/artisan/symlink', function () {
 	Artisan::call('storage:link');
+});
+
+Route::get('/artisan/cache', function () {
+	Artisan::call('cache:clear');
+});
+
+Route::get('/artisan/config', function () {
+	Artisan::call('config:clear');
+});
+
+Route::get('/artisan/view', function () {
+	Artisan::call('view:clear');
 });
 
 Route::get('/artisan/clearimages', function () {

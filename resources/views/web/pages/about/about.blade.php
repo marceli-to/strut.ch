@@ -44,7 +44,7 @@
             <img src="{!! ImageHelper::get($t->media, 'sm') !!}" width="432" height="500" alt="{{ config('app.name') }} - {{$t->firstname}} {{$t->name}}">
           </figure>
           <div>
-            @if ($t->phone) {{$t->phone}}<br> @endif
+            @if ($t->phone) <a href="tel:{{$t->phone}}" class="anchor-dark">{{$t->phone}}</a><br> @endif
             @if ($t->email) <a href="mailto:{{$t->email}}" class="anchor-dark">{{$t->email}}</a> @endif
           </div>
           <a href="javascript:;" class="icon-toggle js-msnry-btn">
