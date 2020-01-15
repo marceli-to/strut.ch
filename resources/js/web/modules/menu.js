@@ -56,6 +56,14 @@ var Menu = (function() {
                 _resize();
             }
         });
+
+        // A click outside the menu hides all open submenus
+        $(selectors.body).click(function(event) {
+            if (mq.md.matches && !$(event.target).is(selectors.menu + ' *')) {
+                $('ul.is-open').removeClass(classes.open).hide();
+                _resetMenuHeight();
+            }
+        });
     };
 
     var _resize = debounce(function(){
@@ -142,7 +150,7 @@ var Menu = (function() {
      * ------------------------------------------------------------ */
 
     return {
-        init:  _initialize,
+        init: _initialize,
 	};
 	
 })();

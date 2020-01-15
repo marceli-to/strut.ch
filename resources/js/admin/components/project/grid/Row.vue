@@ -5,6 +5,9 @@
     </div>
     <div class="grids">
       <div v-if="layout == '2fr'">
+        <div class="grid-layout-preview">
+          <img :src="getAssetUri(layout)" height="47" width="102">
+        </div>
         <div class="grid-2fr">
           <div class="span">
             <div v-if="elements[0] && elements[0].position == '0'">
@@ -25,6 +28,9 @@
         </div>
       </div>
       <div v-if="layout == '1fr_stacked-1fr'">
+        <div class="grid-layout-preview">
+          <img :src="getAssetUri(layout)" height="47" width="102">
+        </div>
         <div class="grid-1fr_stacked-1fr">
           <div class="span grid-stacked">
             <div class="span">
@@ -55,6 +61,9 @@
         </div>
       </div>
       <div v-if="layout == '1fr-1fr_stacked'">
+        <div class="grid-layout-preview">
+          <img :src="getAssetUri(layout)" height="47" width="102">
+        </div>
         <div class="grid-1fr-1fr_stacked">
           <div class="span">
             <div v-if="elements[0] && elements[0].position == '0'">
@@ -76,6 +85,162 @@
             <div class="span">
               <div v-if="elements[2] && elements[2].position == '2'">
                   <grid-media :element="elements[2]"></grid-media>
+              </div>
+              <div v-else>
+                <button-add :gridId="gridId" :gridPosition="2"></button-add>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div v-if="layout == '1fr_sm_lg-1fr_lg_sm'">
+        <div class="grid-layout-preview">
+          <img :src="getAssetUri(layout)" height="47" width="102">
+        </div>
+        <div class="grid-1fr_sm_lg-1fr_lg_sm">
+          <div class="span grid-stacked">
+            <div class="span">
+              <div v-if="elements[0] && elements[0].position == '0'">
+                <grid-media :element="elements[0]"></grid-media>
+              </div>
+              <div v-else>
+                <button-add :gridId="gridId" :gridPosition="0"></button-add>
+              </div>
+            </div>
+            <div class="span">
+              <div v-if="elements[1] && elements[1].position == '1'">
+                <grid-media :element="elements[1]"></grid-media>
+              </div>
+              <div v-else>
+                <button-add :gridId="gridId" :gridPosition="1"></button-add>
+              </div>
+            </div>
+          </div>
+          <div class="span grid-stacked">
+            <div class="span">
+              <div v-if="elements[2] && elements[2].position == '2'">
+                  <grid-media :element="elements[2]"></grid-media>
+              </div>
+              <div v-else>
+                <button-add :gridId="gridId" :gridPosition="2"></button-add>
+              </div>
+            </div>
+            <div class="span">
+              <div v-if="elements[3] && elements[3].position == '3'">
+                  <grid-media :element="elements[3]"></grid-media>
+              </div>
+              <div v-else>
+                <button-add :gridId="gridId" :gridPosition="3"></button-add>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div v-if="layout == '1fr_lg_sm-1fr_sm_lg'">
+        <div class="grid-layout-preview">
+          <img :src="getAssetUri(layout)" height="47" width="102">
+        </div>
+        <div class="grid-1fr_lg_sm-1fr_sm_lg">
+          <div class="span grid-stacked">
+            <div class="span">
+              <div v-if="elements[0] && elements[0].position == '0'">
+                <grid-media :element="elements[0]"></grid-media>
+              </div>
+              <div v-else>
+                <button-add :gridId="gridId" :gridPosition="0"></button-add>
+              </div>
+            </div>
+            <div class="span">
+              <div v-if="elements[1] && elements[1].position == '1'">
+                <grid-media :element="elements[1]"></grid-media>
+              </div>
+              <div v-else>
+                <button-add :gridId="gridId" :gridPosition="1"></button-add>
+              </div>
+            </div>
+          </div>
+          <div class="span grid-stacked">
+            <div class="span">
+              <div v-if="elements[2] && elements[2].position == '2'">
+                  <grid-media :element="elements[2]"></grid-media>
+              </div>
+              <div v-else>
+                <button-add :gridId="gridId" :gridPosition="2"></button-add>
+              </div>
+            </div>
+            <div class="span">
+              <div v-if="elements[3] && elements[3].position == '3'">
+                  <grid-media :element="elements[3]"></grid-media>
+              </div>
+              <div v-else>
+                <button-add :gridId="gridId" :gridPosition="3"></button-add>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div v-if="layout == '1fr_sm_lg-1fr_lg'">
+        <div class="grid-layout-preview">
+          <img :src="getAssetUri(layout)" height="47" width="102">
+        </div>
+        <div class="grid-1fr_sm_lg-1fr_lg">
+          <div class="span grid-stacked">
+            <div class="span">
+              <div v-if="elements[0] && elements[0].position == '0'">
+                <grid-media :element="elements[0]"></grid-media>
+              </div>
+              <div v-else>
+                <button-add :gridId="gridId" :gridPosition="0"></button-add>
+              </div>
+            </div>
+            <div class="span">
+              <div v-if="elements[1] && elements[1].position == '1'">
+                <grid-media :element="elements[1]"></grid-media>
+              </div>
+              <div v-else>
+                <button-add :gridId="gridId" :gridPosition="1"></button-add>
+              </div>
+            </div>
+          </div>
+          <div class="span grid-stacked">
+            <div class="span">
+              <div v-if="elements[2] && elements[2].position == '2'">
+                  <grid-media :element="elements[2]"></grid-media>
+              </div>
+              <div v-else>
+                <button-add :gridId="gridId" :gridPosition="2"></button-add>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div v-if="layout == '1fr_lg-1fr_sm_lg'">
+        <div class="grid-layout-preview">
+          <img :src="getAssetUri(layout)" height="47" width="102">
+        </div>
+        <div class="grid-1fr_lg-1fr_sm_lg">
+          <div class="span grid-stacked">
+            <div class="span">
+              <div v-if="elements[0] && elements[0].position == '0'">
+                  <grid-media :element="elements[0]"></grid-media>
+              </div>
+              <div v-else>
+                <button-add :gridId="gridId" :gridPosition="0"></button-add>
+              </div>
+            </div>
+          </div>
+          <div class="span grid-stacked">
+            <div class="span">
+              <div v-if="elements[1] && elements[1].position == '1'">
+                <grid-media :element="elements[1]"></grid-media>
+              </div>
+              <div v-else>
+                <button-add :gridId="gridId" :gridPosition="1"></button-add>
+              </div>
+            </div>
+            <div class="span">
+              <div v-if="elements[2] && elements[2].position == '2'">
+                <grid-media :element="elements[2]"></grid-media>
               </div>
               <div v-else>
                 <button-add :gridId="gridId" :gridPosition="2"></button-add>
@@ -216,6 +381,10 @@ export default {
 
     getAssetSource(asset) {
       return `/media/grid/${asset}`;
+    },
+
+    getAssetUri(key) {
+      return `/assets/admin/img/icons/grid-layout-${key}.svg`;
     },
 
     toggleOverlay() {

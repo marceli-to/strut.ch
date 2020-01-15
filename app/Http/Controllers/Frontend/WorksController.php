@@ -39,7 +39,7 @@ class WorksController extends Controller
                                   ->with('images')
                                   ->with('downloads')
                                   ->orderBy('year', 'DESC')
-                                  ->orderBy('name->de')
+                                  ->orderBy('name')
                                   ->get();
                                   
         $grouped_projects = $projects->groupBy('status');
@@ -72,7 +72,7 @@ class WorksController extends Controller
                                   ->with('images')
                                   ->with('downloads')
                                   ->orderBy('year', 'DESC')
-                                  ->orderBy('name->de')
+                                  ->orderBy('name')
                                   ->get();
         $grouped_projects = $projects->groupBy('year');
         $project_columns  = \AppHelper::partition($grouped_projects, 'year');

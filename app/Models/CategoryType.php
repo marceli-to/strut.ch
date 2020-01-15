@@ -33,7 +33,7 @@ class CategoryType extends Model
     {
         return $this->hasMany('App\Models\Project')
                     ->orderBy('year', 'DESC')
-                    ->orderBy('name->de')
+                    ->orderBy('name')
                     ->where('publish', '=', 1);
     }
 

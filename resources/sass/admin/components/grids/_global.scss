@@ -65,6 +65,18 @@
 
 .grids {
     
+
+    > div {
+        position: relative;
+    }
+
+    .grid-layout-preview {
+        display: block;
+        right: 0;
+        position: absolute;
+        top: -55px;
+    }
+
     .span {
         border: 2px dashed #999;
         display: flex;
@@ -183,7 +195,11 @@
     }
 
     .grid-1fr_stacked-1fr,
-    .grid-1fr-1fr_stacked {
+    .grid-1fr-1fr_stacked,
+    .grid-1fr_sm_lg-1fr_lg_sm,
+    .grid-1fr_lg_sm-1fr_sm_lg,
+    .grid-1fr_sm_lg-1fr_lg,
+    .grid-1fr_lg-1fr_sm_lg {
         grid-template-columns: 1fr 1fr;
     }
     

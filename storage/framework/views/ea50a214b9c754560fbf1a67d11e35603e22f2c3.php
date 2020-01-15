@@ -21,7 +21,7 @@
 <meta name="theme-color" content="#ffffff">
 <meta name="csrf-token" value="<?php echo e(csrf_token()); ?>" />
 <meta name="format-detection" content="telephone=no">
-<link href="<?php echo e(asset('assets/css/app.v8.css')); ?>" type="text/css" rel="stylesheet" />
+<link href="<?php echo e(asset('assets/css/app.v9.css')); ?>" type="text/css" rel="stylesheet" />
 <script src="<?php echo e(asset('assets/js/modernizr.min.js')); ?>"></script>
 </head>
 <body>
@@ -162,7 +162,7 @@
   <div><?php echo $__env->yieldContent('content'); ?></div>
 </main>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD87zTe10NbK_liZzlO93W17qHiFVwlU8c"></script>
-<script src="<?php echo e(asset('assets/js/app.v7.js')); ?>" type="text/javascript"></script>
+<script src="<?php echo e(asset('assets/js/app.v8.js')); ?>" type="text/javascript"></script>
 <script src="<?php echo e(asset('assets/js/fancybox.min.js')); ?>" type="text/javascript"></script>
 <script src="<?php echo e(asset('assets/js/imagesloaded.min.js')); ?>" type="text/javascript"></script>
 <script src="<?php echo e(asset('assets/js/packery.min.js')); ?>" type="text/javascript"></script>

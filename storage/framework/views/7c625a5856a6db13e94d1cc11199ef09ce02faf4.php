@@ -45,7 +45,7 @@
             <img src="<?php echo ImageHelper::get($t->media, 'sm'); ?>" width="432" height="500" alt="<?php echo e(config('app.name')); ?> - <?php echo e($t->firstname); ?> <?php echo e($t->name); ?>">
           </figure>
           <div>
-            <?php if($t->phone): ?> <?php echo e($t->phone); ?><br> <?php endif; ?>
+            <?php if($t->phone): ?> <a href="tel:<?php echo e($t->phone); ?>" class="anchor-dark"><?php echo e($t->phone); ?></a><br> <?php endif; ?>
             <?php if($t->email): ?> <a href="mailto:<?php echo e($t->email); ?>" class="anchor-dark"><?php echo e($t->email); ?></a> <?php endif; ?>
           </div>
           <a href="javascript:;" class="icon-toggle js-msnry-btn">

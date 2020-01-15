@@ -24,7 +24,6 @@
     <h1><?php echo e($project->name); ?>, <?php echo e($project->location); ?></h1>
     <div class="project__images">
       <?php $__currentLoopData = $grids; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $g): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-        
         <?php if($g['key'] == '2fr'): ?>
           <?php if(isset($g['elements'])): ?>
             <?php echo $__env->make('web.partials.grids.projects.2fr', array('elements' => $g['elements']), \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
@@ -42,6 +41,18 @@
             <?php echo $__env->make('web.partials.grids.projects.1fr1fr_stacked', array('elements' => $g['elements']), \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
           <?php endif; ?>
         <?php endif; ?>
+
+        <?php if($g['key'] == '1fr_sm_lg-1fr_lg_sm'): ?>
+          <?php if(isset($g['elements'])): ?>
+            <?php echo $__env->make('web.partials.grids.projects.1fr_sm_lg-1fr_lg_sm', array('elements' => $g['elements']), \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+          <?php endif; ?>
+        <?php endif; ?>        
+
+        <?php if($g['key'] == '1fr_lg_sm-1fr_sm_lg'): ?>
+          <?php if(isset($g['elements'])): ?>
+            <?php echo $__env->make('web.partials.grids.projects.1fr_lg_sm-1fr_sm_lg', array('elements' => $g['elements']), \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+          <?php endif; ?>
+        <?php endif; ?>   
 
       <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
     </div>

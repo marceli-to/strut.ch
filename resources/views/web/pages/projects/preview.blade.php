@@ -40,7 +40,6 @@
     <h1>{{$project->name}}, {{$project->location}}</h1>
     <div class="project__images">
       @foreach($grids as $g)
-        
         @if ($g['key'] == '2fr')
           @if (isset($g['elements']))
             @include('web.partials.grids.projects.2fr', array('elements' => $g['elements']))
@@ -58,6 +57,30 @@
             @include('web.partials.grids.projects.1fr1fr_stacked', array('elements' => $g['elements']))
           @endif
         @endif
+
+        @if ($g['key'] == '1fr_sm_lg-1fr_lg_sm')
+          @if (isset($g['elements']))
+            @include('web.partials.grids.projects.1fr_sm_lg-1fr_lg_sm', array('elements' => $g['elements']))
+          @endif
+        @endif        
+
+        @if ($g['key'] == '1fr_lg_sm-1fr_sm_lg')
+          @if (isset($g['elements']))
+            @include('web.partials.grids.projects.1fr_lg_sm-1fr_sm_lg', array('elements' => $g['elements']))
+          @endif
+        @endif
+
+        @if ($g['key'] == '1fr_sm_lg-1fr_lg')
+          @if (isset($g['elements']))
+            @include('web.partials.grids.projects.1fr_sm_lg-1fr_lg', array('elements' => $g['elements']))
+          @endif
+        @endif  
+
+        @if ($g['key'] == '1fr_lg-1fr_sm_lg')
+          @if (isset($g['elements']))
+            @include('web.partials.grids.projects.1fr_lg-1fr_sm_lg', array('elements' => $g['elements']))
+          @endif
+        @endif  
 
       @endforeach
     </div>
