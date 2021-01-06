@@ -12,3 +12,15 @@
     background-image: url($url-icons + 'grid-off.svg');
   }
 }
+
+.icon-grid-list {
+  display: block;
+  height: auto;
+  width: auto;
+
+  img {
+    display: block;
+    height: auto;
+    width: 100px;
+  }
+}

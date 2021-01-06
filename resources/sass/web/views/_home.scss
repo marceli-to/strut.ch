@@ -171,6 +171,7 @@
 
         a {
           @extend %anchor-underline;
+          padding-left: 0;
         }
 
         figure {

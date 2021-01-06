@@ -142,6 +142,7 @@ Route::middleware('auth:api')->group(function() {
     Route::get('home/grids/reset', 'Backend\Home\HomeGridController@reset');
     Route::get('home/grid/store/{layoutId}', 'Backend\Home\HomeGridController@store');
     Route::delete('home/grid/delete/{id}', 'Backend\Home\HomeGridController@destroy');
+    Route::post('home/grids/order', 'Backend\Home\HomeGridController@order');
 
     // Home grid layout routes
     Route::get('home/grid/layout/fetch', 'Backend\Home\HomeGridLayoutController@fetch');

@@ -1,5 +1,4 @@
 @include('web.pdf.partials.header', array('title' => $title))
-
 <span class="date">{{ $date }}</span>
 <span class="title">Werkliste nach Jahr</span>
 <div class="content">
@@ -16,5 +15,4 @@
     @endforeach
   @endif
 </div>
-
 @include('web.pdf.partials.footer')

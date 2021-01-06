@@ -17,6 +17,18 @@
     &.grid-row--draggable {
         cursor: move;
     }
+
+    &.is-list {
+        margin-bottom: 0 !important;
+        padding-bottom: 10px;
+        padding-top: 10px !important;
+        transition: background-color .12s ease-out;
+
+        &:hover {
+            background-color: #eee;
+            cursor: move;
+        }
+    }
 }
 
 .grid-layout-selector {

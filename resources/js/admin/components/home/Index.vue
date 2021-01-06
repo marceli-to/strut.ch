@@ -16,8 +16,18 @@
             </div>
           </div>
           <h1>Bauten</h1>
+          <div style="position:relative">
+            <a href="javascript:;"
+              class="icon-layout is-home"
+              @click.prevent="toggleView()">
+              <span v-if="layout == 'grid'">Grid</span>
+              <span v-if="layout == 'list'">Liste</span>
+            </a>
+          </div>
+
           <grid-selector></grid-selector>
-          <div class="grid-rows">
+
+          <div class="grid-rows" v-if="layout == 'grid'">
             <div class="grid-row" v-for="grid in grids" :key="grid.id">
               <a
                 href="javascript:;"
@@ -27,6 +37,22 @@
               <grid-row :layout="grid.layout.key" :gridId="grid.id"></grid-row>
             </div>
           </div>
+
+          <div class="grid-rows" v-if="layout == 'list'">
+            <draggable 
+              :disabled="false"
+              v-model="grids" 
+              @end="updateOrder"
+              ghost-class="draggable-ghost"
+              draggable=".grid-row">
+              <div class="grid-row is-list is-draggable" v-for="grid in grids" :key="grid.id">
+                <span class="icon-grid-list">
+                  <img :src="'/assets/admin/img/icons/grid-layout-' + grid.layout.key + '.svg'" height="172" width="126">
+                </span>
+              </div>
+            </draggable>
+          </div>
+
           <footer :class="[hasChanges ? '' : 'is-hidden', 'form-footer is-warning']">
             <div>
               <div class="fs-xs">
@@ -61,18 +87,21 @@ import PageHeader from "@/layout/PageHeader.vue";
 import GridRow from "@/components/home/Row.vue";
 import GridHighlight from "@/components/home/Highlight.vue";
 import GridSelector from "@/components/home/Selector.vue";
+import draggable from 'vuedraggable';
 
 export default {
   components: {
     PageHeader: PageHeader,
     GridRow: GridRow,
     GridHighlight: GridHighlight,
-    GridSelector: GridSelector
+    GridSelector: GridSelector,
+    draggable,
   },
 
   data() {
     return {
       grids: [],
+      layout: 'grid',
       isLoading: false
     };
   },
@@ -156,6 +185,25 @@ export default {
           }, 200);
         });
       }
+    },
+
+    updateOrder() {
+      let grids = this.grids.map(function(grid, index) {
+          grid.order = index;
+          return grid;
+      });
+      if (this.debounce) return;
+      this.debounce = setTimeout(function(books) {
+        this.debounce = false 
+        let uri = `/api/home/grids/order`;
+        this.axios.post(uri, {grids: grids}).then((response) => {
+          this.$notify({type: 'success', text: 'Reihenfolge angepasst'});
+        });
+      }.bind(this, grids), 1000);
+    },
+
+    toggleView() {
+      this.layout = this.layout == 'grid' ? 'list' : 'grid';
     }
   },
 

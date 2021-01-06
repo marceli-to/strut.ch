@@ -1,0 +1,12 @@
+[2020-03-04 11:07:11] local.ERROR: Allowed memory size of 134217728 bytes exhausted (tried to allocate 16777232 bytes) {"exception":"[object] (Symfony\\Component\\Debug\\Exception\\FatalErrorException(code: 1): Allowed memory size of 134217728 bytes exhausted (tried to allocate 16777232 bytes) at /Users/marceli.to/Jamon.digital/Webroot/strut.ch/vendor/dompdf/dompdf/lib/Cpdf.php:3054)
+[stacktrace]
+#0 {main}
+"} 
+[2020-03-04 22:13:25] local.ERROR: Allowed memory size of 134217728 bytes exhausted (tried to allocate 56880001 bytes) {"exception":"[object] (Symfony\\Component\\Debug\\Exception\\FatalErrorException(code: 1): Allowed memory size of 134217728 bytes exhausted (tried to allocate 56880001 bytes) at /Users/marceli.to/Jamon.digital/Webroot/strut.ch/vendor/dompdf/dompdf/lib/Cpdf.php:5015)
+[stacktrace]
+#0 {main}
+"} 
+[2020-03-04 22:13:54] local.ERROR: Allowed memory size of 134217728 bytes exhausted (tried to allocate 56880001 bytes) {"exception":"[object] (Symfony\\Component\\Debug\\Exception\\FatalErrorException(code: 1): Allowed memory size of 134217728 bytes exhausted (tried to allocate 56880001 bytes) at /Users/marceli.to/Jamon.digital/Webroot/strut.ch/vendor/dompdf/dompdf/lib/Cpdf.php:5015)
+[stacktrace]
+#0 {main}
+"} 

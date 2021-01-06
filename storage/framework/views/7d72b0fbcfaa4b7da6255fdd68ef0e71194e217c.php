@@ -52,7 +52,19 @@
           <?php if(isset($g['elements'])): ?>
             <?php echo $__env->make('web.partials.grids.projects.1fr_lg_sm-1fr_sm_lg', array('elements' => $g['elements']), \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
           <?php endif; ?>
-        <?php endif; ?>   
+        <?php endif; ?>
+
+        <?php if($g['key'] == '1fr_sm_lg-1fr_lg'): ?>
+          <?php if(isset($g['elements'])): ?>
+            <?php echo $__env->make('web.partials.grids.projects.1fr_sm_lg-1fr_lg', array('elements' => $g['elements']), \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+          <?php endif; ?>
+        <?php endif; ?>  
+
+        <?php if($g['key'] == '1fr_lg-1fr_sm_lg'): ?>
+          <?php if(isset($g['elements'])): ?>
+            <?php echo $__env->make('web.partials.grids.projects.1fr_lg-1fr_sm_lg', array('elements' => $g['elements']), \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+          <?php endif; ?>
+        <?php endif; ?>  
 
       <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
     </div>
