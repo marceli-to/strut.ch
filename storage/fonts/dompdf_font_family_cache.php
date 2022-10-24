@@ -1,4 +1,5 @@
-<?php return array (
+<?php return function ($fontDir, $rootDir) {
+return array (
   'sans-serif' => array(
     'normal' => $rootDir . '/lib/fonts/Helvetica',
     'bold' => $rootDir . '/lib/fonts/Helvetica-Bold',
@@ -81,9 +82,10 @@
     'normal' => $fontDir . '/2ee5a7797d02fe4d560048b698835802',
   ),
   'basis-grotesque-regular-pro' => array(
-    'normal' => $fontDir . '/basis-grotesque-regular-pro-normal_7e64e72bc9cdd0faee5a05698513ee3c',
+    'normal' => $fontDir . '/basis_grotesque_regular_pro_normal_7e64e72bc9cdd0faee5a05698513ee3c',
   ),
   'basis-grotesque-medium-pro' => array(
-    'normal' => $fontDir . '/basis-grotesque-medium-pro-normal_6579904852f67c0647faa1c957ef445b',
+    'normal' => $fontDir . '/basis_grotesque_medium_pro_normal_6579904852f67c0647faa1c957ef445b',
   ),
-) ?>
+);
+}; ?>
