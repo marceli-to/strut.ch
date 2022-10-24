@@ -81,9 +81,9 @@
     'normal' => $fontDir . '/2ee5a7797d02fe4d560048b698835802',
   ),
   'basis-grotesque-regular-pro' => array(
-    'normal' => $fontDir . '/1e048c0090368d169446c93198c15a63',
+    'normal' => $fontDir . '/basis-grotesque-regular-pro-normal_7e64e72bc9cdd0faee5a05698513ee3c',
   ),
   'basis-grotesque-medium-pro' => array(
-    'normal' => $fontDir . '/6579904852f67c0647faa1c957ef445b',
+    'normal' => $fontDir . '/basis-grotesque-medium-pro-normal_6579904852f67c0647faa1c957ef445b',
   ),
 ) ?>
