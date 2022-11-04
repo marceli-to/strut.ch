@@ -15,3 +15,4 @@ INSTALL.TXT
 /INSTALL.txt
 storage/*
 storage/framework/cache/data
+storage/app
