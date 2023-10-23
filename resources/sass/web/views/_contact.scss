@@ -31,6 +31,26 @@
     }
   }
 
+  .contact__privacy {
+    margin-top: $space-xs;
+
+    > div {
+      margin-top: $space-sm;
+    }
+
+    ul {
+      list-style-type: disc;
+
+      li {
+        display: list-item;
+      }
+    }
+
+    a:not(.icon-toggle) {
+      @extend %anchor-underline;
+    }
+  }
+
   .contact__maps {
     min-height: 300px;
 
