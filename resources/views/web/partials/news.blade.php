@@ -17,8 +17,8 @@
     @endif
     @if ($news->link && $news->linkText)
       <p>
-        <a href="{{$news->link}}" class="icon-arrow">
-          </span>{{ $news->linkText }}</a>
+        <a href="{{$news->link}}" class="icon-arrow" @if (strpos($news->link, 'strut.ch') === false) target="_blank" @endif>
+          {{ $news->linkText }}
         </a>
       </p>
     @endif
