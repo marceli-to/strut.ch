@@ -44,7 +44,7 @@
             <article class="work-group">
               <div class="article">
                 <h3>1. Preis</h3>
-                @foreach($competition['1. Preis'] as $project)
+                @foreach($competition['1. Preis']->sortByDesc('year') as $project)
                   @include('web.pages.works.partials.item', array('project' => $project, 'image_by' => 'status'))
                 @endforeach
               </div>
@@ -54,7 +54,7 @@
             <article class="work-group is-competition">
               <div class="article">
                 <h3>2. Preis</h3>
-                @foreach($competition['2. Preis'] as $project)
+                @foreach($competition['2. Preis']->sortByDesc('year') as $project)
                   @include('web.pages.works.partials.item', array('project' => $project, 'image_by' => 'status'))
                 @endforeach
               </div>
@@ -64,7 +64,7 @@
             <article class="work-group is-competition">
               <div class="article">
                 <h3>Andere</h3>
-                @foreach($competition['Andere'] as $project)
+                @foreach($competition['Andere']->sortByDesc('year') as $project)
                   @include('web.pages.works.partials.item', array('project' => $project, 'image_by' => 'status'))
                 @endforeach
               </div>
