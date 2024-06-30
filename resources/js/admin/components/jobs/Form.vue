@@ -48,7 +48,6 @@
             <div class="form-row">
               <label>Info</label>
               <tinymce-editor
-                api-key="vuaywur9klvlt3excnrd9xki1a5lj25v18b2j0d0nu5tbwro"
                 :init="tinyConfig"
                 v-model="job.info.de"
               ></tinymce-editor>
