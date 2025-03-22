@@ -6,33 +6,24 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 class Handler extends ExceptionHandler
 {
     /**
-     * A list of the exception types that are not reported.
+     * The list of the inputs that are never flashed to the session on validation exceptions.
      *
-     * @var array
-     */
-    protected $dontReport = [
-        //
-    ];
-
-    /**
-     * A list of the inputs that are never flashed for validation exceptions.
-     *
-     * @var array
+     * @var array<int, string>
      */
     protected $dontFlash = [
+        'current_password',
         'password',
         'password_confirmation',
     ];
 
     /**
-     * Report or log an exception.
-     *
-     * @param  \Throwable  $exception
-     * @return void
+     * Register the exception handling callbacks for the application.
      */
-    public function report(Throwable $exception)
+    public function register(): void
     {
-        parent::report($exception);
+        $this->reportable(function (Throwable $e) {
+            //
+        });
     }
 
     /**
@@ -40,7 +31,7 @@ class Handler extends ExceptionHandler
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Throwable  $exception
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse
      */
     public function render($request, Throwable $exception)
     {
@@ -58,6 +49,8 @@ class Handler extends ExceptionHandler
                     return parent::render($request, $exception);
                 break;
             }
-        }        
+        }
+        
+        return parent::render($request, $exception);
     }
 }
