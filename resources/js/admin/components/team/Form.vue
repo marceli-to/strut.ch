@@ -61,7 +61,7 @@
               </div>
               <div class="span form-row">
                 <label>Telefon</label>
-                <masked-input v-model="team.phone" mask="\0\5\2 111 11 11" type="text" placeholder="052 2xx xx xx" />
+                <TheMask v-model="team.phone" mask="\0\5\2 111 11 11" type="text" placeholder="052 2xx xx xx" />
               </div>
               <div class="span form-row" :class="errors.email ? 'has-error': ''">
                 <label>E-Mail *</label>
@@ -102,15 +102,15 @@ import ImageUpload from "@/components/ui/ImageUpload.vue";
 import tinyConfig from "@/config/tinyconfig.js";
 import Editor from "@tinymce/tinymce-vue";
 import Helpers from "@/mixins/helpers";
-import MaskedInput from 'vue-masked-input'
+import { TheMask } from 'vue-the-mask'
 import Progress from "@/mixins/progress";
 
 export default {
   components: {
     ImageUpload: ImageUpload,
     tinymceEditor: Editor,
+    TheMask,
     FormButtons: FormButtons,
-    MaskedInput
   },
 
   props: {

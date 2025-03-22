@@ -7,7 +7,7 @@
 require('./bootstrap');
 
 // Require Vue
-window.Vue = require('vue');
+import Vue from 'vue';
 
 // VueAxios
 import VueAxios from 'vue-axios';
@@ -56,17 +56,38 @@ router.beforeEach((to, from, next) => {
   next();
 });
 
-
 // Intercept Axios Response (401, Unauthorized)
-Vue.axios.interceptors.response.use((response) => {
+Vue.axios.interceptors.response.use(
+  (response) => {
     return response;
-  }, (error) => {
-  if (error.response.status == 401) {
-    window.location.href = '/admin/login';
+  }, 
+  async (error) => {
+    // Handle 401 errors
+    if (error.response && error.response.status === 401) {
+      // Clear token and update store
+      localStorage.removeItem('token');
+      store.commit('logoutUser');
+      window.location.href = '/admin/login';
+      return Promise.reject(error);
+    }
+    
+    return Promise.reject(error);
   }
-  return Promise.reject(error);
-});
+);
 
+// Add request interceptor to include token in every request
+Vue.axios.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers['Authorization'] = 'Bearer ' + token;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 // Mount App
 import AppComponent from '@/components/App.vue';

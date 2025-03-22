@@ -19,7 +19,7 @@
 <meta name="msapplication-TileColor" content="#ffffff">
 <meta name="msapplication-config" content="/assets/img/favicon/browserconfig.xml">
 <meta name="theme-color" content="#ffffff">
-<meta name="csrf-token" value="{{ csrf_token() }}" />
+<meta name="csrf-token" content="{{ csrf_token() }}" />
 <meta name="format-detection" content="telephone=no">
 <link href="{{ asset('assets/css/app.css') }}" type="text/css" rel="stylesheet" />
 <script src="{{ asset('assets/js/modernizr.min.js') }}"></script>

@@ -4,7 +4,6 @@ mix.webpackConfig({
     resolve: {
         extensions: ['.js', '.vue', '.json'],
         alias: {
-            //'vue$': 'vue/dist/vue.esm.js',
             '@': __dirname + '/resources/js/admin/'
         },
     },
@@ -24,9 +23,19 @@ mix.webpackConfig({
  */
 
 // Admin
-mix.js('resources/js/admin/app.js', 'public/assets/admin/js').version();
-mix.sass('resources/sass/admin/app.scss', 'public/assets/admin/css').options({processCssUrls: false}).version();
+mix.js('resources/js/admin/app.js', 'public/assets/admin/js')
+   .vue()
+   .version();
+
+mix.sass('resources/sass/admin/app.scss', 'public/assets/admin/css')
+   .options({processCssUrls: false})
+   .version();
 
 // Web
-mix.js('resources/js/web/app.js', 'public/assets/js').version();
-mix.sass('resources/sass/web/app.scss', 'public/assets/css').options({processCssUrls: false}).version();
+mix.js('resources/js/web/app.js', 'public/assets/js')
+   .vue()
+   .version();
+
+mix.sass('resources/sass/web/app.scss', 'public/assets/css')
+   .options({processCssUrls: false})
+   .version();
