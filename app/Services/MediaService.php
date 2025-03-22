@@ -3,13 +3,20 @@
 namespace App\Services;
 
 use Illuminate\Http\Request;
-use Intervention\Image\ImageManager;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Cache;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver as GdDriver;
+use Intervention\Image\Encoders\JpegEncoder;
 
 class MediaService
 {
+    /**
+     * Image manager instance
+     */
+    protected $manager;
+
     /**
      * Path for source files
      */
@@ -93,16 +100,23 @@ class MediaService
     /**
      * Image quality
      */
-
     protected $quality = 90;
 
     /**
      * Image prefix
      */
     protected $prefix = 'strut.ch';
+
+    /**
+     * Cache expiry time in seconds (7 days)
+     */
+    protected $cache_ttl = 604800;
     
     public function __construct()
     {
+        // Initialize the ImageManager with GD driver
+        $this->manager = new ImageManager(new GdDriver());
+        
         $this->path_source    = storage_path('app/public/media/');
         $this->path_xsmall    = storage_path('app/public/media/xsmall/');
         $this->path_small     = storage_path('app/public/media/small/');
@@ -120,7 +134,6 @@ class MediaService
      *
      * @return array
      */
-
     public function upload(Request $request)
     {
         $file = $request->file('file');
@@ -129,7 +142,7 @@ class MediaService
         $file->move($this->path_source, $name);
 
         // Get file extension to store in media model
-        $filetype = \File::extension($this->path_source . $name);
+        $filetype = File::extension($this->path_source . $name);
 
         // Create thumbnail for preview
         $this->thumbnail($name);
@@ -142,7 +155,6 @@ class MediaService
      *
      * @return array
      */
-
     public function uploadDocument(Request $request)
     {
         $file = $request->file('file');
@@ -151,7 +163,7 @@ class MediaService
         $file->move($this->path_downloads, $name);
 
         // Get file extension to store in media model
-        $filetype = \File::extension($this->path_downloads . $name);
+        $filetype = File::extension($this->path_downloads . $name);
 
         return ['name' => $name, 'filetype' => $filetype];
     }
@@ -162,51 +174,76 @@ class MediaService
      * @param  str $image
      * @return \Illuminate\Http\Response
      */
-
-    public function thumbnail($image = NULL)
+    public function thumbnail($image = null)
     {
-        if (!File::exists($this->path_thumbs . $image))
-        {
-            $image = \Image::make($this->path_source . $image)->fit($this->size_thumbs);
-            $image->save($this->path_thumbs . $image->basename);
-            return \Response::make($image, 200, ['Content-Type' => 'image/jpeg']);
-        }
-        else
-        {
-            $filename = $image;
-            $img = \Image::cache(function($image) use ($filename) {
-                return $image->make($this->path_thumbs . $filename);
-            }, 300, false);
-            return \Response::make($img, 200, ['Content-Type' => 'image/jpeg']);
+        $cacheKey = 'thumb_' . $image;
+        
+        // If thumbnail doesn't exist, create it
+        if (!File::exists($this->path_thumbs . $image)) {
+            // Create image instance
+            $img = $this->manager->read($this->path_source . $image);
+            
+            // Resize the image to fit the dimensions
+            $img = $img->cover($this->size_thumbs, $this->size_thumbs);
+            
+            // Save the image
+            $img->save($this->path_thumbs . $image, new JpegEncoder($this->quality));
+            
+            // Store the image data in cache
+            $imageData = file_get_contents($this->path_thumbs . $image);
+            Cache::put($cacheKey, $imageData, $this->cache_ttl);
+            
+            return response($imageData, 200, ['Content-Type' => 'image/jpeg']);
+        } else {
+            // Check if image is in cache
+            if (Cache::has($cacheKey)) {
+                $imageData = Cache::get($cacheKey);
+            } else {
+                $imageData = file_get_contents($this->path_thumbs . $image);
+                Cache::put($cacheKey, $imageData, $this->cache_ttl);
+            }
+            
+            return response($imageData, 200, ['Content-Type' => 'image/jpeg']);
         }
     }
 
-    public function grid($image = NULL)
+    /**
+     * Generate grid size image
+     * 
+     * @param  str $image
+     * @return \Illuminate\Http\Response
+     */
+    public function grid($image = null)
     {
-        if ($image != NULL)
-        {
-            // Generate xsmall sized images
-            if (!File::exists($this->path_grid . $image))
-            {
+        if ($image != null) {
+            $cacheKey = 'grid_' . $image;
+            
+            // If grid image doesn't exist, create it
+            if (!File::exists($this->path_grid . $image)) {
                 // Create image instance
-                $image = \Image::make($this->path_source . $image);
+                $img = $this->manager->read($this->path_source . $image);
                 
-                // Resize image
-                $image->resize(null, 90, function ($constraint) {
-                    $constraint->aspectRatio();
-                });
-
-                $image->save($this->path_grid . $image->basename);
-                return \Response::make($image, 200, ['Content-Type' => 'image/jpeg']);
-            }
-            else
-            {   
-                $filename = $image;
-                $img = \Image::cache(function($image) use ($filename) {
-                    return $image->make($this->path_grid . $filename);
-                }, 300, false);
+                // Resize the image
+                $img = $img->scale(height: 90);
                 
-                return \Response::make($img, 200, ['Content-Type' => 'image/jpeg']);
+                // Save the image
+                $img->save($this->path_grid . $image, new JpegEncoder($this->quality));
+                
+                // Store the image data in cache
+                $imageData = file_get_contents($this->path_grid . $image);
+                Cache::put($cacheKey, $imageData, $this->cache_ttl);
+                
+                return response($imageData, 200, ['Content-Type' => 'image/jpeg']);
+            } else {
+                // Check if image is in cache
+                if (Cache::has($cacheKey)) {
+                    $imageData = Cache::get($cacheKey);
+                } else {
+                    $imageData = file_get_contents($this->path_grid . $image);
+                    Cache::put($cacheKey, $imageData, $this->cache_ttl);
+                }
+                
+                return response($imageData, 200, ['Content-Type' => 'image/jpeg']);
             }
         }
     }
@@ -218,169 +255,76 @@ class MediaService
      * @param  str $size
      * @return \Illuminate\Http\Response
      */
-
     public function resize($image, $size = 'sm')
     {
-        if ($image != NULL)
-        {
-            // Generate extra small sized images
-            if ($size == 'xs')
-            {
-                if (!File::exists($this->path_xsmall . $image))
-                {
-                    // Create image instance
-                    $image = \Image::make($this->path_source . $image);
-
-                    // Get width and height
-                    $width  = $image->getWidth();
-                    $height = $image->getHeight();
-                    
-                    // Resize landscape image
-                    if ($width > $height && $width >= $this->max_width_xs)
-                    {
-                        $image->resize($this->max_width_xs, null, function ($constraint) {
-                            $constraint->aspectRatio();
-                        });
-                    }
-                    else if ($height >= $this->max_height_xs)
-                    {
-                        $image->resize(null, $this->max_height_xs, function ($constraint) {
-                            $constraint->aspectRatio();
-                        });
-                    }
-
-                    $image->save($this->path_xsmall . $image->basename, $this->quality);
-                    return \Response::make($image, 200, ['Content-Type' => 'image/jpeg']);
-                }
-                else
-                {   
-                    $filename = $image;
-                    $img = \Image::cache(function($image) use ($filename) {
-                        return $image->make($this->path_xsmall . $filename);
-                    }, 300, false);
-                    
-                    return \Response::make($img, 200, ['Content-Type' => 'image/jpeg']);
-                }
+        if ($image != null) {
+            $cacheKey = $size . '_' . $image;
+            $targetPath = '';
+            $maxWidth = 0;
+            $maxHeight = 0;
+            
+            // Set target path and dimensions based on size
+            switch ($size) {
+                case 'xs':
+                    $targetPath = $this->path_xsmall;
+                    $maxWidth = $this->max_width_xs;
+                    $maxHeight = $this->max_height_xs;
+                    break;
+                case 'sm':
+                    $targetPath = $this->path_small;
+                    $maxWidth = $this->max_width_sm;
+                    $maxHeight = $this->max_height_sm;
+                    break;
+                case 'md':
+                    $targetPath = $this->path_medium;
+                    $maxWidth = $this->max_width_md;
+                    $maxHeight = $this->max_height_md;
+                    break;
+                case 'lg':
+                    $targetPath = $this->path_large;
+                    $maxWidth = $this->max_width_lg;
+                    $maxHeight = $this->max_height_lg;
+                    break;
+                default:
+                    $targetPath = $this->path_small;
+                    $maxWidth = $this->max_width_sm;
+                    $maxHeight = $this->max_height_sm;
             }
-
-            // Generate small sized images
-            if ($size == 'sm')
-            {
-                if (!File::exists($this->path_small . $image))
-                {
-                    // Create image instance
-                    $image = \Image::make($this->path_source . $image);
-
-                    // Get width and height
-                    $width  = $image->getWidth();
-                    $height = $image->getHeight();
-                    
-                    // Resize landscape image
-                    if ($width > $height && $width >= $this->max_width_sm)
-                    {
-                        $image->resize($this->max_width_sm, null, function ($constraint) {
-                            $constraint->aspectRatio();
-                        });
-                    }
-                    else if ($height >= $this->max_height_sm)
-                    {
-                        $image->resize(null, $this->max_height_sm, function ($constraint) {
-                            $constraint->aspectRatio();
-                        });
-                    }
-
-                    $image->save($this->path_small . $image->basename, $this->quality);
-                    return \Response::make($image, 200, ['Content-Type' => 'image/jpeg']);
+            
+            // If resized image doesn't exist, create it
+            if (!File::exists($targetPath . $image)) {
+                // Create image instance
+                $img = $this->manager->read($this->path_source . $image);
+                
+                // Get width and height
+                $width = $img->width();
+                $height = $img->height();
+                
+                // Resize image according to orientation
+                if ($width > $height && $width >= $maxWidth) {
+                    $img = $img->scale(width: $maxWidth);
+                } elseif ($height >= $maxHeight) {
+                    $img = $img->scale(height: $maxHeight);
                 }
-                else
-                {   
-                    $filename = $image;
-                    $img = \Image::cache(function($image) use ($filename) {
-                        return $image->make($this->path_small . $filename);
-                    }, 300, false);
-                    
-                    return \Response::make($img, 200, ['Content-Type' => 'image/jpeg']);
+                
+                // Save the image
+                $img->save($targetPath . $image, new JpegEncoder($this->quality));
+                
+                // Store the image data in cache
+                $imageData = file_get_contents($targetPath . $image);
+                Cache::put($cacheKey, $imageData, $this->cache_ttl);
+                
+                return response($imageData, 200, ['Content-Type' => 'image/jpeg']);
+            } else {
+                // Check if image is in cache
+                if (Cache::has($cacheKey)) {
+                    $imageData = Cache::get($cacheKey);
+                } else {
+                    $imageData = file_get_contents($targetPath . $image);
+                    Cache::put($cacheKey, $imageData, $this->cache_ttl);
                 }
-            }
-
-            // Generate medium sized images
-            if ($size == 'md')
-            {
-                if (!File::exists($this->path_medium . $image))
-                {
-                    // Create image instance
-                    $image = \Image::make($this->path_source . $image);
-
-                    // Get width and height
-                    $width  = $image->getWidth();
-                    $height = $image->getHeight();
-                    
-                    // Resize landscape image
-                    if ($width > $height && $width >= $this->max_width_md)
-                    {
-                        $image->resize($this->max_width_md, null, function ($constraint) {
-                            $constraint->aspectRatio();
-                        });
-                    }
-                    else if ($height >= $this->max_height_md)
-                    {
-                        $image->resize(null, $this->max_height_md, function ($constraint) {
-                            $constraint->aspectRatio();
-                        });
-                    }
-
-                    $image->save($this->path_medium . $image->basename, $this->quality);
-                    return \Response::make($image, 200, ['Content-Type' => 'image/jpeg']);
-                }
-                else
-                {   
-                    $filename = $image;
-                    $img = \Image::cache(function($image) use ($filename) {
-                        return $image->make($this->path_medium . $filename);
-                    }, 300, false);
-                    
-                    return \Response::make($img, 200, ['Content-Type' => 'image/jpeg']);
-                }
-            }
-
-            // Generate large sized images
-            if ($size == 'lg')
-            {
-                if (!File::exists($this->path_large . $image))
-                {
-                    // Create image instance
-                    $image = \Image::make($this->path_source . $image);
-
-                    // Get width and height
-                    $width  = $image->getWidth();
-                    $height = $image->getHeight();
-                    
-                    // Resize landscape image
-                    if ($width > $height && $width >= $this->max_width_lg)
-                    {
-                        $image->resize($this->max_width_lg, null, function ($constraint) {
-                            $constraint->aspectRatio();
-                        });
-                    }
-                    else if ($height >= $this->max_height_lg)
-                    {
-                        $image->resize(null, $this->max_height_lg, function ($constraint) {
-                            $constraint->aspectRatio();
-                        });
-                    }
-
-                    $image->save($this->path_large . $image->basename, $this->quality);
-                    return \Response::make($image, 200, ['Content-Type' => 'image/jpeg']);
-                }
-                else
-                {   
-                    $filename = $image;
-                    $img = \Image::cache(function($image) use ($filename) {
-                        return $image->make($this->path_large . $filename);
-                    }, 300, false);
-                    
-                    return \Response::make($img, 200, ['Content-Type' => 'image/jpeg']);
-                }
+                
+                return response($imageData, 200, ['Content-Type' => 'image/jpeg']);
             }
         }
     }
@@ -390,14 +334,20 @@ class MediaService
      * 
      * @param str $filename
      */
-
     public function delete($filename)
     {
         $directories = Storage::allDirectories('public');
-        foreach($directories as $d)
-        {
+        foreach ($directories as $d) {
             Storage::delete($d . '/'. $filename);
         }
+        
+        // Clear any cached versions
+        Cache::forget('thumb_' . $filename);
+        Cache::forget('grid_' . $filename);
+        Cache::forget('xs_' . $filename);
+        Cache::forget('sm_' . $filename);
+        Cache::forget('md_' . $filename);
+        Cache::forget('lg_' . $filename);
     }
 
     /**
@@ -407,13 +357,12 @@ class MediaService
      * @param boolean  $force_lowercase - Force the string to lowercase?
      * @param boolean  $anal - If set to *true*, will remove all non-alphanumeric characters.
      */
-
     private function _sanitizeFilename($string, $force_lowercase = true, $anal = false)
     {
-        $strip = array("~", "`", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "=", "+", "[", "{", "]", "}", "\\", "|", ";", ":", "\"", "'", "&#8216;", "&#8217;", "&#8220;", "&#8221;", "&#8211;", "&#8212;", "â€”", "â€“", ",", "<", ">", "/", "?");
+        $strip = ['~', '`', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '=', '+', '[', '{', ']', '}', '\\', '|', ';', ':', '"', "'", '&#8216;', '&#8217;', '&#8220;', '&#8221;', '&#8211;', '&#8212;', 'â€"', 'â€"', ',', '<', '>', '/', '?'];
         $clean = trim(str_replace($strip, "", strip_tags($string)));
         $clean = preg_replace('/\s+/', "-", $clean);
-        $clean = ($anal) ? preg_replace("/[^a-zA-Z0-9.\-_]/", "", $clean) : $clean ;
+        $clean = ($anal) ? preg_replace("/[^a-zA-Z0-9.\-_]/", "", $clean) : $clean;
         return ($force_lowercase) ? (function_exists('mb_strtolower')) ? mb_strtolower($clean, 'UTF-8') : strtolower($clean) : $clean;
     }
 
@@ -421,51 +370,41 @@ class MediaService
      * Create directories
      * 
      */
-
     private function _mkdir()
     {
-        if (!File::isDirectory($this->path_uploads))
-        {
+        if (!File::isDirectory($this->path_uploads)) {
             File::makeDirectory($this->path_uploads, 0775, true, true);
         }
 
-        if (!File::isDirectory($this->path_downloads))
-        {
+        if (!File::isDirectory($this->path_downloads)) {
             File::makeDirectory($this->path_downloads, 0775, true, true);
         }
         
-        if (!File::isDirectory($this->path_source))
-        {
+        if (!File::isDirectory($this->path_source)) {
             File::makeDirectory($this->path_source, 0775, true, true);
         }
 
-        if (!File::isDirectory($this->path_thumbs))
-        {
+        if (!File::isDirectory($this->path_thumbs)) {
             File::makeDirectory($this->path_thumbs, 0775, true, true);
         }
 
-        if (!File::isDirectory($this->path_grid))
-        {
+        if (!File::isDirectory($this->path_grid)) {
             File::makeDirectory($this->path_grid, 0775, true, true);
         }
 
-        if (!File::isDirectory($this->path_xsmall))
-        {
+        if (!File::isDirectory($this->path_xsmall)) {
             File::makeDirectory($this->path_xsmall, 0775, true, true);
         }
 
-        if (!File::isDirectory($this->path_small))
-        {
+        if (!File::isDirectory($this->path_small)) {
             File::makeDirectory($this->path_small, 0775, true, true);
         }
 
-        if (!File::isDirectory($this->path_medium))
-        {
+        if (!File::isDirectory($this->path_medium)) {
             File::makeDirectory($this->path_medium, 0775, true, true);
         }
 
-        if (!File::isDirectory($this->path_large))
-        {
+        if (!File::isDirectory($this->path_large)) {
             File::makeDirectory($this->path_large, 0775, true, true);
         }
     }
