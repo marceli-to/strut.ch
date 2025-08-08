@@ -18,13 +18,13 @@
             <div class="job__description">
               {!!$j->info!!}
               @if ($j->media)
-              <br>
-              <a 
-                href="/storage/media/downloads/{{ $j->media }}" 
-                target="_blank"
-                aria-label="Download Stelleninserat">
-                Download Stelleninserat
-              </a>
+                <br>
+                <a 
+                  href="/storage/media/downloads/{{ $j->media }}" 
+                  target="_blank"
+                  aria-label="Download Stellenausschreibung">
+                  Download Stellenausschreibung
+                </a>
               @endif
             </div>
           </article>
