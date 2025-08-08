@@ -9,9 +9,24 @@
       @if (!$jobs->isEmpty())
         @foreach($jobs as $j)
           <article class="job">
-            <h2>{{$j->title}}</h2>
-            <p class="job__lead">{{$j->lead}}</p>
-            <div class="job__description">{!!$j->info!!}</div>
+            <h2>
+              {{$j->title}}
+            </h2>
+            <p class="job__lead">
+              {{$j->lead}}
+            </p>
+            <div class="job__description">
+              {!!$j->info!!}
+              @if ($j->media)
+              <br>
+              <a 
+                href="/storage/media/downloads/{{ $j->media }}" 
+                target="_blank"
+                aria-label="Download Stelleninserat">
+                Download Stelleninserat
+              </a>
+              @endif
+            </div>
           </article>
         @endforeach
       @else
