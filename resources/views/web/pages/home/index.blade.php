@@ -3,21 +3,35 @@
 @section('seo_description', 'Strut Architekten AG aus Winterthur, Schweiz. Gegründet im Jahre 2015 durch Roger Studerus, Felix Rutishauser und Peter Kunz.')
 @section('content')
 <section class="home">
-  @if ($highlight)
+  @if ($highlight && count($highlight) > 0)
     <figure class="is-highlight">
-      <a href="{{ route('page.projects') }}/{{ $highlight['slug'] }}" title="{{ config('app.name') }} - {{ $highlight['title'] }}">
-        <figcaption>
-          @if ($highlight['title'])
-            <span>{{$highlight['title']}}</span>
-          @else
-            <span>{{$highlight['name']}}</span>
-          @endif
-        </figcaption>
-        <img src="{!! ImageHelper::get($highlight['image'], 'lg') !!}" 
-          width="1600" 
-          height="1066"
-          alt="{{ $highlight['name'] }}">
-      </a>
+      <div class="swiper highlight-swiper">
+        <div class="swiper-wrapper">
+          @foreach ($highlight as $slide)
+            <div class="swiper-slide">
+              <a href="{{ route('page.projects') }}/{{ $slide['slug'] }}" title="{{ config('app.name') }} - {{ $slide['title'] }}">
+                <figcaption>
+                  @if ($slide['title'])
+                    <span>{{ $slide['title'] }}</span>
+                  @else
+                    <span>{{ $slide['name'] }}</span>
+                  @endif
+                </figcaption>
+                @if ($slide['type'] === 'video')
+                  <video autoplay muted loop playsinline>
+                    <source src="/storage/media/{{ $slide['image'] }}" type="video/{{ pathinfo($slide['image'], PATHINFO_EXTENSION) }}">
+                  </video>
+                @else
+                  <img src="{!! ImageHelper::get($slide['image'], 'lg') !!}" 
+                    width="1600" 
+                    height="1066"
+                    alt="{{ $slide['name'] }}">
+                @endif
+              </a>
+            </div>
+          @endforeach
+        </div>
+      </div>
     </figure>
   @endif
   <div class="home__grids">

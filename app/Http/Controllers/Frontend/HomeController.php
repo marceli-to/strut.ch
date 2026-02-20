@@ -93,28 +93,34 @@ class HomeController extends Controller
             return NULL;
         }
 
-        // Shuffle highlights and pick one
-        $random_item   = $highlights->shuffle()->first();
+        // Return all highlights (shuffled) for slideshow
+        $items = [];
+        foreach ($highlights->shuffle() as $item)
+        {
+            $project_image = $item->projectimage->name;
+            $project       = $item->projectimage->project;
 
-        // Create project & slug
-        $project_image = $random_item->projectimage->name;
-        $project       = $random_item->projectimage->project;
+            $project_slug  = $project->id .'/'.
+                str_slug(
+                    \AppHelper::transliterate($project->getTranslation('name', 'de')) . '-' .
+                    \AppHelper::transliterate($project->getTranslation('location', 'de')) . '-' .
+                    $project->year
+                , '-')
+            ;
 
-        $project_slug  = $project->id .'/'.
-            str_slug(
-                \AppHelper::transliterate($project->getTranslation('name', 'de')) . '-' .
-                \AppHelper::transliterate($project->getTranslation('location', 'de')) . '-' .
-                $project->year
-            , '-')
-        ;
+            // Detect media type by file extension
+            $extension = strtolower(pathinfo($project_image, PATHINFO_EXTENSION));
+            $type = in_array($extension, ['mp4', 'webm']) ? 'video' : 'image';
 
-        $highlight = [
-            'image' => $project_image,
-            'name'  => $project->name . ', ' . $project->location,
-            'title' => $project->title,
-            'slug'  => $project_slug,
-        ];
+            $items[] = [
+                'image' => $project_image,
+                'name'  => $project->name . ', ' . $project->location,
+                'title' => $project->title,
+                'slug'  => $project_slug,
+                'type'  => $type,
+            ];
+        }
 
-        return $highlight;
+        return $items;
     }
 }

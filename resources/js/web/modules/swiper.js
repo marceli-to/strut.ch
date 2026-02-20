@@ -19,7 +19,41 @@ var SwiperUi = (function() {
                 nextEl: '.swiper-nav-next',
                 prevEl: '.swiper-nav-prev'
             }
-        });        
+        });
+
+        // Highlight slideshow
+        var highlightEl = document.querySelector('.highlight-swiper');
+        if (highlightEl) {
+            var highlightSwiper = new Swiper('.highlight-swiper', {
+                effect: 'fade',
+                fadeEffect: {
+                    crossFade: true
+                },
+                autoplay: {
+                    delay: 4500,
+                    disableOnInteraction: false
+                },
+                loop: true,
+                speed: 800,
+                autoHeight: false
+            });
+
+            // Pause autoplay on video slides
+            highlightSwiper.on('slideChangeTransitionEnd', function() {
+                var activeSlide = highlightSwiper.slides[highlightSwiper.activeIndex];
+                var video = activeSlide ? activeSlide.querySelector('video') : null;
+                if (video) {
+                    highlightSwiper.autoplay.stop();
+                    video.currentTime = 0;
+                    video.play();
+                    // Resume after one loop of the video
+                    video.addEventListener('ended', function onEnded() {
+                        video.removeEventListener('ended', onEnded);
+                        highlightSwiper.autoplay.start();
+                    });
+                }
+            });
+        }
     };
 
     return {
