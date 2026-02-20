@@ -61,6 +61,7 @@ class HomeController extends Controller
     {
         $grids = $this->homeGrid->with('layout')
                                 ->with('elements.projectimage.project')
+                                ->with('elements.projectvideo.project')
                                 ->with('elements.news')
                                 ->orderBy('order')
                                 ->get();
@@ -87,6 +88,7 @@ class HomeController extends Controller
         $highlights = $this->homeGridElement->highlight()
                                             ->isProduction()
                                             ->with('projectimage.project')
+                                            ->with('projectvideo.project')
                                             ->get();
         if ($highlights->isEmpty())
         {
@@ -97,8 +99,24 @@ class HomeController extends Controller
         $items = [];
         foreach ($highlights->shuffle() as $item)
         {
-            $project_image = $item->projectimage->name;
-            $project       = $item->projectimage->project;
+            // Determine if this is an image or video element
+            if ($item->projectvideo)
+            {
+                $media_name = $item->projectvideo->name;
+                $project    = $item->projectvideo->project;
+                $type       = 'video';
+            }
+            elseif ($item->projectimage)
+            {
+                $media_name = $item->projectimage->name;
+                $project    = $item->projectimage->project;
+                $extension  = strtolower(pathinfo($media_name, PATHINFO_EXTENSION));
+                $type       = in_array($extension, ['mp4', 'webm', 'mov', 'm4v']) ? 'video' : 'image';
+            }
+            else
+            {
+                continue;
+            }
 
             $project_slug  = $project->id .'/'.
                 str_slug(
@@ -108,12 +126,8 @@ class HomeController extends Controller
                 , '-')
             ;
 
-            // Detect media type by file extension
-            $extension = strtolower(pathinfo($project_image, PATHINFO_EXTENSION));
-            $type = in_array($extension, ['mp4', 'webm', 'mov', 'm4v']) ? 'video' : 'image';
-
             $items[] = [
-                'image' => $project_image,
+                'image' => $media_name,
                 'name'  => $project->name . ', ' . $project->location,
                 'title' => $project->title,
                 'slug'  => $project_slug,

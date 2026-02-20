@@ -6,8 +6,15 @@
         class="btn-trash"
         @click.prevent="deleteMedia(element.id)"
       >Löschen</a>
-      <video v-if="isVideo(element.image)" :src="getVideoSource(element.image)" height="50" width="50" muted></video>
-      <img v-else :src="getPreviewImage(element.image)" height="50" width="50">
+      <video
+        v-if="isVideo(element.image)"
+        :src="getVideoSource(element.image)"
+        class="media-preview"
+        :style="mediaPreviewStyle"
+        muted
+        preload="metadata"
+      ></video>
+      <img v-else :src="getPreviewImage(element.image)" class="media-preview" :style="mediaPreviewStyle">
       <figcaption>
         <strong>{{element.caption}}</strong>
       </figcaption>
@@ -19,10 +26,27 @@ import grid from "@/mixins/grid";
 
 export default {
   props: {
-    element: Object
+    element: Object,
+    previewAspectRatio: {
+      type: String,
+      default: null
+    }
   },
 
   mixins: [grid],
+
+  computed: {
+    mediaPreviewStyle() {
+      if (!this.previewAspectRatio) {
+        return {};
+      }
+
+      return {
+        aspectRatio: this.previewAspectRatio,
+        objectFit: "cover"
+      };
+    }
+  },
 
   methods: {
     deleteMedia(elementId) {
@@ -42,3 +66,11 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+img.media-preview,
+video.media-preview {
+  display: block;
+  width: 100%;
+}
+</style>

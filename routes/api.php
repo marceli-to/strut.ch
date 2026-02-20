@@ -118,6 +118,10 @@ Route::middleware('auth:api')->group(function() {
     Route::delete('project/image/delete/{file}', 'Backend\Project\ProjectImageController@unlink');
     Route::get('project/image/status/{id}', 'Backend\Project\ProjectImageController@status');
 
+    // Project video routes
+    Route::delete('project/video/delete/{file}', 'Backend\Project\ProjectVideoController@unlink');
+    Route::get('project/video/status/{id}', 'Backend\Project\ProjectVideoController@status');
+
     // Project file routes
     Route::delete('project/file/delete/{file}', 'Backend\Project\ProjectFileController@unlink');
     Route::get('project/file/status/{id}', 'Backend\Project\ProjectFileController@status');

@@ -30,6 +30,7 @@ class HomeGridElementController extends Controller
     {
         return new HomeGridCollection(
                 $this->homeGridElement->with('projectimage.project')
+                                      ->with('projectvideo.project')
                                       ->with('news')
                                       ->where('grid_id', '=', $gridId)
                                       ->where('action', '=', 'keep')
@@ -48,6 +49,7 @@ class HomeGridElementController extends Controller
         $gridElement = new HomeGridElement([
             'grid_id'           => $request->get('grid_id'),
             'project_image_id'  => $request->get('project_image_id'),
+            'project_video_id'  => $request->get('project_video_id'),
             'news_id'           => $request->get('news_id'),
             'position'          => $request->get('position'),
             'environment'       => 'development',

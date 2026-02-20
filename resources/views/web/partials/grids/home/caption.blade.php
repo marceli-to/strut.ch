@@ -1,7 +1,12 @@
+@php
+  $project = $element->projectvideo->project ?? $element->projectimage->project ?? null;
+@endphp
+@if ($project)
 <figcaption>
-  @if ($element->projectimage->project->title)
-    <span>{{$element->projectimage->project->title}}</span>
+  @if ($project->title)
+    <span>{{ $project->title }}</span>
   @else
-    <span>{{$element->projectimage->project->name}}, {{$element->projectimage->project->location}}</span>
+    <span>{{ $project->name }}, {{ $project->location }}</span>
   @endif
 </figcaption>
+@endif

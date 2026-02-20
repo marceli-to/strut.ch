@@ -3,13 +3,17 @@
     <h1>Projektbild auswählen</h1>
     <div class="project-selector">
       <div v-for="project in filtered" :key="project.id">
-        <div class="project-selector__item is-multi" v-if="project.images.length > 0">
+        <div class="project-selector__item is-multi" v-if="hasMedia(project)">
           <h2>{{ project.name.de }}, {{ project.location.de }} ({{project.year}})</h2>
           <div class="project-selector__media">
-            <figure v-for="image in project.images" :key="image.id">
-              <a href @click.prevent="storeMedia(image.id)">
-                <video v-if="isVideo(image.name)" :src="getVideoSource(image.name)" height="50" width="50" muted></video>
-                <img v-else :src="getImageSource(image.name)" height="50" width="50">
+            <figure v-for="image in project.images" :key="'img-' + image.id">
+              <a href @click.prevent="storeMedia(image.id, 'image')">
+                <img :src="getImageSource(image.name)" height="50" width="50">
+              </a>
+            </figure>
+            <figure v-for="video in project.videos" :key="'vid-' + video.id" class="is-video">
+              <a href @click.prevent="storeMedia(video.id, 'video')">
+                <video :src="getVideoSource(video.name)" muted preload="metadata"></video>
               </a>
             </figure>
           </div>
@@ -32,13 +36,12 @@ export default {
   },
 
   methods: {
-    storeMedia(imageId) {
-      this.$parent.storeMedia(imageId);
+    storeMedia(mediaId, type) {
+      this.$parent.storeMedia(mediaId, type);
     },
 
-    isVideo(file) {
-      const ext = file.split('.').pop().toLowerCase();
-      return ['mp4', 'webm', 'mov'].includes(ext);
+    hasMedia(project) {
+      return project.images.length > 0 || (project.videos && project.videos.length > 0);
     },
 
     getImageSource(file) {
@@ -47,7 +50,7 @@ export default {
 
     getVideoSource(file) {
       return `/storage/media/${file}`;
-    }
+    },
   },
   
   computed: {
@@ -55,10 +58,7 @@ export default {
       let projects = this.$props.projects;
       if (projects) {
         return projects.filter(project => {
-          let images = project.images;
-          if (images.length > 0) {
-            return project;
-          }
+          return this.hasMedia(project);
         })
       }
     }

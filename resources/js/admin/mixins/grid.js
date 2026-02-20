@@ -76,12 +76,13 @@ export default {
       });
     },
 
-    storeMedia(imageId) {
+    storeMedia(mediaId, type = 'image') {
       let uri = '/api/home/grid/element/store';
       let data = {
         'grid_id': this.tmpGridId,
         'position': this.tmpPosition,
-        'project_image_id': imageId
+        'project_image_id': type === 'image' ? mediaId : null,
+        'project_video_id': type === 'video' ? mediaId : null
       };
 
       this.isLoading = true;

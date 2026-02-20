@@ -28,6 +28,13 @@
             <li>
               <a
                 href="javascript:;"
+                @click="changeTab('videos')"
+                :class="tabs.videos.active ? 'is-active' : ''"
+              >Videos</a>
+            </li>
+            <li>
+              <a
+                href="javascript:;"
                 @click="changeTab('files')"
                 :class="tabs.files.active ? 'is-active' : ''"
               >Dateien</a>
@@ -210,7 +217,7 @@
                 :options="dropzoneImageConfig"
                 @vdropzone-complete="afterImageComplete"
               ></vue-dropzone>
-              <span class="dz-restrictions">jpg, png, mp4, webm, mov | max. 100 MB</span>
+              <span class="dz-restrictions">jpg, png | max. 100 MB</span>
             </div>
             <div class="form-row" v-if="project.images.length">
               <label>Vorhandene Bilder</label>
@@ -221,8 +228,7 @@
                     v-for="(image,index) in project.images"
                     :key="image.id"
                   >
-                    <video v-if="isVideo(image.name)" :src="getVideoUri(image.name)" height="300" width="300" muted></video>
-                    <img v-else :src="getImageUri(image.name)" height="300" width="300">
+                    <img :src="getImageUri(image.name)" height="300" width="300">
                     <div class="dz-toolbar">
                       <a
                         href="javascript:;"
@@ -271,6 +277,75 @@
                           <label :for="'is_preview_type_'+index" class="form-control is-auto">Typ</label>
                           <input type="checkbox" class="visually-hidden" v-model="image.is_preview_year" name="is_preview_year" :id="'is_preview_year_'+index">
                           <label :for="'is_preview_year_'+index" class="form-control is-auto">Jahr</label>
+                      </div>
+                    </div>
+                  </figure>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div v-show="tabs.videos.active">
+            <div class="form-row">
+              <label for="document">
+                Videos hochladen
+              </label>
+              <vue-dropzone
+                ref="dropzoneVideos"
+                id="dropzoneVideos"
+                :options="dropzoneVideoConfig"
+                @vdropzone-complete="afterVideoComplete"
+              ></vue-dropzone>
+              <span class="dz-restrictions">mp4, webm, mov | max. 200 MB</span>
+            </div>
+            <div class="form-row" v-if="project.videos.length">
+              <label>Vorhandene Videos</label>
+              <div class="dropzone-existing-assets has-images">
+                <div>
+                  <figure
+                    :class="[video.publish == 0 ? 'is-disabled' : '', 'dz-existing-asset is-image']"
+                    v-for="(video,index) in project.videos"
+                    :key="video.id"
+                  >
+                    <video :src="getVideoUri(video.name)" height="300" width="300" muted></video>
+                    <div class="dz-toolbar">
+                      <a
+                        href="javascript:;"
+                        :class="[video.publish == 1 ? 'icon-eye' : 'icon-eye-off', 'icon-mini']"
+                        @click.prevent="toggleVideo(video,$event)"
+                      ></a>
+                      <a
+                        href="javascript:;"
+                        class="icon-edit icon-mini"
+                        @click.prevent="showAssetEdit($event)"
+                      ></a>
+                      <a
+                        href="javascript:;"
+                        class="icon-trash icon-mini"
+                        @click.prevent="deleteVideo(video.name,$event)"
+                      ></a>
+                    </div>
+                    <div class="dz-edit-form">
+                      <a
+                        href="javascript:;"
+                        class="dz-icon-hide-form"
+                        @click.prevent="hideAssetEdit($event)"
+                      >Schliessen</a>
+                      <div class="dz-edit-form-row">
+                        <label>Datei:</label>
+                        <a 
+                        :href="getVideoUri(video.name)"
+                        target="_blank"
+                        >
+                          {{video.name}}
+                        </a>
+                      </div>
+                      <div class="dz-edit-form-row">
+                        <label>Legende:</label>
+                        <input
+                          type="text"
+                          v-model="video.caption.de"
+                          class="is-caption"
+                        >
                       </div>
                     </div>
                   </figure>
@@ -359,6 +434,7 @@ import draggable from 'vuedraggable';
 import vue2Dropzone from "vue2-dropzone";
 import dropzoneFileConfig from "@/config/dropzoneconfig-file.js";
 import dropzoneImageConfig from "@/config/dropzoneconfig-image.js";
+import dropzoneVideoConfig from "@/config/dropzoneconfig-video.js";
 import tinyConfig from "@/config/tinyconfig.js";
 import Editor from "@tinymce/tinymce-vue";
 import years from "@/config/years.js";
@@ -409,6 +485,10 @@ export default {
           active: false,
           error: false
         },
+        videos: {
+          active: false,
+          error: false
+        },
         files: {
           active: false,
           error: false
@@ -441,6 +521,7 @@ export default {
 
         // media
         images: [],
+        videos: [],
         downloads: []
       },
 
@@ -465,6 +546,9 @@ export default {
       // dropzone config for images
       dropzoneImageConfig: dropzoneImageConfig,
 
+      // dropzone config for videos
+      dropzoneVideoConfig: dropzoneVideoConfig,
+
       // tinymce config
       tinyConfig: tinyConfig
     };
@@ -481,6 +565,7 @@ export default {
 
     // Update dropzone default config
     this.dropzoneImageConfig.maxFiles = 50;
+    this.dropzoneVideoConfig.maxFiles = 20;
     this.dropzoneFileConfig.maxFiles = 50;
   },
 
@@ -616,10 +701,19 @@ export default {
       this.$refs.dropzoneImages.removeFile(file);
     },
 
-    // Check if file is a video
-    isVideo(file) {
-      const ext = file.split('.').pop().toLowerCase();
-      return ['mp4', 'webm', 'mov'].includes(ext);
+    // Video Upload Callback
+    afterVideoComplete(file) {
+      if (file.status == "error" && file.accepted == false) {
+        this.$notify({ type: "error", text: "Ungültiges Dateiformat." });
+      } else {
+        let file_response = JSON.parse(file.xhr.response);
+        file_response.id = null;
+        file_response.caption = {de: null, en: null};
+        file_response.order = -1;
+        file_response.publish = 1;
+        this.project.videos.push(file_response);
+      }
+      this.$refs.dropzoneVideos.removeFile(file);
     },
 
     // Build media source string
@@ -696,6 +790,33 @@ export default {
         this.axios.get(uri).then(response => {
           const index = this.project.images.findIndex(x => x.id === image.id);
           this.project.images[index].publish = response.data;
+          this.progress(el);
+        });
+      }
+    },
+
+    deleteVideo(video, event) {
+      if(confirm('Bitte löschen bestätigen!')) {
+        let uri = `/api/project/video/delete/${video}`;
+        let el = this.progress(event.target), self = this;
+        const index = this.project.videos.findIndex(x => x.name === video);
+        this.axios.delete(uri).then(response => {
+          this.project.videos.splice(index, 1);
+          this.progress(el);
+        });
+      }
+    },
+
+    toggleVideo(video, event) {
+      if (video.id === null) {
+        const index = this.project.videos.findIndex(x => x.name === video.name);
+        this.project.videos[index].publish = video.publish == 1 ? 0 : 1;
+      } else {
+        let uri = `/api/project/video/status/${video.id}`;
+        let el = this.progress(event.target);
+        this.axios.get(uri).then(response => {
+          const index = this.project.videos.findIndex(x => x.id === video.id);
+          this.project.videos[index].publish = response.data;
           this.progress(el);
         });
       }
