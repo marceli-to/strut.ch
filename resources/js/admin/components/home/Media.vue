@@ -6,7 +6,8 @@
         class="btn-trash"
         @click.prevent="deleteMedia(element.id)"
       >Löschen</a>
-      <img :src="getPreviewImage(element.image)" height="50" width="50">
+      <video v-if="isVideo(element.image)" :src="getVideoSource(element.image)" height="50" width="50" muted></video>
+      <img v-else :src="getPreviewImage(element.image)" height="50" width="50">
       <figcaption>
         <strong>{{element.caption}}</strong>
       </figcaption>
@@ -28,6 +29,15 @@ export default {
       if (confirm("Bitte löschen bestätigen!")) {
         this.$parent.deleteMedia(elementId);
       }
+    },
+
+    isVideo(file) {
+      const ext = file.split('.').pop().toLowerCase();
+      return ['mp4', 'webm', 'mov'].includes(ext);
+    },
+
+    getVideoSource(file) {
+      return `/storage/media/${file}`;
     }
   }
 };

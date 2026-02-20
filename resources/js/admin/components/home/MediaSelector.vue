@@ -8,7 +8,8 @@
           <div class="project-selector__media">
             <figure v-for="image in project.images" :key="image.id">
               <a href @click.prevent="storeMedia(image.id)">
-                <img :src="getImageSource(image.name)" height="50" width="50">
+                <video v-if="isVideo(image.name)" :src="getVideoSource(image.name)" height="50" width="50" muted></video>
+                <img v-else :src="getImageSource(image.name)" height="50" width="50">
               </a>
             </figure>
           </div>
@@ -35,8 +36,17 @@ export default {
       this.$parent.storeMedia(imageId);
     },
 
+    isVideo(file) {
+      const ext = file.split('.').pop().toLowerCase();
+      return ['mp4', 'webm', 'mov'].includes(ext);
+    },
+
     getImageSource(file) {
       return `/media/grid/${file}`;
+    },
+
+    getVideoSource(file) {
+      return `/storage/media/${file}`;
     }
   },
   

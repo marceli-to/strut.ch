@@ -210,7 +210,7 @@
                 :options="dropzoneImageConfig"
                 @vdropzone-complete="afterImageComplete"
               ></vue-dropzone>
-              <span class="dz-restrictions">jpg, png | max. 8 MB</span>
+              <span class="dz-restrictions">jpg, png, mp4, webm, mov | max. 100 MB</span>
             </div>
             <div class="form-row" v-if="project.images.length">
               <label>Vorhandene Bilder</label>
@@ -221,7 +221,8 @@
                     v-for="(image,index) in project.images"
                     :key="image.id"
                   >
-                    <img :src="getImageUri(image.name)" height="300" width="300">
+                    <video v-if="isVideo(image.name)" :src="getVideoUri(image.name)" height="300" width="300" muted></video>
+                    <img v-else :src="getImageUri(image.name)" height="300" width="300">
                     <div class="dz-toolbar">
                       <a
                         href="javascript:;"
@@ -615,6 +616,12 @@ export default {
       this.$refs.dropzoneImages.removeFile(file);
     },
 
+    // Check if file is a video
+    isVideo(file) {
+      const ext = file.split('.').pop().toLowerCase();
+      return ['mp4', 'webm', 'mov'].includes(ext);
+    },
+
     // Build media source string
     getFileUri(file) {
       return `/storage/media/downloads/${file}`;
@@ -622,6 +629,10 @@ export default {
 
     getImageUri(file) {
       return `/media/thumbnail/${file}`;
+    },
+
+    getVideoUri(file) {
+      return `/storage/media/${file}`;
     },
 
     getPreviewUri(file) {
