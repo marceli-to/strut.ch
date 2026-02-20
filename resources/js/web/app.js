@@ -22,6 +22,9 @@ require('./modules/header.js');
 // Project
 require('./modules/project.js');
 
+// Swiper
+require('./modules/swiper.js');
+
 // Masonry
 //require('./vendor/packery/packery.min.js');
 require('./modules/packery.js');

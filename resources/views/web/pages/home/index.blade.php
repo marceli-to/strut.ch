@@ -18,8 +18,8 @@
                   @endif
                 </figcaption>
                 @if ($slide['type'] === 'video')
-                  <video autoplay muted loop playsinline>
-                    <source src="/storage/media/{{ $slide['image'] }}" type="video/{{ pathinfo($slide['image'], PATHINFO_EXTENSION) }}">
+                  <video autoplay muted playsinline>
+                    <source src="/storage/media/{{ $slide['image'] }}">
                   </video>
                 @else
                   <img src="{!! ImageHelper::get($slide['image'], 'lg') !!}" 

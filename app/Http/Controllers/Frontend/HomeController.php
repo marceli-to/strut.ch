@@ -110,7 +110,7 @@ class HomeController extends Controller
 
             // Detect media type by file extension
             $extension = strtolower(pathinfo($project_image, PATHINFO_EXTENSION));
-            $type = in_array($extension, ['mp4', 'webm']) ? 'video' : 'image';
+            $type = in_array($extension, ['mp4', 'webm', 'mov', 'm4v']) ? 'video' : 'image';
 
             $items[] = [
                 'image' => $project_image,
