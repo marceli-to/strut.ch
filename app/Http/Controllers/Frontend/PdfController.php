@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use PDF;
 use iio\libmergepdf\Merger;
+use iio\libmergepdf\Driver\TcpdiDriver;
 
 use App\Models\Category;
 use App\Models\Project;
@@ -32,7 +33,7 @@ class PdfController extends Controller
                               ->where('category_id', '=', $id)
                               ->get();
 
-    $merger = new Merger();
+    $merger = new Merger(new TcpdiDriver());
 
     foreach($projects as $project)
     {
