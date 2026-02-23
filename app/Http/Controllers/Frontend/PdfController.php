@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use PDFMerger;
 use PDF;
+use iio\libmergepdf\Merger;
 
 use App\Models\Category;
 use App\Models\Project;
@@ -31,19 +32,24 @@ class PdfController extends Controller
                               ->with('downloads')
                               ->where('category_id', '=', $id)
                               ->get();
-    $files = [];
-    $merger = \PDFMerger::init();
+
+    $merger = new Merger();
 
     foreach($projects as $project)
     {
       foreach($project->downloads as $file)
       {
-        $merger->addPathToPDF(public_path() .'/storage/media/downloads/' . $file->name, 'all', 'P');
+        $merger->addFile(public_path() .'/storage/media/downloads/' . $file->name);
       }
     }
-    $merger->setFileName('strut.ch-Projektdokumentation-' . ucfirst($slug) .'-' . date('d-m-Y:H:i:s') . '.pdf');
-    $merger->merge();
-    $merger->inline();
+
+    $filename = 'strut.ch-Projektdokumentation-' . ucfirst($slug) .'-' . date('d-m-Y:H:i:s') . '.pdf';
+    $mergedPdf = $merger->merge();
+
+    return response($mergedPdf, 200, [
+      'Content-Type' => 'application/pdf',
+      'Content-Disposition' => 'inline; filename="' . $filename . '"',
+    ]);
   }
 
   public function worksAll()

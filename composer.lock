@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8c4c0367a55831cda75c7cd6889a07df",
+    "content-hash": "c744e15adef5c6bb1c384161615c9a27",
     "packages": [
         {
             "name": "barryvdh/laravel-dompdf",
@@ -1240,6 +1240,61 @@
                 }
             ],
             "time": "2025-02-03T10:55:03+00:00"
+        },
+        {
+            "name": "iio/libmergepdf",
+            "version": "3.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hanneskod/libmergepdf.git",
+                "reference": "77059d0f5d9c5ebfe6df2d094109e6aee90ae647"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hanneskod/libmergepdf/zipball/77059d0f5d9c5ebfe6df2d094109e6aee90ae647",
+                "reference": "77059d0f5d9c5ebfe6df2d094109e6aee90ae647",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6",
+                "setasign/fpdi-fpdf": "^2.0"
+            },
+            "require-dev": {
+                "hanneskod/readme-tester": "1.0-beta.1",
+                "phpunit/phpunit": "^5.0",
+                "symfony/finder": "^2.0"
+            },
+            "suggest": {
+                "symfony/finder": "Bulk add files using finder."
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "iio\\libmergepdf\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "WTFPL"
+            ],
+            "authors": [
+                {
+                    "name": "Hannes Forsgård",
+                    "email": "hannes.forsgard@gmail.com"
+                }
+            ],
+            "description": "Library for merging multiple PDFs",
+            "homepage": "https://github.com/hanneskod/libmergepdf",
+            "keywords": [
+                "concatenate",
+                "merge",
+                "pdf"
+            ],
+            "support": {
+                "issues": "https://github.com/hanneskod/libmergepdf/issues",
+                "source": "https://github.com/hanneskod/libmergepdf/tree/master"
+            },
+            "time": "2017-12-11T20:42:07+00:00"
         },
         {
             "name": "intervention/gif",
@@ -9676,5 +9731,5 @@
         "php": "^8.2"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }
