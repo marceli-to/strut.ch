@@ -161,7 +161,6 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        GrofGraf\LaravelPDFMerger\Providers\PDFMergerServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
 
         /*
@@ -230,7 +229,6 @@ return [
         'AppHelper' => App\Helpers\AppHelper::class,
         'Image' => Intervention\Image\Laravel\Facades\Image::class,
         'ImageHelper' => App\Helpers\ImageHelper::class,
-        'PDFMerger' => GrofGraf\LaravelPDFMerger\Facades\PDFMergerFacade::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
     ],
 

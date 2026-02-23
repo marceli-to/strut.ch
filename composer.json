@@ -10,8 +10,7 @@
     "require": {
         "php": "^8.2",
         "barryvdh/laravel-dompdf": "^2.0.0",
-        "grofgraf/laravel-pdf-merger": "^1.0.1",
-        "iio/libmergepdf": "^3.1",
+        "iio/libmergepdf": "^4.0",
         "intervention/image": "^3.0",
         "intervention/image-laravel": "^1.0",
         "laravel/framework": "^11.0",
@@ -45,9 +44,7 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "app/",
-            "GrofGraf\\LaravelPDFMerger\\Facades\\": "vendor/grofgraf/laravel-pdf-merger/src/facades/",
-            "GrofGraf\\LaravelPDFMerger\\Providers\\": "vendor/grofgraf/laravel-pdf-merger/src/providers/"
+            "App\\": "app/"
         },
         "classmap": [
             "database/seeds",
