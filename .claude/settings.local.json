@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(~/Jamon.digital/Webroot/cms.strut.ch/database/migrations/2026_02_21_000001_create_categories_table.php:*)",
+      "Bash(~/Jamon.digital/Webroot/cms.strut.ch/database/migrations/2026_02_21_000002_create_projects_table.php:*)",
+      "Bash(git remote set-url:*)",
+      "Bash(git remote get-url:*)",
+      "Bash(find /Users/marceli.to/Jamon.digital/Webroot/strut.ch/resources/js/admin -name \"*rid*\" -o -name \"*Grid*\" 2>/dev/null | head -20)",
+      "Bash(git add docs/grid-builder-images.md && git commit -m \"$\\(cat <<'EOF'\nAdd grid builder image & layout reference documentation\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\" && git status)",
+      "Bash(git add docs/domain-awards.md docs/domain-books.md docs/domain-content.md docs/domain-home-grid.md docs/domain-jobs.md docs/domain-lectures.md docs/domain-news.md docs/domain-press.md docs/domain-projects.md docs/domain-team.md)",
+      "Bash(git commit -m \"$\\(cat <<'EOF'\nAdd domain documentation for all models, controllers, and admin forms\n\nCovers 10 domains: Projects, Home Grid, Team, News, Content, Press, Awards, Lectures, Books, Jobs — each documenting models, API endpoints, and form fields.\n\nCo-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git add:*)"
+    ]
+  }
+}
