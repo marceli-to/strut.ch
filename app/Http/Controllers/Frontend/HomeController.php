@@ -61,6 +61,7 @@ class HomeController extends Controller
     {
         $grids = $this->homeGrid->with('layout')
                                 ->with('elements.projectimage.project')
+                                ->with('elements.projectvideo.project')
                                 ->with('elements.news')
                                 ->orderBy('order')
                                 ->get();
@@ -87,34 +88,53 @@ class HomeController extends Controller
         $highlights = $this->homeGridElement->highlight()
                                             ->isProduction()
                                             ->with('projectimage.project')
+                                            ->with('projectvideo.project')
                                             ->get();
         if ($highlights->isEmpty())
         {
             return NULL;
         }
 
-        // Shuffle highlights and pick one
-        $random_item   = $highlights->shuffle()->first();
+        // Return all highlights (shuffled) for slideshow
+        $items = [];
+        foreach ($highlights->shuffle() as $item)
+        {
+            // Determine if this is an image or video element
+            if ($item->projectvideo)
+            {
+                $media_name = $item->projectvideo->name;
+                $project    = $item->projectvideo->project;
+                $type       = 'video';
+            }
+            elseif ($item->projectimage)
+            {
+                $media_name = $item->projectimage->name;
+                $project    = $item->projectimage->project;
+                $extension  = strtolower(pathinfo($media_name, PATHINFO_EXTENSION));
+                $type       = in_array($extension, ['mp4', 'webm', 'mov', 'm4v']) ? 'video' : 'image';
+            }
+            else
+            {
+                continue;
+            }
 
-        // Create project & slug
-        $project_image = $random_item->projectimage->name;
-        $project       = $random_item->projectimage->project;
+            $project_slug  = $project->id .'/'.
+                str_slug(
+                    \AppHelper::transliterate($project->getTranslation('name', 'de')) . '-' .
+                    \AppHelper::transliterate($project->getTranslation('location', 'de')) . '-' .
+                    $project->year
+                , '-')
+            ;
 
-        $project_slug  = $project->id .'/'.
-            str_slug(
-                \AppHelper::transliterate($project->getTranslation('name', 'de')) . '-' .
-                \AppHelper::transliterate($project->getTranslation('location', 'de')) . '-' .
-                $project->year
-            , '-')
-        ;
+            $items[] = [
+                'image' => $media_name,
+                'name'  => $project->name . ', ' . $project->location,
+                'title' => $project->title,
+                'slug'  => $project_slug,
+                'type'  => $type,
+            ];
+        }
 
-        $highlight = [
-            'image' => $project_image,
-            'name'  => $project->name . ', ' . $project->location,
-            'title' => $project->title,
-            'slug'  => $project_slug,
-        ];
-
-        return $highlight;
+        return $items;
     }
 }

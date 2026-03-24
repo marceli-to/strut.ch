@@ -8,6 +8,7 @@ class HomeGridElement extends Model
     protected $fillable = [
         'grid_id',
         'project_image_id',
+        'project_video_id',
         'news_id',
         'position',
         'environment',
@@ -21,6 +22,15 @@ class HomeGridElement extends Model
     public function projectimage()
     {
         return $this->hasOne('App\Models\ProjectImage', 'id', 'project_image_id');
+    }
+
+    /**
+     * ProjectVideo relationship
+     */
+
+    public function projectvideo()
+    {
+        return $this->hasOne('App\Models\ProjectVideo', 'id', 'project_video_id');
     }
 
     /**

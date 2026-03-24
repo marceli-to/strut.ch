@@ -5,6 +5,7 @@ use App\Services\MediaService;
 use App\Models\Project;
 use App\Models\ProjectFile;
 use App\Models\ProjectImage;
+use App\Models\ProjectVideo;
 use App\Http\Resources\ProjectCollection;
 
 use App\Http\Controllers\Controller;
@@ -64,6 +65,7 @@ class ProjectController extends Controller
         $projects = $this->project->orderBy('order', 'ASC')
                                   ->orderBy('year', 'ASC')
                                   ->with('images')
+                                  ->with('videos')
                                   ->with('category', 'categoryType')
                                   ->get();
         return new ProjectCollection($projects);
@@ -81,6 +83,7 @@ class ProjectController extends Controller
                                   ->orderBy('year', 'DESC')
                                   //->orderBy('name->de', $order)
                                   ->with('images')
+                                  ->with('videos')
                                   ->get();
 
                                   
@@ -130,6 +133,20 @@ class ProjectController extends Controller
             }
         }
 
+        if (!empty($request->videos))
+        {
+            foreach($request->videos as $v)
+            {
+                $video = new ProjectVideo([
+                    'project_id' => $project->id,
+                    'name'       => $v['name'],
+                    'caption'    => ['de' => $v['caption']['de']],
+                    'publish'    => 1,
+                ]);
+                $video->save();
+            }
+        }
+
         if (!empty($request->downloads))
         {
             foreach($request->downloads as $f)
@@ -155,7 +172,7 @@ class ProjectController extends Controller
      */
     public function edit($id)
     {
-        $project = $this->project->with('images')->with('downloads')->findOrFail($id);
+        $project = $this->project->with('images')->with('videos')->with('downloads')->findOrFail($id);
         return response()->json($project);
     }
 
@@ -198,6 +215,22 @@ class ProjectController extends Controller
                         'is_preview_type'   => $i['is_preview_type'] ? $i['is_preview_type'] : 0,
                         'is_preview_status' => $i['is_preview_status'] ? $i['is_preview_status'] : 0,
                         'is_preview_year'   => $i['is_preview_year'] ? $i['is_preview_year'] : 0
+                    ]
+                );
+            }
+        }
+
+        if (!empty($request->videos))
+        {
+            foreach($request->videos as $v)
+            {
+                $video = ProjectVideo::updateOrCreate(
+                    ['id' => $v['id']],
+                    [
+                        'project_id' => $project->id,
+                        'name'       => $v['name'],
+                        'caption'    => ['de' => $v['caption']['de']],
+                        'publish'    => $v['publish'] ? $v['publish'] : 0,
                     ]
                 );
             }
@@ -282,15 +315,24 @@ class ProjectController extends Controller
      */
     public function destroy($id)
     {
-        $project = $this->project->with('images')->find($id);
+        $project = $this->project->with('images')->with('videos')->find($id);
         
-        // Delete assets (files, images)
+        // Delete assets (files, images, videos)
         if (isset($project->images))
         {
             foreach($project->images as $i)
             {
                 $this->mediaService->delete($i->name);
                 $i->delete();
+            }
+        }
+
+        if (isset($project->videos))
+        {
+            foreach($project->videos as $v)
+            {
+                $this->mediaService->delete($v->name);
+                $v->delete();
             }
         }
 

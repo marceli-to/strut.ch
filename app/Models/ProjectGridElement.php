@@ -9,15 +9,24 @@ class ProjectGridElement extends Model
         'position',
         'grid_id',
         'project_id',
-        'project_image_id'
+        'project_image_id',
+        'project_video_id'
     ];
 
     /**
-     * Get the elements for the row.
+     * Get the image for the element.
      */
     public function image()
     {
         return $this->hasOne('App\Models\ProjectImage', 'id', 'project_image_id');
+    }
+
+    /**
+     * Get the video for the element.
+     */
+    public function video()
+    {
+        return $this->hasOne('App\Models\ProjectVideo', 'id', 'project_video_id');
     }
 
     /**

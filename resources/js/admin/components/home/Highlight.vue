@@ -6,7 +6,7 @@
         <div class="span">
           <div class="grid-1fr-highlight">
             <div class="span" v-for="element in elements" :key="element.id">
-              <grid-media :element="element"></grid-media>
+              <grid-media :element="element" preview-aspect-ratio="3 / 2"></grid-media>
             </div>
           </div>
         </div>
@@ -55,6 +55,7 @@ export default {
         let els = [];
         response.data.data.forEach(e => {
           let img = e.projectimage;
+          let vid = e.projectvideo;
           if (img) {
             let el = {
               id: e.id,
@@ -63,6 +64,16 @@ export default {
               projectId: img.project.id || null,
               image: img.name || null,
               caption: `${img.project.name.de}, ${img.project.location.de} (${img.project.year})`,
+            };
+            els.push(el);
+          } else if (vid) {
+            let el = {
+              id: e.id,
+              position: e.position,
+              isMedia: true,
+              projectId: vid.project.id || null,
+              image: vid.name || null,
+              caption: `${vid.project.name.de}, ${vid.project.location.de} (${vid.project.year})`,
             };
             els.push(el);
           }

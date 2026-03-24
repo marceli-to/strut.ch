@@ -5,7 +5,7 @@
         href="javascript:;"
         class="btn-add-media"
         @click.prevent="showImages(gridId,gridPosition);"
-      >Bild auswählen</a>
+      >Bild / Video auswählen</a>
     </div>
   </div>
 </template>

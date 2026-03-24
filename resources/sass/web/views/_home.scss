@@ -62,9 +62,33 @@
   figure.is-highlight {
     position: relative;
     margin-bottom: $space-md;
-    
+
+    .highlight-swiper {
+      overflow: hidden;
+      aspect-ratio: 16 / 10;
+
+      .swiper-slide {
+        a {
+          display: block;
+          position: relative;
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+
     img {
-      @extend %is-responsive;
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    video {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     figcaption {
@@ -72,7 +96,7 @@
     }
 
     @include bp-sm() {
-      &:hover {
+      .swiper-slide a:hover {
         figcaption {
           opacity: 1;
         }

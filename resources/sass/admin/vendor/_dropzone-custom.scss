@@ -114,6 +114,15 @@
                 background-color: $color--white;
                 padding: 10px;
             }
+
+            video {
+                aspect-ratio: 1 / 1;
+                background-color: $color--white;
+                display: block;
+                object-fit: cover;
+                padding: 10px;
+                width: 100%;
+            }
         }
 
         &.is-disabled {

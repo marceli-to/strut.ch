@@ -486,7 +486,7 @@ export default {
                 articleId: e.news.id,
                 date: e.news.date.de,
                 title: e.news.title.de,
-                subtitle: e.news.subtitle.de || null,
+                subtitle: e.news.subtitle.de || null,
                 text: e.news.text.de,
                 media: e.news.media
               };
@@ -499,9 +499,20 @@ export default {
                 id: e.id,
                 position: e.position,
                 isMedia: true,
-                projectId: img.project.id || null,
-                image: img.name || null,
+                projectId: img.project.id || null,
+                image: img.name || null,
                 caption: `${img.project.name.de}, ${img.project.location.de} (${img.project.year})`,
+              };
+              els[e.position] = el;
+            } else if (e.project_video_id) {
+              let vid = e.projectvideo;
+              let el = {
+                id: e.id,
+                position: e.position,
+                isMedia: true,
+                projectId: vid.project.id || null,
+                image: vid.name || null,
+                caption: `${vid.project.name.de}, ${vid.project.location.de} (${vid.project.year})`,
               };
               els[e.position] = el;
             }

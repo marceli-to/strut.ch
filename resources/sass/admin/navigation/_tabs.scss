@@ -9,14 +9,13 @@ nav.tabs {
     @include responsive-prop('margin-top', $space-md);
 
     ul {
-        @extend %clearfix;
+        display: flex;
+        gap: 10px;
     }
 
     li {
-        float: left;
-        margin-right: 10px;
+        flex: 1;
         text-align: center;
-        width: 25%;
     }
 
     a {

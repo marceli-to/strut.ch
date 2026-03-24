@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Backend\Project;
 
 use App\Models\ProjectGridElement;
 use App\Models\ProjectImage;
+use App\Models\ProjectVideo;
 use App\Http\Resources\ProjectGridCollection;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -32,6 +33,7 @@ class ProjectGridElementController extends Controller
     {
         $projectGridElements = $this->projectGridElement
                                     ->with('image')
+                                    ->with('video')
                                     ->byGrid($gridId)
                                     ->get();
 
@@ -50,14 +52,17 @@ class ProjectGridElementController extends Controller
             'grid_id'           => $request->get('grid_id'),
             'project_id'        => $request->get('project_id'),
             'project_image_id'  => $request->get('project_image_id'),
+            'project_video_id'  => $request->get('project_video_id'),
             'position'          => $request->get('position')
         ]);
         $item->save();
 
         // Mark an image as used
-        $image = $this->projectImage->find($request->get('project_image_id'));
-        $image->is_grid = 1;
-        $image->save();
+        if ($request->get('project_image_id')) {
+            $image = $this->projectImage->find($request->get('project_image_id'));
+            $image->is_grid = 1;
+            $image->save();
+        }
 
         return response()->json('success');
     }
@@ -75,9 +80,13 @@ class ProjectGridElementController extends Controller
         if ($element->delete())
         {
             // Mark an image as unused
-            $image = $this->projectImage->find($imageId);
-            $image->is_grid = 0;
-            $image->save();
+            if ($imageId) {
+                $image = $this->projectImage->find($imageId);
+                if ($image) {
+                    $image->is_grid = 0;
+                    $image->save();
+                }
+            }
         }
 
         return response()->json('successfully deleted');

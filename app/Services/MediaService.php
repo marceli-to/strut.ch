@@ -144,8 +144,13 @@ class MediaService
         // Get file extension to store in media model
         $filetype = File::extension($this->path_source . $name);
 
-        // Create thumbnail for preview
-        $this->thumbnail($name);
+        // Skip thumbnail/resize for video files
+        $videoExtensions = ['mp4', 'webm', 'mov'];
+        if (!in_array(strtolower($filetype), $videoExtensions))
+        {
+            // Create thumbnail for preview
+            $this->thumbnail($name);
+        }
 
         return ['name' => $name, 'filetype' => $filetype];
     }
