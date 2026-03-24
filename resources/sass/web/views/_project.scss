@@ -82,6 +82,21 @@
         margin-bottom: 0;
       }
 
+      .grid-stack {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+
+        > div {
+          flex: 1;
+          overflow: hidden;
+
+          &:first-of-type {
+            margin-bottom: 24px;
+          }
+        }
+      }
+
       img {
         @extend %is-object-fit;
       }
