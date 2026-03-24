@@ -143,6 +143,7 @@ class ProjectsController extends Controller
         $grids = $this->projectGrid->byProject($projectId)
                                    ->with('layout')
                                    ->with('elements.image')
+                                   ->with('elements.video')
                                    ->orderBy('order')
                                    ->get();
 

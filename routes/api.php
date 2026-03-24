@@ -119,6 +119,7 @@ Route::middleware('auth:api')->group(function() {
     Route::get('project/image/status/{id}', 'Backend\Project\ProjectImageController@status');
 
     // Project video routes
+    Route::get('project/video/get/{projectId}', 'Backend\Project\ProjectVideoController@get');
     Route::delete('project/video/delete/{file}', 'Backend\Project\ProjectVideoController@unlink');
     Route::get('project/video/status/{id}', 'Backend\Project\ProjectVideoController@status');
 

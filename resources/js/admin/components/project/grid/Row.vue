@@ -255,13 +255,18 @@
       <div>
         <a href="javascript:;" @click.prevent="toggleOverlay()" class="icon-close-overlay"></a>
         <div>
-          <h1>Projektbild auswählen</h1>
+          <h1>Bild oder Video auswählen</h1>
           <div class="project-selector">
             <div class="project-selector__item">
               <div class="project-selector__media">
-                <figure v-for="image in images" :key="image.id">
-                  <a href @click.prevent="storeImage(image.id)">
+                <figure v-for="image in images" :key="'img-' + image.id">
+                  <a href @click.prevent="storeMedia(image.id, 'image')">
                     <img :src="getAssetSource(image.name)" height="50" width="50">
+                  </a>
+                </figure>
+                <figure v-for="video in videos" :key="'vid-' + video.id" class="is-video">
+                  <a href @click.prevent="storeMedia(video.id, 'video')">
+                    <video :src="getVideoSource(video.name)" height="50" width="50" muted preload="metadata"></video>
                   </a>
                 </figure>
               </div>
@@ -293,6 +298,9 @@ export default {
       // Project images
       images: [],
 
+      // Project videos
+      videos: [],
+
       // Grid elements
       elements: []
     };
@@ -303,8 +311,6 @@ export default {
     gridId: Number,
     projectId: Number
   },
-
-  //mixins: [grid],
 
   created() {
     this.fetch();
@@ -322,9 +328,9 @@ export default {
               let el = {
                 id: e.id,
                 position: e.position,
-                imageId: e.image.id,
-                image: e.image.name,
-                caption: e.image.caption.de
+                type: e.video ? 'video' : 'image',
+                image: e.video ? e.video.name : (e.image ? e.image.name : null),
+                caption: e.video ? (e.video.caption ? e.video.caption.de : '') : (e.image ? e.image.caption.de : '')
               };
               els[e.position] = el;
             }
@@ -342,10 +348,16 @@ export default {
     },
 
     showImages(gridId, position) {
-      let uri = `/api/project/image/get/${this.$props.projectId}`;
+      let imageUri = `/api/project/image/get/${this.$props.projectId}`;
+      let videoUri = `/api/project/video/get/${this.$props.projectId}`;
       this.isLoading = true;
-      this.axios.get(uri).then(response => {
-        this.images = response.data.data;
+
+      Promise.all([
+        this.axios.get(imageUri),
+        this.axios.get(videoUri).catch(() => ({ data: { data: [] } }))
+      ]).then(([imageResponse, videoResponse]) => {
+        this.images = imageResponse.data.data;
+        this.videos = videoResponse.data.data || [];
         this.toggleOverlay();
         this.isLoading = false;
         this.tmpGridId = gridId;
@@ -353,11 +365,12 @@ export default {
       });
     },
 
-    storeImage(imageId) {
+    storeMedia(mediaId, type) {
       let data = {
         position: this.tmpPosition,
         grid_id: this.tmpGridId,
-        project_image_id: imageId,
+        project_image_id: type === 'image' ? mediaId : null,
+        project_video_id: type === 'video' ? mediaId : null,
         project_id: this.$props.projectId
       };
 
@@ -365,7 +378,7 @@ export default {
       this.isLoading = true;
       this.axios.post(uri, data).then(response => {
         this.toggleOverlay();
-        this.$notify({type: 'success', text: 'Bild hinzugefügt!'});
+        this.$notify({type: 'success', text: 'Medium hinzugefügt!'});
         this.fetch();
       });
     },
@@ -374,13 +387,17 @@ export default {
       let uri = `/api/project/grid/image/delete/${id}`;
       this.isLoading = true;
       this.axios.delete(uri).then(response => {
-        this.$notify({type: 'success', text: 'Bild gelöscht!'});
+        this.$notify({type: 'success', text: 'Medium gelöscht!'});
         this.fetch();
       });
     },
 
     getAssetSource(asset) {
       return `/media/grid/${asset}`;
+    },
+
+    getVideoSource(file) {
+      return `/storage/media/${file}`;
     },
 
     getAssetUri(key) {
