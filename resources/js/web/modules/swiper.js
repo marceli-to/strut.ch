@@ -34,7 +34,7 @@ var SwiperUi = (function() {
                     disableOnInteraction: false
                 },
                 loop: true,
-                speed: 800,
+                speed: 1500,
                 autoHeight: false
             });
 
