@@ -61,7 +61,12 @@
               </div>
               <div class="span form-row">
                 <label>Telefon</label>
-                <TheMask v-model="team.phone" mask="\0\5\2 111 11 11" type="text" placeholder="052 2xx xx xx" />
+                <input
+                  type="text"
+                  name="phone"
+                  v-model="team.phone"
+                  placeholder="052 214 20 00"
+                >
               </div>
               <div class="span form-row" :class="errors.email ? 'has-error': ''">
                 <label>E-Mail *</label>
@@ -102,14 +107,12 @@ import ImageUpload from "@/components/ui/ImageUpload.vue";
 import tinyConfig from "@/config/tinyconfig.js";
 import Editor from "@tinymce/tinymce-vue";
 import Helpers from "@/mixins/helpers";
-import { TheMask } from 'vue-the-mask'
 import Progress from "@/mixins/progress";
 
 export default {
   components: {
     ImageUpload: ImageUpload,
     tinymceEditor: Editor,
-    TheMask,
     FormButtons: FormButtons,
   },
 
@@ -173,7 +176,7 @@ export default {
     if (this.$props.type == "edit") {
       let uri = `/api/team/edit/${this.$route.params.id}`;
       this.axios.get(uri).then(response => {
-        this.team = response.data;
+        this.team = this.normalize(response.data);
       });
 
       // Overwrite tinymce config
@@ -182,6 +185,19 @@ export default {
   },
 
   methods: {
+    // Make sure translatable fields are always objects with all locale keys,
+    // so optional fields stay reactive and editable when they are empty
+    normalize(data) {
+      ["role", "position", "cv"].forEach(field => {
+        let value = data[field] || {};
+        data[field] = {
+          de: value.de !== undefined ? value.de : null,
+          en: value.en !== undefined ? value.en : null
+        };
+      });
+      return data;
+    },
+
     // Validation methods
     validate() {
       if (this.team.name && this.team.firstname && this.team.email) {

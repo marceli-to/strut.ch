@@ -52,25 +52,28 @@ class TeamController extends Controller
         $team = new Team([
             'name'      =>  $request->input('name'),
             'firstname' =>  $request->input('firstname'),
-            'role' => [
-                'de' => $request->input('role.de'),
-                'en' => $request->input('role.en'),
-            ],
-            'position' => [
-                'de' => $request->input('position.de'),
-                'en' => $request->input('position.en'),
-            ],
-            'phone' =>  $request->input('phone'),
+            'phone' =>  $this->nullIfEmpty($request->input('phone')),
             'email' =>  $request->input('email'),
-            'cv' => [
-                'de' => $request->input('cv.de'),
-                'en' => $request->input('cv.en')
-            ],
-            'media' =>  $request->input('media'),          
+            'media' =>  $this->nullIfEmpty($request->input('media')),          
         ]);
+
+        $team->setTranslation('role', 'de', $this->nullIfEmpty($request->input('role.de')));
+        $team->setTranslation('position', 'de', $this->nullIfEmpty($request->input('position.de')));
+        $team->setTranslation('cv', 'de', $this->nullIfEmpty($request->input('cv.de')));
 
         $team->save();
         return response()->json(['teamId' => $team->id]);
+    }
+
+    /**
+     * Normalize empty form values to NULL, so optional fields stay empty.
+     *
+     * @param  mixed $value
+     * @return mixed
+     */
+    protected function nullIfEmpty($value)
+    {
+        return (is_string($value) && trim($value) === '') || $value === '' ? NULL : $value;
     }
 
     /**
@@ -97,12 +100,12 @@ class TeamController extends Controller
         $team = $this->team->findOrFail($id);
         $team->name = $request->input('name');
         $team->firstname = $request->input('firstname');
-        $team->phone = $request->input('phone');
+        $team->phone = $this->nullIfEmpty($request->input('phone'));
         $team->email = $request->input('email');
         $team->media = $request->input('media') ? $request->input('media') : NULL;
-        $team->setTranslation('role', 'de', $request->input('role.de'));
-        $team->setTranslation('position', 'de', $request->input('position.de'));
-        $team->setTranslation('cv', 'de', $request->input('cv.de'));
+        $team->setTranslation('role', 'de', $this->nullIfEmpty($request->input('role.de')));
+        $team->setTranslation('position', 'de', $this->nullIfEmpty($request->input('position.de')));
+        $team->setTranslation('cv', 'de', $this->nullIfEmpty($request->input('cv.de')));
         $team->save();
         return response()->json('successfully updated');
     }

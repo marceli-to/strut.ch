@@ -37,8 +37,8 @@
                 {{$t->firstname}} {{$t->name}}
               </h3>
             @endif
-            @if ($t->role) {{$t->role}}<br>@endif
-            @if ($t->position) {{$t->position}}<br>@endif
+            @if ($t->role){{$t->role}}@else&nbsp;@endif<br>
+            @if ($t->position){{$t->position}}@else&nbsp;@endif<br>
           </header>
           <figure>
             <img src="{!! ImageHelper::get($t->media, 'sm') !!}" width="432" height="500" alt="{{ config('app.name') }} - {{$t->firstname}} {{$t->name}}">
