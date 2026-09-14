@@ -21,7 +21,7 @@
 <meta name="theme-color" content="#ffffff">
 <meta name="csrf-token" content="{{ csrf_token() }}" />
 <meta name="format-detection" content="telephone=no">
-<link href="{{ asset('assets/css/app.css') }}" type="text/css" rel="stylesheet" />
+<link href="{{ mix('assets/css/app.css') }}" type="text/css" rel="stylesheet" />
 <script src="{{ asset('assets/js/modernizr.min.js') }}"></script>
 </head>
 <body>
@@ -154,7 +154,7 @@
   <div>@yield('content')</div>
 </main>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD87zTe10NbK_liZzlO93W17qHiFVwlU8c"></script>
-<script src="{{ asset('assets/js/app.js') }}" type="text/javascript"></script>
+<script src="{{ mix('assets/js/app.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/js/fancybox.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/js/imagesloaded.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('assets/js/packery.min.js') }}" type="text/javascript"></script>

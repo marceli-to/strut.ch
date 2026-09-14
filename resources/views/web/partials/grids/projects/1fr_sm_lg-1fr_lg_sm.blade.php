@@ -3,12 +3,12 @@
     <div class="span">
       <div class="grid-stack">
         @if (isset($elements[0]))
-          <div>
+          <div class="is-sm">
             @include('web.partials.grids.projects.media', ['element' => $elements[0], 'size' => 'md', 'width' => '687', 'height' => '458'])
           </div>
         @endif
         @if (isset($elements[1]))
-          <div>
+          <div class="is-lg">
             @include('web.partials.grids.projects.media', ['element' => $elements[1], 'size' => 'md', 'width' => '687', 'height' => '940'])
           </div>
         @endif
@@ -19,12 +19,12 @@
     <div class="span">
       <div class="grid-stack">
         @if (isset($elements[2]))
-          <div>
+          <div class="is-lg">
             @include('web.partials.grids.projects.media', ['element' => $elements[2], 'size' => 'md', 'width' => '687', 'height' => '940'])
           </div>
         @endif
         @if (isset($elements[3]))
-          <div>
+          <div class="is-sm">
             @include('web.partials.grids.projects.media', ['element' => $elements[3], 'size' => 'md', 'width' => '687', 'height' => '458'])
           </div>
         @endif

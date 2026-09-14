@@ -82,17 +82,34 @@
         margin-bottom: 0;
       }
 
+      // Stacked column. Each tile keeps the aspect ratio its layout declares
+      // (sm = 687x458, lg = 687x940) so the sm/lg layouts stay distinguishable.
+      // Sizing the box rather than the media keeps videos, which carry no
+      // intrinsic dimensions, in step with images.
       .grid-stack {
         display: flex;
         flex-direction: column;
         height: 100%;
 
         > div {
-          flex: 1;
+          flex: 0 0 auto;
           overflow: hidden;
 
           &:first-of-type {
             margin-bottom: 24px;
+          }
+
+          &.is-sm {
+            aspect-ratio: 687 / 458;
+          }
+
+          &.is-lg {
+            aspect-ratio: 687 / 940;
+          }
+
+          // Fills the leftover height in columns that hold a single tile.
+          &.is-spacer {
+            flex: 1 1 auto;
           }
         }
       }
