@@ -6,7 +6,13 @@
         class="btn-trash"
         @click.prevent="deleteImage(element.id)"
       >Löschen</a>
-      <img :src="getPreviewImage(element.image)" height="50" width="50">
+      <video
+        v-if="element.type === 'video'"
+        :src="getVideoSource(element.image)"
+        muted
+        preload="metadata"
+      ></video>
+      <img v-else :src="getPreviewImage(element.image)">
       <figcaption v-if="element.caption">
         <strong>{{element.caption}}</strong>
       </figcaption>
@@ -20,7 +26,7 @@ export default {
   },
 
   methods: {
-    
+
     deleteImage(id) {
       if (confirm("Bitte löschen bestätigen!")) {
         this.$parent.deleteImage(id);
@@ -29,6 +35,10 @@ export default {
 
     getPreviewImage(image) {
       return `/media/${image}/sm`;
+    },
+
+    getVideoSource(file) {
+      return `/storage/media/${file}#t=0.1`;
     },
   }
 };

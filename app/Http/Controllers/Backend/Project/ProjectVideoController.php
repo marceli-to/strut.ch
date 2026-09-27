@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Backend\Project;
 
 use App\Services\MediaService;
 use App\Models\ProjectVideo;
+use App\Http\Resources\ProjectVideoCollection;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -17,6 +18,16 @@ class ProjectVideoController extends Controller
     ) {
         $this->mediaService = $mediaService;
         $this->projectVideo = $projectVideo;
+    }
+
+    public function get($projectId = NULL)
+    {
+        $projectVideos = $this->projectVideo
+                              ->where('project_id', '=', $projectId)
+                              ->where('publish', '=', 1)
+                              ->get();
+
+        return new ProjectVideoCollection($projectVideos);
     }
 
     public function unlink($filename)
